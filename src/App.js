@@ -7,7 +7,7 @@ function App() {
     <div>
       App
       <div className="nanum" style={{ fontSize: "100px", fontWeight: [100] }}>
-        s나눔고딕!
+        s나눔고딕!!
       </div>
       <div style={{ fontSize: "100px" }}>s나꿱뷁뉅눔고딕</div>
       <div style={{ fontSize: "12px" }}>s나꿱뷁눔고딕 12px</div>
