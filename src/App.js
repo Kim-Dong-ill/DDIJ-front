@@ -1,7 +1,9 @@
-import "./assets/tStyle.css";
-import "./assets/index.scss";
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+
+import "./assets/tStyle.css";
+import "./assets/index.scss";
+
 import IntroPage from "./pages/IntroPage";
 import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/LoginPage";
@@ -22,31 +24,33 @@ import AddMyPetPage from "./pages/AddMyPetPage";
 function App() {
   return (
     <>
-      {/* 인트로 페이지  */}
-      <div>
-        <div className="bg-ye-400 w-[500px] m-auto h-[100vh]">
-          <Routes>
-            <Route index element={<IntroPage />} />
+      {/* 인트로 페이지 */}
+      <Routes>
+        <Route path="/intro" element={<IntroPage />} />
+      </Routes>
 
-            {/* auth user */}
+      <div className="bg-ye-100 w-[100%]">
+        {/* 로그인 안되어있으면 hidden */}
+        <div className="bg-ye-400 w-[500px] m-auto ">
+          {/* auth user */}
+          <Routes>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
 
             {/* header 있는 layout */}
-            <Route path="/main" element={<Layout />}>
-              <Route path="/main" element={<MainPage />} />
-              <Route path="/main/appealwrite" element={<AppealWritePage />} />
-              <Route path="/main/allcclist" element={<AllCCListPage />} />
-              <Route path="/main/attendcclist" element={<AttendCCListPage />} />
-              <Route path="/main/createcc" element={<CreateCCPage />} />
-              <Route path="/main/ccview" element={<CCViewPage />} />
-              <Route path="/main/userinfo" element={<UserInfoPage />} />
-              <Route path="/main/usermodify" element={<UserModifyPage />} />
-              <Route path="/main/mypetlist" element={<MyPetListPage />} />
+            <Route element={<Layout />}>
+              <Route index element={<MainPage />} />
+              <Route path="/appealwrite" element={<AppealWritePage />} />
+              <Route path="/allcclist" element={<AllCCListPage />} />
+              <Route path="/attendcclist" element={<AttendCCListPage />} />
+              <Route path="/createcc" element={<CreateCCPage />} />
+              <Route path="/ccview" element={<CCViewPage />} />
+              <Route path="/userinfo" element={<UserInfoPage />} />
+              <Route path="/usermodify" element={<UserModifyPage />} />
+              <Route path="/mypetlist" element={<MyPetListPage />} />
             </Route>
 
             {/* header 없는 layout */}
-
             <Route path="/appeal" element={<AppealPage />} />
             <Route path="/mypetmodify" element={<MyPetModifyPage />} />
             <Route path="/addmypet" element={<AddMyPetPage />} />
