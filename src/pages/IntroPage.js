@@ -23,9 +23,25 @@ function IntroPage() {
   //스크롤시 섹션 이동 end
   return (
     <div className="box w-[100%] bg-ye-600">
+      {/* section 01 */}
       <div className="section h-[100vh]" id="section1">
-        section 01
+        <div className="text-wh-100 flex justify-end gap-2 p-3">
+          <div>
+            <a href="#">로그인</a>
+          </div>
+          |
+          <div>
+            <a href="#"> 회원가입</a>
+          </div>
+        </div>
+        <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
+          <img src="./images/info_logo.svg" alt="" />
+        </div>
+        <div className="absolute bottom-[50px] left-1/2 -translate-x-1/2 text-wh-100 text-3xl">
+          <i class="fa-solid fa-angles-down"></i>
+        </div>
       </div>
+      {/* section 01 */}
       <div className="section h-[100vh]" id="section2">
         section 02
       </div>
