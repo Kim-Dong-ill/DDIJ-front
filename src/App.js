@@ -23,35 +23,30 @@ function App() {
   return (
     <>
       {/* 인트로 페이지  */}
-      <Routes>
-        <Route index element={<IntroPage />} />
-      </Routes>
-
       <div className="bg-ye-100 w-[100%] h-[100vh]">
         <div className="bg-ye-400 w-[500px] m-auto h-[100vh]">
-          {/* auth user */}
           <Routes>
+            <Route index element={<IntroPage />} />
+
+            {/* auth user */}
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-          </Routes>
 
-          {/* header 있는 layout */}
-          <Routes>
-            <Route path="/" element={<Layout />}>
+            {/* header 있는 layout */}
+            <Route path="/main" element={<Layout />}>
               <Route path="/main" element={<MainPage />} />
-              <Route path="/appealwrite" element={<AppealWritePage />} />
-              <Route path="/allcclist" element={<AllCCListPage />} />
-              <Route path="/attendcclist" element={<AttendCCListPage />} />
-              <Route path="/createcc" element={<CreateCCPage />} />
-              <Route path="/ccview" element={<CCViewPage />} />
-              <Route path="/userinfo" element={<UserInfoPage />} />
-              <Route path="/usermodify" element={<UserModifyPage />} />
-              <Route path="/mypetlist" element={<MyPetListPage />} />
+              <Route path="/main/appealwrite" element={<AppealWritePage />} />
+              <Route path="/main/allcclist" element={<AllCCListPage />} />
+              <Route path="/main/attendcclist" element={<AttendCCListPage />} />
+              <Route path="/main/createcc" element={<CreateCCPage />} />
+              <Route path="/main/ccview" element={<CCViewPage />} />
+              <Route path="/main/userinfo" element={<UserInfoPage />} />
+              <Route path="/main/usermodify" element={<UserModifyPage />} />
+              <Route path="/main/mypetlist" element={<MyPetListPage />} />
             </Route>
-          </Routes>
 
-          {/* header 없는 layout */}
-          <Routes>
+            {/* header 없는 layout */}
+
             <Route path="/appeal" element={<AppealPage />} />
             <Route path="/mypetmodify" element={<MyPetModifyPage />} />
             <Route path="/addmypet" element={<AddMyPetPage />} />
