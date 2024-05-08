@@ -36,3 +36,10 @@ ul {
   font-weight: 400;
   font-style: normal;
 }
+
+html,
+body {
+  background-color: #fffcf3;
+  display: block;
+  /* overflow: hidden; */
+}

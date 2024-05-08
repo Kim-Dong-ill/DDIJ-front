@@ -23,7 +23,7 @@ function App() {
   return (
     <>
       {/* 인트로 페이지  */}
-      <div className="bg-ye-100 w-[100%] h-[100vh]">
+      <div>
         <div className="bg-ye-400 w-[500px] m-auto h-[100vh]">
           <Routes>
             <Route index element={<IntroPage />} />

@@ -6,9 +6,11 @@ import Navbar from "../components/Navbar";
 function Layout() {
   return (
     <>
-      <Header />
-      <Outlet />
-      <Navbar />
+      <div className="h-[100vh]">
+        <Header />
+        <Outlet />
+        <Navbar />
+      </div>
     </>
   );
 }
