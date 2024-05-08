@@ -1,7 +1,9 @@
-import "./assets/tStyle.css";
-import "./assets/index.scss";
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+
+import "./assets/tStyle.css";
+import "./assets/index.scss";
+
 import IntroPage from "./pages/IntroPage";
 import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/LoginPage";
@@ -22,23 +24,23 @@ import AddMyPetPage from "./pages/AddMyPetPage";
 function App() {
   return (
     <>
-      {/* 인트로 페이지  */}
+      {/* 인트로 페이지 */}
+
       <Routes>
-        <Route index element={<IntroPage />} />
+        <Route path="/intro" element={<IntroPage />} />
       </Routes>
 
-      <div className="bg-ye-100 w-[100%] h-[100vh]">
-        <div className="bg-ye-400 w-[500px] m-auto h-[100vh]">
+      <div className="bg-ye-100 w-[100%]">
+        {/* 로그인 안되어있으면 hidden */}
+        <div className="bg-ye-400 w-[500px] m-auto ">
           {/* auth user */}
           <Routes>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-          </Routes>
 
-          {/* header 있는 layout */}
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route path="/main" element={<MainPage />} />
+            {/* header 있는 layout */}
+            <Route element={<Layout />}>
+              <Route index element={<MainPage />} />
               <Route path="/appealwrite" element={<AppealWritePage />} />
               <Route path="/allcclist" element={<AllCCListPage />} />
               <Route path="/attendcclist" element={<AttendCCListPage />} />
@@ -48,10 +50,8 @@ function App() {
               <Route path="/usermodify" element={<UserModifyPage />} />
               <Route path="/mypetlist" element={<MyPetListPage />} />
             </Route>
-          </Routes>
 
-          {/* header 없는 layout */}
-          <Routes>
+            {/* header 없는 layout */}
             <Route path="/appeal" element={<AppealPage />} />
             <Route path="/mypetmodify" element={<MyPetModifyPage />} />
             <Route path="/addmypet" element={<AddMyPetPage />} />
