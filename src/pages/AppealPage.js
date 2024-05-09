@@ -91,18 +91,23 @@ function AppealPage() {
           {commentList.map((item) => {
             return (
               <>
-                <div className="flex mb-[20px] gap-[20px] items-center ">
+                <div className="flex justify-between mb-[20px] gap-[20px] items-center w-full bg-slate-400 ">
                   <div className="flex items-center">
-                    <img
-                      src="/images/commenticon.svg"
-                      alt=""
-                      className="block"
-                    />
-                    <div className="flex items-center w-[90px]">
-                      <p>닉네임6글자</p>
+                    <div className="flex gap-[1px] ">
+                      <img
+                        src="/images/commenticon.svg"
+                        alt=""
+                        className="block"
+                      />
+                      <div className="flex items-center w-[90px]">
+                        <p>닉네임6글자</p>
+                      </div>
+                    </div>
+                    <div className="nanum flex-wrap bg-slate-50 w-[270px] overflow-wrap">
+                      {item}
                     </div>
                   </div>
-                  <div className="nanum">{item}</div>
+                  <div>삭제</div>
                 </div>
               </>
             );
