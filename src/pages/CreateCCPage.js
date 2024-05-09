@@ -24,7 +24,7 @@ function CreateCCPage() {
   };
   return (
     <>
-      <div className="bg-white px-12">
+      <div className="bg-white px-12 ">
         <div>
           {/* 경고창 */}
           <div>
