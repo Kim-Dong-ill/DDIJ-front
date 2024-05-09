@@ -25,7 +25,6 @@ function App() {
   return (
     <>
       {/* 인트로 페이지 */}
-
       <Routes>
         <Route path="/intro" element={<IntroPage />} />
       </Routes>
