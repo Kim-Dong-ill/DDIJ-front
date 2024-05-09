@@ -6,7 +6,7 @@ import Navbar from "../components/Navbar";
 function Layout() {
   return (
     <>
-      <div className="h-[100vh]">
+      <div>
         <Header />
         <Outlet />
         <Navbar />
