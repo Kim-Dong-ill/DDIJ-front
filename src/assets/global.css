@@ -43,6 +43,7 @@ body {
   display: block;
   /* overflow: hidden; */
 }
+
 ::-webkit-scrollbar {
   width: 2px; /* 세로축 스크롤바 길이 */
 
@@ -52,4 +53,8 @@ body {
   border-radius: 8px;
 
   background-color: #fffcf3;
+}
+
+.navbar {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
