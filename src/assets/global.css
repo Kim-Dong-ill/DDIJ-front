@@ -55,6 +55,12 @@ body {
   background-color: #fffcf3;
 }
 
+
+.shadow-bottom {
+  box-shadow: 0 3px 4px 0px rgba(0, 0, 0, 0.1);
+}
+
 .navbar {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+
 }
