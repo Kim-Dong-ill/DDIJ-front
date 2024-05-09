@@ -14,7 +14,7 @@ function Layout() {
   return (
     <>
       <div>
-        <Header pageTitle={pageTitle} />
+        <Header props={pageTitle} />
         <Outlet />
         <Navbar />
       </div>

@@ -43,7 +43,7 @@ function App() {
               <Route path="/appealwrite" element={<AppealWritePage />} />
               <Route path="/allcclist" element={<AllCCListPage />} />
               <Route path="/attendcclist" element={<AttendCCListPage />} />
-              <Route path="/createcc" element={<CreateCCPage />} />
+              <Route path="/createcc " element={<CreateCCPage />} />
               <Route path="/ccview" element={<CCViewPage />} />
               <Route path="/userinfo" element={<UserInfoPage />} />
               <Route path="/usermodify" element={<UserModifyPage />} />
