@@ -13,24 +13,49 @@ function UserModifyPage() {
       </div>
 
       <div>
-        <button>대표</button>
+        <button className="flex items-center bg-ye-600  h-[30px] px-[5px] py-[5px] rounded-lg ">
+          <img
+            src="./images/star1.svg"
+            className="w-[14px] h-[14px] mr-[3px] "
+          />
+          <span className="text-[14px]">대표</span>
+        </button>
         <img src="./images/dog1.svg" className="w-[100px] h-[100px]" />
-        <h2>뚜비</h2>
-        <img src="./images/man.svg" className="w-[20px] h-[20px]" />
+        <div>
+          <span>뚜비</span>
+          <img src="./images/man.svg" className="w-[20px] h-[20px]" />
+        </div>
         <button>수정하기</button>
       </div>
       <div>
-        <button>대표</button>
+        <button className="flex items-center bg-white h-[30px] px-[5px] py-[5px] rounded-lg border border-da-100 ">
+          <img
+            src="./images/star1.svg"
+            className="w-[14px] h-[14px] mr-[3px] "
+          />
+          <span className="text-[14px]">대표</span>
+        </button>
         <img src="./images/dog2.svg" className="w-[100px] h-[100px]" />
         <h2>나나</h2>
-        <img src="./images/man.svg" className="w-[20px] h-[20px]" />
+        <img src="./images/woman.svg" className="w-[20px] h-[20px]" />
         <button>수정하기</button>
       </div>
       <div>
-        <button>대표</button>
-        <img src="./images/dog1.svg" className="w-[100px] h-[100px]" />
+        <button className="flex items-center bg-white  h-[30px] px-[5px] py-[5px] rounded-lg border border-da-100">
+          <img
+            src="./images/star1.svg"
+            className="w-[14px] h-[14px] mr-[3px] "
+          />
+          <span className="text-[14px]">대표</span>
+        </button>
+
+        <button className="flex items-center bg-ye-500 h-[100px] px-[5px] py-[5px] rounded-lg  ">
+          <img src="./images/camera1.svg" className="w-[100px] h-[100px]" />
+        </button>
+        {/* <div className="bg-ye-500">
+          <img src="./images/camera1.svg" className="w-[100px] h-[100px]" />
+        </div> */}
         <h2></h2>
-        <img src="./images/man.svg" className="w-[20px] h-[20px]" />
         <button>추가하기</button>
       </div>
     </div>
