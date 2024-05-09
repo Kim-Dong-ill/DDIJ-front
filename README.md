@@ -1,2 +1,3 @@
+main 백업본입니다.
 
-main 변경할 사항 있어서 개인 branch에서 작업은 main 변경 후에 pull하고 작업하시면 됩니다.
+main으로 merge후 이상 없을 시 백업에 올립니다.

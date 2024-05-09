@@ -1,7 +1,17 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-function Header() {
-  return <div className="w-[500px] h-[90px] bg-red-100 ">Header</div>;
+function Header(props) {
+  return (
+    <>
+      <div className="flex items-end justify-between h-[90px] px-[10px]">
+        <h1 className="text-white navbar">{props}</h1>
+        <Link to="/">
+          <img src="/images/DDIJlogo.svg" alt="" />
+        </Link>
+      </div>
+    </>
+  );
 }
 
 export default Header;

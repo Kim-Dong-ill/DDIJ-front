@@ -1,7 +1,7 @@
 import React from "react";
 
 function RegisterPage() {
-  return <div>RegisterPage</div>;
+  return <div className=" h-[300%] bg-slate-400">RegisterPage</div>;
 }
 
 export default RegisterPage;
