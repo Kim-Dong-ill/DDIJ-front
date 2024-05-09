@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 function AppealPage() {
   return (
     <div>
+      {/* subHeader */}
       <div className="subHeader  bg-ye-700 w-[500px] top-0 fixed h-[240px] text-center mb-[35px] ">
         <div className="h-[50px] border-b-2 mb-3 flex justify-between items-center justify-center">
           <h2>
@@ -19,8 +20,7 @@ function AppealPage() {
         <div className="flex justify-center items-center gap-1">
           <div>뚜비</div>
           <div>
-            {/* 폰트어썸으로 변경해줄 예정 */}
-            <img src="/images/male.png" alt="" className="w-[15px] h-[15px]" />
+            <i class="fa-solid fa-mars"></i>
           </div>
         </div>
         <div className="flex justify-center">
@@ -44,8 +44,7 @@ function AppealPage() {
               </div>
             </div>
             <div>
-              {/* 폰트어썸으로 변경해줄예정 */}
-              <img src="/images/moreicon.png" alt="" />
+              <i class="fa-solid fa-ellipsis-vertical"></i>
             </div>
           </div>
           {/* 사진, 내용 넣는 section */}
@@ -54,9 +53,11 @@ function AppealPage() {
             사진 페이지네이션 들어가야 할 구간
           </div>
           <div className="nanum border-b-2">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquam
-            minus pariatur repellendus similique omnis velit quas, alias quam
-            laboriosam nesciunt?
+            <p className="mb-[5px]">
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquam
+              minus pariatur repellendus similique omnis velit quas, alias quam
+              laboriosam nesciunt?
+            </p>
           </div>
           {/* 구분선 아래, 댓글입력창부터 시작 */}
           <div className="my-[20px]">
@@ -68,14 +69,16 @@ function AppealPage() {
             <button>확인</button>
           </div>
           {/* comment section 시작 */}
-          <div className="flex mb-[10px] gap-[20px] items-center">
+          <div className="flex mb-[20px] gap-[20px] items-center ">
             <div className="flex items-center">
               <img src="/images/commenticon.svg" alt="" className="block" />
-              <div className="flex items-center">
-                <p>닉네임구간입니다</p>
+              <div className="flex items-center w-[90px]">
+                <p>닉네임6글자</p>
               </div>
             </div>
-            <div className="nanum">코멘트구간입니다</div>
+            <div className="nanum">
+              코멘트구간입니다 Lorem ipsum dolor sit amet.
+            </div>
           </div>
 
           {/* div*2개 남겨놔야해요 */}
