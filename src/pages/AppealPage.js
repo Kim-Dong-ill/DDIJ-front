@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 
 function AppealPage() {
+  let [commentList, setCommentList] = useState([]);
+  let [textData, setTextData] = useState("");
+  function clickListener() {
+    let copy = [...commentList];
+    setCommentList([textData, ...copy]);
+    setTextData("");
+  }
+
+  function textDataChange(e) {
+    setTextData(e.target.value);
+  }
+
   return (
     <div>
       {/* subHeader */}
@@ -32,7 +44,7 @@ function AppealPage() {
         </div>
       </div>
       {/* 자랑하개 mainview _ subheader와 navbar 중간section 전부 */}
-      <div className="mt-[240px] mb-[65px] p-3 bg">
+      <div className="mt-[240px] mb-[65px] p-3 bg-white">
         <div className="py-10 px-5">
           {/* 강아지 아바타 / 닉네임 section 시작 */}
           <div className="flex justify-between mb-[20px]">
@@ -60,26 +72,50 @@ function AppealPage() {
             </p>
           </div>
           {/* 구분선 아래, 댓글입력창부터 시작 */}
-          <div className="my-[20px]">
+          <div className=" flex my-[20px] gap-[10px]">
             <input
               type="text"
               placeholder="댓글입력"
-              className="rounded-[25px] px-[10px] py-[5px]"
+              className=" border w-[365px] rounded-[25px] px-[10px] py-[5px] nanum"
+              onChange={textDataChange}
+              value={textData}
             />
-            <button>확인</button>
+            <button
+              className="w-[50px] bg-da-100 rounded-[50px]"
+              onClick={clickListener}
+            >
+              확인
+            </button>
           </div>
           {/* comment section 시작 */}
-          <div className="flex mb-[20px] gap-[20px] items-center ">
+          {commentList.map((item) => {
+            return (
+              <>
+                <div className="flex mb-[20px] gap-[20px] items-center ">
+                  <div className="flex items-center">
+                    <img
+                      src="/images/commenticon.svg"
+                      alt=""
+                      className="block"
+                    />
+                    <div className="flex items-center w-[90px]">
+                      <p>닉네임6글자</p>
+                    </div>
+                  </div>
+                  <div className="nanum">{item}</div>
+                </div>
+              </>
+            );
+          })}
+          {/* <div className="flex mb-[20px] gap-[20px] items-center ">
             <div className="flex items-center">
               <img src="/images/commenticon.svg" alt="" className="block" />
               <div className="flex items-center w-[90px]">
                 <p>닉네임6글자</p>
               </div>
             </div>
-            <div className="nanum">
-              코멘트구간입니다 Lorem ipsum dolor sit amet.
-            </div>
-          </div>
+            <div className="nanum">{commentList}</div>
+          </div> */}
 
           {/* div*2개 남겨놔야해요 */}
         </div>
