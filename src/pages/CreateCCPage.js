@@ -98,9 +98,9 @@ function CreateCCPage() {
                 id="max"
                 className="w-full px-4 py-2 mb-3 border-2 rounded-md"
               >
-                {max.map((item) => {
+                {max.map((item, idx) => {
                   return (
-                    <option value={item.key} key={item.key}>
+                    <option value={item.key} key={idx}>
                       {item.value}
                     </option>
                   );
@@ -116,9 +116,9 @@ function CreateCCPage() {
                 id="usingTime"
                 className="w-full border-2 rounded-md block h-[35px]"
               >
-                {usingTime.map((item) => {
+                {usingTime.map((item, idx) => {
                   return (
-                    <option value={item.key} key={item.key}>
+                    <option value={item.key} key={idx}>
                       {item.value}
                     </option>
                   );
