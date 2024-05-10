@@ -1,29 +1,7 @@
 import React from "react";
-import TextField from "@mui/material/TextField";
-import { styled } from "@mui/material/styles";
-// import { Button } from "@mui/material";
+import TextFieldLine from "../components/TextField";
 import ButtonYe from "../components/ButtonYe";
 import { NavLink } from "react-router-dom";
-
-const CssTextField = styled(TextField)({
-  "& label.Mui-focused": {
-    color: "#FFBC11",
-  },
-  "& .MuiInput-underline:after": {
-    borderBottomColor: "#FFBC11",
-  },
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": {
-      borderColor: "#E0E3E7",
-    },
-    "&:hover fieldset": {
-      borderColor: "#e9a701",
-    },
-    "&.Mui-focused fieldset": {
-      borderColor: "#FFBC11",
-    },
-  },
-});
 
 function LoginPage() {
   return (
@@ -34,16 +12,9 @@ function LoginPage() {
       <div className=" w-[80%] mb-10">
         <form className="flex flex-col items-center">
           <div className="w-[100%] flex flex-col gap-7 mb-10">
-            <CssTextField
+            <TextFieldLine fullWidth label="E-mail" />
+            <TextFieldLine
               fullWidth
-              color="secondary"
-              id="outlined-basic"
-              type="text"
-              label="E-mail"
-            />
-            <CssTextField
-              fullWidth
-              id="outlined-password-input"
               label="Password"
               type="password"
               autoComplete="current-password"
