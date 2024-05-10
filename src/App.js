@@ -51,7 +51,7 @@ function App() {
               <Route path="/circles" element={<AllCCListPage />} />
               <Route path="/attendcircles" element={<AttendCCListPage />} />
               <Route path="/circles/new" element={<CreateCCPage />} />
-              <Route path={`/ccview/circledId`} element={<CCViewPage />} />
+              <Route path={`/circles/:circleid`} element={<CCViewPage />} />
               <Route path="/user" element={<UserInfoPage />} />
               <Route path={`/user/userId`} element={<UserModifyPage />} />
               <Route path="/pet" element={<MyPetListPage />} />
