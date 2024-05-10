@@ -14,7 +14,6 @@ function UserInfoPage() {
           반려견 정보
         </button>
       </div>
-
       {/* content-between h-[670px] */}
       <div className="w-[350px]  m-auto grid gap-3 ">
         <div className="h-[45px] flex justify-between">

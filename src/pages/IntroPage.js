@@ -2,6 +2,9 @@ import React from "react";
 import $ from "jquery";
 import { NavLink } from "react-router-dom";
 
+//css
+import "../assets/animation.css";
+
 function IntroPage() {
   //스크롤시 섹션 이동 start
   var mHtml = $("html");
@@ -46,7 +49,7 @@ function IntroPage() {
         <div className=" absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
           <img src="./images/intro_logo.svg" alt="" />
         </div>
-        <div className="infoArrow fixed bottom-[20px] left-1/2 -translate-x-1/2 text-wh-100 text-3xl">
+        <div className="infoArrow fixed bottom-[40px] left-1/2 -translate-x-1/2 text-wh-100 text-3xl">
           <i class="fa-solid fa-angles-down"></i>
         </div>
       </div>

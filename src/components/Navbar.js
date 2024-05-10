@@ -4,10 +4,10 @@ import "../assets/global.css";
 
 function Navbar() {
   const menu = [
-    { title: "산책하기", route: "" },
-    { title: "모임만들기", route: "createcc" },
-    { title: "모임리스트", route: "allcclist" },
-    { title: "마이펫이지", route: "userinfo" },
+    { title: "산책하기", route: "main" },
+    { title: "모임만들기", route: "circles/new" },
+    { title: "모임리스트", route: "circles" },
+    { title: "마이펫이지", route: "user" },
   ];
   return (
     <>
