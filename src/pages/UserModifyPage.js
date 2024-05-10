@@ -14,7 +14,6 @@ function UserModifyPage() {
           반려견 정보
         </button>
       </div>
-
       {/* content-between h-[670px] */}
       <div className="w-[350px]  m-auto grid gap-3 pt-[50px] pb-[115px] ">
         <div className="h-[45px] flex justify-between">
@@ -29,7 +28,6 @@ function UserModifyPage() {
             수정하기
           </button>
         </div>
-
         {/* <div className=" flex-col gap-y-20 "> */}
         <div className=" nanum flex-col items-center space-y-10 mb-[50px]">
           <div className="p-2">

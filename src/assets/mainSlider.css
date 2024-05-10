@@ -1,0 +1,32 @@
+.mapDogList {
+  position: absolute;
+  z-index: 999999999;
+  width: 380px;
+  height: 85px;
+  background-color: rgb(255, 254, 251);
+  border-radius: 10px;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  display: flex;
+  padding: 15px;
+}
+.mapDogListCard {
+  width: 45px;
+  height: 60px;
+}
+
+.swiper-slide {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
