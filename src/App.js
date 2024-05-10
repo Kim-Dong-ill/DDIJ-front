@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import "./assets/tStyle.css";
@@ -22,6 +22,14 @@ import MyPetModifyPage from "./pages/MyPetModifyPage";
 import AddMyPetPage from "./pages/AddMyPetPage";
 
 function App() {
+  const pageTitle = [
+    { title: "함께걷개" },
+    { title: "어디가개" },
+    { title: "자랑하개" },
+    { title: "마이펫이지" },
+  ];
+
+  const [number, setNumber] = useState(0);
   return (
     <>
       {/* 인트로 페이지 */}
@@ -31,7 +39,7 @@ function App() {
 
       <div className="bg-ye-100 w-[100%]">
         {/* 로그인 안되어있으면 hidden */}
-        <div className="bg-ye-400 w-[500px] m-auto ">
+        <div className="bg-ye-300 w-[500px] m-auto ">
           {/* auth user */}
           <Routes>
             <Route path="/login" element={<LoginPage />} />
@@ -40,10 +48,19 @@ function App() {
             {/* header 있는 layout */}
             <Route element={<Layout />}>
               <Route index element={<MainPage />} />
-              <Route path="/appealwrite" element={<AppealWritePage />} />
+              <Route path="/appeal/new" element={<AppealWritePage />} />
               <Route path="/allcclist" element={<AllCCListPage />} />
               <Route path="/attendcclist" element={<AttendCCListPage />} />
-              <Route path="/createcc" element={<CreateCCPage />} />
+              <Route
+                path="/createcc"
+                element={
+                  <CreateCCPage
+                    pageTitle={pageTitle}
+                    number={number}
+                    setNumber={setNumber}
+                  />
+                }
+              />
               <Route path="/ccview" element={<CCViewPage />} />
               <Route path="/userinfo" element={<UserInfoPage />} />
               <Route path="/usermodify" element={<UserModifyPage />} />
