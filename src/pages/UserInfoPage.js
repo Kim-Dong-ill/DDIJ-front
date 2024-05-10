@@ -5,8 +5,11 @@ import Navbar from "../components/Navbar";
 
 function UserInfoPage() {
   return (
-    <div className="w-[500px]  bg-white mt ">
-      <div className=" flex justify-between mt-[50px] mb-[50px]  ">
+    <div
+      className="w-[500px]  bg-white "
+      style={{ height: "calc(100vh - 65px)" }}
+    >
+      <div className="flex justify-between">
         <button className=" w-1/2  border-b  border-gray-200 shadow-bottom px-2 py-3 text-[13px] hover:border-gray-800 ">
           보호자 정보
         </button>
@@ -16,7 +19,7 @@ function UserInfoPage() {
       </div>
 
       {/* content-between h-[670px] */}
-      <div className="w-[350px]  m-auto grid gap-3 ">
+      <div className="w-[350px]  m-auto grid gap-3 pt-[50px] pb-[115px] ">
         <div className="h-[45px] flex justify-between">
           <div className="flex justify-start  gap-2">
             <img
@@ -65,14 +68,14 @@ function UserInfoPage() {
           </div>
         </div>
 
-        <div className="flex justify-center h-[28px] mb-[50px] gap-2 ">
-          <button className=" w-[82px] text-[13px] text-center rounded-2xl bg-da-300 text-white hover:bg-ye-600 hover:text-da-300">
+        {/* <div className="flex justify-center h-[28px] mb-[50px] gap-2 ">
+          <button className=" w-[82px] text-[13px] text-center rounded-2xl bg-da-300 text-white hover:bg-da-600 hover:text-white">
             취소
           </button>
-          <button className=" w-[82px] text-[13px] text-center rounded-2xl bg-da-300 text-white hover:bg-ye-600 hover:text-da-300">
+          <button className=" w-[82px] text-[13px] text-center rounded-2xl bg-ye-600 text-da-300 hover:bg-ye-800 hover:text-da-300">
             수정완료
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
