@@ -11,7 +11,6 @@ function UserModifyPage() {
           반려견 정보
         </button>
       </div>
-
       <div>
         <button className="flex items-center bg-ye-600  h-[30px] px-[5px] py-[5px] rounded-lg ">
           <img

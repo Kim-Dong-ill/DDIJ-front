@@ -18,7 +18,6 @@ function IntroPage() {
       if (page === 1) return;
       page--;
     }
-    console.log(page);
     if (page > 5) {
       page = 6;
       $(".infoArrow").css("display", "none");
@@ -134,8 +133,8 @@ function IntroPage() {
       {/* section 05 */}
 
       {/* section 06 */}
-      <div className="section h-[100vh]" id="section6">
-        <div className="bg-wh-100 sm:w-[700px] w-[500px] h-[100%] m-auto flex flex-col items-center">
+      <div className="section h-[100vh] grid" id="section6">
+        <div className="bg-wh-100 sm:w-[700px] w-[500px] h-[100vh] m-auto flex flex-col items-center">
           <div>
             <img src="./images/intro_logo_wh.svg" alt="" />
           </div>
@@ -150,7 +149,7 @@ function IntroPage() {
               alt=""
             />
             <img
-              className="w-[40px] h-[35px]"
+              className="w-[40px] h-[40px]"
               src="./images/intro_dog2.png"
               alt=""
             />
@@ -163,14 +162,15 @@ function IntroPage() {
           <div>
             <div>
               <NavLink className="text-da-300" to="/login">
-                <button className="w-[250px] h-[50px] rounded-full bg-ye-600 mb-3">
+                {/* <button className="w-[250px] h-[50px] rounded-full bg-ye-600 mb-3 hover:bg-ye-800"> */}
+                <button className="w-[250px] h-[50px] rounded-full bg-da-300 text-wh-100 mb-3 hover:bg-da-500">
                   로그인
                 </button>
               </NavLink>
             </div>
             <div>
               <NavLink className="text-da-300" to="/register">
-                <button className="w-[250px] h-[50px] rounded-full bg-ye-600 ">
+                <button className="w-[250px] h-[50px] rounded-full bg-ye-600 hover:bg-ye-800">
                   회원가입
                 </button>
               </NavLink>

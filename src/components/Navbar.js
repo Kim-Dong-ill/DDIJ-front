@@ -15,16 +15,16 @@ function Navbar() {
         <ul className=" flex justify-around items-center border w-full">
           {menu.map((item, idx) => {
             return (
-              <li key={idx} className="text-center text-white navbar">
-                <Link to={`/${item.route}`}>
+              <Link to={`/${item.route}`}>
+                <li key={idx} className="text-center text-white navbar">
                   <img
                     src={`./images/menulogo${idx + 1}.svg`}
                     alt=""
                     className="m-auto"
                   />
                   {item.title}
-                </Link>
-              </li>
+                </li>
+              </Link>
             );
           })}
         </ul>
