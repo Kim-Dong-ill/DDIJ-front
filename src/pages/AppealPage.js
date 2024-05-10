@@ -128,7 +128,7 @@ function AppealPage() {
       {/* ======================자랑하개 mainview_ 중간섹션 + 사진 + 글 + 댓글까지 한묶음 end */}
       {/* 글써보개 고정하기위한작업 시작 */}
       <div className="w-[490px] flex justify-end fixed bottom-[90px] ">
-        <Link to="/appeal/new">
+        <Link to="/appealwrite/:petid">
           <div className=" bg-ye-400 text-white navbar py-2 px-3 rounded-[50px] ">
             글써보개
           </div>
