@@ -40,7 +40,7 @@ function App() {
             {/* header 있는 layout */}
             <Route element={<Layout />}>
               <Route index element={<MainPage />} />
-              <Route path="/appealwrite" element={<AppealWritePage />} />
+              <Route path="/appealwrite/:petid" element={<AppealWritePage />} />
               <Route path="/allcclist" element={<AllCCListPage />} />
               <Route path="/attendcclist" element={<AttendCCListPage />} />
               <Route path="/createcc" element={<CreateCCPage />} />
