@@ -14,7 +14,7 @@ function Layout() {
   return (
     <>
       <div>
-        <Header />
+        <Header pageTitle={pageTitle} />
         <Outlet />
         <Navbar />
       </div>
