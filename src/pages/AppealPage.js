@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
+import { Link } from "react-router-dom";
 
 function AppealPage() {
   let [commentList, setCommentList] = useState([]);
@@ -15,7 +16,7 @@ function AppealPage() {
   }
 
   return (
-    <div>
+    <div className="relative">
       {/* subHeader */}
       <div className="subHeader  bg-ye-700 w-[500px] top-0 fixed h-[240px] text-center mb-[35px] ">
         <div className="h-[50px] border-b-2 mb-3 flex justify-between items-center justify-center">
@@ -44,8 +45,9 @@ function AppealPage() {
         </div>
       </div>
       {/* 자랑하개 mainview _ subheader와 navbar 중간section 전부 */}
-      <div className="mt-[240px] mb-[65px] p-3 bg-white">
-        <div className="py-10 px-5">
+      {/* ======================자랑하개 mainview_ 중간섹션 + 사진 + 글 + 댓글까지 한묶음 start */}
+      <div className="mt-[240px] mb-[65px] p-3 bg-white ">
+        <div className="py-10 px-5 ">
           {/* 강아지 아바타 / 닉네임 section 시작 */}
           <div className="flex justify-between mb-[20px]">
             <div className="flex gap-3">
@@ -103,11 +105,10 @@ function AppealPage() {
                         <p>닉네임6글자</p>
                       </div>
                     </div>
-                    <div className="nanum flex-wrap bg-slate-50 w-[270px] overflow-wrap">
+                    <div className="nanum flex-wrap bg-slate-50 w-[280px] overflow-wrap">
                       {item}
                     </div>
                   </div>
-                  <div>삭제</div>
                 </div>
               </>
             );
@@ -121,10 +122,20 @@ function AppealPage() {
             </div>
             <div className="nanum">{commentList}</div>
           </div> */}
-
           {/* div*2개 남겨놔야해요 */}
         </div>
       </div>
+      {/* ======================자랑하개 mainview_ 중간섹션 + 사진 + 글 + 댓글까지 한묶음 end */}
+      {/* 글써보개 고정하기위한작업 시작 */}
+      <div className="w-[490px] flex justify-end fixed bottom-[90px] ">
+        <Link to="/appeal/new">
+          <div className=" bg-ye-400 text-white navbar py-2 px-3 rounded-[50px] ">
+            글써보개
+          </div>
+        </Link>
+      </div>
+      {/* 글써보개 고정하기위한작업 끝 */}
+
       <Navbar />
     </div>
   );
