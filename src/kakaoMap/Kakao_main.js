@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import "../kakaoMap/kakaoMap.css";
 import MainSlider from "../components/MainSlider";
 
+//내위치 허용 안하면 아예 아무것도 안된다.
+//추가로 오류창 뜨지 않게 해줘야한다.
+
 // 지도 로드
 
 // <geolocation가능할때>
