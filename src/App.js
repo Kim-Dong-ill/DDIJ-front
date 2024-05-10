@@ -49,6 +49,7 @@ function App() {
             <Route element={<Layout />}>
               <Route index element={<MainPage />} />
               <Route path="/appeal/new" element={<AppealWritePage />} />
+
               <Route path="/allcclist" element={<AllCCListPage />} />
               <Route path="/attendcclist" element={<AttendCCListPage />} />
               <Route
