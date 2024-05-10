@@ -7,7 +7,7 @@ const max = [
   { key: 4, value: "5명" },
 ];
 const usingTime = [
-  { key: 1, value: "30분" },
+  { key: 1, value: " 30분" },
   { key: 2, value: "45분" },
   { key: 3, value: "1시간" },
   { key: 4, value: "1시간 15분" },
@@ -17,14 +17,27 @@ const usingTime = [
 ];
 
 function CreateCCPage() {
-  const [text, setText] = useState("");
+  const [introduction, setIntroduction] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [startshowBox, setStartshowBox] = useState(false);
+  const [endshowBox, setEndshowBox] = useState(false);
 
-  const handleChange = (e) => {
-    setText(e.target.value);
+  const introductionChange = (e) => {
+    setIntroduction(e.target.value);
+  };
+  const startTimeChange = (e) => {
+    setStartTime(e.target.value);
+  };
+
+  const startToggleBox = () => {
+    setStartshowBox(!startshowBox);
+  };
+  const endToggleBox = () => {
+    setEndshowBox(!endshowBox);
   };
   return (
     <>
-      <div className="bg-white px-12">
+      <div className="bg-white px-12 h-[100vh] border-2 border-da-100">
         <div>
           {/* 경고창 */}
           <div>
@@ -52,14 +65,10 @@ function CreateCCPage() {
                 className="border-2 rounded-md w-[300px] px-4 py-2"
               />
             </div>
-            {/* <input
-              type="text"
-              placeholder="소개말을 입력해주세요."
-              className="bg-gray-200 rounded-md w-full h-[100px] text-justify mb-3 px-4 py-2 text-wrap"
-            /> */}
+
             <textarea
-              value={text}
-              onChange={handleChange}
+              value={introduction}
+              onChange={introductionChange}
               placeholder="소개말을 입력해주세요."
               className="bg-gray-200 rounded-md w-full h-[100px] text-justify mb-3 px-4 py-2"
             />
@@ -71,22 +80,41 @@ function CreateCCPage() {
                 출발지
               </label>
               <input
-                type="text"
+                type="String"
                 className="w-full border-2 rounded-md mb-3 px-4 py-2"
+                onClick={startToggleBox}
+                readOnly
               />
+              {startshowBox && (
+                <div className="bg-gray-100 px-4 py-2 border-2 rounded-md">
+                  지도 창
+                </div>
+              )}
             </div>
             <div>
               <h4 className="mb-3">목적지</h4>
               <input
                 type="text"
                 className="w-full border-2 rounded-md mb-3 px-4 py-2"
+                readOnly
+                onClick={endToggleBox}
               />
+              {endshowBox && (
+                <div className="bg-gray-100 px-4 py-2 border-2 rounded-md">
+                  지도 창
+                </div>
+              )}
             </div>
             <div>
-              <h4 className="mb-3">시작시간</h4>
+              <label htmlFor="startTime" className="mb-3">
+                시작시간
+              </label>
               <input
                 type="text"
+                id="startTime"
+                name="startTime"
                 className="w-full border-2 rounded-md mb-3 px-4 py-2 "
+                onChange={startTimeChange}
               />
             </div>
             <div>
@@ -96,11 +124,11 @@ function CreateCCPage() {
               <select
                 name="max"
                 id="max"
-                className="w-full px-4 py-2 mb-3 border-2 rounded-md"
+                className="w-full px-4 py-2 mb-3 border-2 rounded-md  h-[45px]"
               >
-                {max.map((item) => {
+                {max.map((item, idx) => {
                   return (
-                    <option value={item.key} key={item.key}>
+                    <option value={item.key} key={idx}>
                       {item.value}
                     </option>
                   );
@@ -108,17 +136,17 @@ function CreateCCPage() {
               </select>
             </div>
             <div>
-              <label htmlFor="usingTime" className="block mb-3 h-[35px]">
+              <label htmlFor="usingTime" className="block mb-3">
                 소요시간
               </label>
               <select
                 name="usingTime"
                 id="usingTime"
-                className="w-full border-2 rounded-md block h-[35px]"
+                className="w-full border-2 px-4 py- 2 mb-10 rounded-md block h-[45px]"
               >
-                {usingTime.map((item) => {
+                {usingTime.map((item, idx) => {
                   return (
-                    <option value={item.key} key={item.key}>
+                    <option value={item.key} key={idx}>
                       {item.value}
                     </option>
                   );
@@ -127,7 +155,14 @@ function CreateCCPage() {
             </div>
           </div>
           {/* 취소,등록버튼 */}
-          <div></div>
+          <div className="flex justify-center items-center gap-10">
+            <button className="bg-da-300 text-wh-100 rounded-full w-[80px] h-[25px]">
+              취소
+            </button>
+            <button className="bg-ye-600 text-da-300 rounded-full w-[80px] h-[25px]">
+              등록
+            </button>
+          </div>
         </div>
       </div>
     </>

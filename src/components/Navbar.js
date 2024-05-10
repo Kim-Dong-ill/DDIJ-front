@@ -15,7 +15,7 @@ function Navbar() {
         <ul className=" flex justify-around items-center border w-full">
           {menu.map((item, idx) => {
             return (
-              <li className="text-center text-white navbar">
+              <li key={idx} className="text-center text-white navbar">
                 <Link to={`/${item.route}`}>
                   <img
                     src={`./images/menulogo${idx + 1}.svg`}
