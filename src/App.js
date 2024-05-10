@@ -53,7 +53,7 @@ function App() {
               <Route path="/circles/attended" element={<AttendCCListPage />} />
               <Route path="/newcircle" element={<CreateCCPage />} />
               <Route path="/circles/:circleid" element={<CCViewPage />} />
-              <Route path="/circles/:circleid/mod" element={<CreateCCPage/>} />
+              <Route path="/circles/:circleid/mod" element={<CreateCCPage />} />
               <Route path="/userinfo/:userid" element={<UserInfoPage />} />
               <Route path="/usermod/:userid" element={<UserModifyPage />} />
               <Route path="/mypet/:userid" element={<MyPetListPage />} />
@@ -62,7 +62,6 @@ function App() {
             <Route path="/appeal/:petid" element={<AppealPage />} />
             <Route path="/mypet/mod/:petid" element={<MyPetModifyPage />} />
             <Route path="/mypet/add" element={<AddMyPetPage />} />
-
           </Routes>
         </div>
       </div>

@@ -4,7 +4,10 @@ import Header from "../components/Header";
 function AppealWritePage() {
   return (
     <>
-      <div className="w-[450px] h-[700px] m-auto py-[15px] px-5 mb-3 ">
+      <div
+        className="w-[450px] m-auto py-[15px] px-5 mb-3 "
+        style={{ height: "calc(100vh - 65px)" }}
+      >
         <div className="mb-[10px]">
           <img src="/images/addPhotoicon.svg" alt="" className="m-auto mb-5" />
           {/* 여기에 온클릭으로 사진 추가할 수 있게끔 기능구현해야함 */}
