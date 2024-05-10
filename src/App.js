@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import "./assets/tStyle.css";
@@ -22,6 +22,14 @@ import MyPetModifyPage from "./pages/MyPetModifyPage";
 import AddMyPetPage from "./pages/AddMyPetPage";
 
 function App() {
+  const pageTitle = [
+    { title: "함께걷개" },
+    { title: "어디가개" },
+    { title: "자랑하개" },
+    { title: "마이펫이지" },
+  ];
+
+  const [number, setNumber] = useState(0);
   return (
     <>
       {/* 인트로 페이지 */}
@@ -31,7 +39,7 @@ function App() {
 
       <div className="bg-ye-100 w-[100%]">
         {/* 로그인 안되어있으면 hidden */}
-        <div className="bg-ye-400 w-[500px] m-auto ">
+        <div className="bg-ye-300 w-[500px] m-auto ">
           {/* auth user */}
           <Routes>
             <Route path="/login" element={<LoginPage />} />
@@ -50,11 +58,11 @@ function App() {
               <Route path="/usermod/:userid" element={<UserModifyPage />} />
               <Route path="/mypet/:userid" element={<MyPetListPage />} />
             </Route>
-
             {/* header 없는 layout */}
             <Route path="/appeal/:petid" element={<AppealPage />} />
             <Route path="/mypet/mod/:petid" element={<MyPetModifyPage />} />
             <Route path="/mypet/add" element={<AddMyPetPage />} />
+
           </Routes>
         </div>
       </div>
