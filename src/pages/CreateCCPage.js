@@ -16,6 +16,7 @@ const usingTime = [
   { key: 7, value: "2시간" },
 ];
 
+
 function CreateCCPage() {
   const [introduction, setIntroduction] = useState("");
   const [startTime, setStartTime] = useState("");
