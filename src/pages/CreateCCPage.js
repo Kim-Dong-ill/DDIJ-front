@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import ButtonBl from "../components/ButtonBl";
+import ButtonYe from "../components/ButtonYe";
 
 const max = [
   { key: 1, value: "2명" },
@@ -39,9 +41,9 @@ function CreateCCPage() {
     <>
       <div
         className="bg-white px-12 border-2 border-da-100"
-        style={{ height: "calc(100vh - 65px)" }}
+        style={{ height: "calc(100%)" }}
       >
-        <div>
+        <div className="pb-[80px]">
           {/* 경고창 */}
           <div className="mt-4">
             <div className="text-center  mb-4 px-4 py-2">
@@ -79,7 +81,8 @@ function CreateCCPage() {
           {/* 장소,시간설정 */}
           <div>
             <div>
-              <label htmlFor="" className="block mb-4">
+              <label htmlFor="" className=" mb-4 flex gap-2">
+                <img src="/images/plag_icon.svg" alt="깃발아이콘" />
                 출발지
               </label>
               <input
@@ -88,6 +91,12 @@ function CreateCCPage() {
                 onClick={startToggleBox}
                 readOnly
               />
+              <img
+                src="/images/plusglass_icon.svg"
+                alt="돋보기아이콘"
+                className="block relative  left-[350px] bottom-[47px]"
+                onClick={startToggleBox}
+              />
               {startshowBox && (
                 <div className="bg-gray-100 px-4 py-2 border-2 rounded-md">
                   지도 창
@@ -95,11 +104,20 @@ function CreateCCPage() {
               )}
             </div>
             <div>
-              <h4 className="mb-3">목적지</h4>
+              <h4 className="mb-3  flex gap-2">
+                <img src="/images/plag_icon.svg" alt="깃발아이콘" />
+                목적지
+              </h4>
               <input
                 type="text"
                 className="w-full border-2 rounded-md mb-4 px-4 py-2"
                 readOnly
+                onClick={endToggleBox}
+              />
+              <img
+                src="/images/plusglass_icon.svg"
+                alt="돋보기아이콘"
+                className="block relative  left-[350px] bottom-[47px]"
                 onClick={endToggleBox}
               />
               {endshowBox && (
@@ -160,12 +178,8 @@ function CreateCCPage() {
           </div>
           {/* 취소,등록버튼 */}
           <div className="flex justify-center items-center gap-10">
-            <button className="bg-da-300 text-wh-100 rounded-full w-[80px] h-[25px]">
-              취소
-            </button>
-            <button className="bg-ye-600 text-da-300 rounded-full w-[80px] h-[25px]">
-              등록
-            </button>
+            <ButtonBl className="">취소</ButtonBl>
+            <ButtonYe>등록</ButtonYe>
           </div>
         </div>
       </div>
