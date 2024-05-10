@@ -40,20 +40,21 @@ function App() {
             {/* header 있는 layout */}
             <Route element={<Layout />}>
               <Route index element={<MainPage />} />
-              <Route path="/appealwrite" element={<AppealWritePage />} />
-              <Route path="/allcclist" element={<AllCCListPage />} />
-              <Route path="/attendcclist" element={<AttendCCListPage />} />
-              <Route path="/createcc " element={<CreateCCPage />} />
-              <Route path="/ccview" element={<CCViewPage />} />
-              <Route path="/userinfo" element={<UserInfoPage />} />
-              <Route path="/usermodify" element={<UserModifyPage />} />
-              <Route path="/mypetlist" element={<MyPetListPage />} />
+              <Route path="/appealwrite/:petid" element={<AppealWritePage />} />
+              <Route path="/circles" element={<AllCCListPage />} />
+              <Route path="/circles/attended" element={<AttendCCListPage />} />
+              <Route path="/newcircle" element={<CreateCCPage />} />
+              <Route path="/circles/:circleid" element={<CCViewPage />} />
+              <Route path="/circles/:circleid/mod" element={<CreateCCPage/>} />
+              <Route path="/userinfo/:userid" element={<UserInfoPage />} />
+              <Route path="/usermod/:userid" element={<UserModifyPage />} />
+              <Route path="/mypet/:userid" element={<MyPetListPage />} />
             </Route>
 
             {/* header 없는 layout */}
-            <Route path="/appeal" element={<AppealPage />} />
-            <Route path="/mypetmodify" element={<MyPetModifyPage />} />
-            <Route path="/addmypet" element={<AddMyPetPage />} />
+            <Route path="/appeal/:petid" element={<AppealPage />} />
+            <Route path="/mypet/mod/:petid" element={<MyPetModifyPage />} />
+            <Route path="/mypet/add" element={<AddMyPetPage />} />
           </Routes>
         </div>
       </div>
