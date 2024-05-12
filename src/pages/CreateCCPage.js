@@ -23,6 +23,7 @@ function CreateCCPage() {
   const [startTime, setStartTime] = useState("");
   const [startshowBox, setStartshowBox] = useState(false);
   const [endshowBox, setEndshowBox] = useState(false);
+  const [selectButton, setSelectButton] = useState(null);
 
   const introductionChange = (e) => {
     setIntroduction(e.target.value);
@@ -37,13 +38,17 @@ function CreateCCPage() {
   const endToggleBox = () => {
     setEndshowBox(!endshowBox);
   };
+
+  const handleClick = (buttonName) => {
+    setSelectButton(buttonName);
+  };
   return (
     <>
       <div
         className="bg-white px-12 border-2 border-da-100"
         style={{ height: "calc(100%)" }}
       >
-        <div className="pb-[80px]">
+        <div className="pb-[100px]">
           {/* 경고창 */}
           <div className="mt-4">
             <div className="text-center  mb-4 px-4 py-2">
@@ -53,10 +58,16 @@ function CreateCCPage() {
               확인하셨나요?
             </div>
             <div className="flex justify-around items-center mb-4 px-4 py-2 gap-7">
-              <button className="border-2 border-da-100 w-[185px] h-[35px] rounded-md hover:bg-da-300 hover:text-wh-100">
+              <button
+                className="border-2 border-da-100 w-[185px] h-[35px] rounded-md hover:bg-da-300 hover:text-wh-100"
+                onClick={() => handleClick("Yesbutton")}
+              >
                 했어요
               </button>
-              <button className="border-2 border-da-100 w-[185px] h-[35px] rounded-md hover:bg-da-100 hover:text-red-500">
+              <button
+                className="border-2 border-da-100 w-[185px] h-[35px] rounded-md hover:bg-da-100 hover:text-red-500"
+                onClick={() => handleClick("Nobutton")}
+              >
                 안했어요
               </button>
             </div>
@@ -87,7 +98,7 @@ function CreateCCPage() {
               </label>
               <input
                 type="String"
-                className="w-full border-2 rounded-md mb-4 px-4 py-2"
+                className="w-full border-2 rounded-md mb-3 px-4 py-2"
                 onClick={startToggleBox}
                 readOnly
               />
@@ -98,7 +109,7 @@ function CreateCCPage() {
                 onClick={startToggleBox}
               />
               {startshowBox && (
-                <div className="bg-gray-100 px-4 py-2 border-2 rounded-md">
+                <div className="bg-gray-100 px-4 py-2 mb-4 border-2 rounded-md">
                   지도 창
                 </div>
               )}
@@ -110,25 +121,28 @@ function CreateCCPage() {
               </h4>
               <input
                 type="text"
-                className="w-full border-2 rounded-md mb-4 px-4 py-2"
+                className="w-full border-2 rounded-md mb-3 px-4 py-2"
                 readOnly
                 onClick={endToggleBox}
               />
               <img
                 src="/images/plusglass_icon.svg"
-                alt="돋보기아이콘"
+                alt="돋보기 아이콘"
                 className="block relative  left-[350px] bottom-[47px]"
                 onClick={endToggleBox}
               />
               {endshowBox && (
-                <div className="bg-gray-100 px-4 py-2 border-2 rounded-md">
+                <div className="bg-gray-100 px-4 py-2 mb-4 border-2 rounded-md">
                   지도 창
                 </div>
               )}
             </div>
             <div>
               <label htmlFor="startTime" className="mb-4">
-                시작시간
+                <h4 className="flex mb-3 gap-2">
+                  <img src="/images/clock_icon.svg" alt="시계 아이콘" />
+                  시작시간
+                </h4>
               </label>
               <input
                 type="text"
@@ -141,7 +155,10 @@ function CreateCCPage() {
             </div>
             <div>
               <label htmlFor="max" className="block mb-4">
-                인원수
+                <h4 className="flex mb-3 gap-2">
+                  <img src="/images/people_icon.svg" alt="사람 아이콘" />
+                  인원수
+                </h4>
               </label>
               <select
                 name="max"
@@ -159,7 +176,10 @@ function CreateCCPage() {
             </div>
             <div>
               <label htmlFor="usingTime" className="block mb-4">
-                소요시간
+                <h4 className="flex mb-3 gap-2">
+                  <img src="/images/clock_icon.svg" alt="시계 아이콘" />
+                  소요시간
+                </h4>
               </label>
               <select
                 name="usingTime"
