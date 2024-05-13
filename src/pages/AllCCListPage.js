@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 
 function AllCCListPage() {
+  // const useState([])
   return (
-    <div className="pt-[90px] pb-[100px] bg-white ">
+    <div className="pt-[90px] pb-[100px] bg-white border-[1px] ">
       {/* 상단버튼section start */}
       <div className=" flex justify-between mb-[25px]">
         <button className=" w-1/2  border-b  border-gray-200 shadow-bottom px-2 py-3 text-[15px] hover:border-gray-800 ">

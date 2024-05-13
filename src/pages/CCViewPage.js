@@ -3,7 +3,7 @@ import React from "react";
 function CCViewPage() {
   return (
     <>
-      <div className=" bg-da-400 pt-[90px] pb-[100px]">
+      <div className=" bg-da-400 pt-[90px] pb-[100px] border-[1px]">
         <div className="w-[500px] h-[255px] bg-slate-300"></div>
         <div className="text-white">
           {/* 박스 안 contents start======= */}
