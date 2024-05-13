@@ -25,7 +25,7 @@ function AppealWritePage() {
           />
         </div>
         <textarea
-          className="w-full nanum h-[450px] px-[10px] border-b-2 rounded-[10px] resize-none bg-slate-400"
+          className="w-full nanum h-[450px] px-[10px] border-b-2 rounded-[10px] resize-none"
           placeholder="내용을 입력하세요."
         />
       </div>
