@@ -1,28 +1,27 @@
 import React from "react";
+import ButtonBl from "../components/ButtonBl";
+import ButtonYe from "../components/ButtonYe";
 
 function UserModifyPage() {
   return (
-    <div
-      className="w-[500px] bg-white"
-      style={{ height: "calc(100vh - 65px)" }}
-    >
+    <div className="bg-white">
       <div className=" flex justify-between">
-        <button className=" w-1/2  border-b  border-gray-200 shadow-bottom px-2 py-3 text-[13px] hover:border-gray-800 ">
+        <button className=" w-1/2  border-b  border-gray-200 shadow-bottom px-2 py-3 text-[15px] hover:border-gray-800 ">
           보호자 정보
         </button>
-        <button className="w-1/2 border-b border-gray-200 shadow-bottom px-2 py-3 text-[13px] hover:border-gray-800">
+        <button className="w-1/2 border-b border-gray-200 shadow-bottom px-2 py-3 text-[15px] hover:border-gray-800">
           반려견 정보
         </button>
       </div>
       {/* content-between h-[670px] */}
-      <div className="w-[350px]  m-auto grid gap-3 pt-[50px] pb-[115px] ">
-        <div className="h-[45px] flex justify-between">
-          <div className="flex justify-start  gap-2">
-            <img
-              src="./images/user-profile.svg"
-              className="w-[20px] h-[20px]"
-            />
-            <h2 className="text-sm">보호자 정보</h2>
+      <div
+        className="w-[400px] m-auto grid gap-3 pt-[50px] pb-[115px] "
+        style={{ height: "calc(100vh - 65px)" }}
+      >
+        <div className="h-[45px] flex justify-between p-[10px]">
+          <div className="flex justify-start gap-2">
+            <img src="/images/user-profile.svg" className="w-[20px] h-[20px]" />
+            <h2 className="text-[15px]">보호자 정보</h2>
           </div>
           <button className="px-2 bg-ye-600 w-[55px] h-[25px] text-[11px] text-center rounded-2xl">
             수정하기
@@ -42,7 +41,7 @@ function UserModifyPage() {
             <h2 className="text-base p-[10px]">이메일</h2>
             <input
               type="text"
-              className="w-[350px] p-[10px] nanum border-b-2 border-da-100 "
+              className="w-full p-[10px] nanum border-b-2 border-da-100 "
             ></input>
           </div>
 
@@ -63,13 +62,9 @@ function UserModifyPage() {
           </div>
         </div>
 
-        <div className="flex justify-center h-[28px] mb-[50px] gap-2 ">
-          <button className=" w-[82px] text-[13px] text-center rounded-2xl bg-da-300 text-white hover:bg-da-600 hover:text-white">
-            취소
-          </button>
-          <button className=" w-[82px] text-[13px] text-center rounded-2xl bg-ye-600 text-da-300 hover:bg-ye-800 hover:text-da-300">
-            수정완료
-          </button>
+        <div className="w-[400px] flex justify-center h-[28px] gap-2 mb-[50px] px-[100px]">
+          <ButtonBl>취소</ButtonBl>
+          <ButtonYe>수정완료</ButtonYe>
         </div>
       </div>
     </div>
