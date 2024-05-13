@@ -4,7 +4,7 @@ import Header from "../components/Header";
 function AppealWritePage() {
   return (
     <>
-      <div className="w-[450px] h-[700px] m-auto py-[15px] px-5 mb-3 ">
+      <div className="w-[450px] m-auto py-[30px] px-5 ">
         <div className="mb-[10px]">
           <img src="/images/addPhotoicon.svg" alt="" className="m-auto mb-5" />
           {/* 여기에 온클릭으로 사진 추가할 수 있게끔 기능구현해야함 */}
@@ -25,11 +25,11 @@ function AppealWritePage() {
           />
         </div>
         <textarea
-          className="w-full nanum h-[480px] px-[10px] border-b-2 rounded-[10px] resize-none"
+          className="w-full nanum h-[450px] px-[10px] border-b-2 rounded-[10px] resize-none"
           placeholder="내용을 입력하세요."
         />
       </div>
-      <div className="flex justify-center  h-[50px] mb-[50px] gap-2 ">
+      <div className="flex justify-center h-[50px] mb-[70px] gap-2 ">
         <button className=" w-[82px] h-[30px] text-[13px] text-center rounded-2xl bg-da-300 text-white hover:bg-ye-600 hover:text-da-300">
           등록
         </button>
