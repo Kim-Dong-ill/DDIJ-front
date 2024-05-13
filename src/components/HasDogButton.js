@@ -9,14 +9,14 @@ function HasDogButton({ handleHasDog, hasDog }) {
   }
 
   return (
-    <div className="flex gap-5 mb-6">
-      <div>
+    <div className="flex justify-center items-center gap-5 mb-6">
+      <div className="w-[100%]">
         <button
           type="button"
           className={
             hasDog
-              ? `bg-black rounded-md w-[150px] h-[35px] border border-black`
-              : `bg-white rounded-md w-[150px] h-[35px] border border-black`
+              ? `bg-black rounded-md w-[100%] h-[35px] border border-black`
+              : `bg-white rounded-md w-[100%] h-[35px] border border-black`
           }
         >
           <label
@@ -37,13 +37,13 @@ function HasDogButton({ handleHasDog, hasDog }) {
           name="dog"
         />
       </div>
-      <div>
+      <div className="w-[100%]">
         <button
           type="button"
           className={
             hasDog
-              ? `bg-white rounded-md w-[150px] h-[35px] border border-black`
-              : `bg-black rounded-md w-[150px] h-[35px] border border-black`
+              ? `bg-white rounded-md w-[100%] h-[35px] border border-black`
+              : `bg-black rounded-md w-[100%] h-[35px] border border-black`
           }
         >
           <label

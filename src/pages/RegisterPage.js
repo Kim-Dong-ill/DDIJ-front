@@ -9,6 +9,17 @@ import PetGenderButton from "../components/PetGenderButton";
 import RabiesButton from "../components/RabiesButton";
 import HasDogButton from "../components/HasDogButton";
 import $ from "jquery";
+import RegisterName from "../components/RegisterName";
+import RegisterEmail from "../components/RegisterEmail";
+import RegisterPW from "../components/RegisterPW";
+import RegisterPWCheck from "../components/RegisterPWCheck";
+import RegisterNick from "../components/RegisterNick";
+import RegisterAdr from "../components/RegisterAdr";
+import RegisterPetName from "../components/RegisterPetName";
+import RegisterPetBreed from "../components/RegisterPetBreed";
+import RegisterPetAge from "../components/RegisterPetAge";
+import RegisterPetVC from "../components/RegisterPetVC";
+import RegisterPetEtc from "../components/RegisterPetEtc";
 
 function RegisterPage() {
   const [hasDog, setHasDog] = useState(false); //반려동물 있는지 없는지
@@ -63,111 +74,18 @@ function RegisterPage() {
         <div className="w-[400px]" hidden={pageMove ? false : true}>
           <div className="my-2">반려동물이 있나요?</div>
           <HasDogButton handleHasDog={handleHasDog} hasDog={hasDog} />
-          <div className="flex flex-col gap-2 mb-6">
-            <label
-              className={hasDog ? `w-[100px]` : `w-[100px] text-da-500`}
-              htmlFor="userName"
-            >
-              이름
-            </label>
-            <div>
-              <TextFieldLine
-                required
-                disabled={hasDog ? false : true}
-                id="userName"
-                label="이름"
-                fullWidth
-              />
-            </div>
-          </div>
-          <div className="flex flex-col gap-2 mb-6">
-            <label
-              className={hasDog ? `w-[100px]` : `w-[100px] text-da-500`}
-              htmlFor="userEmail"
-            >
-              이메일
-            </label>
-            <div>
-              <TextFieldLine
-                required
-                disabled={hasDog ? false : true}
-                id="userEmail"
-                label="이메일"
-                fullWidth
-              />
-            </div>
-          </div>
-          <div className="flex flex-col gap-2 mb-6">
-            <label
-              className={hasDog ? `w-[100px]` : `w-[100px] text-da-500`}
-              htmlFor="usePassword"
-            >
-              비밀번호
-            </label>
-            <div>
-              <TextFieldLine
-                required
-                disabled={hasDog ? false : true}
-                id="userPassword"
-                label="비밀번호"
-                fullWidth
-              />
-            </div>
-          </div>
-          <div className="flex flex-col gap-2 mb-6">
-            <label
-              className={hasDog ? `w-[100px]` : `w-[100px] text-da-500`}
-              htmlFor="checkPassword"
-            >
-              비밀번호 확인
-            </label>
-            <div>
-              <TextFieldLine
-                required
-                disabled={hasDog ? false : true}
-                id="checkPassword"
-                label="비밀번호 확인"
-                fullWidth
-              />
-            </div>
-          </div>
-          <div className="flex flex-col gap-2 mb-6">
-            <label
-              className={hasDog ? `w-[100px]` : `w-[100px] text-da-500`}
-              htmlFor=""
-            >
-              닉네임
-              <button type="button">
-                <i className=" pl-1 text-ye-600 fa-solid fa-circle-check"></i>
-              </button>
-            </label>
-            <div>
-              <TextFieldLine
-                required
-                disabled={hasDog ? false : true}
-                id="nickName"
-                label="닉네임"
-                fullWidth
-              />
-            </div>
-          </div>
-          <div className="flex flex-col gap-2 mb-10">
-            <label
-              className={hasDog ? `w-[100px]` : `w-[100px] text-da-500`}
-              htmlFor="adress"
-            >
-              주소
-            </label>
-            <div>
-              <TextFieldLine
-                required
-                disabled={hasDog ? false : true}
-                id="adress"
-                label="주소"
-                fullWidth
-              />
-            </div>
-          </div>
+
+          <RegisterName hasDog={hasDog} />
+
+          <RegisterEmail hasDog={hasDog} />
+
+          <RegisterPW hasDog={hasDog} />
+
+          <RegisterPWCheck hasDog={hasDog} />
+
+          <RegisterNick hasDog={hasDog} />
+
+          <RegisterAdr hasDog={hasDog} />
           <div className="flex justify-center gap-3 mb-28">
             <NavLink to="/intro">
               <ButtonBl>취소</ButtonBl>
@@ -187,56 +105,28 @@ function RegisterPage() {
               <img src="" alt="" />
             </div>
           </div>
-          <div className="flex flex-col gap-2 mb-6">
-            <label className={`w-[100px]`} htmlFor="petName">
-              이름
-            </label>
-            <div>
-              <TextFieldLine required id="petName" label="이름" fullWidth />
-            </div>
-          </div>
-          <div className="flex flex-col gap-2 mb-6">
-            <label className={`w-[100px]`} htmlFor="breed">
-              견종
-            </label>
-            <div>
-              <TextFieldLine required id="breed" label="견종" fullWidth />
-            </div>
-          </div>
-          <div className="flex flex-col gap-2 mb-6">
-            <label className={`w-[100px]`} htmlFor="petAge">
-              나이
-            </label>
-            <div>
-              <TextFieldLine required id="petAge" label="나이" fullWidth />
-            </div>
-          </div>
+          <RegisterPetName hasDog={hasDog} />
+
+          <RegisterPetBreed hasDog={hasDog} />
+
+          <RegisterPetAge hasDog={hasDog} />
+
           <div className="flex gap-5 items-center mb-6">
             <div>성별</div>
             <PetGenderButton handleGender={handleGender} gender={gender} />
           </div>
-          <div>
-            <div className="mb-6">
-              <div className="mb-2">중성화</div>
-              <NeuterButton neuter={neuter} handleNeuter={handleNeuter} />
-            </div>
-            <div className="mb-6">
-              <div className="mb-2">기본 접종</div>
-              <VaccineButton vaccine={vaccine} handleVaccine={handleVaccine} />
-            </div>
-            <div className="mb-6">
-              <div className="mb-2">광견병</div>
-              <RabiesButton handleRabies={handleRabies} rabies={rabies} />
-            </div>
-          </div>
-          <div className="flex flex-col gap-2 mb-6">
-            <label className={`w-[100px]`} htmlFor="petEtc">
-              우리 아이 성격
-            </label>
-            <div>
-              <TextFieldLine required id="petEtc" label="성격" fullWidth />
-            </div>
-          </div>
+
+          <RegisterPetVC
+            neuter={neuter}
+            vaccine={vaccine}
+            rabies={rabies}
+            handleNeuter={handleNeuter}
+            handleVaccine={handleVaccine}
+            handleRabies={handleRabies}
+          />
+
+          <RegisterPetEtc hasDog={hasDog} />
+
           <div className="flex justify-center gap-3 mb-28">
             <ButtonBl onClick={handlePage}>이전</ButtonBl>
             <ButtonYe type="submit">회원가입</ButtonYe>
