@@ -1,0 +1,24 @@
+.startEndLocMarker {
+  gap: 20px;
+  position: absolute;
+  z-index: 99999;
+  right: 10px;
+  bottom: 10px;
+  background-color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+
+  border-radius: 10px;
+}
+.startEndMarkerImg {
+  display: flex;
+  justify-content: center;
+}
+.startEndMarkerImg img {
+  width: 30px;
+}
+.startEndTitle {
+  font-size: 11px;
+}

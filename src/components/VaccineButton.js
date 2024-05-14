@@ -9,14 +9,18 @@ function VaccineButton({ handleVaccine, vaccine }) {
   }
 
   return (
-    <div className="flex gap-[30px]">
-      <div className="flex flex-grow-0 w-1/2">
+
+    <div className="flex gap-5">
+      <div className="w-[100%]">
+
         <button
           type="button"
           className={
             vaccine
-              ? `bg-black rounded-md h-[35px] border border-black w-full`
-              : `bg-white rounded-md h-[35px] border border-black w-full`
+
+              ? `bg-black rounded-md w-[100%] h-[35px] border border-black`
+              : `bg-white rounded-md w-[100%] h-[35px] border border-black`
+
           }
         >
           <label
@@ -37,13 +41,17 @@ function VaccineButton({ handleVaccine, vaccine }) {
           name="vaccine"
         />
       </div>
-      <div className="flex flex-grow-0 w-1/2">
+
+      <div className="w-[100%]">
+
         <button
           type="button"
           className={
             vaccine
-              ? `bg-white rounded-md h-[35px] border border-black w-full`
-              : `bg-black rounded-md h-[35px] border border-black w-full`
+
+              ? `bg-white rounded-md w-[100%] h-[35px] border border-black`
+              : `bg-black rounded-md w-[100%] h-[35px] border border-black`
+
           }
         >
           <label

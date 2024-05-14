@@ -12,7 +12,7 @@ import Layout from "./layout/Layout";
 import AppealPage from "./pages/AppealPage";
 import AppealWritePage from "./pages/AppealWritePage";
 import AllCCListPage from "./pages/AllCCListPage";
-import AttendCCListPage from "./pages/AttendCCListPage";
+// import AttendCCListPage from "./pages/AttendCCListPage";
 import CreateCCPage from "./pages/CreateCCPage";
 import CCViewPage from "./pages/CCViewPage";
 import UserInfoPage from "./pages/UserInfoPage";
