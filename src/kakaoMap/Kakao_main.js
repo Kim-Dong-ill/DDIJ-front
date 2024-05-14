@@ -568,14 +568,6 @@ function Kakao_main() {
           <i className="fa-solid fa-location-crosshairs"></i>
         </div>
         <MainSlider></MainSlider>
-        {/* <div className="mapDogList">
-          <div onClick={test} className="mapDogListSlide"></div>
-          <div onClick={test} className="mapDogListSlide"></div>
-          <div onClick={test} className="mapDogListSlide"></div>
-          <div onClick={test} className="mapDogListSlide"></div>
-          <div onClick={test} className="mapDogListSlide"></div>
-          <div onClick={test} className="mapDogListSlide"></div>
-        </div> */}
         <div className="flex flex-col absolute bottom-[20px] right-[20px] z-50 gap-2">
           {/* <button onClick={hideMarkers}>마커 감추기</button> */}
           {/* <button onClick={showMarkers}>마커 보이기</button> */}
