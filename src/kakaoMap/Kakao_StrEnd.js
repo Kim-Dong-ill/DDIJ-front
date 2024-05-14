@@ -36,6 +36,7 @@ function Kakao_StrEnd() {
   const a = Math.abs(startMa - endMa);
   const b = Math.abs(startLa - endLa);
   const c = (a + b) * 1000;
+  // console.log(c);
   const [level, setLevel] = useState(c < 9 ? 4 : c < 13 ? 5 : c < 17 ? 6 : 7);
 
   //출발지 검색start--------------------------------------------------------출발지 검색start----------------------------------------------------------------출발지 검색 start

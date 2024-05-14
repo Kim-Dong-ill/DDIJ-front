@@ -1,7 +1,7 @@
 .startEndLocMarker {
   gap: 20px;
   position: absolute;
-  z-index: 99999;
+  z-index: 49;
   right: 10px;
   bottom: 10px;
   background-color: white;
