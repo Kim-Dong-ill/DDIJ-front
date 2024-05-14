@@ -1,10 +1,14 @@
 import React from "react";
+import Kakao_StrEnd from "../kakaoMap/Kakao_StrEnd";
 
 function CCViewPage() {
   return (
     <>
+
       <div className=" bg-da-400 pt-[90px] pb-[100px] border-[1px]">
-        <div className="w-[500px] h-[255px] bg-slate-300"></div>
+        <div className="w-[500px] h-[255px] bg-slate-300">
+          <Kakao_StrEnd />
+        </div>
         <div className="text-white">
           {/* 박스 안 contents start======= */}
           <div className=" border m-5 rounded-lg p-5">
