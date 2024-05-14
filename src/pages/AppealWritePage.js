@@ -7,7 +7,7 @@ function AppealWritePage() {
   return (
     <>
       <div className="w-[450px] m-auto px-5 pb-[50px] pt-[120px] ">
-        <div className="mb-[10px]">
+        <div className="mb-[10px] ">
           <img src="/images/addPhotoicon.svg" alt="" className="m-auto mb-5" />
           {/* 여기에 온클릭으로 사진 추가할 수 있게끔 기능구현해야함 */}
           <input
