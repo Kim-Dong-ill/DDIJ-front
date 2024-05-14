@@ -12,7 +12,7 @@ import Layout from "./layout/Layout";
 import AppealPage from "./pages/AppealPage";
 import AppealWritePage from "./pages/AppealWritePage";
 import AllCCListPage from "./pages/AllCCListPage";
-import AttendCCListPage from "./pages/AttendCCListPage";
+// import AttendCCListPage from "./pages/AttendCCListPage";
 import CreateCCPage from "./pages/CreateCCPage";
 import CCViewPage from "./pages/CCViewPage";
 import UserInfoPage from "./pages/UserInfoPage";
@@ -49,7 +49,7 @@ function App() {
             <Route element={<Layout />}>
               <Route path="/appealwrite/:petid" element={<AppealWritePage />} />
               <Route path="/circles" element={<AllCCListPage />} />
-              <Route path="/circles/attended" element={<AttendCCListPage />} />
+              {/* <Route path="/circles/attended" element={<AttendCCListPage />} /> */}
               <Route path="/newcircle" element={<CreateCCPage />} />
               <Route path="/circles/:circleid" element={<CCViewPage />} />
               <Route path="/circles/:circleid/mod" element={<CreateCCPage />} />
