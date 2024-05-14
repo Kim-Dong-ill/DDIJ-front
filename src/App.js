@@ -49,7 +49,7 @@ function App() {
             <Route element={<Layout />}>
               <Route path="/appealwrite/:petid" element={<AppealWritePage />} />
               <Route path="/circles" element={<AllCCListPage />} />
-              <Route path="/circles/attended" element={<AttendCCListPage />} />
+              {/* <Route path="/circles/attended" element={<AttendCCListPage />} /> */}
               <Route path="/newcircle" element={<CreateCCPage />} />
               <Route path="/circles/:circleid" element={<CCViewPage />} />
               <Route path="/circles/:circleid/mod" element={<CreateCCPage />} />

@@ -10,14 +10,14 @@ function RabiesButton({ handleRabies, rabies }) {
   }
 
   return (
-    <div className="flex gap-5">
-      <div>
+    <div className="flex gap-[30px]">
+      <div className="flex flex-grow-0 w-1/2">
         <button
           type="button"
           className={
             rabies
-              ? `bg-black rounded-md w-[150px] h-[35px] border border-black`
-              : `bg-white rounded-md w-[150px] h-[35px] border border-black`
+              ? `bg-black rounded-md h-[35px] border border-black w-full`
+              : `bg-white rounded-md h-[35px] border border-black w-full`
           }
         >
           <label
@@ -38,13 +38,13 @@ function RabiesButton({ handleRabies, rabies }) {
           name="rabies"
         />
       </div>
-      <div>
+      <div className="flex flex-grow-0 w-1/2">
         <button
           type="button"
           className={
             rabies
-              ? `bg-white rounded-md w-[150px] h-[35px] border border-black`
-              : `bg-black rounded-md w-[150px] h-[35px] border border-black`
+              ? `bg-white rounded-md h-[35px] border border-black w-full`
+              : `bg-black rounded-md h-[35px] border border-black w-full`
           }
         >
           <label
