@@ -39,7 +39,7 @@ function App() {
 
       <div className="bg-ye-100 w-[100%]">
         {/* 로그인 안되어있으면 hidden */}
-        <div className="bg-ye-300 w-[501px] m-auto ">
+        <div className="bg-ye-300 w-[500px] m-auto ">
           {/* auth user */}
           <Routes>
             <Route path="/login" element={<LoginPage />} />
