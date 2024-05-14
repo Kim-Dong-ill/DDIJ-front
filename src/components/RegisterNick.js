@@ -1,12 +1,13 @@
 import React from "react";
 import TextFieldLine from "../components/TextField";
+import { userNickName } from "../utils/validation";
 
-function RegisterNick({ hasDog }) {
+function RegisterNick({ hasDog, errors, register }) {
   return (
     <div className="flex flex-col gap-2 mb-6">
       <label
         className={hasDog ? `w-[100px]` : `w-[100px] text-da-500`}
-        htmlFor=""
+        htmlFor="userNickName"
       >
         닉네임
         <button type="button">
@@ -17,10 +18,16 @@ function RegisterNick({ hasDog }) {
         <TextFieldLine
           required
           disabled={hasDog ? false : true}
-          id="nickName"
+          id="userNickName"
           label="닉네임"
           fullWidth
+          {...register("userNickName", userNickName)}
         />
+        {errors.userNickName && (
+          <div className="nanumBold text-red-500 text-xs mt-1">
+            {errors.userNickName.message}
+          </div>
+        )}
       </div>
     </div>
   );

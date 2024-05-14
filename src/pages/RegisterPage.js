@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import ButtonBl from "../components/ButtonBl";
 import ButtonYe from "../components/ButtonYe";
-import TextFieldLine from "../components/TextField";
 import { NavLink } from "react-router-dom";
-import NeuterButton from "../components/NeuterButton";
-import VaccineButton from "../components/VaccineButton";
 import PetGenderButton from "../components/PetGenderButton";
-import RabiesButton from "../components/RabiesButton";
 import HasDogButton from "../components/HasDogButton";
 import $ from "jquery";
+import TextFieldLine from "../components/TextField";
+import { userPassword } from "../utils/validation";
 import RegisterName from "../components/RegisterName";
 import RegisterEmail from "../components/RegisterEmail";
 import RegisterPW from "../components/RegisterPW";
@@ -21,7 +19,17 @@ import RegisterPetAge from "../components/RegisterPetAge";
 import RegisterPetVC from "../components/RegisterPetVC";
 import RegisterPetEtc from "../components/RegisterPetEtc";
 
+import { useForm } from "react-hook-form";
+
 function RegisterPage() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    watch,
+  } = useForm({ mode: "onChange" });
+
   const [hasDog, setHasDog] = useState(false); //반려동물 있는지 없는지
   const [gender, setGender] = useState(""); //남자인지 여자인지
   const [neuter, setNeuter] = useState(); //중성화 여부
@@ -67,7 +75,7 @@ function RegisterPage() {
       </div>
 
       <form
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         className=" bg-white w-full border-x  mt-[326px] flex flex-col justify-center items-center "
       >
         {/* 유저 정보입력 */}
@@ -75,17 +83,76 @@ function RegisterPage() {
           <div className="my-2">반려동물이 있나요?</div>
           <HasDogButton handleHasDog={handleHasDog} hasDog={hasDog} />
 
-          <RegisterName hasDog={hasDog} />
+          <RegisterName errors={errors} register={register} hasDog={hasDog} />
 
-          <RegisterEmail hasDog={hasDog} />
+          <RegisterEmail errors={errors} register={register} hasDog={hasDog} />
 
-          <RegisterPW hasDog={hasDog} />
+          {/* <RegisterPW errors={errors} register={register} hasDog={hasDog} /> */}
+          <div className="flex flex-col gap-2 mb-6">
+            <label
+              className={hasDog ? `w-[100px]` : `w-[100px] text-da-500`}
+              htmlFor="userPassword"
+            >
+              비밀번호
+            </label>
+            <div>
+              <TextFieldLine
+                type="password"
+                required
+                disabled={hasDog ? false : true}
+                id="userPassword"
+                label="비밀번호"
+                fullWidth
+                {...register("userPassword", userPassword)}
+              />
+              {errors.userPassword && (
+                <div className="nanumBold text-red-500 text-xs mt-1">
+                  {errors.userPassword.message}
+                </div>
+              )}
+            </div>
+          </div>
 
-          <RegisterPWCheck hasDog={hasDog} />
+          {/* <RegisterPWCheck
+            errors={errors}
+            register={register}
+            watch={watch}
+            hasDog={hasDog}
+          /> */}
+          <div className="flex flex-col gap-2 mb-6">
+            <label
+              className={hasDog ? `w-[100px]` : `w-[100px] text-da-500`}
+              htmlFor="checkPassword"
+            >
+              비밀번호 확인
+            </label>
+            <div>
+              <TextFieldLine
+                type="password"
+                required
+                disabled={hasDog ? false : true}
+                id="checkPassword"
+                label="비밀번호 확인"
+                fullWidth
+                {...register("checkPassword", {
+                  validate: (value) => {
+                    return (
+                      value === watch("userPassword") || "비밀번호 일치 안함"
+                    );
+                  },
+                })}
+              />
+              {errors.checkPassword && (
+                <div className="nanumBold text-red-500 text-xs mt-1">
+                  {errors.checkPassword.message}
+                </div>
+              )}
+            </div>
+          </div>
 
-          <RegisterNick hasDog={hasDog} />
+          <RegisterNick errors={errors} register={register} hasDog={hasDog} />
 
-          <RegisterAdr hasDog={hasDog} />
+          <RegisterAdr errors={errors} register={register} hasDog={hasDog} />
           <div className="flex justify-center gap-3 mb-28">
             <NavLink to="/intro">
               <ButtonBl>취소</ButtonBl>
@@ -112,11 +179,19 @@ function RegisterPage() {
               </div>
             </div>
           </div>
-          <RegisterPetName hasDog={hasDog} />
+          <RegisterPetName
+            errors={errors}
+            register={register}
+            hasDog={hasDog}
+          />
 
-          <RegisterPetBreed hasDog={hasDog} />
+          <RegisterPetBreed
+            errors={errors}
+            register={register}
+            hasDog={hasDog}
+          />
 
-          <RegisterPetAge hasDog={hasDog} />
+          <RegisterPetAge errors={errors} register={register} hasDog={hasDog} />
 
           <div className="flex gap-5 items-center mb-6">
             <div>성별</div>
@@ -132,7 +207,7 @@ function RegisterPage() {
             handleRabies={handleRabies}
           />
 
-          <RegisterPetEtc hasDog={hasDog} />
+          <RegisterPetEtc errors={errors} register={register} hasDog={hasDog} />
 
           <div className="flex justify-center gap-3 mb-28">
             <ButtonBl onClick={handlePage}>이전</ButtonBl>

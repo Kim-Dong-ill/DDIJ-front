@@ -1,7 +1,7 @@
 import React from "react";
 import TextFieldLine from "../components/TextField";
 
-function RegisterPWCheck({ hasDog }) {
+function RegisterPWCheck({ hasDog, register, errors, watch }) {
   return (
     <div className="flex flex-col gap-2 mb-6">
       <label
@@ -17,6 +17,11 @@ function RegisterPWCheck({ hasDog }) {
           id="checkPassword"
           label="비밀번호 확인"
           fullWidth
+          {...register("checkPassword", {
+            validate: (value) => {
+              return value === watch("userPassword") || "비밀번호 일치 안함";
+            },
+          })}
         />
       </div>
     </div>
