@@ -6,33 +6,34 @@ import ButtonBl from "../components/ButtonBl";
 function AppealWritePage() {
   return (
     <>
-      <div className="w-[450px] m-auto px-5 pb-[50px] pt-[120px] ">
-        <div className="mb-[10px]">
+      <div className="w-[450px] m-auto px-5 pb-[80px] pt-[150px]">
+        <div className="mb-[10px] flex">
           <img src="/images/addPhotoicon.svg" alt="" className="m-auto mb-5" />
+          <img
+            src="/images/dog1.svg"
+            alt=""
+            className="m-auto mb-5 w-[87px] h-[86px] rounded-lg"
+          />
+          <img
+            src="/images/dog2.svg"
+            alt=""
+            className="m-auto mb-5 w-[87px] h-[86px] rounded-lg"
+          />
+          <img
+            src="/images/dog1.svg"
+            alt=""
+            className="m-auto mb-5 w-[87px] h-[86px] rounded-lg"
+          />
           {/* 여기에 온클릭으로 사진 추가할 수 있게끔 기능구현해야함 */}
-          <input
-            type="text"
-            className="w-full nanum border-b-2 rounded-[50px] px-[10px] mb-1"
-            placeholder="사진 파일이름..."
-          />
-          <input
-            type="text"
-            className="w-full nanum border-b-2 rounded-[50px] px-[10px] mb-1"
-            placeholder="사진 파일이름..."
-          />
-          <input
-            type="text"
-            className="w-full nanum border-b-2 rounded-[50px] px-[10px]"
-            placeholder="사진 파일이름..."
-          />
         </div>
+
         <textarea
-          className="w-full nanum h-[430px] px-[10px] border-b-2 rounded-[10px] resize-none mb-7"
+          className="w-full nanum h-[450px] px-[10px] border-b-2 rounded-[10px] resize-none mb-7"
           placeholder="내용을 입력하세요."
         />
         <div className="flex justify-center h-[50px] gap-2 ">
-          <ButtonBl>취소</ButtonBl>
           <ButtonYe>등록</ButtonYe>
+          <ButtonBl>취소</ButtonBl>
           {/* <button className=" w-[82px] h-[30px] text-[13px] text-center rounded-2xl bg-da-300 text-white hover:bg-ye-600 hover:text-da-300">
             등록
           </button>

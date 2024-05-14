@@ -36,7 +36,7 @@ function Header() {
   }
   return (
     <>
-      <div className="flex items-end justify-between h-[90px] px-[10px] bg-ye-400 fixed w-[500px]">
+      <div className="flex items-end justify-between h-[90px] px-[10px] bg-ye-400 fixed w-[500px] z-50">
         <h1 className="text-white navbar">{title}</h1>
 
         <Link to="/">
