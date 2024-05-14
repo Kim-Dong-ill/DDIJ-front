@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../components/Header";
 import ButtonYe from "../components/ButtonYe";
 import ButtonBl from "../components/ButtonBl";
+import axios from "axios";
 
 function AppealWritePage() {
   return (
