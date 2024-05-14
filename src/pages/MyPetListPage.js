@@ -1,22 +1,27 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function MyPetListPage() {
   return (
     <div
-      className="w-[500px] bg-white"
-      style={{ height: "calc(100vh - 65px)" }}
+      className="w-[500px] bg-white pt-[90px] pb-[115px] border border-da-100"
+      style={{ height: "calc(100% - 65px)" }}
     >
-      <div className="flex justify-between ">
-        <button className=" w-1/2  border-b  border-gray-200 shadow-bottom px-2 py-3 text-[15px] hover:border-gray-800 ">
-          보호자 정보
-        </button>
-        <button className="w-1/2 border-b border-gray-200 shadow-bottom px-2 py-3 text-[15px] hover:border-gray-800">
-          반려견 정보
-        </button>
+      <div className="flex mb-[30px]">
+        <Link to="/userinfo/:userid" className="flex-1">
+          <button className="w-full border-b  border-gray-200 shadow-bottom px-2 py-3 text-[15px] hover:border-gray-800 ">
+            보호자 정보
+          </button>
+        </Link>
+        <Link to="/mypet/:userid" className="flex-1">
+          <button className="w-full  border-b border-gray-200 shadow-bottom px-2 py-3 text-[15px] hover:border-gray-800">
+            반려견 정보
+          </button>
+        </Link>
       </div>
 
-      <div className="w-[450px] m-auto grid gap-[25px] pt-[50px] pb-[115px] bg-white text-center">
-        <div className="border border-border-da-100 rounded-lg">
+      <div className="w-[450px] m-auto grid gap-[25px]  bg-white text-center">
+        <div className="border border-da-100 rounded-lg">
           <p className="text-right pr-[15px] pt-[15px]">
             <button className="bg-ye-600 h-[30px] px-[5px] rounded-lg">
               <img
@@ -37,13 +42,15 @@ function MyPetListPage() {
             <i class="fa-solid fa-mars"></i>
           </div>
           <div className="border-t">
-            <button className="inilne-block leading-[40px] nanum text-[14px] text-da-500">
-              수정하기
-            </button>
+            <Link to="/mypet/mod/:petid">
+              <button className="inilne-block leading-[40px] nanum text-[14px] text-da-500">
+                수정하기
+              </button>
+            </Link>
           </div>
         </div>
 
-        <div className="border border-border-da-100 rounded-lg">
+        <div className="border border-da-100 rounded-lg">
           <p className="text-right pr-[15px] pt-[15px]">
             <button className="bg-white h-[30px] px-[5px] rounded-lg border border-da-100">
               <img
@@ -64,13 +71,15 @@ function MyPetListPage() {
             <i class="fa-solid fa-venus"></i>
           </div>
           <div className="border-t">
-            <button className="inilne-block leading-[40px] nanum text-[14px] text-da-500">
-              수정하기
-            </button>
+            <Link to="/mypet/mod/:petid">
+              <button className="inilne-block leading-[40px] nanum text-[14px] text-da-500">
+                수정하기
+              </button>
+            </Link>
           </div>
         </div>
 
-        <div className="border border-border-da-100 rounded-lg">
+        <div className="border border-da-100 rounded-lg">
           <p className="text-right pr-[15px] pt-[15px]">
             <button className="bg-white h-[30px] px-[5px] rounded-lg border border-da-100">
               <img
@@ -91,9 +100,11 @@ function MyPetListPage() {
             {/* <i class="fa-solid fa-mars"></i> */}
           </div>
           <div className="border-t">
-            <button className="inilne-block leading-[40px] nanum text-[14px] text-da-500">
-              추가하기
-            </button>
+            <Link to="/mypet/add">
+              <button className="inilne-block leading-[40px] nanum text-[14px] text-da-500">
+                추가하기
+              </button>
+            </Link>
           </div>
         </div>
       </div>
