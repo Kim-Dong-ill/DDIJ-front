@@ -1,10 +1,12 @@
 import React from "react";
 import Header from "../components/Header";
+import ButtonYe from "../components/ButtonYe";
+import ButtonBl from "../components/ButtonBl";
 
 function AppealWritePage() {
   return (
     <>
-      <div className="w-[450px] m-auto py-[30px] px-5 ">
+      <div className="w-[450px] m-auto px-5 pb-[50px] pt-[120px] ">
         <div className="mb-[10px]">
           <img src="/images/addPhotoicon.svg" alt="" className="m-auto mb-5" />
           {/* 여기에 온클릭으로 사진 추가할 수 있게끔 기능구현해야함 */}
@@ -25,17 +27,19 @@ function AppealWritePage() {
           />
         </div>
         <textarea
-          className="w-full nanum h-[450px] px-[10px] border-b-2 rounded-[10px] resize-none"
+          className="w-full nanum h-[430px] px-[10px] border-b-2 rounded-[10px] resize-none mb-7"
           placeholder="내용을 입력하세요."
         />
-      </div>
-      <div className="flex justify-center h-[50px] mb-[70px] gap-2 ">
-        <button className=" w-[82px] h-[30px] text-[13px] text-center rounded-2xl bg-da-300 text-white hover:bg-ye-600 hover:text-da-300">
-          등록
-        </button>
-        <button className=" w-[82px] h-[30px] text-[13px] text-center rounded-2xl bg-da-300 text-white hover:bg-ye-600 hover:text-da-300">
-          취소
-        </button>
+        <div className="flex justify-center h-[50px] gap-2 ">
+          <ButtonBl>취소</ButtonBl>
+          <ButtonYe>등록</ButtonYe>
+          {/* <button className=" w-[82px] h-[30px] text-[13px] text-center rounded-2xl bg-da-300 text-white hover:bg-ye-600 hover:text-da-300">
+            등록
+          </button>
+          <button className=" w-[82px] h-[30px] text-[13px] text-center rounded-2xl bg-da-300 text-white hover:bg-ye-600 hover:text-da-300">
+            취소
+          </button> */}
+        </div>
       </div>
     </>
   );

@@ -46,7 +46,7 @@ function AppealPage() {
       </div>
       {/* 자랑하개 mainview _ subheader와 navbar 중간section 전부 */}
       {/* ======================자랑하개 mainview_ 중간섹션 + 사진 + 글 + 댓글까지 한묶음 start */}
-      <div className="mt-[240px] mb-[65px] p-3 bg-white ">
+      <div className="mt-[240px] mb-[65px] p-3 bg-white border-[1px]">
         <div className="py-10 px-5 ">
           {/* 강아지 아바타 / 닉네임 section 시작 */}
           <div className="flex justify-between mb-[20px]">
