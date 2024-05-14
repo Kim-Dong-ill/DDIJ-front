@@ -4,69 +4,73 @@ import Kakao_StrEnd from "../kakaoMap/Kakao_StrEnd";
 function CCViewPage() {
   return (
     <>
-
-      <div className=" bg-da-400 pt-[90px] pb-[100px] border-[1px]">
+      <div className="grid gap-3 bg-da-400 pt-[90px] pb-[100px] border-[1px]">
         <div className="w-[500px] h-[255px] bg-slate-300">
           <Kakao_StrEnd />
         </div>
-        <div className="text-white">
+        <div className="text-wh-100">
           {/* 박스 안 contents start======= */}
-          <div className=" border m-5 rounded-lg p-5">
-            <div className="flex mb-[20px]">
-              <div className="w-[100px] h-[100px] bg-slate-500 rounded-[50px]"></div>
-              <div>
-                <div className="flex text-white ">
-                  <p className="nanum">이름:&nbsp;</p>
+          <div className=" border border-da-900 mx-5 my-[30px] rounded-lg p-5">
+            <div className="flex mb-[20px] ">
+              <img
+                src="/images/dog3.svg"
+                className="w-[100px] h-[100px] rounded-full"
+              />
+
+              <div className="grid gap-[3px] ml-[20px]">
+                <div className="flex text-da-800 text-[15px] ">
+                  <p className="nanum">이름 :&nbsp;</p>
                   <p className="nanum">봄</p>
                 </div>
-                <div className="flex text-white ">
-                  <p className="nanum">나이:&nbsp;</p>
+                <div className="flex text-da-800 text-[15px]">
+                  <p className="nanum">나이 :&nbsp;</p>
                   <p className="nanum">11살</p>
                 </div>
-                <div className="flex text-white items-center">
-                  <p className="nanum">성별:&nbsp;</p>
+                <div className="flex text-da-800 text-[15px] items-center">
+                  <p className="nanum">성별 :&nbsp;</p>
                   <i class="fa-solid fa-mars"></i>
                 </div>
-                <div className="flex text-white ">
-                  <p className="nanum">특이사항:&nbsp;</p>
-                  <p className="nanum">Lorem ipsum dolor sit amet.</p>
+                <div className="flex text-da-800 text-[15px] ">
+                  <p className="nanum">특이사항 :&nbsp;</p>
+                  <p className="nanum">칭구 조와!</p>
                 </div>
               </div>
             </div>
             <div>
-              <h2 className="nanum text-center">
-                "Lorem ipsum dolor sit, amet consectetur adipisicing."
-              </h2>
+              <h2 className="nanumBold text-center">" 나만 따라오개 ! "</h2>
             </div>
           </div>
           {/* =======박스 안 contents end */}
-          <div className="px-[18px] mb-[10px]">
-            <p className="text-2xl">title</p>
-            <p className="nanum">[저녁] 7시 30분 ~ 9시 00분</p>
-            <p className="nanum mb-[20px]">
+          <div className="grid gap-[5px] px-[25px] mb-[20px]">
+            <p className="nanumBold text-[18px]">어서오시개</p>
+            <p className="nanum text-[15px] text-da-800">
+              [저녁] 7시 30분 ~ 9시 00분
+            </p>
+            <p className="nanum text-[15px] text-da-800 mb-[20px]">
               가산 디지털단지역 코드랩 아카데미 건물앞
             </p>
-            <hr className="mb-[20px] " />
+            <hr className="mb-[20px] border-da-900" />
           </div>
-          <div className="px-[18px] mb-[50px]">
-            <p className="nanum text-lg mb-[20px]">소개말</p>
-            <p className="nanum mb-[20px]">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae,
-              repudiandae. Corrupti nemo veritatis quo quidem dignissimos fugiat
-              ipsam quis commodi ea. Sequi impedit a voluptatum quae voluptates
-              omnis recusandae cumque?
+          <div className="grid gap-[5px] px-[25px] mb-[50px]">
+            <p className="nanumBold text-[18px]">소개말</p>
+            <p className="nanum text-[15px] text-da-800 mb-[20px]">
+              날씨도 좋은데 퇴근하고 같이 강아지 산책시키실분들 계신가요???
+              저녁은 각자 해결하고 7시 30분에 모여서 안양천 산책해요!! 모임
+              장소는 코드랩 건물 앞입니다!
             </p>
-            <hr className="mb-[20px]" />
-            <div className="w-full px-[18px]">
-              <p className="text-xs mb-[30px]">참석자명단 4/5</p>
+            <hr className="mb-[30px] border-da-900" />
+            <div className="w-full grid gap-3 ">
+              <p className="nanumBold text-[18px]">참석댕명단 4/5</p>
               {/* 참석자명단시작! - map돌려야합니다 */}
-              <div className="w-[430px] h-[55px] rounded-[50px] m-auto flex items-center px-3 gap-3 mb-3 border">
+              <div className="w-full h-auto rounded-[10px] flex items-center px-[15px] py-[5px] gap-3 mb-3 border border-da-900">
                 <div>
                   <div className="w-[45px] h-[45px] rounded-[50px] bg-slate-300"></div>
                 </div>
                 <div>
-                  <p className="text-wh-100">겨울이엄마</p>
-                  <p className="text-da-800 text-xs">
+                  <p className="text-wh-100 text-[15px] nanumBold pb-[2px]">
+                    겨울이엄마
+                  </p>
+                  <p className="text-da-800 text-xs nanum">
                     겨울이 여 5세 "활발한 편이에요 / 활동량이 많아요 / 뛰는걸
                     좋아해요"
                   </p>
