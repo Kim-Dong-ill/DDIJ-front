@@ -99,10 +99,17 @@ function RegisterPage() {
         {/* 강아지 정보 입력 */}
         <div className="w-[400px]" hidden={pageMove ? true : false}>
           <div>저에게 반려견을 소개해 주세요!</div>
-          <div>
-            <div className="bg-ye-300">
-              사진 아이콘
-              <img src="" alt="" />
+          <div className="flex justify-center py-5">
+            <div className="bg-ye-300 w-[200px] h-[200px] rounded-[25px] flex justify-center items-center">
+              <div className="border border-black w-[150px] h-[150px] rounded-full flex justify-center items-center">
+                <img
+                  onClick={() => {
+                    alert("a");
+                  }}
+                  src="./images/camera1.svg"
+                  alt=""
+                />
+              </div>
             </div>
           </div>
           <RegisterPetName hasDog={hasDog} />

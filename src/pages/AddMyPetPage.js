@@ -133,7 +133,7 @@ function AddMyPetPage() {
           </div>
         </div>
         <div className="flex flex-col gap-2 mb-6">
-          <label className={`w-[100px] nanumBold`} htmlFor="petEtc">
+          <label className={`w-[110px] nanumBold`} htmlFor="petEtc">
             우리 아이 성격
           </label>
           <div>

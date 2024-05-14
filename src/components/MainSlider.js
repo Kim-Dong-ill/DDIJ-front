@@ -88,7 +88,7 @@ function MainSlider() {
                 <div className=" w-[55px] h-[55px] rounded-full overflow-hidden">
                   <img src={item.img} alt="" />
                 </div>
-                <div className="text-sm">{item.name}</div>
+                <div className="text-sm nanumBold">{item.name}</div>
               </div>
             </SwiperSlide>
           );
