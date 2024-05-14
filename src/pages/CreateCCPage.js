@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ButtonBl from "../components/ButtonBl";
 import ButtonYe from "../components/ButtonYe";
 import { Link } from "react-router-dom";
+import TextFieldLine from "../components/TextField";
 
 const max = [
   { key: 1, value: "2명" },
@@ -20,10 +21,10 @@ const usingTime = [
 ];
 
 function CreateCCPage() {
-  const [introduction, setIntroduction] = useState("");
-  const [startTime, setStartTime] = useState("");
-  const [startshowBox, setStartshowBox] = useState(false);
-  const [endshowBox, setEndshowBox] = useState(false);
+  const [introduction, setIntroduction] = useState(""); // 소개말
+  const [startTime, setStartTime] = useState(""); // 시작시간
+  const [startshowBox, setStartshowBox] = useState(false); // 출발지 토글박스
+  const [endshowBox, setEndshowBox] = useState(false); // 목적지 토글박스
   const [selectButton, setSelectButton] = useState(null);
 
   const introductionChange = (e) => {
@@ -46,7 +47,7 @@ function CreateCCPage() {
   return (
     <>
       <div
-        className="bg-white px-12 border-2 border-da-100 "
+        className="bg-white px-12 border-[1px] border-da-100 "
         style={{ height: "calc(100%)" }}
       >
         <div className="pt-[90px] pb-[100px]">
@@ -81,11 +82,20 @@ function CreateCCPage() {
           </div>
           {/* 모임설명 */}
           <div>
-            <div className="flex justify-center items-center rounded-md gap-7 mb-4 px-4 py-2">
+            {/* <div className="flex justify-center items-center rounded-md gap-7 mb-4 px-4 py-2">
               <h4>모임명</h4>
               <input
                 type="text"
                 className="border-2 rounded-md w-[300px] px-4 py-2"
+              />
+            </div> */}
+            <div>
+              <TextFieldLine
+                required
+                // disabled={isCheck ? false : true}
+                id="circleName"
+                label="모임명"
+                fullWidth
               />
             </div>
 

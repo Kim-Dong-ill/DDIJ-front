@@ -9,14 +9,18 @@ function NeuterButton({ handleNeuter, neuter }) {
     handleNeuter(false);
   }
   return (
+
     <div className="flex justify-center gap-5">
       <div className="w-[100%]">
+
         <button
           type="button"
           className={
             neuter
+
               ? `bg-black rounded-md w-[100%] h-[35px] border border-black`
               : `bg-white rounded-md w-[100%] h-[35px] border border-black`
+
           }
         >
           <label
@@ -37,13 +41,17 @@ function NeuterButton({ handleNeuter, neuter }) {
           name="neuter"
         />
       </div>
+
       <div className="w-[100%]">
+
         <button
           type="button"
           className={
             neuter
+
               ? `bg-white rounded-md w-[100%] h-[35px] border border-black`
               : `bg-black rounded-md w-[100%] h-[35px] border border-black`
+
           }
         >
           <label
