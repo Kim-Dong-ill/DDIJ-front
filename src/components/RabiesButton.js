@@ -10,18 +10,15 @@ function RabiesButton({ handleRabies, rabies }) {
   }
 
   return (
-
     <div className="flex gap-5">
       <div className="w-[100%]">
-
         <button
+          onClick={doRabies}
           type="button"
           className={
             rabies
-
               ? `bg-black rounded-md w-[100%] h-[35px] border border-black`
               : `bg-white rounded-md w-[100%] h-[35px] border border-black`
-
           }
         >
           <label
@@ -34,25 +31,24 @@ function RabiesButton({ handleRabies, rabies }) {
           </label>
         </button>
         <input
+          value={true}
           hidden
-          onClick={doRabies}
+          // onClick={doRabies}
           checked={rabies ? true : false}
           id="doRabies"
-          type="radio"
-          name="rabies"
+          type="checkbox"
+          name="pRabies"
         />
       </div>
 
       <div className="w-[100%]">
-
         <button
+          onClick={doNotRabies}
           type="button"
           className={
             rabies
-
               ? `bg-white rounded-md w-[100%] h-[35px] border border-black`
               : `bg-black rounded-md w-[100%] h-[35px] border border-black`
-
           }
         >
           <label
@@ -65,12 +61,13 @@ function RabiesButton({ handleRabies, rabies }) {
           </label>
         </button>
         <input
+          value={false}
           hidden
-          onClick={doNotRabies}
+          // onClick={doNotRabies}
           checked={rabies ? false : true}
           id="doNotRabies"
-          type="radio"
-          name="rabies"
+          type="checkbox"
+          name="pRabies"
         />
       </div>
     </div>

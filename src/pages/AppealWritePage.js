@@ -1,46 +1,87 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../components/Header";
 import ButtonYe from "../components/ButtonYe";
 import ButtonBl from "../components/ButtonBl";
+// import axiosInstance from "../utils/axios";
+// import { useParams } from "react-router-dom";
 
 function AppealWritePage() {
+  // const { petid } = useParams();
+  // const [appealData, setAppealData] = useState({
+  //   text: "",
+  //   // images:[]
+  // });
+  // async function handleSubmit(event) {
+  //   event.preventDefault();
+  //   const body = {
+  //     ...appealData,
+  //   };
+  //   try {
+  //     await axiosInstance.post(`/appeal/${petid}`, body);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
+  // function handleChange(event) {
+  //   const { name, value } = event.target;
+  //   console.log(value, name);
+  //   setAppealData((prevState) => {
+  //     return {
+  //       ...prevState,
+  //       [name]: value,
+  //     };
+  //   });
+  // }
+
   return (
     <>
-      <div className="w-[450px] m-auto px-5 pb-[50px] pt-[120px] ">
-        <div className="mb-[10px]">
-          <img src="/images/addPhotoicon.svg" alt="" className="m-auto mb-5" />
-          {/* 여기에 온클릭으로 사진 추가할 수 있게끔 기능구현해야함 */}
-          <input
+      {/* <form onSubmit={handleSubmit}> */}
+      <form>
+        <div className="w-[450px] m-auto px-5 pb-[80px] pt-[150px]">
+          <div className="mb-[10px] flex">
+            <img
+              src="/images/addPhotoicon.svg"
+              alt=""
+              className="m-auto mb-5"
+            />
+            <img
+              src="/images/dog1.svg"
+              alt=""
+              className="m-auto mb-5 w-[87px] h-[86px] rounded-lg"
+            />
+            <img
+              src="/images/dog2.svg"
+              alt=""
+              className="m-auto mb-5 w-[87px] h-[86px] rounded-lg"
+            />
+            <img
+              src="/images/dog1.svg"
+              alt=""
+              className="m-auto mb-5 w-[87px] h-[86px] rounded-lg"
+            />
+            {/* 여기에 온클릭으로 사진 추가할 수 있게끔 기능구현해야함 */}
+          </div>
+          <textarea
+            className="w-full nanum h-[450px] px-[10px] border-b-2 rounded-[10px] resize-none mb-7"
+            placeholder="내용을 입력하세요."
             type="text"
-            className="w-full nanum border-b-2 rounded-[50px] px-[10px] mb-1"
-            placeholder="사진 파일이름..."
+            name="text"
+            // onChange={handleChange}
+            // value={appealData.text}
           />
-          <input
-            type="text"
-            className="w-full nanum border-b-2 rounded-[50px] px-[10px] mb-1"
-            placeholder="사진 파일이름..."
-          />
-          <input
-            type="text"
-            className="w-full nanum border-b-2 rounded-[50px] px-[10px]"
-            placeholder="사진 파일이름..."
-          />
+          <div className="flex justify-center h-[50px] gap-2 ">
+            <ButtonYe>등록</ButtonYe>
+            <ButtonBl>취소</ButtonBl>
+            {/* <button className=" w-[82px] h-[30px] text-[13px] text-center rounded-2xl bg-da-300 text-white hover:bg-ye-600 hover:text-da-300">
+              등록
+            </button>
+            <button className=" w-[82px] h-[30px] text-[13px] text-center rounded-2xl bg-da-300 text-white hover:bg-ye-600 hover:text-da-300">
+              취소
+            </button> */}
+          </div>
         </div>
-        <textarea
-          className="w-full nanum h-[430px] px-[10px] border-b-2 rounded-[10px] resize-none mb-7"
-          placeholder="내용을 입력하세요."
-        />
-        <div className="flex justify-center h-[50px] gap-2 ">
-          <ButtonBl>취소</ButtonBl>
-          <ButtonYe>등록</ButtonYe>
-          {/* <button className=" w-[82px] h-[30px] text-[13px] text-center rounded-2xl bg-da-300 text-white hover:bg-ye-600 hover:text-da-300">
-            등록
-          </button>
-          <button className=" w-[82px] h-[30px] text-[13px] text-center rounded-2xl bg-da-300 text-white hover:bg-ye-600 hover:text-da-300">
-            취소
-          </button> */}
-        </div>
-      </div>
+      </form>
     </>
   );
 }

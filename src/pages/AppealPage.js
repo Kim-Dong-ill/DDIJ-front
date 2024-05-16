@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
+// import axiosInstance from "../../utils/axios";
 
 function AppealPage() {
   let [commentList, setCommentList] = useState([]);
@@ -31,7 +32,7 @@ function AppealPage() {
         <div className="h-[100px] w-[100px] bg-ye-100 m-auto rounded-[50px]  my-[5px]"></div>
 
         <div className="flex justify-center items-center gap-1">
-          <div>뚜비</div>
+          <div className="nanumBold">뚜비</div>
           <div>
             <i class="fa-solid fa-mars"></i>
           </div>
@@ -53,7 +54,7 @@ function AppealPage() {
             <div className="flex gap-3">
               <div className="w-[50px] h-[50px] bg-ye-100 rounded-[50px]"></div>
               <div>
-                <div>뚜비</div>
+                <div className="nanumBold">뚜비</div>
                 <p className="nanum">1일전</p>
               </div>
             </div>
@@ -62,17 +63,20 @@ function AppealPage() {
             </div>
           </div>
           {/* 사진, 내용 넣는 section */}
+          {/* 실질적인 글 구간 start ============ */}
+
           <div className="w-[430px] h-[320px] bg-ye-100 m-auto mb-[25px]"></div>
           <div className="text-center mb-[20px]">
             사진 페이지네이션 들어가야 할 구간
           </div>
           <div className="nanum border-b-2">
-            <p className="mb-[5px]">
+            <p className="nanum mb-[5px]">
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquam
               minus pariatur repellendus similique omnis velit quas, alias quam
               laboriosam nesciunt?
             </p>
           </div>
+          {/* ============ 실질적인 글 구간 end */}
           {/* 구분선 아래, 댓글입력창부터 시작 */}
           <div className=" flex my-[20px] gap-[10px]">
             <input
@@ -93,8 +97,8 @@ function AppealPage() {
           {commentList.map((item) => {
             return (
               <>
-                <div className="flex justify-between mb-[20px] gap-[20px] items-center w-full bg-slate-400 ">
-                  <div className="flex items-center">
+                <div className="flex justify-between mb-[20px] gap-[20px] items-center w-full ">
+                  <div className="flex items-center gap-1">
                     <div className="flex gap-[1px] ">
                       <img
                         src="/images/commenticon.svg"
@@ -102,10 +106,10 @@ function AppealPage() {
                         className="block"
                       />
                       <div className="flex items-center w-[90px]">
-                        <p>닉네임6글자</p>
+                        <p className="nanumBold">닉네임6글자</p>
                       </div>
                     </div>
-                    <div className="nanum flex-wrap bg-slate-50 w-[280px] overflow-wrap">
+                    <div className="nanum flex-wrap w-[280px] overflow-wrap">
                       {item}
                     </div>
                   </div>
