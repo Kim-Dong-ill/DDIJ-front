@@ -32,6 +32,7 @@ function CreateCCPage() {
   // const [usingTime, setUsingTime] = useState([]); // 소요시간
   // const [max, setMax] = useState([]);
   // const [selectButton, setSelectButton] = useState(null);
+  const [checkCircle, setCheckCircle] = useState(false); // 중복된모임체크
 
   const introductionChange = (e) => {
     setIntroduction(e.target.value);
@@ -55,6 +56,10 @@ function CreateCCPage() {
   // // const handleClick = (button) => {
   // //   setSelectButton(button);
   // // };
+
+  function handleCheckCircle(result) {
+    setCheckCircle(result);
+  }
 
   return (
     <>
@@ -141,6 +146,7 @@ function CreateCCPage() {
                   label="출발지"
                   fullWidth
                   type="String"
+                  disabled
                   readOnly
                   onClick={startToggleBox}
                   className="cursor-pointer"
@@ -234,13 +240,13 @@ function CreateCCPage() {
               <label htmlFor="usingTime" className="block mb-4">
                 <h4 className="flex mb-3 gap-2">
                   <img src="/images/clock_icon.svg" alt="시계 아이콘" />
-                  소요시간
+                  소요 시간
                 </h4>
               </label>
               <select
                 name="usingTime"
                 id="usingTime"
-                className="w-full border-2 px-4 py- 2 mb-4 rounded-md block h-[45px] cursor-pointer"
+                className="w-full border px-4 py- 2 mb-4 rounded-md block h-[45px] cursor-pointer border-[#e0e3e7] hover:border-ye-800 focus:border-ye-600 focus:border-2 outline-none"
               >
                 {usingTime.map((item, idx) => {
                   return (
@@ -277,7 +283,7 @@ function CreateCCPage() {
               <select
                 name="max"
                 id="max"
-                className="w-full px-4 py-2 mb-10 border-2 rounded-md  h-[45px] cursor-pointer"
+                className="w-full px-4 py-2 mb-10 border rounded-md  h-[60px] cursor-pointer border-[#e0e3e7] hover:border-ye-800 focus:border-ye-600 focus:border-2 outline-none"
               >
                 {max.map((item, idx) => {
                   return (
