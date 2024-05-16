@@ -6,11 +6,9 @@ import PetGenderButton from "../components/PetGenderButton";
 import HasDogButton from "../components/HasDogButton";
 import $ from "jquery";
 import TextFieldLine from "../components/TextField";
-import { userPassword } from "../utils/validation";
+import { uPassword } from "../utils/validation";
 import RegisterName from "../components/RegisterName";
 import RegisterEmail from "../components/RegisterEmail";
-import RegisterPW from "../components/RegisterPW";
-import RegisterPWCheck from "../components/RegisterPWCheck";
 import RegisterNick from "../components/RegisterNick";
 import RegisterAdr from "../components/RegisterAdr";
 import RegisterPetName from "../components/RegisterPetName";
@@ -31,7 +29,7 @@ function RegisterPage() {
   } = useForm({ mode: "onChange" });
 
   const [hasDog, setHasDog] = useState(false); //반려동물 있는지 없는지
-  const [gender, setGender] = useState(""); //남자인지 여자인지
+  const [gender, setGender] = useState("male"); //남자인지 여자인지
   const [neuter, setNeuter] = useState(); //중성화 여부
   const [vaccine, setVaccine] = useState(); //기본접종 여부
   const [rabies, setRabies] = useState(); //광견병 여부
@@ -81,7 +79,11 @@ function RegisterPage() {
         {/* 유저 정보입력 */}
         <div className="w-[400px]" hidden={pageMove ? false : true}>
           <div className="my-2">반려동물이 있나요?</div>
-          <HasDogButton handleHasDog={handleHasDog} hasDog={hasDog} />
+          <HasDogButton
+            reset={reset}
+            handleHasDog={handleHasDog}
+            hasDog={hasDog}
+          />
 
           <RegisterName errors={errors} register={register} hasDog={hasDog} />
 
@@ -91,7 +93,7 @@ function RegisterPage() {
           <div className="flex flex-col gap-2 mb-6">
             <label
               className={hasDog ? `w-[100px]` : `w-[100px] text-da-500`}
-              htmlFor="userPassword"
+              htmlFor="uPassword"
             >
               비밀번호
             </label>
@@ -100,25 +102,19 @@ function RegisterPage() {
                 type="password"
                 required
                 disabled={hasDog ? false : true}
-                id="userPassword"
+                id="uPassword"
                 label="비밀번호"
                 fullWidth
-                {...register("userPassword", userPassword)}
+                {...register("uPassword", uPassword)}
               />
-              {errors.userPassword && (
+              {errors.uPassword && (
                 <div className="nanumBold text-red-500 text-xs mt-1">
-                  {errors.userPassword.message}
+                  {errors.uPassword.message}
                 </div>
               )}
             </div>
           </div>
 
-          {/* <RegisterPWCheck
-            errors={errors}
-            register={register}
-            watch={watch}
-            hasDog={hasDog}
-          /> */}
           <div className="flex flex-col gap-2 mb-6">
             <label
               className={hasDog ? `w-[100px]` : `w-[100px] text-da-500`}
@@ -136,9 +132,7 @@ function RegisterPage() {
                 fullWidth
                 {...register("checkPassword", {
                   validate: (value) => {
-                    return (
-                      value === watch("userPassword") || "비밀번호 일치 안함"
-                    );
+                    return value === watch("uPassword") || "비밀번호 일치 안함";
                   },
                 })}
               />

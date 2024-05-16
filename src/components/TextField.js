@@ -2,7 +2,6 @@ import TextField from "@mui/material/TextField";
 import { styled } from "@mui/material/styles";
 
 const TextFieldLine = styled(TextField)({
-  // type: "text",
   "& label.Mui-focused": {
     color: "#FFBC11",
   },

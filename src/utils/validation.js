@@ -1,4 +1,4 @@
-export const userName = {
+export const uName = {
   required: {
     value: true,
     message: "이름은 필수입니다.",
@@ -8,7 +8,7 @@ export const userName = {
     message: "6자 이내로 입력해주세요",
   },
 };
-export const userEmail = {
+export const uEmail = {
   required: {
     value: true,
     message: "이메일은 필수입니다.",
@@ -18,7 +18,7 @@ export const userEmail = {
     message: "이메일 형식을 다시 입력하세요",
   },
 };
-export const userPassword = {
+export const uPassword = {
   required: {
     value: true,
     message: "비밀번호는 필수입니다.",
@@ -32,7 +32,7 @@ export const userPassword = {
     message: "6자 ~ 12자 이내로 입력해주세요",
   },
 };
-export const userNickName = {
+export const uNickName = {
   required: {
     value: true,
     message: "닉네임은 필수입니다.",
@@ -42,13 +42,13 @@ export const userNickName = {
     message: "8자 이내로 입력해주세요",
   },
 };
-export const userAdress = {
+export const uAdress = {
   required: {
     value: true,
     message: "주소는 필수입니다.",
   },
 };
-export const petName = {
+export const pName = {
   required: {
     value: true,
     message: " 반려견 이름은 필수입니다.",
@@ -58,7 +58,7 @@ export const petName = {
     message: "8자 이내로 입력해주세요",
   },
 };
-export const petBreed = {
+export const pBreed = {
   required: {
     value: true,
     message: "견종은 필수입니다.",
@@ -68,7 +68,7 @@ export const petBreed = {
     message: "14자 이내로 입력해주세요",
   },
 };
-export const petAge = {
+export const pAge = {
   required: {
     value: true,
     message: "나이는 필수입니다.",
@@ -78,7 +78,7 @@ export const petAge = {
     message: "적절한 나이를 입력해주세요",
   },
 };
-export const petCha = {
+export const pChar = {
   required: {
     value: true,
     message: "성격은 필수입니다.",
