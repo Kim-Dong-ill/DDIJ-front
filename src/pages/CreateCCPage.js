@@ -3,6 +3,10 @@ import ButtonBl from "../components/ButtonBl";
 import ButtonYe from "../components/ButtonYe";
 import { Link } from "react-router-dom";
 import TextFieldLine from "../components/TextField";
+// import { Box, FormControl, MenuItem, Select } from "@mui/material";
+// import SelectButton from "../components/SelectButton";
+// import { SelectUnstyled, OptionUnstyled } from "@mui/base";
+// import { styled } from "@mui/system";
 
 const max = [
   { key: 1, value: "2명" },
@@ -25,7 +29,9 @@ function CreateCCPage() {
   const [startTime, setStartTime] = useState(""); // 시작시간
   const [startshowBox, setStartshowBox] = useState(false); // 출발지 토글박스
   const [endshowBox, setEndshowBox] = useState(false); // 목적지 토글박스
-  const [selectButton, setSelectButton] = useState(null);
+  // const [usingTime, setUsingTime] = useState([]); // 소요시간
+  // const [max, setMax] = useState([]);
+  // const [selectButton, setSelectButton] = useState(null);
 
   const introductionChange = (e) => {
     setIntroduction(e.target.value);
@@ -40,10 +46,16 @@ function CreateCCPage() {
   const endToggleBox = () => {
     setEndshowBox(!endshowBox);
   };
-
-  // const handleClick = (button) => {
-  //   setSelectButton(button);
+  // const handleUsingTimeChange = (e) => {
+  //   setUsingTime(e.target.value);
   // };
+  // const handleMaxChange = (e) => {
+  //   setMax(e.target.value);
+  // };
+  // // const handleClick = (button) => {
+  // //   setSelectButton(button);
+  // // };
+
   return (
     <>
       <div
@@ -89,7 +101,10 @@ function CreateCCPage() {
                 className="border-2 rounded-md w-[300px] px-4 py-2"
               />
             </div> */}
-            <div>
+            <div className="flex flex-col mb-6 ">
+              <label className="mb-4" htmlFor="circleName">
+                모임명
+              </label>
               <TextFieldLine
                 required
                 // disabled={isCheck ? false : true}
@@ -109,20 +124,32 @@ function CreateCCPage() {
           {/* 장소,시간설정 */}
           <div>
             <div>
-              <label htmlFor="" className=" mb-4 flex gap-2 ">
-                <img src="/images/plag_icon.svg" alt="깃발아이콘" />
-                출발지
-              </label>
-              <input
+              {/* <input
                 type="String"
                 className="w-full border-2 rounded-md mb-3 px-4 py-2 cursor-pointer"
                 onClick={startToggleBox}
                 readOnly
-              />
+              /> */}
+              <div>
+                <label htmlFor="startPoint" className=" mb-4 flex gap-2 ">
+                  <img src="/images/plag_icon.svg" alt="깃발아이콘" />
+                  출발지
+                </label>
+                <TextFieldLine
+                  required
+                  id="startPoint"
+                  label="출발지"
+                  fullWidth
+                  type="String"
+                  readOnly
+                  onClick={startToggleBox}
+                  className="cursor-pointer"
+                />
+              </div>
               <img
                 src="/images/plusglass_icon.svg"
                 alt="돋보기아이콘"
-                className="block relative  left-[350px] bottom-[42px] cursor-pointer"
+                className="block relative  left-[350px] bottom-[37px] cursor-pointer"
                 onClick={startToggleBox}
               />
               {startshowBox && (
@@ -132,7 +159,7 @@ function CreateCCPage() {
               )}
             </div>
             <div>
-              <h4 className="mb-3  flex gap-2">
+              {/* <h4 className="mb-3  flex gap-2">
                 <img src="/images/plag_icon.svg" alt="깃발아이콘" />
                 목적지
               </h4>
@@ -141,11 +168,27 @@ function CreateCCPage() {
                 className="w-full border-2 rounded-md mb-3 px-4 py-2 cursor-pointer"
                 readOnly
                 onClick={endToggleBox}
-              />
+              /> */}
+              <div>
+                <label htmlFor="endPoint" className=" mb-4 flex gap-2 ">
+                  <img src="/images/plag_icon.svg" alt="깃발아이콘" />
+                  목적지
+                </label>
+                <TextFieldLine
+                  required
+                  id="endPoint"
+                  label={"목적지"}
+                  fullWidth
+                  type="String"
+                  disabled
+                  onClick={endToggleBox}
+                  className="cursor-pointer"
+                />
+              </div>
               <img
                 src="/images/plusglass_icon.svg"
                 alt="돋보기 아이콘"
-                className="block relative  left-[350px] bottom-[42px] cursor-pointer"
+                className="block relative  left-[350px] bottom-[37px] cursor-pointer"
                 onClick={endToggleBox}
               />
               {endshowBox && (
@@ -154,7 +197,7 @@ function CreateCCPage() {
                 </div>
               )}
             </div>
-            <div>
+            {/* <div>
               <label htmlFor="startTime" className="mb-4">
                 <h4 className="flex mb-3 gap-2">
                   <img src="/images/clock_icon.svg" alt="시계 아이콘" />
@@ -168,6 +211,22 @@ function CreateCCPage() {
                 value={startTime}
                 className="w-full border-2 rounded-md mb-4 px-4 py-2 "
                 onChange={startTimeChange}
+              />
+            </div> */}
+            <div className="mb-10">
+              <label htmlFor="startTime" className=" mb-4 flex gap-2 ">
+                <img src="/images/clock_icon.svg" alt="시계 아이콘" />
+                시작 시간
+              </label>
+              <TextFieldLine
+                required
+                id="startTime"
+                label="시작 시간"
+                fullWidth
+                type="String"
+                readOnly
+                onClick={startTimeChange}
+                className="cursor-pointer"
               />
             </div>
 
@@ -192,6 +251,22 @@ function CreateCCPage() {
                 })}
               </select>
             </div>
+
+            {/* <CustomSelectButton id="usingTime">소요 시간</CustomSelectButton>
+            <CustomSelect
+              labelId="usingTime"
+              id="usingTime"
+              value={usingTime}
+              onChange={handleUsingTimeChange}
+            >
+              <CustomOption value={30}>30분</CustomOption>
+              <CustomOption value={45}>45분</CustomOption>
+              <CustomOption value={60}>1시간</CustomOption>
+              <CustomOption value={90}>1시간 30분</CustomOption>
+              <CustomOption value={105}>1시간 45분</CustomOption>
+              <CustomOption value={120}>2시간</CustomOption>
+            </CustomSelect> */}
+
             <div>
               <label htmlFor="max" className="block mb-4">
                 <h4 className="flex mb-3 gap-2">
@@ -213,6 +288,24 @@ function CreateCCPage() {
                 })}
               </select>
             </div>
+
+            {/* <Box sx={{ minWidth: 120 }} className="mb-6">
+              <FormControl fullWidth>
+                <SelectButton id="max">인원수</SelectButton>
+                <Select
+                  labelId="max"
+                  id="max"
+                  value={max}
+                  label="인원수"
+                  onChange={handleMaxChange}
+                >
+                  <MenuItem value={2}>2명</MenuItem>
+                  <MenuItem value={3}>3명</MenuItem>
+                  <MenuItem value={4}>4명</MenuItem>
+                  <MenuItem value={5}>5명</MenuItem>
+                </Select>
+              </FormControl>
+            </Box> */}
           </div>
           {/* 취소,등록버튼 */}
           <div className="flex justify-center items-center gap-10">

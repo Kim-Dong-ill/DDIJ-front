@@ -17,7 +17,7 @@ function Navbar() {
 
   return (
     <>
-      <div className="bottom-0 bg-ye-400 fixed h-[65px] w-[500px] flex">
+      <div className="z-50 bottom-0 bg-ye-400 fixed h-[65px] w-[500px] flex">
         <ul className="flex justify-around items-center border w-full">
           {" "}
           {/* relative 클래스 추가 */}
