@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
+// import axiosInstance from "../../utils/axios";
 
 function AppealPage() {
   let [commentList, setCommentList] = useState([]);
@@ -62,6 +63,8 @@ function AppealPage() {
             </div>
           </div>
           {/* 사진, 내용 넣는 section */}
+          {/* 실질적인 글 구간 start ============ */}
+
           <div className="w-[430px] h-[320px] bg-ye-100 m-auto mb-[25px]"></div>
           <div className="text-center mb-[20px]">
             사진 페이지네이션 들어가야 할 구간
@@ -73,6 +76,7 @@ function AppealPage() {
               laboriosam nesciunt?
             </p>
           </div>
+          {/* ============ 실질적인 글 구간 end */}
           {/* 구분선 아래, 댓글입력창부터 시작 */}
           <div className=" flex my-[20px] gap-[10px]">
             <input
