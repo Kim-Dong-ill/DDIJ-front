@@ -1,4 +1,4 @@
-export const uName = {
+export const name = {
   required: {
     value: true,
     message: "이름은 필수입니다.",
@@ -8,7 +8,7 @@ export const uName = {
     message: "6자 이내로 입력해주세요",
   },
 };
-export const uEmail = {
+export const email = {
   required: {
     value: true,
     message: "이메일은 필수입니다.",
@@ -18,7 +18,7 @@ export const uEmail = {
     message: "이메일 형식을 다시 입력하세요",
   },
 };
-export const uPassword = {
+export const password = {
   required: {
     value: true,
     message: "비밀번호는 필수입니다.",
@@ -32,7 +32,7 @@ export const uPassword = {
     message: "6자 ~ 12자 이내로 입력해주세요",
   },
 };
-export const uNickName = {
+export const nickName = {
   required: {
     value: true,
     message: "닉네임은 필수입니다.",
@@ -42,7 +42,7 @@ export const uNickName = {
     message: "8자 이내로 입력해주세요",
   },
 };
-export const uAdress = {
+export const adress = {
   required: {
     value: true,
     message: "주소는 필수입니다.",

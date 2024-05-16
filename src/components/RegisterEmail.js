@@ -1,13 +1,13 @@
 import React from "react";
 import TextFieldLine from "../components/TextField";
-import { uEmail } from "../utils/validation";
+import { email } from "../utils/validation";
 
 function RegisterEmail({ hasDog, register, errors }) {
   return (
     <div className="flex flex-col gap-2 mb-6">
       <label
         className={hasDog ? `w-[100px]` : `w-[100px] text-da-500`}
-        htmlFor="uEmail"
+        htmlFor="email"
       >
         이메일
       </label>
@@ -15,14 +15,14 @@ function RegisterEmail({ hasDog, register, errors }) {
         <TextFieldLine
           required
           disabled={hasDog ? false : true}
-          id="uEmail"
+          id="email"
           label="이메일"
           fullWidth
-          {...register("uEmail", uEmail)}
+          {...register("email", email)}
         />
-        {errors.uEmail && (
+        {errors.email && (
           <div className="nanumBold text-red-500 text-xs mt-1">
-            {errors.uEmail.message}
+            {errors.email.message}
           </div>
         )}
       </div>

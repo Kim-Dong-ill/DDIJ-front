@@ -6,7 +6,7 @@ import PetGenderButton from "../components/PetGenderButton";
 import HasDogButton from "../components/HasDogButton";
 import $ from "jquery";
 import TextFieldLine from "../components/TextField";
-import { uPassword } from "../utils/validation";
+import { password } from "../utils/validation";
 import RegisterName from "../components/RegisterName";
 import RegisterEmail from "../components/RegisterEmail";
 import RegisterNick from "../components/RegisterNick";
@@ -60,8 +60,8 @@ function RegisterPage() {
     $("html, body").scrollTop("0");
   }
 
-  function onSubmit() {
-    alert("전송");
+  function onSubmit(body) {
+    console.log(body);
   }
 
   return (
@@ -93,7 +93,7 @@ function RegisterPage() {
           <div className="flex flex-col gap-2 mb-6">
             <label
               className={hasDog ? `w-[100px]` : `w-[100px] text-da-500`}
-              htmlFor="uPassword"
+              htmlFor="password"
             >
               비밀번호
             </label>
@@ -102,14 +102,14 @@ function RegisterPage() {
                 type="password"
                 required
                 disabled={hasDog ? false : true}
-                id="uPassword"
+                id="password"
                 label="비밀번호"
                 fullWidth
-                {...register("uPassword", uPassword)}
+                {...register("password", password)}
               />
-              {errors.uPassword && (
+              {errors.password && (
                 <div className="nanumBold text-red-500 text-xs mt-1">
-                  {errors.uPassword.message}
+                  {errors.password.message}
                 </div>
               )}
             </div>
