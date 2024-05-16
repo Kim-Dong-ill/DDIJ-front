@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 function AllCCListPage() {
   const [tempArray, setTempArray] = useState([]);
@@ -95,57 +96,61 @@ function AllCCListPage() {
               return (
                 <>
                   {rest === 0 ? (
-                    <div className="w-[410px] h-[110px] bg-ye-300 mb-[20px] rounded-lg pl-2 pt-1 pr-2 pb-2">
-                      <p className="text-right nanumBold text-xs">3/5</p>
-                      <div className="flex gap-3 items-center">
-                        <div className="w-[75px] h-[75px] bg-slate-400 rounded-[50px] flex-shrink-0"></div>
-                        <div>
-                          <p className="text-lg">{item.title}</p>
-                          <div className="flex gap-[3px]">
-                            <p className="nanumBold text-sm whitespace-nowrap">
-                              약속시간{" "}
-                            </p>
-                            <span className="text-da-200 nanum text-sm">
-                              {item.meetingTime}
-                            </span>
-                          </div>
-                          <div className="flex gap-[3px]">
-                            <p className="nanumBold text-sm whitespace-nowrap">
-                              출발장소{" "}
-                            </p>
-                            <span className="text-da-200 nanum text-sm">
-                              {item.meetingLocation}
-                            </span>
+                    <Link to="/circles/:circleid">
+                      <div className="w-[410px] h-[110px] bg-ye-300 mb-[20px] rounded-lg pl-2 pt-1 pr-2 pb-2">
+                        <p className="text-right nanumBold text-xs">3/5</p>
+                        <div className="flex gap-3 items-center">
+                          <div className="w-[75px] h-[75px] bg-slate-400 rounded-[50px] flex-shrink-0"></div>
+                          <div>
+                            <p className="text-lg">{item.title}</p>
+                            <div className="flex gap-[3px]">
+                              <p className="nanumBold text-sm whitespace-nowrap">
+                                약속시간{" "}
+                              </p>
+                              <span className="text-da-200 nanum text-sm">
+                                {item.meetingTime}
+                              </span>
+                            </div>
+                            <div className="flex gap-[3px]">
+                              <p className="nanumBold text-sm whitespace-nowrap">
+                                출발장소{" "}
+                              </p>
+                              <span className="text-da-200 nanum text-sm">
+                                {item.meetingLocation}
+                              </span>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   ) : (
-                    <div className="w-[410px] h-[110px] bg-ye-200 mb-[20px] rounded-lg pl-2 pt-1 pr-2 pb-2">
-                      <p className="text-right nanumBold text-xs">3/5</p>
-                      <div className="flex gap-3 items-center">
-                        <div className="w-[75px] h-[75px] bg-slate-400 rounded-[50px] flex-shrink-0"></div>
-                        <div>
-                          <p className="text-lg">{item.title}</p>
-                          <div className="flex gap-[3px]">
-                            <p className="nanumBold text-sm whitespace-nowrap">
-                              약속시간{" "}
-                            </p>
-                            <span className="text-da-200 nanum text-sm">
-                              {item.meetingTime}
-                            </span>
-                          </div>
-                          <div className="flex gap-[3px]">
-                            <p className="nanumBold text-sm whitespace-nowrap">
-                              출발장소{" "}
-                            </p>
-                            <span className="text-da-200 nanum text-sm">
-                              {item.meetingLocation}
-                            </span>
+                    <Link to="/circles/:circleid">
+                      <div className="w-[410px] h-[110px] bg-ye-200 mb-[20px] rounded-lg pl-2 pt-1 pr-2 pb-2">
+                        <p className="text-right nanumBold text-xs">3/5</p>
+                        <div className="flex gap-3 items-center">
+                          <div className="w-[75px] h-[75px] bg-slate-400 rounded-[50px] flex-shrink-0"></div>
+                          <div>
+                            <p className="text-lg">{item.title}</p>
+                            <div className="flex gap-[3px]">
+                              <p className="nanumBold text-sm whitespace-nowrap">
+                                약속시간{" "}
+                              </p>
+                              <span className="text-da-200 nanum text-sm">
+                                {item.meetingTime}
+                              </span>
+                            </div>
+                            <div className="flex gap-[3px]">
+                              <p className="nanumBold text-sm whitespace-nowrap">
+                                출발장소{" "}
+                              </p>
+                              <span className="text-da-200 nanum text-sm">
+                                {item.meetingLocation}
+                              </span>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   )}
                 </>
               );

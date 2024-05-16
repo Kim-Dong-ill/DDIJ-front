@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
-import axios from "axios";
+// import axiosInstance from "../../utils/axios";
 
 function AppealPage() {
   let [commentList, setCommentList] = useState([]);

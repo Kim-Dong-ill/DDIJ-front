@@ -6,6 +6,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 import "../assets/mainSlider.css";
+import { Link } from "react-router-dom";
 
 function MainSlider() {
   const myDog = [
@@ -86,7 +87,9 @@ function MainSlider() {
             <SwiperSlide key={idx} className="mapDogListCard ">
               <div>
                 <div className=" w-[55px] h-[55px] rounded-full overflow-hidden">
-                  <img src={item.img} alt="" />
+                  <Link to="/appeal/:petid">
+                    <img src={item.img} alt="" />
+                  </Link>
                 </div>
                 <div className="text-sm nanumBold">{item.name}</div>
               </div>
