@@ -11,12 +11,16 @@ function PetGenderButton({ handleGender, gender }) {
 
   return (
     <div className="flex gap-10 items-center">
-      <div className="flex items-center gap-2">
-        <input type="radio" id="male" name="gender" hidden />
-        <label className="flex gap-2 items-center" htmlFor="male">
+      <div className="flex items-center gap-2 ">
+        <input type="radio" id="male" name="pGender" hidden value="남" />
+        <label
+          onClick={male}
+          className="flex gap-2 items-center"
+          htmlFor="male"
+        >
           <div type="button">
             <i
-              onClick={male}
+              // onClick={male}
               className={
                 gender === "male"
                   ? `text-[25px] bg-ye-600 rounded-full fa-regular fa-circle-check`
@@ -24,26 +28,30 @@ function PetGenderButton({ handleGender, gender }) {
               }
             ></i>
           </div>
+          <div>
+            <i className="text-blue-600 text-[30px] fa-solid fa-mars"></i>
+          </div>
         </label>
-        <div>
-          <i className="text-blue-600 text-[30px] fa-solid fa-mars"></i>
-        </div>
       </div>
       <div className="flex itmes-center gap-2">
-        <input type="radio" id="female" name="gender" hidden />
-        <label className="flex items-center gap-2" htmlFor="female">
+        <input type="radio" id="female" name="pGender" hidden value="여" />
+        <label
+          onClick={female}
+          className="flex items-center gap-2"
+          htmlFor="female"
+        >
           <div type="button">
             <i
-              onClick={female}
+              // onClick={female}
               className={`text-[25px] rounded-full fa-regular fa-circle-check ${
                 gender === "female" ? `bg-ye-600` : ""
               }`}
             ></i>
           </div>
+          <div>
+            <i className="text-pink-600 fa-solid text-[30px] fa-venus"></i>
+          </div>
         </label>
-        <div>
-          <i className="text-pink-600 fa-solid text-[30px] fa-venus"></i>
-        </div>
       </div>
     </div>
   );

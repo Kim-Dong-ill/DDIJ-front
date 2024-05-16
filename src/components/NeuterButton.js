@@ -9,18 +9,15 @@ function NeuterButton({ handleNeuter, neuter }) {
     handleNeuter(false);
   }
   return (
-
     <div className="flex justify-center gap-5">
       <div className="w-[100%]">
-
         <button
+          onClick={doNeuter}
           type="button"
           className={
             neuter
-
               ? `bg-black rounded-md w-[100%] h-[35px] border border-black`
               : `bg-white rounded-md w-[100%] h-[35px] border border-black`
-
           }
         >
           <label
@@ -33,25 +30,24 @@ function NeuterButton({ handleNeuter, neuter }) {
           </label>
         </button>
         <input
+          value={true}
           hidden
-          onClick={doNeuter}
+          // onClick={doNeuter}
           checked={neuter ? true : false}
           id="doNeuter"
           type="radio"
-          name="neuter"
+          name="pNeuter"
         />
       </div>
 
       <div className="w-[100%]">
-
         <button
+          onClick={doNotNeuter}
           type="button"
           className={
             neuter
-
               ? `bg-white rounded-md w-[100%] h-[35px] border border-black`
               : `bg-black rounded-md w-[100%] h-[35px] border border-black`
-
           }
         >
           <label
@@ -64,12 +60,13 @@ function NeuterButton({ handleNeuter, neuter }) {
           </label>
         </button>
         <input
+          value={false}
           hidden
-          onClick={doNotNeuter}
+          // onClick={doNotNeuter}
           checked={neuter ? false : true}
           id="doNotNeuter"
           type="radio"
-          name="neuter"
+          name="pNeuter"
         />
       </div>
     </div>

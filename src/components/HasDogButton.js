@@ -1,17 +1,19 @@
 import React from "react";
 
-function HasDogButton({ handleHasDog, hasDog }) {
+function HasDogButton({ handleHasDog, hasDog, reset }) {
   function haveDog() {
     handleHasDog(true);
   }
   function haveNotDog() {
     handleHasDog(false);
+    reset();
   }
 
   return (
     <div className="flex justify-center items-center gap-5 mb-6">
       <div className="w-[100%]">
         <button
+          onClick={haveDog}
           type="button"
           className={
             hasDog
@@ -29,8 +31,9 @@ function HasDogButton({ handleHasDog, hasDog }) {
           </label>
         </button>
         <input
+          value={true}
           hidden
-          onClick={haveDog}
+          // onClick={haveDog}
           checked={hasDog ? true : false}
           id="hasdog"
           type="radio"
@@ -39,6 +42,7 @@ function HasDogButton({ handleHasDog, hasDog }) {
       </div>
       <div className="w-[100%]">
         <button
+          onClick={haveNotDog}
           type="button"
           className={
             hasDog
@@ -56,8 +60,9 @@ function HasDogButton({ handleHasDog, hasDog }) {
           </label>
         </button>
         <input
+          value={false}
           hidden
-          onClick={haveNotDog}
+          // onClick={haveNotDog}
           checked={hasDog ? false : true}
           id="hasnotdog"
           type="radio"
