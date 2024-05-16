@@ -32,7 +32,7 @@ function CCViewPage() {
                 </div>
                 <div className="flex text-da-800 text-[15px] ">
                   <p className="nanum">특이사항 :&nbsp;</p>
-                  <p className="nanum">칭구 조와!</p>
+                  <p className="nanum">칭구 조와!!</p>
                 </div>
               </div>
             </div>
