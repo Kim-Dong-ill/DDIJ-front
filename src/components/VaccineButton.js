@@ -9,18 +9,15 @@ function VaccineButton({ handleVaccine, vaccine }) {
   }
 
   return (
-
     <div className="flex gap-5">
       <div className="w-[100%]">
-
         <button
+          onClick={doVaccine}
           type="button"
           className={
             vaccine
-
               ? `bg-black rounded-md w-[100%] h-[35px] border border-black`
               : `bg-white rounded-md w-[100%] h-[35px] border border-black`
-
           }
         >
           <label
@@ -33,25 +30,24 @@ function VaccineButton({ handleVaccine, vaccine }) {
           </label>
         </button>
         <input
+          value={true}
           hidden
-          onClick={doVaccine}
+          // onClick={doVaccine}
           checked={vaccine ? true : false}
           id="doVaccine"
           type="radio"
-          name="vaccine"
+          name="pVaccine"
         />
       </div>
 
       <div className="w-[100%]">
-
         <button
+          onClick={doNotVaccine}
           type="button"
           className={
             vaccine
-
               ? `bg-white rounded-md w-[100%] h-[35px] border border-black`
               : `bg-black rounded-md w-[100%] h-[35px] border border-black`
-
           }
         >
           <label
@@ -64,12 +60,13 @@ function VaccineButton({ handleVaccine, vaccine }) {
           </label>
         </button>
         <input
+          value={false}
           hidden
-          onClick={doNotVaccine}
+          // onClick={doNotVaccine}
           checked={vaccine ? false : true}
           id="doNotVaccine"
           type="radio"
-          name="vaccine"
+          name="pVaccine"
         />
       </div>
     </div>
