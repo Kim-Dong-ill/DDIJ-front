@@ -1,3 +1,4 @@
+//회원가입 validation 체크
 export const name = {
   required: {
     value: true,
@@ -86,5 +87,31 @@ export const pChar = {
   maxLength: {
     value: 30,
     message: "더이상 입력하 수 없습니다.",
+  },
+};
+
+//로그인 validation 체크
+export const loginEmail = {
+  required: {
+    value: true,
+    message: "이메일을 입력해주세요.",
+  },
+  pattern: {
+    value: /^\S+@\S+$/i,
+    message: "아이디는 이메일 입니다.",
+  },
+};
+export const loginPassword = {
+  required: {
+    value: true,
+    message: "비밀번호를 입력해주세요.",
+  },
+  minLength: {
+    value: 6,
+    message: "비밀번호는 6자 ~ 12자 이내 입니다",
+  },
+  maxLength: {
+    value: 12,
+    message: "비밀번호는 6자 ~ 12자 이내 입니다",
   },
 };
