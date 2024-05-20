@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import Kakao_StrEnd from "../kakaoMap/Kakao_StrEnd";
 
 function CCViewPage() {
+  let [textData, setTextData] = useState("");
+  const [commentList, setCommentList] = useState([]);
+  function textDataChange(e) {
+    setTextData(e.target.value);
+    // console.log(textData);
+  }
+  function clickListener() {
+    let temp = [...commentList];
+    setCommentList([textData, ...temp]);
+    setTextData("");
+  }
   return (
     <>
       <div className="grid gap-3 bg-da-400 pt-[90px] pb-[100px] border-[1px]">
@@ -78,10 +89,74 @@ function CCViewPage() {
               </div>
               {/* 참석자명단 end - 여기까지 map돌립니다 */}
             </div>
+            {/* 글 contents 섹션 완료 */}
+            <hr className="my-[30px] border-da-900" />
+            {/* 댓글구간 시작============= */}
+            <div>
+              <p className="nanumBold text-[18px]">할 말이 있개!</p>
+            </div>
+            <div className=" flex my-[20px] gap-[10px] text-black">
+              <input
+                type="text"
+                placeholder="댓글입력"
+                className=" border w-[365px] rounded-[25px] px-[10px] py-[5px] nanum"
+                onChange={textDataChange}
+                value={textData}
+              />
+              <button
+                className="w-[50px] bg-da-100 rounded-[50px]"
+                onClick={clickListener}
+              >
+                등록
+              </button>
+            </div>
+            {/* <div className="flex justify-between mb-[20px] gap-[20px] items-center w-full">
+              <div className="flex items-center gap-1">
+                <div className="flex gap-[1px] ">
+                  <img
+                    src="/images/commenticon_white.svg"
+                    alt=""
+                    className="block"
+                  />
+                  <div className="flex items-center w-[90px]">
+                    <p className="nanumBold">닉네임6글자</p>
+                  </div>
+                </div> */}
+
+            {commentList.map((item, idx) => {
+              return (
+                <>
+                  <div className="flex justify-between mb-[20px] gap-[20px] items-center w-full ">
+                    <div className="flex items-center gap-1">
+                      <div className="flex gap-[1px] ">
+                        <img
+                          src="/images/commenticon_white.svg"
+                          alt=""
+                          className="block"
+                        />
+                        <div className="flex items-center w-[90px]">
+                          <p className="nanumBold">닉네임6글자</p>
+                        </div>
+                      </div>
+                      <div className="nanum flex-wrap w-[280px] overflow-wrap">
+                        {item}
+                      </div>
+                    </div>
+                  </div>
+                </>
+              );
+            })}
+            {/* </div>
+            </div> */}
+            {/*=============== 댓글구간 끝 */}
           </div>
-          {/* 글 contents 섹션 완료 */}
           <div className="w-full flex justify-center">
-            <button className="fixed bottom-[60px] w-[150px] h-[40px] m-auto text-[13px] text-center rounded-[20px] bg-ye-600 text-black my-4">
+            <button
+              className="fixed bottom-[60px] w-[150px] h-[40px] m-auto text-[13px] text-center rounded-[20px] bg-ye-600 text-black my-4"
+              onClick={() => {
+                alert("참석완료");
+              }}
+            >
               참석하기 4/5
               {/* 정원 꽉 차면 버튼색상 #222222 - 정원이 다 찼개... 로 버튼변경  */}
               {/* 참석하기 완료되면 취소하기 버튼으로 버튼 변경 - #313131 */}

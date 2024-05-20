@@ -7,7 +7,7 @@ import TextFieldLine from "../components/TextField";
 import NeuterButton from "../components/NeuterButton";
 import VaccineButton from "../components/VaccineButton";
 import RabiesButton from "../components/RabiesButton";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import $ from "jquery";
 
 function MyPetModifyPage() {
@@ -17,6 +17,7 @@ function MyPetModifyPage() {
   const [vaccine, setVaccine] = useState(); //기본접종 여부
   const [rabies, setRabies] = useState(); //광견병 여부
   const [pageMove, setPageMove] = useState(true);
+  const navigate = useNavigate();
 
   function handleHasDog(result) {
     setHasDog(result);
@@ -54,11 +55,17 @@ function MyPetModifyPage() {
       {/* subheader start */}
       <div className="subHeader bg-ye-600 w-[500px] top-0 text-center h-[265px] border border-da-100">
         <div className="h-[50px] border-b-2 flex  justify-between items-center">
-          <Link to="/mypet/:userid">
-            <h2>
-              <img src="/images/backicon.svg" alt="" />
-            </h2>
-          </Link>
+          <h2>
+            <img
+              src="/images/backicon.svg"
+              alt=""
+              onClick={() => {
+                navigate(-1);
+              }}
+              className="cursor-pointer"
+            />
+          </h2>
+
           <h2 className="text-[20px]">프로필 수정</h2>
           <h2 className="invisible">
             <img src="/images/backicon.svg" alt="" />

@@ -2,17 +2,18 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../utils/axios";
-import AppealCommentList from "./AppealCommentList";
 
 // import axiosInstance from "../../utils/axios";
 // function AppealPage() {
 function AppealPage({}) {
   // userId값 어떻게 가져올지 몰라서 일단 임시로 useParams값으로 가져옴..ㅜㅜ
   const { userId, petId } = useParams();
+  const [appealComment, setAppealComment] = useState([]); // set함수는 무조건 재랜더링된다!!!
   // const [appealPostId, setAppealPostId] = useState([]);
 
   const navigate = useNavigate();
   // let [commentList, setCommentList] = useState([]);   // wldnfdPwjd
+  let [textData, setTextData] = useState("");
 
   // function clickListener() {
   //   let copy = [...commentList];
@@ -21,6 +22,25 @@ function AppealPage({}) {
   // }
   const [appealData, setAppealData] = useState([]);
   const [appealPostId, setAppealPostId] = useState([]);
+
+  // 댓글 달아주려고 포스트 작성하는중.....ㅜㅜ
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const body = {
+      // appeal
+      text: textData,
+    };
+    try {
+      await axiosInstance.post(`appeal/${userId}/comment`, body);
+      setTextData("");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  function textDataChange(e) {
+    setTextData(e.target.value);
+  }
 
   const keyPressListener = (event) => {
     if (event.key === "Enter") {
@@ -34,23 +54,29 @@ function AppealPage({}) {
         const res = await axiosInstance.get("/appeal/:userId");
         console.log(res.data.appealData);
         setAppealData(res.data.appealData);
-
-        //gpt
-        const postIds = res.data.appealData.map((item) => item._id);
-        setAppealPostId(postIds);
+        // setAppealPostId()
       } catch (error) {
         // res.status(500).send({ error: error.message });
       }
     };
     fetchData();
-    appealData.map((item) => {
-      return setAppealPostId([...appealPostId, item._id]);
-    });
-    console.log(appealPostId);
-    // setAppealPostId()
-    // console.log(appealPostId);
   }, []);
   // console.log(appealData);
+
+  useEffect(() => {
+    async function fetchAppealComment() {
+      try {
+        const res = await axiosInstance.get(`/appeal/${userId}/comment`);
+        // console.log(appealData._id);
+        setAppealComment(res.data.appealComment);
+        // console.log(res.data.appealComment);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchAppealComment();
+    // console.log("appealComment" + appealComment);
+  }, []);
 
   // // 상태가 업데이트될 때마다 콘솔에 출력
   // useEffect(() => {
@@ -89,6 +115,7 @@ function AppealPage({}) {
           <p className="nanum">
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </p>
+
           <p className="text-[25px] nanum">"</p>
         </div>
       </div>
@@ -96,9 +123,7 @@ function AppealPage({}) {
       {/* ======================자랑하개 mainview_ 중간섹션 + 사진 + 글 + 댓글까지 한묶음 start */}
 
       {appealData.map((item, idx) => {
-        // console.log(appealData);
-        // setAppealPostId(item._id);
-        console.log("appealPostId" + appealPostId);
+        setAppealPostId(item._id);
         return (
           <>
             <div className="mt-[240px] mb-[65px] p-3 bg-white border-[1px]">
@@ -124,14 +149,71 @@ function AppealPage({}) {
                   사진 페이지네이션 들어가야 할 구간
                 </div>
                 <div className="nanum border-b-2">
-                  <p className="nanum mb-[5px]">{item.text}</p>
+                  <p className="nanum mb-[5px]">
+                    {item.text}
+
+                    {/* {appealData.map((item, idx) => {
+                return (
+                  <>
+                    <div>{item.text}</div>
+                  </>
+                );
+              })} */}
+                  </p>
                 </div>
                 {/* ============ 실질적인 글 구간 end */}
-
-                <AppealCommentList
-                  keyPressListener={keyPressListener}
-                  appealPostId={appealPostId[idx]}
-                />
+                {/* 구분선 아래, 댓글입력창부터 시작 */}
+                <form onSubmit={handleSubmit}>
+                  <div className=" flex my-[20px] gap-[10px]">
+                    <input
+                      type="text"
+                      placeholder="댓글입력"
+                      className=" border w-[365px] rounded-[25px] px-[10px] py-[5px] nanum"
+                      value={textData}
+                      onChange={textDataChange}
+                    />
+                    <button
+                      className="w-[50px] bg-da-100 rounded-[50px] "
+                      onKeyPress={keyPressListener} // Enter 키 이벤트 추가
+                      // onClick={clickListener}
+                    >
+                      확인
+                    </button>
+                  </div>
+                </form>
+                {/* comment section 시작 */}
+                {appealComment.map((item) => {
+                  return (
+                    <>
+                      <div className="flex justify-between mb-[20px] gap-[20px] items-center w-full ">
+                        <div className="flex items-center gap-1">
+                          <div className="flex gap-[1px] ">
+                            <img
+                              src="/images/commenticon.svg"
+                              alt=""
+                              className="block"
+                            />
+                            <div className="flex items-center w-[90px]">
+                              <p className="nanumBold">닉네임6글자</p>
+                            </div>
+                          </div>
+                          <div className="nanum flex-wrap w-[280px] overflow-wrap">
+                            {item.text}
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  );
+                })}
+                {/* <div className="flex mb-[20px] gap-[20px] items-center ">
+            <div className="flex items-center">
+              <img src="/images/commenticon.svg" alt="" className="block" />
+              <div className="flex items-center w-[90px]">
+                <p>닉네임6글자</p>
+              </div>
+            </div>
+            <div className="nanum">{commentList}</div>
+          </div> */}
                 {/* div*2개 남겨놔야해요 */}
               </div>
             </div>
