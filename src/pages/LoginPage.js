@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import TextFieldLine from "../components/TextField";
 import ButtonYe from "../components/ButtonYe";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { loginEmail, loginPassword } from "../utils/validation";
 
@@ -15,17 +15,19 @@ function LoginPage() {
     formState: { errors },
     reset,
   } = useForm({ mode: "onChange" });
-
   const [errorMsg, setErrorMsg] = useState("");
 
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   // console.log("errorMsg", errorMsg);
   async function onSubmit(body) {
     function handleLoginError(loginError) {
       setErrorMsg(loginError);
     }
-    dispatch(loginUser({ body, handleLoginError }));
+    const result = await dispatch(loginUser({ body, handleLoginError }));
+    if (loginUser.fulfilled.match(result)) {
+      navigate("/");
+    }
     reset();
   }
 

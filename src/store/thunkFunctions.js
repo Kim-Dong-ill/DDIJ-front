@@ -1,13 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../utils/axios";
 import { toast } from "react-toastify";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const loginUser = createAsyncThunk(
   "/user/login",
   async ({ body, handleLoginError }, thunkAPI) => {
     try {
-      //   const navigate = useNavigate();
       const res = await axiosInstance.post("/user/login", body);
       console.log("로그인 성공", res.data);
 
@@ -21,8 +20,6 @@ export const loginUser = createAsyncThunk(
         progress: undefined,
         theme: "light",
       });
-
-      //   navigate("/");
 
       return res.data;
     } catch (error) {
@@ -51,3 +48,13 @@ export const loginUser = createAsyncThunk(
     }
   }
 );
+
+export const authUser = createAsyncThunk("/user/auth", async (_) => {
+  try {
+    const res = await axiosInstance.get("/user/auth"); //여기에 토큰 데리고 온다.
+    console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+});

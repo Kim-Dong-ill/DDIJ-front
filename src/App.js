@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 import "./assets/tStyle.css";
 import "./assets/index.scss";
@@ -21,6 +21,7 @@ import MyPetModifyPage from "./pages/MyPetModifyPage";
 import AddMyPetPage from "./pages/AddMyPetPage";
 import { useDispatch, useSelector } from "react-redux";
 import ProtectRouter from "./components/ProtectRouter";
+import { authUser } from "./store/thunkFunctions";
 
 function App() {
   const pageTitle = [
@@ -34,11 +35,11 @@ function App() {
     return state.user.isAuth;
   });
   const dispatch = useDispatch();
-  //const { pathname } = useLocation(); //page의 path 알려준다.
+  const { pathname } = useLocation(); //page의 path 알려준다.
+  console.log(pathname);
   useEffect(() => {
     if (isAuth) {
-      //isAuth = true
-      // dispatch(authUser()); //dispatch는 신호를 보낸다.
+      dispatch(authUser()); //dispatch는 신호를 보낸다.
     }
   }, [isAuth, dispatch]); // 세개의 값중 하나가 변화하면 실행
   return (
@@ -67,10 +68,10 @@ function App() {
               <Route path="/usermod/:userid" element={<UserModifyPage />} />
               <Route path="/mypet/:userid" element={<MyPetListPage />} />
             </Route>
-            {/* header 없는 layout */}
 
+            {/* header 없는 layout */}
             <Route element={<ProtectRouter isAuth={isAuth} />}>
-              <Route index element={<MainPage />} />
+              <Route path="/" element={<MainPage />} />
               <Route path="/appeal/:petid" element={<AppealPage />} />
               <Route path="/mypet/mod/:petid" element={<MyPetModifyPage />} />
               <Route path="/mypet/add" element={<AddMyPetPage />} />
