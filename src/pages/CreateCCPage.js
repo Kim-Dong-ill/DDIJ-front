@@ -3,6 +3,7 @@ import ButtonBl from "../components/ButtonBl";
 import ButtonYe from "../components/ButtonYe";
 import { Link } from "react-router-dom";
 import TextFieldLine from "../components/TextField";
+import CheckCircleButton from "../components/CheckCircleButton";
 // import { Box, FormControl, MenuItem, Select } from "@mui/material";
 // import SelectButton from "../components/SelectButton";
 // import { SelectUnstyled, OptionUnstyled } from "@mui/base";
@@ -76,26 +77,11 @@ function CreateCCPage() {
               <br />
               확인하셨나요?
             </div>
-            <div className="flex justify-around items-center mb-4 px-4 py-2 gap-7">
-              {/* onClick 추가 */}
-              <button
-                className={
-                  "border-2 border-da-100 w-[185px] h-[35px] rounded-md hover:bg-da-300 hover:text-wh-100 ${selectButton === 'Yesbutton'? 'bg-da-300 text-white' : ''}"
-                }
-                // onClick={() => handleClick("Yesbutton")}
-              >
-                했어요
-              </button>
-              {/* onClick 추가 */}
-              <button
-                className={
-                  "border-2 border-da-100 w-[185px] h-[35px] rounded-md hover:bg-da-100 hover:text-red-500 ${selectButton === 'Nobutton' ? 'bg-da-100 text-red-500' : ''}"
-                }
-                // onClick={() => handleClick("Nobutton")}
-              >
-                안했어요
-              </button>
-            </div>
+            {/* <div className="flex justify-around items-center mb-4 px-4 py-2 gap-7"> */}
+            <CheckCircleButton
+              handleCheckCircle={handleCheckCircle}
+              checkCircle={checkCircle}
+            />
           </div>
           {/* 모임설명 */}
           <div>
@@ -107,12 +93,17 @@ function CreateCCPage() {
               />
             </div> */}
             <div className="flex flex-col mb-6 ">
-              <label className="mb-4" htmlFor="circleName">
+              <label
+                className={
+                  checkCircle ? `w-[100px] mb-4` : `w-[100px] mb-4 text-da-500`
+                }
+                htmlFor="circleName"
+              >
                 모임명
               </label>
               <TextFieldLine
                 required
-                // disabled={isCheck ? false : true}
+                disabled={checkCircle ? false : true}
                 id="circleName"
                 label="모임명"
                 fullWidth
@@ -123,7 +114,13 @@ function CreateCCPage() {
               value={introduction}
               onChange={introductionChange}
               placeholder="소개말을 입력해주세요."
-              className="bg-gray-200 rounded-md w-full h-[100px] text-justify mb-4 px-4 py-2"
+              className={
+                checkCircle
+                  ? `bg-gray-200 rounded-md w-full h-[100px] text-justify mb-4 px-4 py-2 border hover:border-ye-800 focus:border-ye-600 focus:border-2 outline-none`
+                  : `bg-gray-200 rounded-md w-full h-[100px] text-justify mb-4 px-4 py-2 border hover:border-ye-800 text-da-500`
+              }
+              // className="bg-gray-200 rounded-md w-full h-[100px] text-justify mb-4 px-4 py-2"
+              disabled={checkCircle ? false : true}
             />
           </div>
           {/* 장소,시간설정 */}
@@ -136,7 +133,15 @@ function CreateCCPage() {
                 readOnly
               /> */}
               <div>
-                <label htmlFor="startPoint" className=" mb-4 flex gap-2 ">
+                <label
+                  htmlFor="startPoint"
+                  className={
+                    checkCircle
+                      ? `mb-4 flex gap-2`
+                      : `mb-4 flex gap-2 text-da-500`
+                  }
+                >
+                  {/* <label htmlFor="startPoint" className=" mb-4 flex gap-2 "> */}
                   <img src="/images/plag_icon.svg" alt="깃발아이콘" />
                   출발지
                 </label>
@@ -148,7 +153,6 @@ function CreateCCPage() {
                   type="String"
                   disabled
                   readOnly
-                  onClick={startToggleBox}
                   className="cursor-pointer"
                 />
               </div>
@@ -176,7 +180,15 @@ function CreateCCPage() {
                 onClick={endToggleBox}
               /> */}
               <div>
-                <label htmlFor="endPoint" className=" mb-4 flex gap-2 ">
+                <label
+                  htmlFor="endPoint"
+                  className={
+                    checkCircle
+                      ? `mb-4 flex gap-2`
+                      : `mb-4 flex gap-2 text-da-500`
+                  }
+                >
+                  {/* <label htmlFor="endPoint" className=" mb-4 flex gap-2 "> */}
                   <img src="/images/plag_icon.svg" alt="깃발아이콘" />
                   목적지
                 </label>
@@ -220,7 +232,15 @@ function CreateCCPage() {
               />
             </div> */}
             <div className="mb-10">
-              <label htmlFor="startTime" className=" mb-4 flex gap-2 ">
+              <label
+                htmlFor="startTime"
+                className={
+                  checkCircle
+                    ? `mb-4 flex gap-2`
+                    : `mb-4 flex gap-2 text-da-500`
+                }
+              >
+                {/* <label htmlFor="startTime" className=" mb-4 flex gap-2 "> */}
                 <img src="/images/clock_icon.svg" alt="시계 아이콘" />
                 시작 시간
               </label>
@@ -233,11 +253,18 @@ function CreateCCPage() {
                 readOnly
                 onClick={startTimeChange}
                 className="cursor-pointer"
+                disabled={checkCircle ? false : true}
               />
             </div>
 
             <div>
-              <label htmlFor="usingTime" className="block mb-4">
+              <label
+                htmlFor="usingTime"
+                className={
+                  checkCircle ? `block mb-4` : `block mb-4 text-da-500`
+                }
+              >
+                {/* <label htmlFor="usingTime" className="block mb-4"> */}
                 <h4 className="flex mb-3 gap-2">
                   <img src="/images/clock_icon.svg" alt="시계 아이콘" />
                   소요 시간
@@ -246,7 +273,8 @@ function CreateCCPage() {
               <select
                 name="usingTime"
                 id="usingTime"
-                className="w-full border px-4 py- 2 mb-4 rounded-md block h-[45px] cursor-pointer border-[#e0e3e7] hover:border-ye-800 focus:border-ye-600 focus:border-2 outline-none"
+                className="w-full border px-4 py- 2 mb-4 rounded-md block h-[60px] cursor-pointer border-[#e0e3e7] hover:border-ye-800 focus:border-ye-600 focus:border-2 outline-none"
+                disabled={checkCircle ? false : true}
               >
                 {usingTime.map((item, idx) => {
                   return (
@@ -284,6 +312,7 @@ function CreateCCPage() {
                 name="max"
                 id="max"
                 className="w-full px-4 py-2 mb-10 border rounded-md  h-[60px] cursor-pointer border-[#e0e3e7] hover:border-ye-800 focus:border-ye-600 focus:border-2 outline-none"
+                disabled={checkCircle ? false : true}
               >
                 {max.map((item, idx) => {
                   return (
@@ -314,7 +343,10 @@ function CreateCCPage() {
             </Box> */}
           </div>
           {/* 취소,등록버튼 */}
-          <div className="flex justify-center items-center gap-10">
+          <div
+            className="flex justify-center items-center gap-10"
+            disabled={checkCircle ? false : true}
+          >
             <Link to="/circles">
               <ButtonBl>취소</ButtonBl>
             </Link>
@@ -324,6 +356,7 @@ function CreateCCPage() {
           </div>
         </div>
       </div>
+      {/* 중복모임 확인 안했을시 돋보기클릭 , 등록버튼 잠궈야함 */}
     </>
   );
 }
