@@ -1,7 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { authUser, loginUser } from "./thunkFunctions";
-import { toast } from "react-toastify";
-// import { useNavigate } from "react-router-dom";
 
 const initialState = {
   userData: {

@@ -31,7 +31,7 @@ function RegisterPage() {
     formState: { errors },
     reset,
     watch,
-  } = useForm({ mode: "onTouched" });
+  } = useForm({ mode: "onChange" });
 
   const [hasDog, setHasDog] = useState(false); //반려동물 있는지 없는지
   const [gender, setGender] = useState("male"); //남자인지 여자인지
