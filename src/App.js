@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 import "./assets/tStyle.css";
 import "./assets/index.scss";
@@ -19,16 +19,22 @@ import UserModifyPage from "./pages/UserModifyPage";
 import MyPetListPage from "./pages/MyPetListPage";
 import MyPetModifyPage from "./pages/MyPetModifyPage";
 import AddMyPetPage from "./pages/AddMyPetPage";
+import { useDispatch, useSelector } from "react-redux";
+import ProtectRouter from "./components/ProtectRouter";
+import { authUser } from "./store/thunkFunctions";
 
 function App() {
-  const pageTitle = [
-    { title: "함께걷개" },
-    { title: "어디가개" },
-    { title: "자랑하개" },
-    { title: "마이펫이지" },
-  ];
-
-  const [number, setNumber] = useState(0);
+  const isAuth = useSelector((state) => {
+    return state.user.isAuth;
+  });
+  const dispatch = useDispatch();
+  const { pathname } = useLocation(); //page의 path 알려준다.
+  console.log(pathname);
+  useEffect(() => {
+    if (isAuth) {
+      dispatch(authUser()); //dispatch는 신호를 보낸다.
+    }
+  }, [isAuth, dispatch]); // 세개의 값중 하나가 변화하면 실행
   return (
     <>
       {/* 인트로 페이지 */}
@@ -45,11 +51,15 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
 
             {/* header 있는 layout */}
-            <Route element={<Layout />}>
+
+   <Route element={<Layout isAuth={isAuth} />}>
               <Route
                 path="/appealwrite/:userId"
                 element={<AppealWritePage />}
               />
+
+         
+
               <Route path="/circles" element={<AllCCListPage />} />
               <Route path="/newcircle" element={<CreateCCPage />} />
               <Route path="/circles/:circleid" element={<CCViewPage />} />
@@ -58,11 +68,19 @@ function App() {
               <Route path="/usermod/:userid" element={<UserModifyPage />} />
               <Route path="/mypet/:userId" element={<MyPetListPage />} />
             </Route>
+
             {/* header 없는 layout */}
+
+<Route element={<ProtectRouter isAuth={isAuth} />}>
             <Route index element={<MainPage />} />
             <Route path="/appeal/:userId" element={<AppealPage />} />
             <Route path="/mypet/mod/:petid" element={<MyPetModifyPage />} />
             <Route path="/mypet/add" element={<AddMyPetPage />} />
+               </Route>
+
+            
+            
+
           </Routes>
         </div>
       </div>
