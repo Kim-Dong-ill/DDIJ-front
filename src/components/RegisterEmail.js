@@ -11,6 +11,7 @@ function RegisterEmail({ hasDog, register, errors }) {
       >
         이메일
       </label>
+
       <div>
         <TextFieldLine
           required

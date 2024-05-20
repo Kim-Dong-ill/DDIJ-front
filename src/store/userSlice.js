@@ -29,6 +29,7 @@ const userSlice = createSlice({
         state.isAuth = true;
         state.isLoding = false;
         state.userData = action.payload.user;
+        console.log(action.payload);
         localStorage.setItem("accessToken", action.payload.accessToken);
         // navigate("/");
       })

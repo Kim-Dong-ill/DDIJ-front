@@ -20,7 +20,7 @@ function LoginPage() {
 
   const dispatch = useDispatch();
 
-  console.log("errorMsg", errorMsg);
+  // console.log("errorMsg", errorMsg);
   async function onSubmit(body) {
     function handleLoginError(loginError) {
       setErrorMsg(loginError);

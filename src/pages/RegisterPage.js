@@ -39,6 +39,7 @@ function RegisterPage() {
   const [vaccine, setVaccine] = useState(false); //기본접종 여부
   const [rabies, setRabies] = useState(false); //광견병 여부
   const [pageMove, setPageMove] = useState(true);
+  const [email, setEmail] = useState("");
 
   function handleHasDog(result) {
     setHasDog(result);
@@ -71,6 +72,7 @@ function RegisterPage() {
     body.neuter = neuter;
     body.rabies = rabies;
     body.vaccine = vaccine;
+    body.email = email;
 
     try {
       const res = await axiosInstance.post("/user/register", body);

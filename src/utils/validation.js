@@ -43,7 +43,7 @@ export const nickName = {
     message: "8자 이내로 입력해주세요",
   },
 };
-export const adress = {
+export const address = {
   required: {
     value: true,
     message: "주소는 필수입니다.",
