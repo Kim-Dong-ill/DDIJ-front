@@ -1,6 +1,6 @@
 import React from "react";
 
-function VaccineButton({ handleVaccine, vaccine }) {
+function VaccineButton({ handleVaccine, vaccine, register }) {
   function doVaccine() {
     handleVaccine(true);
   }
@@ -30,13 +30,14 @@ function VaccineButton({ handleVaccine, vaccine }) {
           </label>
         </button>
         <input
-          value={true}
+          value={vaccine}
           hidden
           // onClick={doVaccine}
           checked={vaccine ? true : false}
           id="doVaccine"
           type="radio"
           name="pVaccine"
+          {...register("vaccine")}
         />
       </div>
 
@@ -60,13 +61,14 @@ function VaccineButton({ handleVaccine, vaccine }) {
           </label>
         </button>
         <input
-          value={false}
+          value={vaccine}
           hidden
           // onClick={doNotVaccine}
           checked={vaccine ? false : true}
           id="doNotVaccine"
           type="radio"
           name="pVaccine"
+          {...register("vaccine")}
         />
       </div>
     </div>

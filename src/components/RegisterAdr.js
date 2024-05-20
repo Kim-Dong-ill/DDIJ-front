@@ -1,13 +1,13 @@
 import React from "react";
 import TextFieldLine from "../components/TextField";
-import { uAdress } from "../utils/validation";
+import { address } from "../utils/validation";
 
 function RegisterAdr({ hasDog, errors, register }) {
   return (
     <div className="flex flex-col gap-2 mb-10">
       <label
         className={hasDog ? `w-[100px]` : `w-[100px] text-da-500`}
-        htmlFor="uAdress"
+        htmlFor="address"
       >
         주소
       </label>
@@ -15,14 +15,14 @@ function RegisterAdr({ hasDog, errors, register }) {
         <TextFieldLine
           required
           disabled={hasDog ? false : true}
-          id="uAdress"
+          id="address"
           label="주소"
           fullWidth
-          {...register("uAdress", uAdress)}
+          {...register("address", address)}
         />
-        {errors.uAdress && (
+        {errors.address && (
           <div className="nanumBold text-red-500 text-xs mt-1">
-            {errors.uAdress.message}
+            {errors.address.message}
           </div>
         )}
       </div>

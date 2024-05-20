@@ -1,6 +1,6 @@
 import React from "react";
 
-function PetGenderButton({ handleGender, gender }) {
+function PetGenderButton({ handleGender, gender, register }) {
   function male() {
     handleGender("male");
   }
@@ -12,7 +12,15 @@ function PetGenderButton({ handleGender, gender }) {
   return (
     <div className="flex gap-10 items-center">
       <div className="flex items-center gap-2 ">
-        <input type="radio" id="male" name="pGender" hidden value="남" />
+        <input
+          type="radio"
+          id="male"
+          name="pGender"
+          hidden
+          value="남"
+          checked={gender === "male" ? true : false}
+          {...register("gender")}
+        />
         <label
           onClick={male}
           className="flex gap-2 items-center"
@@ -34,7 +42,15 @@ function PetGenderButton({ handleGender, gender }) {
         </label>
       </div>
       <div className="flex itmes-center gap-2">
-        <input type="radio" id="female" name="pGender" hidden value="여" />
+        <input
+          checked={gender === "female" ? true : false}
+          type="radio"
+          id="female"
+          name="pGender"
+          hidden
+          value="여"
+          {...register("gender")}
+        />
         <label
           onClick={female}
           className="flex items-center gap-2"
