@@ -1,12 +1,54 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import axiosInstance from "../utils/axios";
 
 function MyPetListPage() {
+  const { userId } = useParams();
+  const [mypetList, setMyPetList] = useState([]);
+  const [petId, setPetId] = useState([]);
+  const [mainPetId, setMainPetId] = useState();
+  console.log(userId);
+  //   useEffect(() => {
+  //     const loadPetList = async () => {};
+  //     loadPetList();
+  //   }, []);
+  useEffect(() => {
+    const loadPetList = async () => {
+      try {
+        const res = await axiosInstance.get(`/pet/list/${userId}`);
+        console.log(res.data.myPetList);
+        setMyPetList(res.data.myPetList);
+      } catch (error) {}
+    };
+    loadPetList();
+  }, []);
+
+  // ===== gpt
+  useEffect(() => {
+    if (mypetList.length > 0) {
+      const ids = mypetList.map((item) => item._id);
+      setPetId(ids);
+    }
+  }, [mypetList]);
+
+  useEffect(() => {
+    const loadMainPetId = async () => {
+      try {
+        const res = await axiosInstance.get(`/mainpet/${userId}`);
+        setMainPetId(res.data);
+      } catch (error) {}
+    };
+  }, []);
+
   return (
     <div
       className="w-[500px] bg-white pt-[90px] pb-[115px] border border-da-100"
       style={{ height: "calc(100% - 65px)" }}
     >
+      {/* {mypetList.map((item, idx) => {
+        return <>{item.pName}</>;
+      })} */}
+      {/* 상단 버튼 시작 */}
       <div className="flex mb-[30px]">
         <Link to="/userinfo/:userid" className="flex-1">
           <button className="w-full border-b  border-gray-200 shadow-bottom px-2 py-3 text-[15px] hover:border-gray-800 ">
@@ -19,95 +61,108 @@ function MyPetListPage() {
           </button>
         </Link>
       </div>
+      {/* 상단 버튼 끝 */}
 
-      <div className="w-[450px] m-auto grid gap-[25px]  bg-white text-center">
-        <div className="border border-da-100 rounded-lg">
-          <p className="text-right pr-[15px] pt-[15px]">
-            <button className="bg-ye-600 h-[30px] px-[5px] rounded-lg">
-              <img
-                src="/images/star1.svg"
-                className="inline-block align-middle w-[14px] h-[14px] mr-[3px] "
-              />
-              <span className="inline-block  text-[14px]">대표</span>
-            </button>
-          </p>
-          <img
-            src="/images/dog1.svg"
-            className="w-[100px] h-[100px] rounded-full m-auto"
-          />
-          <div>
-            <span className="inline-block leading-[40px] mr-[10px] nanumBold">
-              뚜비
-            </span>
-            <i class="fa-solid fa-mars"></i>
-          </div>
-          <div className="border-t">
-            <Link to="/mypet/mod/:petid">
-              <button className="inilne-block leading-[40px] nanum text-[14px] text-da-500">
-                수정하기
+      {/* 강아지1 시작 */}
+
+      {mypetList.map((item, idx) => {
+        return (
+          <>
+            <div className="w-[450px] m-auto grid mb-[25px] bg-white text-center">
+              <div className="border border-da-100 rounded-lg">
+                <p className="text-right pr-[15px] pt-[15px]">
+                  {/* {petId==} */}
+                  <button className="bg-ye-600 h-[30px] px-[5px] rounded-lg">
+                    <img
+                      src="/images/star1.svg"
+                      className="inline-block align-middle w-[14px] h-[14px] mr-[3px] "
+                    />
+                    <span className="inline-block  text-[14px]">대표</span>
+                  </button>
+                </p>
+                <img
+                  src="/images/dog1.svg"
+                  className="w-[100px] h-[100px] rounded-full m-auto"
+                />
+                <div>
+                  <span className="inline-block leading-[40px] mr-[10px] nanumBold">
+                    {item.pName}
+                  </span>
+                  <i class="fa-solid fa-mars"></i>
+                </div>
+                <div className="border-t">
+                  <Link to="/mypet/mod/:petid">
+                    <button className="inilne-block leading-[40px] nanum text-[14px] text-da-500">
+                      수정하기
+                    </button>
+                  </Link>
+                </div>
+              </div>
+
+              {/* <div className="border border-da-100 rounded-lg">
+                <p className="text-right pr-[15px] pt-[15px]">
+                  <button className="bg-white h-[30px] px-[5px] rounded-lg border border-da-100">
+                    <img
+                      src="/images/star1.svg"
+                      className="inline-block align-middle w-[14px] h-[14px] mr-[3px] "
+                    />
+                    <span className="inline-block  text-[14px]">대표</span>
+                  </button>
+                </p>
+                <img
+                  src="/images/dog2.svg"
+                  className="w-[100px] h-[100px] rounded-full m-auto"
+                />
+                <div>
+                  <span className="inline-block leading-[40px] mr-[10px] nanumBold">
+                    나나
+                  </span>
+                  <i class="fa-solid fa-venus"></i>
+                </div>
+                <div className="border-t">
+                  <Link to="/mypet/mod/:petid">
+                    <button className="inilne-block leading-[40px] nanum text-[14px] text-da-500">
+                      수정하기
+                    </button>
+                  </Link>
+                </div>
+              </div> */}
+            </div>
+          </>
+        );
+      })}
+      {mypetList.length < 3 ? (
+        <div className="w-[450px] m-auto grid bg-white text-center">
+          <div className="border border-da-100 rounded-lg">
+            <p className="text-right pr-[15px] pt-[15px]">
+              <button className="bg-white h-[30px] px-[5px] rounded-lg border border-da-100">
+                <img
+                  src="/images/star1.svg"
+                  className="inline-block align-middle w-[14px] h-[14px] mr-[3px] "
+                />
+                <span className="inline-block  text-[14px]">대표</span>
               </button>
-            </Link>
+            </p>
+            <div className=" bg-ye-500 h-[100px] w-[100px] rounded-full flex justify-center items-center m-auto ">
+              <img
+                src="/images/camera1.svg"
+                className="w-[60px] h-[60px] m-auto"
+              />
+            </div>
+            <div>
+              <span className="inline-block leading-[40px] mr-[10px]"></span>
+              {/* <i class="fa-solid fa-mars"></i> */}
+            </div>
+            <div className="border-t">
+              <Link to="/mypet/add">
+                <button className="inilne-block leading-[40px] nanum text-[14px] text-da-500">
+                  추가하기
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
-
-        <div className="border border-da-100 rounded-lg">
-          <p className="text-right pr-[15px] pt-[15px]">
-            <button className="bg-white h-[30px] px-[5px] rounded-lg border border-da-100">
-              <img
-                src="/images/star1.svg"
-                className="inline-block align-middle w-[14px] h-[14px] mr-[3px] "
-              />
-              <span className="inline-block  text-[14px]">대표</span>
-            </button>
-          </p>
-          <img
-            src="/images/dog2.svg"
-            className="w-[100px] h-[100px] rounded-full m-auto"
-          />
-          <div>
-            <span className="inline-block leading-[40px] mr-[10px] nanumBold">
-              나나
-            </span>
-            <i class="fa-solid fa-venus"></i>
-          </div>
-          <div className="border-t">
-            <Link to="/mypet/mod/:petid">
-              <button className="inilne-block leading-[40px] nanum text-[14px] text-da-500">
-                수정하기
-              </button>
-            </Link>
-          </div>
-        </div>
-
-        <div className="border border-da-100 rounded-lg">
-          <p className="text-right pr-[15px] pt-[15px]">
-            <button className="bg-white h-[30px] px-[5px] rounded-lg border border-da-100">
-              <img
-                src="/images/star1.svg"
-                className="inline-block align-middle w-[14px] h-[14px] mr-[3px] "
-              />
-              <span className="inline-block  text-[14px]">대표</span>
-            </button>
-          </p>
-          <div className=" bg-ye-500 h-[100px] w-[100px] rounded-full flex justify-center items-center m-auto ">
-            <img
-              src="/images/camera1.svg"
-              className="w-[60px] h-[60px] m-auto"
-            />
-          </div>
-          <div>
-            <span className="inline-block leading-[40px] mr-[10px]"></span>
-            {/* <i class="fa-solid fa-mars"></i> */}
-          </div>
-          <div className="border-t">
-            <Link to="/mypet/add">
-              <button className="inilne-block leading-[40px] nanum text-[14px] text-da-500">
-                추가하기
-              </button>
-            </Link>
-          </div>
-        </div>
-      </div>
+      ) : null}
     </div>
   );
 }

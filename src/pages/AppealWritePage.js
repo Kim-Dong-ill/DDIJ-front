@@ -1,43 +1,61 @@
-import React, { useState } from "react";
-import Header from "../components/Header";
+import React, { useEffect, useState } from "react";
+// import Header from "../components/Header";
 import ButtonYe from "../components/ButtonYe";
 import ButtonBl from "../components/ButtonBl";
-// import axiosInstance from "../utils/axios";
-// import { useParams } from "react-router-dom";
+import axiosInstance from "../utils/axios";
+import { useNavigate, useParams } from "react-router-dom";
 
 function AppealWritePage() {
-  // const { petid } = useParams();
-  // const [appealData, setAppealData] = useState({
-  //   text: "",
-  //   // images:[]
-  // });
-  // async function handleSubmit(event) {
-  //   event.preventDefault();
-  //   const body = {
-  //     ...appealData,
-  //   };
-  //   try {
-  //     await axiosInstance.post(`/appeal/${petid}`, body);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
+  const navigate = useNavigate();
+  const { userId } = useParams();
+  const [appealData, setAppealData] = useState({
+    text: "",
+    // images:[]
+  });
+  const [mainPetId, setMainPetId] = useState();
 
-  // function handleChange(event) {
-  //   const { name, value } = event.target;
-  //   console.log(value, name);
-  //   setAppealData((prevState) => {
-  //     return {
-  //       ...prevState,
-  //       [name]: value,
-  //     };
-  //   });
-  // }
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const body = {
+      ...appealData,
+      mainPetId: mainPetId,
+    };
+    try {
+      await axiosInstance.post(`/appeal/${userId}`, body);
+      navigate(`/appeal/${userId}`);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    console.log(value, name);
+    setAppealData((prevState) => {
+      return {
+        ...prevState,
+        [name]: value,
+      };
+    });
+  }
+
+  useEffect(() => {
+    async function findMainPet() {
+      try {
+        const res = await axiosInstance.get(`/mainpet/${userId}`);
+        console.log(res.data);
+        setMainPetId(res.data.mainPetId._id);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    findMainPet();
+  }, []);
 
   return (
     <>
-      {/* <form onSubmit={handleSubmit}> */}
-      <form>
+      <form onSubmit={handleSubmit}>
+        {/* <form> */}
         <div className="w-[450px] m-auto px-5 pb-[80px] pt-[150px]">
           <div className="mb-[10px] flex">
             <img
@@ -67,12 +85,22 @@ function AppealWritePage() {
             placeholder="내용을 입력하세요."
             type="text"
             name="text"
-            // onChange={handleChange}
-            // value={appealData.text}
+            onChange={handleChange}
+            value={appealData.text}
           />
           <div className="flex justify-center h-[50px] gap-2 ">
-            <ButtonYe>등록</ButtonYe>
-            <ButtonBl>취소</ButtonBl>
+            <ButtonYe>
+              <button>등록</button>
+            </ButtonYe>
+
+            <ButtonBl
+              onClick={() => {
+                navigate(-1);
+              }}
+            >
+              취소
+            </ButtonBl>
+
             {/* <button className=" w-[82px] h-[30px] text-[13px] text-center rounded-2xl bg-da-300 text-white hover:bg-ye-600 hover:text-da-300">
               등록
             </button>

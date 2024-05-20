@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function Header() {
   let title = " ";
   const locationHook = useLocation();
   const [currentFirstUrl, setCurrentFirstUrl] = useState(null);
   const splitUrl = locationHook?.pathname?.split("/") ?? null;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const location = splitUrl?.length > 0 ? splitUrl[1] : splitUrl[0];
@@ -37,7 +38,18 @@ function Header() {
   return (
     <>
       <div className="flex items-end justify-between h-[90px] px-[10px] bg-ye-400 fixed w-[500px] z-50">
-        <h1 className="text-white navbar">{title}</h1>
+        <div className="flex items-center">
+          <img
+            src="/images/backicon_white.svg"
+            alt=""
+            onClick={() => {
+              navigate(-1);
+            }}
+            className="cursor-pointer"
+          />
+
+          <h1 className="text-white navbar">{title}</h1>
+        </div>
 
         <Link to="/">
           <img src="/images/DDIJlogo.svg" alt="" />

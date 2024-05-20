@@ -51,24 +51,36 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
 
             {/* header 있는 layout */}
-            <Route element={<Layout isAuth={isAuth} />}>
-              <Route path="/appealwrite/:petid" element={<AppealWritePage />} />
+
+   <Route element={<Layout isAuth={isAuth} />}>
+              <Route
+                path="/appealwrite/:userId"
+                element={<AppealWritePage />}
+              />
+
+         
+
               <Route path="/circles" element={<AllCCListPage />} />
               <Route path="/newcircle" element={<CreateCCPage />} />
               <Route path="/circles/:circleid" element={<CCViewPage />} />
               <Route path="/circles/:circleid/mod" element={<CreateCCPage />} />
               <Route path="/userinfo/:userid" element={<UserInfoPage />} />
               <Route path="/usermod/:userid" element={<UserModifyPage />} />
-              <Route path="/mypet/:userid" element={<MyPetListPage />} />
+              <Route path="/mypet/:userId" element={<MyPetListPage />} />
             </Route>
 
             {/* header 없는 layout */}
-            <Route element={<ProtectRouter isAuth={isAuth} />}>
-              <Route path="/" element={<MainPage />} />
-              <Route path="/appeal/:petid" element={<AppealPage />} />
-              <Route path="/mypet/mod/:petid" element={<MyPetModifyPage />} />
-              <Route path="/mypet/add" element={<AddMyPetPage />} />
-            </Route>
+
+<Route element={<ProtectRouter isAuth={isAuth} />}>
+            <Route index element={<MainPage />} />
+            <Route path="/appeal/:userId" element={<AppealPage />} />
+            <Route path="/mypet/mod/:petid" element={<MyPetModifyPage />} />
+            <Route path="/mypet/add" element={<AddMyPetPage />} />
+               </Route>
+
+            
+            
+
           </Routes>
         </div>
       </div>
