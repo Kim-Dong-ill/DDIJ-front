@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../utils/axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 
 export const loginUser = createAsyncThunk(
   "/user/login",

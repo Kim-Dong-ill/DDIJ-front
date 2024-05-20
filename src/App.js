@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 
 import "./assets/tStyle.css";
@@ -24,13 +24,6 @@ import ProtectRouter from "./components/ProtectRouter";
 import { authUser } from "./store/thunkFunctions";
 
 function App() {
-  const pageTitle = [
-    { title: "함께걷개" },
-    { title: "어디가개" },
-    { title: "자랑하개" },
-    { title: "마이펫이지" },
-  ];
-
   const isAuth = useSelector((state) => {
     return state.user.isAuth;
   });
