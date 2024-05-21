@@ -26,28 +26,50 @@ const usingTime = [
 ];
 
 function CreateCCPage() {
-  const [introduction, setIntroduction] = useState(""); // 소개말
-  const [startTime, setStartTime] = useState(""); // 시작시간
+  const [title, setTitle] = useState(""); // 모임명
+  const [content, setContent] = useState(""); // 소개말
   const [startshowBox, setStartshowBox] = useState(false); // 출발지 토글박스
   const [endshowBox, setEndshowBox] = useState(false); // 목적지 토글박스
-  // const [usingTime, setUsingTime] = useState([]); // 소요시간
-  // const [max, setMax] = useState([]);
+  const [startTime, setStartTime] = useState(""); // 시작시간
+  const [usingTime, setUsingTime] = useState([]); // 소요시간
+  const [max, setMax] = useState([]);
   // const [selectButton, setSelectButton] = useState(null);
   const [checkCircle, setCheckCircle] = useState(false); // 중복된모임체크
 
-  const introductionChange = (e) => {
-    setIntroduction(e.target.value);
+  // 모임명
+  const titleChange = (e) => {
+    setTitle(e.target.value);
   };
+
+  // 소개말
+  const contentChange = (e) => {
+    setContent(e.target.value);
+  };
+
+  // 출발지 토글박스
+  const startToggleBox = () => {
+    setStartshowBox(!startshowBox);
+  };
+
+  // 목적지 토글박스
+  const endToggleBox = () => {
+    setEndshowBox(!endshowBox);
+  };
+  // 시작시간
   const startTimeChange = (e) => {
     setStartTime(e.target.value);
   };
 
-  const startToggleBox = () => {
-    setStartshowBox(!startshowBox);
+  // 소요시간
+  const usingTimeChange = (e) => {
+    setUsingTime(e.target.value);
   };
-  const endToggleBox = () => {
-    setEndshowBox(!endshowBox);
+
+  // 인원수
+  const maxChange = (e) => {
+    setMax(e.target.value);
   };
+
   // const handleUsingTimeChange = (e) => {
   //   setUsingTime(e.target.value);
   // };
@@ -58,9 +80,15 @@ function CreateCCPage() {
   // //   setSelectButton(button);
   // // };
 
+  // 중복된모임체크
   function handleCheckCircle(result) {
     setCheckCircle(result);
   }
+
+  const [newCircle, setNewCircle] = useState({
+    title: "",
+    content: "",
+  });
 
   return (
     <>
@@ -69,7 +97,7 @@ function CreateCCPage() {
         style={{ height: "calc(100%)" }}
       >
         <div className="pt-[90px] pb-[100px]">
-          {/* 경고창 */}
+          {/* 중복모임 체크 */}
           <div className="mt-4">
             <div className="text-center border rounded-md  mb-4 px-4 py-2">
               <span className="text-red-500">동일한 시간대</span>에 중복된
@@ -83,15 +111,8 @@ function CreateCCPage() {
               checkCircle={checkCircle}
             />
           </div>
-          {/* 모임설명 */}
+          {/* 모임명 */}
           <div>
-            {/* <div className="flex justify-center items-center rounded-md gap-7 mb-4 px-4 py-2">
-              <h4>모임명</h4>
-              <input
-                type="text"
-                className="border-2 rounded-md w-[300px] px-4 py-2"
-              />
-            </div> */}
             <div className="flex flex-col mb-6 ">
               <label
                 className={
@@ -107,12 +128,15 @@ function CreateCCPage() {
                 id="title"
                 label="모임명"
                 fullWidth
+                onChange={titleChange}
+                value={title}
               />
             </div>
 
+            {/* 소개말 */}
             <textarea
-              value={introduction}
-              onChange={introductionChange}
+              value={content}
+              onChange={contentChange}
               placeholder="소개말을 입력해주세요."
               id="content"
               className={
@@ -127,12 +151,6 @@ function CreateCCPage() {
           {/* 장소,시간설정 */}
           <div>
             <div>
-              {/* <input
-                type="String"
-                className="w-full border-2 rounded-md mb-3 px-4 py-2 cursor-pointer"
-                onClick={startToggleBox}
-                readOnly
-              /> */}
               <div>
                 <label
                   htmlFor="startPoint"
@@ -170,16 +188,6 @@ function CreateCCPage() {
               )}
             </div>
             <div>
-              {/* <h4 className="mb-3  flex gap-2">
-                <img src="/images/plag_icon.svg" alt="깃발아이콘" />
-                목적지
-              </h4>
-              <input
-                type="text"
-                className="w-full border-2 rounded-md mb-3 px-4 py-2 cursor-pointer"
-                readOnly
-                onClick={endToggleBox}
-              /> */}
               <div>
                 <label
                   htmlFor="endPoint"
@@ -216,22 +224,7 @@ function CreateCCPage() {
                 </div>
               )}
             </div>
-            {/* <div>
-              <label htmlFor="startTime" className="mb-4">
-                <h4 className="flex mb-3 gap-2">
-                  <img src="/images/clock_icon.svg" alt="시계 아이콘" />
-                  시작시간
-                </h4>
-              </label>
-              <input
-                type="text"
-                id="startTime"
-                name="startTime"
-                value={startTime}
-                className="w-full border-2 rounded-md mb-4 px-4 py-2 "
-                onChange={startTimeChange}
-              />
-            </div> */}
+
             <div className="mb-10">
               <label
                 htmlFor="startTime"
@@ -252,7 +245,8 @@ function CreateCCPage() {
                 fullWidth
                 type="String"
                 readOnly
-                onClick={startTimeChange}
+                value={startTime}
+                onChange={startTimeChange}
                 className="cursor-pointer"
                 disabled={checkCircle ? false : true}
               />
@@ -276,10 +270,12 @@ function CreateCCPage() {
                 id="usingTime"
                 className="w-full border px-4 py- 2 mb-4 rounded-md block h-[60px] cursor-pointer border-[#e0e3e7] hover:border-ye-800 focus:border-ye-600 focus:border-2 outline-none"
                 disabled={checkCircle ? false : true}
+                onChange={usingTimeChange}
+                value={newCircle.usingTime}
               >
-                {usingTime.map((item, idx) => {
+                {usingTime.map((item) => {
                   return (
-                    <option value={item.key} key={idx}>
+                    <option value={item.key} key={item.key}>
                       {item.value}
                     </option>
                   );
@@ -303,7 +299,12 @@ function CreateCCPage() {
             </CustomSelect> */}
 
             <div>
-              <label htmlFor="max" className="block mb-4">
+              <label
+                htmlFor="max"
+                className={
+                  checkCircle ? `block mb-4` : `block mb-4 text-da-500`
+                }
+              >
                 <h4 className="flex mb-3 gap-2">
                   <img src="/images/people_icon.svg" alt="사람 아이콘" />
                   인원수
@@ -314,6 +315,8 @@ function CreateCCPage() {
                 id="max"
                 className="w-full px-4 py-2 mb-10 border rounded-md  h-[60px] cursor-pointer border-[#e0e3e7] hover:border-ye-800 focus:border-ye-600 focus:border-2 outline-none"
                 disabled={checkCircle ? false : true}
+                value={max}
+                onChange={maxChange}
               >
                 {max.map((item, idx) => {
                   return (
