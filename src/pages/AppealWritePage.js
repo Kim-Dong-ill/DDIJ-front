@@ -10,13 +10,12 @@ import FileUpload from "../components/FileUpload";
 import axiosInstance from "../utils/axios";
 import { useNavigate, useParams } from "react-router-dom";
 
-
 function AppealWritePage() {
   const navigate = useNavigate();
   const { userId } = useParams();
   const [appealData, setAppealData] = useState({
     text: "",
-    // images:[]
+    images: [],
   });
   const [mainPetId, setMainPetId] = useState();
 
@@ -58,9 +57,9 @@ function AppealWritePage() {
     findMainPet();
   }, []);
 
-  const [appealData, setAppealData] = useState({
-    images: [],
-  });
+  // const [appealData, setAppealData] = useState({
+  //   images: [],
+  // });
 
   // const { petid } = useParams();
 
@@ -78,7 +77,12 @@ function AppealWritePage() {
       <form onSubmit={handleSubmit}>
         {/* <form> */}
         <div className="w-[450px] m-auto px-5 pb-[80px] pt-[150px]">
-          <FileUpload images={appealData.images} onImageChange={handleImage} />
+          {/* <FileUpload images={appealData.images} onImageChange={handleImage} /> */}
+          <FileUpload
+            images={appealData.images}
+            onImageChange={handleImage}
+            userId={userId}
+          />
 
           <textarea
             className="w-full nanum h-[450px] px-[10px] border-b-2 rounded-[10px] resize-none mb-7"
