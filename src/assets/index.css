@@ -1,0 +1,5 @@
+@charset "UTF-8";
+@import url(./global.css);
+textarea {
+  resize: none; /* 크기 조정 비활성화 */
+}/*# sourceMappingURL=index.css.map */

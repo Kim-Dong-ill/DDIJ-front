@@ -4,6 +4,7 @@ import ButtonYe from "../components/ButtonYe";
 import ButtonBl from "../components/ButtonBl";
 // import axiosInstance from "../utils/axios";
 // import { useParams } from "react-router-dom";
+import FileUpload from "../components/FileUpload";
 
 function AppealWritePage() {
   // const { petid } = useParams();
@@ -34,34 +35,28 @@ function AppealWritePage() {
   //   });
   // }
 
+  const [appealData, setAppealData] = useState({
+    images: [],
+  });
+
+  // const { petid } = useParams();
+
+  function handleImage(newImages) {
+    setAppealData((prevState) => {
+      return {
+        ...prevState,
+        images: newImages,
+      };
+    });
+  }
+
   return (
     <>
       {/* <form onSubmit={handleSubmit}> */}
       <form>
         <div className="w-[450px] m-auto px-5 pb-[80px] pt-[150px]">
-          <div className="mb-[10px] flex">
-            <img
-              src="/images/addPhotoicon.svg"
-              alt=""
-              className="m-auto mb-5"
-            />
-            <img
-              src="/images/dog1.svg"
-              alt=""
-              className="m-auto mb-5 w-[87px] h-[86px] rounded-lg"
-            />
-            <img
-              src="/images/dog2.svg"
-              alt=""
-              className="m-auto mb-5 w-[87px] h-[86px] rounded-lg"
-            />
-            <img
-              src="/images/dog1.svg"
-              alt=""
-              className="m-auto mb-5 w-[87px] h-[86px] rounded-lg"
-            />
-            {/* 여기에 온클릭으로 사진 추가할 수 있게끔 기능구현해야함 */}
-          </div>
+          <FileUpload images={appealData.images} onImageChange={handleImage} />
+
           <textarea
             className="w-full nanum h-[450px] px-[10px] border-b-2 rounded-[10px] resize-none mb-7"
             placeholder="내용을 입력하세요."

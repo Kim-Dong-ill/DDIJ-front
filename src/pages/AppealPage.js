@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
 // import axiosInstance from "../../utils/axios";
+// import ImageSlider from "../components/ImageSlider";
 
 function AppealPage() {
   let [commentList, setCommentList] = useState([]);
@@ -65,7 +66,9 @@ function AppealPage() {
           {/* 사진, 내용 넣는 section */}
           {/* 실질적인 글 구간 start ============ */}
 
-          <div className="w-[430px] h-[320px] bg-ye-100 m-auto mb-[25px]"></div>
+          <div className="w-[430px] h-[320px] bg-ye-100 m-auto mb-[25px]">
+            {/* <ImageSlider /> */}
+          </div>
           <div className="text-center mb-[20px]">
             사진 페이지네이션 들어가야 할 구간
           </div>
