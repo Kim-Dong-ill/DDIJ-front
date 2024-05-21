@@ -23,8 +23,12 @@ function Navbar() {
           {/* relative 클래스 추가 */}
           {menu.map((item, idx) => {
             return (
-              <Link to={`/${item.route}`} onClick={() => handleMenuClick(idx)}>
-                <li key={idx} className="text-center text-white navbar ">
+              <Link
+                to={`/${item.route}`}
+                onClick={() => handleMenuClick(idx)}
+                key={idx}
+              >
+                <li className="text-center text-white navbar ">
                   <img
                     src={`/images/menulogo${idx + 1}.svg`}
                     alt=""

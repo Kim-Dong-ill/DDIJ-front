@@ -15,7 +15,6 @@ function AppealPage({}) {
 
   const [appealData, setAppealData] = useState([]);
   const [appealPostId, setAppealPostId] = useState([]);
-  const [petList, setPetList] = useState([]);
 
   const keyPressListener = (event) => {
     if (event.key === "Enter") {
@@ -38,20 +37,7 @@ function AppealPage({}) {
       }
     };
 
-    // 펫 리스트 배열화하기????
-    const loadPetList = async () => {
-      try {
-        const resPetList = await axiosInstance.get(`/pet/list/${userId}`);
-        // console.log("resPetList" + resPetList.data);
-        // setPetList(resPetList);
-        resPetList.map((item) => {
-          return <>{item}</>;
-        });
-      } catch (error) {}
-    };
-
     fetchData();
-    loadPetList();
   }, []);
 
   return (
@@ -79,7 +65,7 @@ function AppealPage({}) {
         <div className="flex justify-center items-center gap-1">
           <div className="nanumBold">뚜비</div>
           <div>
-            <i className="fa-solid fa-mars"></i>
+            <i class="fa-solid fa-mars"></i>
           </div>
         </div>
         <div className="flex justify-center">
@@ -96,43 +82,40 @@ function AppealPage({}) {
       {appealData.map((item, idx) => {
         console.log("appealPostId" + appealPostId);
         return (
-
-          <div
-            className="mt-[240px] mb-[65px] p-3 bg-white border-[1px]"
-            key={idx}
-          >
-            <div className="py-10 px-5 ">
-              {/* 강아지 아바타 / 닉네임 section 시작 */}
-              <div className="flex justify-between mb-[20px]">
-                <div className="flex gap-3">
-                  <div className="w-[50px] h-[50px] bg-ye-100 rounded-[50px]"></div>
-                  <div>
-                    <div className="nanumBold">뚜비</div>
-                    <p className="nanum">1일전</p>
+          <>
+            <div className="mt-[240px] mb-[65px] p-3 bg-white border-[1px]">
+              <div className="py-10 px-5 ">
+                {/* 강아지 아바타 / 닉네임 section 시작 */}
+                <div className="flex justify-between mb-[20px]">
+                  <div className="flex gap-3">
+                    <div className="w-[50px] h-[50px] bg-ye-100 rounded-[50px]"></div>
+                    <div>
+                      <div className="nanumBold">뚜비</div>
+                      <p className="nanum">1일전</p>
+                    </div>
                   </div>
                   <div></div>
                 </div>
-                <div></div>
-              </div>
-              {/* 사진, 내용 넣는 section */}
-              {/* 실질적인 글 구간 start ============ */}
+                {/* 사진, 내용 넣는 section */}
+                {/* 실질적인 글 구간 start ============ */}
 
-              <div className="w-[430px] h-[320px] bg-ye-100 m-auto mb-[25px]"></div>
-              <div className="text-center mb-[20px]">
-                사진 페이지네이션 들어가야 할 구간
-              </div>
-              <div className="nanum border-b-2">
-                <p className="nanum mb-[5px]">{item.text}</p>
-              </div>
-              {/* ============ 실질적인 글 구간 end */}
+                <div className="w-[430px] h-[320px] bg-ye-100 m-auto mb-[25px]"></div>
+                <div className="text-center mb-[20px]">
+                  사진 페이지네이션 들어가야 할 구간
+                </div>
+                <div className="nanum border-b-2">
+                  <p className="nanum mb-[5px]">{item.text}</p>
+                </div>
+                {/* ============ 실질적인 글 구간 end */}
 
-              <AppealCommentList
-                keyPressListener={keyPressListener}
-                appealPostId={appealPostId[idx]}
-              />
-              {/* div*2개 남겨놔야해요 */}
+                <AppealCommentList
+                  keyPressListener={keyPressListener}
+                  appealPostId={appealPostId[idx]}
+                />
+                {/* div*2개 남겨놔야해요 */}
+              </div>
             </div>
-          </div>
+          </>
         );
       })}
 
