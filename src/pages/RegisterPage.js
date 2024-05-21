@@ -68,6 +68,7 @@ function RegisterPage() {
   const navigate = useNavigate();
 
   async function onSubmit(body) {
+    alert("dd");
     body.neuter = neuter;
     body.rabies = rabies;
     body.vaccine = vaccine;
@@ -248,7 +249,9 @@ function RegisterPage() {
 
           <div className="flex justify-center gap-3 mb-28">
             <ButtonBl onClick={handlePage}>이전</ButtonBl>
-            <ButtonYe type="submit">회원가입</ButtonYe>
+            <ButtonYe>
+              <button>회원가입</button>
+            </ButtonYe>
           </div>
         </div>
       </form>

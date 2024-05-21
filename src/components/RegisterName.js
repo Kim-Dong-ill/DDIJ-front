@@ -2,10 +2,7 @@ import React from "react";
 import TextFieldLine from "../components/TextField";
 import { name } from "../utils/validation";
 
-function RegisterName({ hasDog, register, errors, handleError }) {
-  if (errors.name) {
-    handleError("errors.name");
-  }
+function RegisterName({ hasDog, register, errors }) {
   return (
     <div className="flex flex-col gap-2 mb-6">
       <label
