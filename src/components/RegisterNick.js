@@ -1,21 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import TextFieldLine from "../components/TextField";
 import { nickName } from "../utils/validation";
+import axiosInstance from "../utils/axios";
 
 function RegisterNick({ hasDog, errors, register }) {
+  const [nickValue, setNickValue] = useState("");
+  const [msg, setMsg] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+
+  async function checkNickname() {
+    const body = { nickValue };
+    const res = await axiosInstance.post("/user/checkValue", body);
+    console.log(res.data.message); //정상
+    console.log(res.data.errorMsg); //에러
+    setMsg(res.data.message);
+    setErrMsg(res.data.errorMsg);
+  }
+  function handleValue(e) {
+    setNickValue(e.target.value);
+  }
   return (
     <div className="flex flex-col gap-2 mb-6">
-      <label
-        className={hasDog ? `w-[100px]` : `w-[100px] text-da-500`}
-        htmlFor="nickName"
-      >
-        닉네임
-        <button type="button">
-          <i className=" pl-1 text-ye-600 fa-solid fa-circle-check"></i>
-        </button>
-      </label>
+      <div className="flex justify-between relative">
+        <label
+          className={hasDog ? `w-[100px]` : `w-[100px] text-da-500`}
+          htmlFor="nickName"
+        >
+          닉네임
+          <button type="button" onClick={checkNickname}>
+            <i className=" pl-1 text-ye-600 fa-solid fa-circle-check"></i>
+          </button>
+        </label>
+        <div className="absolute right-0 nanumBold text-green-500 text-xs mt-1">
+          {msg}
+        </div>
+        <div className="nanumBold text-red-500 text-xs mt-1">{errMsg}</div>
+      </div>
       <div>
         <TextFieldLine
+          onInput={handleValue}
           required
           disabled={hasDog ? false : true}
           id="nickName"
