@@ -10,9 +10,7 @@ function RegisterNick({ hasDog, errors, register }) {
 
   async function checkNickname() {
     const body = { nickValue };
-    const res = await axiosInstance.post("/user/checkValue", body);
-    console.log(res.data.message); //정상
-    console.log(res.data.errorMsg); //에러
+    const res = await axiosInstance.post("/user/checknickname", body);
     setMsg(res.data.message);
     setErrMsg(res.data.errorMsg);
   }
