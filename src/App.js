@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 
 import "./assets/tStyle.css";
 import "./assets/index.scss";
@@ -29,12 +29,16 @@ function App() {
   });
   const dispatch = useDispatch();
   const { pathname } = useLocation(); //page의 path 알려준다.
+  const navigate = useNavigate();
   console.log(pathname);
   useEffect(() => {
     if (isAuth) {
-      dispatch(authUser()); //dispatch는 신호를 보낸다.
+      const result = dispatch(authUser()); //dispatch는 신호를 보낸다.
+      if (authUser.rejected.match(result)) {
+        navigate("/login");
+      }
     }
-  }, [isAuth, dispatch]); // 세개의 값중 하나가 변화하면 실행
+  }, [isAuth, dispatch, pathname]); // 세개의 값중 하나가 변화하면 실행
   return (
     <>
       {/* 인트로 페이지 */}
@@ -52,13 +56,11 @@ function App() {
 
             {/* header 있는 layout */}
 
-   <Route element={<Layout isAuth={isAuth} />}>
+            <Route element={<Layout isAuth={isAuth} />}>
               <Route
                 path="/appealwrite/:userId"
                 element={<AppealWritePage />}
               />
-
-         
 
               <Route path="/circles" element={<AllCCListPage />} />
               <Route path="/newcircle" element={<CreateCCPage />} />
@@ -71,16 +73,12 @@ function App() {
 
             {/* header 없는 layout */}
 
-<Route element={<ProtectRouter isAuth={isAuth} />}>
-            <Route index element={<MainPage />} />
-            <Route path="/appeal/:userId" element={<AppealPage />} />
-            <Route path="/mypet/mod/:petid" element={<MyPetModifyPage />} />
-            <Route path="/mypet/add" element={<AddMyPetPage />} />
-               </Route>
-
-            
-            
-
+            <Route element={<ProtectRouter isAuth={isAuth} />}>
+              <Route index element={<MainPage />} />
+              <Route path="/appeal/:userId" element={<AppealPage />} />
+              <Route path="/mypet/mod/:petid" element={<MyPetModifyPage />} />
+              <Route path="/mypet/add" element={<AddMyPetPage />} />
+            </Route>
           </Routes>
         </div>
       </div>

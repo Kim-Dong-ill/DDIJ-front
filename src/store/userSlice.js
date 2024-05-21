@@ -33,7 +33,6 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.isAuth = false;
         state.error = action.payload;
-        // toast.error(action.payload.message);
       })
 
       //authUser
