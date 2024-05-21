@@ -29,9 +29,15 @@ function FileUploadOne({ handleImg }) {
     }
   }
 
-  function handleDelete() {
-    setImage("");
-    handleImg("");
+  async function handleDelete() {
+    try {
+      const res = await axiosInstance.delete(`/user/register/image/${image}`);
+      console.log(res.data);
+      setImage("");
+      handleImg("");
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
