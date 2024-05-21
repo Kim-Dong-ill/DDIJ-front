@@ -23,7 +23,6 @@ function AppealPage({}) {
   const [appealData, setAppealData] = useState([]);
   const [appealPostId, setAppealPostId] = useState([]);
 
-
   const keyPressListener = (event) => {
     if (event.key === "Enter") {
       // clickListener(); // Enter 키를 누르면 clickListener 함수 호출
@@ -97,41 +96,42 @@ function AppealPage({}) {
       {/* 자랑하개 mainview _ subheader와 navbar 중간section 전부 */}
       {/* ======================자랑하개 mainview_ 중간섹션 + 사진 + 글 + 댓글까지 한묶음 start */}
 
-
-          <div className="w-[430px] h-[320px] bg-ye-100 m-auto mb-[25px]">
-            {/* <ImageSlider /> */}
-          </div>
-          <div className="text-center mb-[20px]">
-            사진 페이지네이션 들어가야 할 구간
-          </div>
-          <div className="nanum border-b-2">
-            <p className="nanum mb-[5px]">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquam
-              minus pariatur repellendus similique omnis velit quas, alias quam
-              laboriosam nesciunt?
-            </p>
-          </div>
-          {/* ============ 실질적인 글 구간 end */}
-          {/* 구분선 아래, 댓글입력창부터 시작 */}
-          <div className=" flex my-[20px] gap-[10px]">
-            <input
-              type="text"
-              placeholder="댓글입력"
-              className=" border w-[365px] rounded-[25px] px-[10px] py-[5px] nanum"
-              onChange={textDataChange}
-              value={textData}
-            />
-            <button
-              className="w-[50px] bg-da-100 rounded-[50px]"
-              onClick={clickListener}
-            >
-              확인
-            </button>
-          </div>
-          {/* comment section 시작 */}
-          {commentList.map((item) => {
-            return (
-              <>
+      <div className="w-[430px] h-[320px] bg-ye-100 m-auto mb-[25px]">
+        {/* <ImageSlider /> */}
+      </div>
+      <div className="text-center mb-[20px]">
+        사진 페이지네이션 들어가야 할 구간
+      </div>
+      <div className="nanum border-b-2">
+        <p className="nanum mb-[5px]">
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquam
+          minus pariatur repellendus similique omnis velit quas, alias quam
+          laboriosam nesciunt?
+        </p>
+      </div>
+      {/* ============ 실질적인 글 구간 end */}
+      {/* 구분선 아래, 댓글입력창부터 시작 */}
+      <div className=" flex my-[20px] gap-[10px]">
+        <input
+          type="text"
+          placeholder="댓글입력"
+          className=" border w-[365px] rounded-[25px] px-[10px] py-[5px] nanum"
+          onChange={textDataChange}
+          value={textData}
+        />
+        <button
+          className="w-[50px] bg-da-100 rounded-[50px]"
+          onClick={clickListener}
+        >
+          확인
+        </button>
+      </div>
+      {/* comment section 시작 */}
+      {commentList.map((item) => {
+        return (
+          <>
+            <div>
+              <div>
                 <div className="flex justify-between mb-[20px] gap-[20px] items-center w-full ">
                   <div className="flex items-center gap-1">
                     <div className="flex gap-[1px] ">
@@ -146,7 +146,6 @@ function AppealPage({}) {
                     </div>
                     <div className="nanum flex-wrap w-[280px] overflow-wrap">
                       {item}
-
                     </div>
                   </div>
                   <div>
