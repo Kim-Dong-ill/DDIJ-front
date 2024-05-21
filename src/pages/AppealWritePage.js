@@ -10,13 +10,12 @@ import FileUpload from "../components/FileUpload";
 import axiosInstance from "../utils/axios";
 import { useNavigate, useParams } from "react-router-dom";
 
-
 function AppealWritePage() {
   const navigate = useNavigate();
   const { userId } = useParams();
   const [appealData, setAppealData] = useState({
     text: "",
-    // images:[]
+    images: [],
   });
   const [mainPetId, setMainPetId] = useState();
 
@@ -57,10 +56,6 @@ function AppealWritePage() {
     }
     findMainPet();
   }, []);
-
-  const [appealData, setAppealData] = useState({
-    images: [],
-  });
 
   // const { petid } = useParams();
 
