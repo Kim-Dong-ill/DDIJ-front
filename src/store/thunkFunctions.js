@@ -47,3 +47,14 @@ export const loginUser = createAsyncThunk(
     }
   }
 );
+
+export const authUser = createAsyncThunk("/user/auth", async (_, thunkAPI) => {
+  try {
+    const res = await axiosInstance.get("/user/auth"); //여기에 토큰 데리고 온다.
+    console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    return thunkAPI.rejectWithValue(error.response.data || error.message);
+  }
+});
