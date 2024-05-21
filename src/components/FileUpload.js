@@ -5,21 +5,24 @@ import axiosInstance from "../utils/axios";
 // import { useDispatch } from "react-redux";
 // import { addImage } from "../store/actions/addImage";
 
-function FileUpload({ images, onImageChange }) {
+function FileUpload({ images, onImageChange, userId }) {
   //  const dispatch = useDispatch();
   async function handledrop(files) {
-    console.log(files);
-    let formData = new FormData();
-    formData.append("image", files[0]);
-
-    const config = {
-      header: { "content-type": "multipart/form-data" },
-    };
-
     try {
-      const res = await axiosInstance.post("/appeal/image", formData, config);
-      console.log(res.data);
-      onImageChange([...images, res.data]);
+      const formData = new FormData();
+      formData.append("image", files[0]);
+
+      const config = {
+        headers: { "content-type": "multipart/form-data" },
+      };
+
+      const res = await axiosInstance.post(
+        `/appeal/${userId}/comment`,
+        formData,
+        config
+      );
+      console.log(res.data.filename);
+      onImageChange([...images, res.data.filename]);
       // dispatch(addImage(res.data));
       // Redux 상태에 이미지 추가
     } catch (error) {

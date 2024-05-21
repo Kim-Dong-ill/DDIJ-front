@@ -96,6 +96,7 @@ function AppealPage({}) {
       {appealData.map((item, idx) => {
         console.log("appealPostId" + appealPostId);
         return (
+
           <div
             className="mt-[240px] mb-[65px] p-3 bg-white border-[1px]"
             key={idx}
@@ -109,6 +110,7 @@ function AppealPage({}) {
                     <div className="nanumBold">뚜비</div>
                     <p className="nanum">1일전</p>
                   </div>
+                  <div></div>
                 </div>
                 <div></div>
               </div>
