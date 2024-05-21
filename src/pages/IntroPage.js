@@ -6,6 +6,10 @@ import { NavLink } from "react-router-dom";
 import "../assets/animation.css";
 
 function IntroPage() {
+  function scrollTop() {
+    $("html, body").scrollTop("0");
+  }
+
   //스크롤시 섹션 이동 start
   var mHtml = $("html");
   var page = 1;
@@ -172,7 +176,11 @@ function IntroPage() {
               </NavLink>
             </div>
             <div>
-              <NavLink className="text-da-300" to="/register">
+              <NavLink
+                onClick={scrollTop}
+                className="text-da-300"
+                to="/register"
+              >
                 <button className="w-[250px] h-[50px] rounded-full bg-ye-600 hover:bg-ye-800">
                   회원가입
                 </button>

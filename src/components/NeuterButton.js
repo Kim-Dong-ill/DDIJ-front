@@ -1,6 +1,6 @@
 import React from "react";
 
-function NeuterButton({ handleNeuter, neuter }) {
+function NeuterButton({ handleNeuter, neuter, register }) {
   function doNeuter() {
     handleNeuter(true);
   }
@@ -30,13 +30,14 @@ function NeuterButton({ handleNeuter, neuter }) {
           </label>
         </button>
         <input
-          value={true}
+          value={neuter}
           hidden
           // onClick={doNeuter}
           checked={neuter ? true : false}
           id="doNeuter"
           type="radio"
           name="pNeuter"
+          {...register("neuter")}
         />
       </div>
 
@@ -60,13 +61,14 @@ function NeuterButton({ handleNeuter, neuter }) {
           </label>
         </button>
         <input
-          value={false}
+          value={neuter}
           hidden
           // onClick={doNotNeuter}
           checked={neuter ? false : true}
           id="doNotNeuter"
           type="radio"
           name="pNeuter"
+          {...register("neuter")}
         />
       </div>
     </div>

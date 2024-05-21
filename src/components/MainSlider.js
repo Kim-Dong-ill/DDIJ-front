@@ -87,7 +87,7 @@ function MainSlider() {
             <SwiperSlide key={idx} className="mapDogListCard ">
               <div>
                 <div className=" w-[55px] h-[55px] rounded-full overflow-hidden">
-                  <Link to="/appeal/:petid">
+                  <Link to="/appeal/:userid">
                     <img src={item.img} alt="" />
                   </Link>
                 </div>

@@ -1,6 +1,6 @@
 import React from "react";
 
-function RabiesButton({ handleRabies, rabies }) {
+function RabiesButton({ handleRabies, rabies, register }) {
   function doRabies() {
     handleRabies(true);
   }
@@ -31,13 +31,14 @@ function RabiesButton({ handleRabies, rabies }) {
           </label>
         </button>
         <input
-          value={true}
+          value={rabies}
           hidden
           // onClick={doRabies}
           checked={rabies ? true : false}
           id="doRabies"
           type="checkbox"
           name="pRabies"
+          {...register("rabies")}
         />
       </div>
 
@@ -61,13 +62,14 @@ function RabiesButton({ handleRabies, rabies }) {
           </label>
         </button>
         <input
-          value={false}
+          value={rabies}
           hidden
           // onClick={doNotRabies}
           checked={rabies ? false : true}
           id="doNotRabies"
           type="checkbox"
           name="pRabies"
+          {...register("rabies")}
         />
       </div>
     </div>
