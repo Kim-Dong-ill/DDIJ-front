@@ -41,12 +41,13 @@ function RegisterAdr({ hasDog, errors, register }) {
         <label className={hasDog ? `` : ` text-da-500`} htmlFor="address">
           주소
         </label>
-        <button type="button" onClick={handleTextFieldClick}>
+        <button type="button">
           <i className="fa-regular fa-map"></i>
         </button>
       </div>
       <div>
         <TextFieldLine
+          onClick={handleTextFieldClick}
           value={uAddress}
           required
           disabled={hasDog ? false : true}
