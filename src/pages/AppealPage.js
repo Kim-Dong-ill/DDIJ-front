@@ -97,7 +97,7 @@ function AppealPage({}) {
         return <>{item[0].pName}</>;
       })} */}
       {appealData.map((item, idx) => {
-        console.log("appealPostId" + appealPostId);
+        console.log("appealPostId", appealPostId);
         return (
           <div
             className="mt-[240px] mb-[65px] p-3 bg-white border-[1px]"
