@@ -24,17 +24,17 @@ import ProtectRouter from "./components/ProtectRouter";
 import { authUser } from "./store/thunkFunctions";
 
 function App() {
-  // const isAuth = useSelector((state) => {
-  //   return state.user.isAuth;
-  // });
-  // const dispatch = useDispatch();
-  // const { pathname } = useLocation(); //page의 path 알려준다.
-  // console.log(pathname);
-  // useEffect(() => {
-  //   if (isAuth) {
-  //     dispatch(authUser()); //dispatch는 신호를 보낸다.
-  //   }
-  // }, [isAuth, dispatch]); // 세개의 값중 하나가 변화하면 실행
+  const isAuth = useSelector((state) => {
+    return state.user.isAuth;
+  });
+  const dispatch = useDispatch();
+  const { pathname } = useLocation(); //page의 path 알려준다.
+  console.log(pathname);
+  useEffect(() => {
+    if (isAuth) {
+      dispatch(authUser()); //dispatch는 신호를 보낸다.
+    }
+  }, [isAuth, dispatch]); // 세개의 값중 하나가 변화하면 실행
   return (
     <>
       {/* 인트로 페이지 */}
@@ -69,13 +69,13 @@ function App() {
 
             {/* header 없는 layout */}
 
-            {/* <Route element={<ProtectRouter isAuth={isAuth} />}> */}
-            {/* <Route element={<ProtectRouter />}> */}
-            <Route index element={<MainPage />} />
-            <Route path="/appeal/:userId" element={<AppealPage />} />
-            <Route path="/mypet/mod/:petid" element={<MyPetModifyPage />} />
-            <Route path="/mypet/add" element={<AddMyPetPage />} />
-            {/* </Route> */}
+            <Route element={<ProtectRouter isAuth={isAuth} />}>
+              {/* <Route element={<ProtectRouter />}> */}
+              <Route index element={<MainPage />} />
+              <Route path="/appeal/:userId" element={<AppealPage />} />
+              <Route path="/mypet/mod/:petid" element={<MyPetModifyPage />} />
+              <Route path="/mypet/add" element={<AddMyPetPage />} />
+            </Route>
           </Routes>
         </div>
       </div>
