@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextFieldLine from "../components/TextField";
 import { email } from "../utils/validation";
 import axiosInstance from "../utils/axios";
 
-function RegisterEmail({ hasDog, register, errors }) {
+function RegisterEmail({ hasDog, register, errors, handleEmailErr }) {
   const [emailValue, setEmailValue] = useState("");
   const [msg, setMsg] = useState("");
   const [errMsg, setErrMsg] = useState("");
@@ -15,6 +15,18 @@ function RegisterEmail({ hasDog, register, errors }) {
     setErrMsg(res.data.errorMsg);
   }
 
+  useEffect(() => {
+    if (errMsg) {
+      console.log(errMsg);
+      handleEmailErr(false);
+    } else {
+      handleEmailErr(true);
+    }
+  }, [errMsg]);
+  useEffect(() => {
+    handleEmailErr(false);
+  }, []);
+
   function handleValue(e) {
     setEmailValue(e.target.value);
   }
@@ -22,12 +34,14 @@ function RegisterEmail({ hasDog, register, errors }) {
     <div className="flex flex-col gap-2 mb-6">
       <div className="flex justify-between relative">
         <label
-          className={hasDog ? `w-[100px]` : `w-[100px] text-da-500`}
+          className={hasDog ? `w-[150px]` : `w-[100px] text-da-500`}
           htmlFor="email"
         >
           이메일
           <button type="button" onClick={checkEmail}>
-            <i className=" pl-1 text-ye-600 fa-solid fa-circle-check"></i>
+            <i className=" pl-2 text-ye-600 fa-solid fa-circle-check">
+              중복체크
+            </i>
           </button>
         </label>
         <div className="absolute right-0 nanumBold text-green-500 text-xs mt-1">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ButtonBl from "../components/ButtonBl";
 import ButtonYe from "../components/ButtonYe";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -41,6 +41,25 @@ function RegisterPage() {
   const [rabies, setRabies] = useState(false); //광견병 여부
   const [pageMove, setPageMove] = useState(true); //페이지 이전
   const [image, setImage] = useState(""); //반려견 이미지
+  const [checkEmailErr, setCheckEmailErr] = useState(false); //이메일 에러
+  const [checkNickErr, setCheckNickErr] = useState(false); //이메일 에러
+  const [checkErr, setCheckErr] = useState(false);
+
+  useEffect(() => {
+    if (checkEmailErr && checkNickErr) {
+      setCheckErr(true);
+    } else {
+      setCheckErr(false);
+    }
+  }, [checkEmailErr, checkNickErr]);
+
+  function handleNickErr(result) {
+    setCheckNickErr(result);
+  }
+
+  function handleEmailErr(result) {
+    setCheckEmailErr(result);
+  }
 
   function handleImg(result) {
     setImage(result);
@@ -133,7 +152,12 @@ function RegisterPage() {
 
           <RegisterName errors={errors} register={register} hasDog={hasDog} />
 
-          <RegisterEmail errors={errors} register={register} hasDog={hasDog} />
+          <RegisterEmail
+            handleEmailErr={handleEmailErr}
+            errors={errors}
+            register={register}
+            hasDog={hasDog}
+          />
 
           {/* <RegisterPW errors={errors} register={register} hasDog={hasDog} /> */}
           <div className="flex flex-col gap-2 mb-6">
@@ -190,7 +214,12 @@ function RegisterPage() {
             </div>
           </div>
 
-          <RegisterNick errors={errors} register={register} hasDog={hasDog} />
+          <RegisterNick
+            handleNickErr={handleNickErr}
+            errors={errors}
+            register={register}
+            hasDog={hasDog}
+          />
 
           <RegisterAdr errors={errors} register={register} hasDog={hasDog} />
           <div className="flex justify-center gap-3 mb-28">
@@ -246,7 +275,7 @@ function RegisterPage() {
 
           <div className="flex justify-center gap-3 mb-28">
             <ButtonBl onClick={handlePage}>이전</ButtonBl>
-            <ButtonYe type="submit">회원가입</ButtonYe>
+            <ButtonYe type={checkErr ? `submit` : `button`}>회원가입</ButtonYe>
           </div>
         </div>
       </form>
