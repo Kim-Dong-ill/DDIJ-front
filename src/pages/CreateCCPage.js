@@ -97,14 +97,14 @@ function CreateCCPage() {
                 className={
                   checkCircle ? `w-[100px] mb-4` : `w-[100px] mb-4 text-da-500`
                 }
-                htmlFor="circleName"
+                htmlFor="title"
               >
                 모임명
               </label>
               <TextFieldLine
                 required
                 disabled={checkCircle ? false : true}
-                id="circleName"
+                id="title"
                 label="모임명"
                 fullWidth
               />
@@ -114,6 +114,7 @@ function CreateCCPage() {
               value={introduction}
               onChange={introductionChange}
               placeholder="소개말을 입력해주세요."
+              id="content"
               className={
                 checkCircle
                   ? `bg-gray-200 rounded-md w-full h-[100px] text-justify mb-4 px-4 py-2 border hover:border-ye-800 focus:border-ye-600 focus:border-2 outline-none`
