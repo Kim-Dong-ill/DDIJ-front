@@ -67,11 +67,17 @@ const { kakao } = window;
 //------------------------------kakao map start----------------------------//
 //
 // 마커 이미지의 이미지 주소입니다
+// const img = {
+//   imageSrc : "./images/marker.svg",
+//   imageSize : new kakao.maps.Size(40, 42),
+//   imageOption : { offset: new kakao.maps.Point(20, 42) }
+// }
 var imageSrc = "./images/marker.svg";
 var imageSize = new kakao.maps.Size(40, 42);
 var imageOption = { offset: new kakao.maps.Point(20, 42) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 
 var currentPosition = []; //현재 위치 좌표
+
 function Kakao_main() {
   const [message, setMessage] = useState(""); //지도 클릭시 위도 경도 메세지
   const [map, setMap] = useState(null); //카카오 map
@@ -86,7 +92,8 @@ function Kakao_main() {
   // const [isBoundery, setIsBoundery] = useState(); //바운더리 안에 있는지 없는지
 
   //초기 마커 배열
-  const [positions, setPositions] = useState([
+  const [positions, setPositions] = useState([   // 초기엔 인자로 전달받을것 , 이후엔 현재 중심좌표가 변경될 때마다, axios태워서 가져올것 (=> 성능을위해선 범위제한)
+                                                                                  // 개선방향 => 특정 갯수 만큼 받아와서 보관하고 바운더리안에 특정 갯수보다 적을시 axios 태우기
     {
       title: "카카오",
       latlng: new kakao.maps.LatLng(37.479311460347, 126.8866702429908),
@@ -160,6 +167,8 @@ function Kakao_main() {
     );
 
     const newMarkers = [];
+    const HOWMANY = 100;
+    var total = 0;
     //기존 마커 배열 지도에 표시
     for (let i = 0; i < positions.length; i++) {
       const latlng = positions[i].latlng;
@@ -172,14 +181,22 @@ function Kakao_main() {
           imageSrc,
           imageSize,
           imageOption
+            // img.imageSrc,
+            // img.imageSize,
+            // img.imageOption
         );
+        total++;
         newMarkers.push(marker);
       }
     }
+    // if(total<HOWMANY){
+    // 다시 axios 가서 근처 모임을 가져온다. 이떄 count를 둬서 3번이상 조회했는데도 적으면 그냥 진행
+    // // }
+
     setMarkers(newMarkers);
   };
 
-  //현재위치 가져오는 함수
+  //현재위치 가져오는 함수  => 초기에 인자로 받아올거라 필요없어질듯
   const getGeolocation = () => {
     console.log("geolocation 시작");
     if (navigator.geolocation) {

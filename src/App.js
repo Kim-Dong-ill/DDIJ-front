@@ -4,6 +4,9 @@ import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import "./assets/tStyle.css";
 import "./assets/index.scss";
 
+import MainDevPage from "./pages/MainDevPage"
+
+
 import IntroPage from "./pages/IntroPage";
 import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/LoginPage";
@@ -79,6 +82,9 @@ function App() {
               <Route path="/mypet/mod/:petid" element={<MyPetModifyPage />} />
               <Route path="/mypet/add" element={<AddMyPetPage />} />
             </Route>
+            <Route path="/maptest" element={<MainPage />}/>
+            <Route path="/mapdev" element={<MainDevPage />}/>
+
           </Routes>
         </div>
       </div>
