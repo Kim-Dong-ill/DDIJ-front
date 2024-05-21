@@ -7,8 +7,10 @@ function AppealCommentList(props) {
   const { userId } = useParams(); // URL의 userId 파라미터 가져오기
   const [appealComment, setAppealComment] = useState([]); // 댓글 목록 상태
   const [textData, setTextData] = useState({ text: "" }); // 입력 필드 상태
-  const [commentUser, setCommentUser] = useState([]);
+  const [commentNick, setCommentNick] = useState([]);
   const [loginUserId, setLoginUserId] = useState(null);
+
+  //get에서 가져온 유저값에서 닉네임 뽑아와서 출력해야함!!! 댓글에 꽂아야댐
 
   // 입력 필드 변경 시 호출되는 함수
   function textDataChange(e) {
