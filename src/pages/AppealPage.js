@@ -25,7 +25,7 @@ function AppealPage({}) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axiosInstance.get("/appeal/:userId");
+        const res = await axiosInstance.get(`/appeal/${userId}`);
         console.log(res.data.appealData);
         setAppealData(res.data.appealData);
 
@@ -37,10 +37,6 @@ function AppealPage({}) {
       }
     };
     fetchData();
-    appealData.map((item) => {
-      return setAppealPostId([...appealPostId, item._id]);
-    });
-    console.log(appealPostId);
   }, []);
 
   return (
