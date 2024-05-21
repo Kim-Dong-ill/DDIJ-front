@@ -42,11 +42,8 @@ function AppealPage({}) {
     const loadPetList = async () => {
       try {
         const resPetList = await axiosInstance.get(`/pet/list/${userId}`);
-        // console.log("resPetList" + resPetList.data);
-        // setPetList(resPetList);
-        resPetList.map((item) => {
-          return <>{item}</>;
-        });
+        console.log("resPetList" + resPetList.data);
+        setPetList(resPetList);
       } catch (error) {}
     };
 
@@ -92,6 +89,9 @@ function AppealPage({}) {
       </div>
       {/* 자랑하개 mainview _ subheader와 navbar 중간section 전부 */}
       {/* ======================자랑하개 mainview_ 중간섹션 + 사진 + 글 + 댓글까지 한묶음 start */}
+      {/* {petList.map((item) => {
+        return <>{item.pName}</>;
+      })} */}
 
       {appealData.map((item, idx) => {
         console.log("appealPostId" + appealPostId);
