@@ -9,10 +9,6 @@ function FileUpload({ images, onImageChange, userId }) {
   //  const dispatch = useDispatch();
 
   async function handledrop(files) {
-    if (images.length >= 3) {
-      alert("최대 이미지 3개");
-      return;
-    }
     try {
       const formData = new FormData();
       formData.append("image", files[0]); // formData 객체에 드롭된 파일을 image라는 이름으로 추가
@@ -39,19 +35,6 @@ function FileUpload({ images, onImageChange, userId }) {
     }
   }
 
-  // // image :삭제하려는 이미지
-  // function handleDelete(image) {
-  //   // images 배열에서 image 인덱스를  찾고 currentIndex 변수에 저장
-  //   // images : 컴포넌트의 props로 전달된 이미지 배열
-  //   const currentIndex = images.indexOf(image);
-  //   // images 복사하여 newImages 생성
-  //   let newImages = [...images];
-  //   // newImages 배열에서 currentIndex 배열 위치에 있는 요소를 제거
-  //   newImages.splice(currentIndex, 1);
-  //   // newImages 배열을 onImageChange에 전달하여 부모 컴포넌트의 상태를 업데이트
-  //   onImageChange(newImages);
-  // }
-
   async function handleDelete(image) {
     try {
       const res = await axiosInstance.delete(
@@ -68,18 +51,27 @@ function FileUpload({ images, onImageChange, userId }) {
     }
   }
 
+  const handleClick = (event) => {
+    if (images.length >= 3) {
+      event.preventDefault();
+      alert("최대 이미지 3개까지만 추가 가능합니다.");
+    }
+  };
+
   return (
     <div className="flex w-full gap-[20px]">
       <div className=" border-ye-600 mb-[20px]">
+        {/* <p> 이미지추가</p> */}
         <Dropzone onDrop={handledrop} noClick={images.length >= 3}>
           {/* 파일이 드롭되면 handledrop 함수 호출 */}
           {({ getRootProps, getInputProps }) => (
             // getInputProps : 파일 선택
             <div
-              {...getRootProps()}
+              {...getRootProps({ onClick: handleClick })}
               className="bg-ye-500 w-[80px] h-[80px] p-[10px] rounded-md flex justify-center items-center"
             >
               <input {...getInputProps()} />
+
               <img
                 src="/images/camera1.svg"
                 alt=""
@@ -100,7 +92,7 @@ function FileUpload({ images, onImageChange, userId }) {
                   onClick={() => {
                     handleDelete(image);
                   }}
-                  className="w-[20px] h-[20px] flex justify-center items-center bg-red-400 absolute rounded-[50%] right-[-10px] top-[-10px]"
+                  className="w-[20px] h-[20px] flex justify-center items-center bg-er-100 absolute rounded-[50%] right-[-10px] top-[-10px]"
                 >
                   x
                 </div>
@@ -108,7 +100,7 @@ function FileUpload({ images, onImageChange, userId }) {
                 <img
                   src={imageUrl} // ${image} : 이미지의 이름?
                   alt=""
-                  className="w-full h-auto rounded-md"
+                  className="w-full h-full rounded-md"
                 />
               </div>
             );
