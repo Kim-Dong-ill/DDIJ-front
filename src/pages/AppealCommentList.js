@@ -51,6 +51,7 @@ function AppealCommentList(props) {
 
   useEffect(() => {
     fetchAppealComment(); // 컴포넌트가 마운트될 때 댓글 목록 가져오기
+    // console.log("appealComment", appealComment);
   }, [userId, props.appealPostId]); // userId와 appealPostId가 변경될 때마다 다시 요청
 
   // useEffect(() => {
@@ -94,7 +95,7 @@ function AppealCommentList(props) {
             <div className="flex gap-[1px]">
               <img src="/images/commenticon.svg" alt="" className="block" />
               <div className="flex items-center w-[90px]">
-                <p className="nanumBold">닉네임6글자</p>
+                <p className="nanumBold">{item.user.nickName}</p>
                 {/* <p className="nanumBold">{item.user}</p> */}
               </div>
             </div>
