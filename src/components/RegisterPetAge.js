@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import TextFieldLine from "../components/TextField";
 import { pAge } from "../utils/validation";
 
 function RegisterPetAge({ hasDog, errors, register }) {
+  const [petAge, setPetAge] = useState();
+  function handleAge(e) {
+    const age = e.target.value;
+    console.log(age);
+    if (age < 0) {
+      setPetAge(0);
+    } else {
+      setPetAge(age);
+    }
+  }
+
   return (
     <div className="flex flex-col gap-2 mb-6">
       <label
@@ -13,7 +24,8 @@ function RegisterPetAge({ hasDog, errors, register }) {
       </label>
       <div>
         <TextFieldLine
-          // value가 0이상으로 설정 필요
+          value={petAge}
+          onInput={handleAge}
           type="number"
           disabled={hasDog ? false : true}
           required
