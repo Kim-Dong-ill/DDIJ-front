@@ -7,7 +7,6 @@ function MyPetListPage() {
   const { userId } = useParams();
   const [mypetList, setMyPetList] = useState([]);
   const [petId, setPetId] = useState([]);
-  // const [mainPetId, setMainPetId] = useState();
   console.log(userId);
   //   useEffect(() => {
   //     const loadPetList = async () => {};
@@ -39,14 +38,7 @@ function MyPetListPage() {
     }
   }, [mypetList]);
 
-  // useEffect(() => {
-  //   const loadMainPetId = async () => {
-  //     try {
-  //       const res = await axiosInstance.get(`/mainpet/${userId}`);
-  //       setMainPetId(res.data);
-  //     } catch (error) {}
-  //   };
-  // }, []);
+  // 펫 index patch로 꽂아넣을예정 ( 대표강아지 1, 대표강아지 아니면 0으로 전부 통일)
 
   return (
     <div
@@ -79,14 +71,16 @@ function MyPetListPage() {
             <div className="w-[450px] m-auto grid mb-[25px] bg-white text-center">
               <div className="border border-da-100 rounded-lg">
                 {/* {petId==} */}
-                {idx == 0 ? (
+                {item.index == 1 ? (
                   <p className="text-right pr-[15px] pt-[15px]">
                     <button className="bg-ye-600 h-[30px] px-[5px] rounded-lg">
                       <img
                         src="/images/star1.svg"
                         className="inline-block align-middle w-[14px] h-[14px] mr-[3px] "
                       />
-                      <span className="inline-block  text-[14px]">대표</span>
+                      <span className="inline-block  text-[14px]">
+                        대표 / {item.index}/{item._id}
+                      </span>
                     </button>
                   </p>
                 ) : (
@@ -96,7 +90,9 @@ function MyPetListPage() {
                         src="/images/star1.svg"
                         className="inline-block align-middle w-[14px] h-[14px] mr-[3px] "
                       />
-                      <span className="inline-block  text-[14px]">대표</span>
+                      <span className="inline-block  text-[14px]">
+                        대표 / {item.index}/{item._id}
+                      </span>
                     </button>
                   </p>
                 )}
