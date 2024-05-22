@@ -42,7 +42,7 @@ function RegisterPage() {
   const [pageMove, setPageMove] = useState(true); //페이지 이전
   const [image, setImage] = useState(""); //반려견 이미지
   const [checkEmailErr, setCheckEmailErr] = useState(false); //이메일 에러
-  const [checkNickErr, setCheckNickErr] = useState(false); //이메일 에러
+  const [checkNickErr, setCheckNickErr] = useState(false); //닉네임 에러
   const [checkErr, setCheckErr] = useState(false);
 
   useEffect(() => {
