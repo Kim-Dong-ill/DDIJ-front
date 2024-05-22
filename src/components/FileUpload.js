@@ -9,6 +9,10 @@ function FileUpload({ images, onImageChange, userId }) {
   //  const dispatch = useDispatch();
 
   async function handledrop(files) {
+    if (images.length >= 3) {
+      alert("최대 이미지 3개");
+      return;
+    }
     try {
       const formData = new FormData();
       formData.append("image", files[0]); // formData 객체에 드롭된 파일을 image라는 이름으로 추가
@@ -67,7 +71,7 @@ function FileUpload({ images, onImageChange, userId }) {
   return (
     <div className="flex w-full gap-[20px]">
       <div className=" border-ye-600 mb-[20px]">
-        <Dropzone onDrop={handledrop}>
+        <Dropzone onDrop={handledrop} noClick={images.length >= 3}>
           {/* 파일이 드롭되면 handledrop 함수 호출 */}
           {({ getRootProps, getInputProps }) => (
             // getInputProps : 파일 선택
@@ -86,17 +90,15 @@ function FileUpload({ images, onImageChange, userId }) {
         </Dropzone>
       </div>
       <div className="flex gap-[25px]">
-        {images &&
-          images.map((images, index) => {
-            // image : 이미지 파일이름
-            // index : 요소의 인덱스
-            const imageUrl = `${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${images}`;
+        {images && // images: 이미지 파일 이름 배열, image: 각 이미지 파일 이름
+          images.map((image, index) => {
+            const imageUrl = `${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${image}`;
             console.log(imageUrl);
             return (
               <div key={index} className="w-[80px] h-[80px] relative">
                 <div
                   onClick={() => {
-                    handleDelete(images);
+                    handleDelete(image);
                   }}
                   className="w-[20px] h-[20px] flex justify-center items-center bg-red-400 absolute rounded-[50%] right-[-10px] top-[-10px]"
                 >
@@ -104,7 +106,7 @@ function FileUpload({ images, onImageChange, userId }) {
                 </div>
 
                 <img
-                  src={`${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${images}`} // ${image} : 이미지의 이름?
+                  src={imageUrl} // ${image} : 이미지의 이름?
                   alt=""
                   className="w-full h-auto rounded-md"
                 />
