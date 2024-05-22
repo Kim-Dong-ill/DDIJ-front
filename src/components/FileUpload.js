@@ -7,6 +7,7 @@ function FileUpload({ images, onImageChange, userId }) {
   const [newImages, setNewImages] = useState([]); // 업로드 이미지 저장
   console.log("images", images);
   //  const dispatch = useDispatch();
+
   async function handledrop(files) {
     try {
       const formData = new FormData();
@@ -31,6 +32,35 @@ function FileUpload({ images, onImageChange, userId }) {
       // Redux 상태에 이미지 추가
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  // // image :삭제하려는 이미지
+  // function handleDelete(image) {
+  //   // images 배열에서 image 인덱스를  찾고 currentIndex 변수에 저장
+  //   // images : 컴포넌트의 props로 전달된 이미지 배열
+  //   const currentIndex = images.indexOf(image);
+  //   // images 복사하여 newImages 생성
+  //   let newImages = [...images];
+  //   // newImages 배열에서 currentIndex 배열 위치에 있는 요소를 제거
+  //   newImages.splice(currentIndex, 1);
+  //   // newImages 배열을 onImageChange에 전달하여 부모 컴포넌트의 상태를 업데이트
+  //   onImageChange(newImages);
+  // }
+
+  async function handleDelete(image) {
+    try {
+      const res = await axiosInstance.delete(
+        `/appeal/${userId}/image/${image}`
+      );
+      console.log(res.data.images);
+
+      const currentIndex = images.indexOf(image);
+      let newImages = [...images];
+      newImages.splice(currentIndex, 1);
+      onImageChange(newImages);
+    } catch (error) {
+      console.log("삭제 실패", error);
     }
   }
 
@@ -63,14 +93,15 @@ function FileUpload({ images, onImageChange, userId }) {
             const imageUrl = `${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${images}`;
             console.log(imageUrl);
             return (
-              <div key={index} className="w-[80px] h-[80px]">
-                {/* <div
+              <div key={index} className="w-[80px] h-[80px] relative">
+                <div
                   onClick={() => {
-                  handleDelete(image);
+                    handleDelete(images);
                   }}
+                  className="w-[20px] h-[20px] flex justify-center items-center bg-red-400 absolute rounded-[50%] right-[-10px] top-[-10px]"
                 >
                   x
-                </div> */}
+                </div>
 
                 <img
                   src={`${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${images}`} // ${image} : 이미지의 이름?
