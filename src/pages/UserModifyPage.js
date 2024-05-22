@@ -1,27 +1,12 @@
 import React, { useState } from "react";
 import ButtonBl from "../components/ButtonBl";
 import ButtonYe from "../components/ButtonYe";
-import HasDogButton from "../components/HasDogButton";
 import TextFieldLine from "../components/TextField";
-import $ from "jquery";
 import { Link } from "react-router-dom";
 
 function UserModifyPage() {
   const [hasDog, setHasDog] = useState(false); //반려동물 있는지 없는지
-  const [pageMove, setPageMove] = useState(true);
-
-  function handleHasDog(result) {
-    setHasDog(result);
-  }
-
-  function handlePage() {
-    setPageMove(!pageMove);
-    $("html, body").scrollTop("0");
-  }
-
-  function onSubmit() {
-    alert("전송");
-  }
+  function handleModifyPage() {}
   return (
     <>
       <div
@@ -135,7 +120,7 @@ function UserModifyPage() {
             <ButtonBl>취소</ButtonBl>
           </Link>
           <Link to="/userinfo/:userid">
-            <ButtonYe type="button" onClick={handlePage}>
+            <ButtonYe type="button" onClick={handleModifyPage}>
               수정완료
             </ButtonYe>
           </Link>
