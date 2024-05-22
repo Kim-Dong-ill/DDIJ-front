@@ -5,7 +5,6 @@ import axiosInstance from "../utils/axios";
 function FileUploadOne({ handleImg }) {
   const [image, setImage] = useState(null);
   async function handleDrop(files) {
-    console.log(files);
     let formData = new FormData();
     formData.append("image", files[0]);
 
@@ -21,7 +20,6 @@ function FileUploadOne({ handleImg }) {
         formData,
         config
       );
-      console.log(res.data);
       setImage(res.data);
       handleImg(res.data);
     } catch (error) {
@@ -29,9 +27,15 @@ function FileUploadOne({ handleImg }) {
     }
   }
 
-  function handleDelete() {
-    setImage("");
-    handleImg("");
+  async function handleDelete() {
+    try {
+      const res = await axiosInstance.delete(`/user/register/image/${image}`);
+      console.log(res.data);
+      setImage("");
+      handleImg("");
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (

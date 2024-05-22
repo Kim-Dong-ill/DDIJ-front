@@ -58,3 +58,28 @@ export const authUser = createAsyncThunk("/user/auth", async (_, thunkAPI) => {
     return thunkAPI.rejectWithValue(error.response.data || error.message);
   }
 });
+
+export const logoutUser = createAsyncThunk(
+  "/user/logout",
+  async (_, thunkAPI) => {
+    try {
+      const res = await axiosInstance.post("/user/logout");
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.response.data || error.message);
+    }
+  }
+);
+
+export const signOutUser = createAsyncThunk(
+  "/user/signout",
+  async (state, thunkAPI) => {
+    try {
+      const res = await axiosInstance.delete(`/user/signout/${state}`);
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.response.data || error.message);
+    }
+  }
+);
