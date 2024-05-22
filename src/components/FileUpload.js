@@ -65,12 +65,12 @@ function FileUpload({ images, onImageChange, userId }) {
             return (
               <div key={index} className="w-[80px] h-[80px]">
                 {/* <div
-                onClick={() => {
+                  onClick={() => {
                   handleDelete(image);
-                }}
-              >
-                x
-              </div> */}
+                  }}
+                >
+                  x
+                </div> */}
 
                 <img
                   src={`${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${images}`} // ${image} : 이미지의 이름?
