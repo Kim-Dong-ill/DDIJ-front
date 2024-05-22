@@ -31,7 +31,7 @@ function AppealWritePage() {
   //   } catch (error) {
   //     console.log(error);
   //   }
-  // }
+  // }어어어
 
   // result -> setImages -> images
   function handleImg(newImages) {
