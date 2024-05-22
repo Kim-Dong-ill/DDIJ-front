@@ -9,6 +9,7 @@ import VaccineButton from "../components/VaccineButton";
 import RabiesButton from "../components/RabiesButton";
 import { Link, useNavigate } from "react-router-dom";
 import $ from "jquery";
+import { useSelector } from "react-redux";
 
 function MyPetModifyPage() {
   const [hasDog, setHasDog] = useState(false); //반려동물 있는지 없는지
@@ -18,6 +19,12 @@ function MyPetModifyPage() {
   const [rabies, setRabies] = useState(); //광견병 여부
   const [pageMove, setPageMove] = useState(true);
   const navigate = useNavigate();
+
+  // 로그인된 유저 _id값 가져오는과정
+  const loginState = useSelector((state) => {
+    return state.user.userData.user.id;
+  });
+  console.log(loginState);
 
   function handleHasDog(result) {
     setHasDog(result);
@@ -154,10 +161,10 @@ function MyPetModifyPage() {
           </div>
         </div>
         <div className="flex justify-center gap-3 mb-28">
-          <Link to="/mypet/:userid">
+          <Link to={`/mypet/${loginState}`}>
             <ButtonBl onClick={handlePage}>취소</ButtonBl>
           </Link>
-          <Link to="/mypet/:userid">
+          <Link to={`/mypet/${loginState}`}>
             <ButtonYe type="submit">수정완료</ButtonYe>
           </Link>
         </div>

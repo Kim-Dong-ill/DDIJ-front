@@ -19,7 +19,7 @@ function PetGenderButton({ handleGender, gender, register }) {
           hidden
           value="남"
           checked={gender === "male" ? true : false}
-          {...register("gender")}
+          // {...register("gender")}
         />
         <label
           onClick={male}
@@ -49,7 +49,7 @@ function PetGenderButton({ handleGender, gender, register }) {
           name="pGender"
           hidden
           value="여"
-          {...register("gender")}
+          // {...register("gender")}
         />
         <label
           onClick={female}
