@@ -7,28 +7,9 @@ const { kakao } = window;
 var imageSrc = "./images/marker.svg";
 var imageSize = new kakao.maps.Size(40, 42);
 var imageOption = { offset: new kakao.maps.Point(20, 42) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-
 var currentPosition = []; //현재 위치 좌표
 
-
-
-//===================현재여기까지
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const KakaoNew = () => {
+const KakaoNew = ({ Coords, circleList, userList }) => {
     const [message, setMessage] = useState(""); //지도 클릭시 위도 경도 메세지
     const [map, setMap] = useState(null); //카카오 map
     const [markers, setMarkers] = useState([]); //마커들 표시
@@ -39,64 +20,19 @@ const KakaoNew = () => {
     const [isLocationAvailable, setLocationAvailable] = useState(false); // 사용자 위치가 사용 가능한지 여부
     const [isDrag, setIsDrag] = useState(false); //드래그
     const [isGeolocaation, setIsGeolocation] = useState(false); //내위치
-    // const [isBoundery, setIsBoundery] = useState(); //바운더리 안에 있는지 없는지
 
-    //초기 마커 배열
-    const [positions, setPositions] = useState([   // 초기엔 인자로 전달받을것 , 이후엔 현재 중심좌표가 변경될 때마다, axios태워서 가져올것 (=> 성능을위해선 범위제한)
+    const [positions, setPositions] = useState([
+        // 초기엔 인자로 전달받을것 , 이후엔 현재 중심좌표가 변경될 때마다, axios태워서 가져올것 (=> 성능을위해선 범위제한)
         // 개선방향 => 특정 갯수 만큼 받아와서 보관하고 바운더리안에 특정 갯수보다 적을시 axios 태우기
         {
             title: "카카오",
             latlng: new kakao.maps.LatLng(37.479311460347, 126.8866702429908),
-        },
-        {
-            title: "생태연못",
-            latlng: new kakao.maps.LatLng(37.4761376343048, 126.8843235209789),
-        },
-        {
-            title: "텃밭",
-            latlng: new kakao.maps.LatLng(37.47941009051748, 126.87717317821058),
-        },
-        {
-            title: "근린공원",
-            latlng: new kakao.maps.LatLng(37.48622254460432, 126.87797612110123),
-        },
-        {
-            title: "아무곳",
-            latlng: new kakao.maps.LatLng(37.48587053082275, 126.88638897195683),
-        },
-        {
-            title: "아무곳",
-            latlng: new kakao.maps.LatLng(37.48184075616303, 126.89363105403429),
-        },
-        {
-            title: "아무곳",
-            latlng: new kakao.maps.LatLng(37.472827784332004, 126.89047846655862),
-        },
-        {
-            title: "아무곳",
-            latlng: new kakao.maps.LatLng(37.48839922696368, 126.89267194986982),
-        },
-        {
-            title: "아무곳",
-            latlng: new kakao.maps.LatLng(37.47798819362497, 126.89788743524126),
-        },
-        {
-            title: "아무곳",
-            latlng: new kakao.maps.LatLng(37.47198455870856, 126.8760096376654),
-        },
-        {
-            title: "아무곳",
-            latlng: new kakao.maps.LatLng(37.46896653243736, 126.88528413136493),
-        },
-        {
-            title: "아무곳",
-            latlng: new kakao.maps.LatLng(37.49268343334169, 126.88773559566658),
-        },
-        {
-            title: "아무곳",
-            latlng: new kakao.maps.LatLng(37.473483034315564, 126.89775790505735),
-        },
+        }
     ]);
+    useEffect(() => {
+        // circleList를 순회하며 각 인덱스의 { title: cicleList.name, latlng: new kakao.maps.LatLng(좌표)로 해서 전체데이터를 positions에 set
+        setMap()
+    }, [Coords, circleList, userList]);
 
     //초기 마커 추가해놓기
     const initializeMarkers = (map) => {
@@ -152,13 +88,13 @@ const KakaoNew = () => {
 
             //성공했을떄
             function success(position) {
-                setUserLocation(position.coords); //현재 좌표 저장
+                setUserLocation(Coords); //현재 좌표 저장
                 setLocationAvailable(true); //위치사용 가능
                 currentPosition = position.coords; //현재 좌표 저장
                 const time = new Date(position.timestamp); //시각 저장
                 const latlng = new kakao.maps.LatLng(
-                    position.coords.latitude,
-                    position.coords.longitude
+                    Coords.latitude,
+                    Coords.longitude
                 );
                 map.setCenter(latlng); // 사용자의 현재 위치를 지도의 중심 좌표로 설정
                 console.log("사용자의 현재 위치: ", latlng);

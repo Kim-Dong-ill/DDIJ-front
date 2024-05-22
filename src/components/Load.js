@@ -1,52 +1,55 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axiosInstance from "../utils/axios";
 
-const Load = ({LoadData},{updateData}) => {
-
+const Load = ({ LoadData, updateData }) => {
     useEffect(() => {
         const sendLocation = async () => {
-            let nowCoords = false;
+            let nowCoords = {
+                latitude: LoadData.Coords.latitude,
+                longitude: LoadData.Coords.longitude
+            };
+
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(success, error);
-                function success(position) {
-                    nowCoords = position.coords;
+                try {
+                    const position = await new Promise((resolve, reject) => {
+                        navigator.geolocation.getCurrentPosition(
+                            resolve,
+                            reject,
+                            { enableHighAccuracy: true, maximumAge: 2000, timeout: 5000 }
+                        )});
+                    nowCoords.latitude = position.coords.latitude;
+                    nowCoords.longitude = position.coords.longitude;
+
+                    let userid = "664c4171a9e4f2a9a11b291c";
+
+                    console.log(localStorage);
+                    console.log(`유저아이디는 => ${userid}`);
+                    try {
+                        const body = {
+                            nowCoords : nowCoords
+                        }
+                        const response = await axiosInstance.post(`/index/${userid}`, body);
+                        console.log('Location sent successfully:', response.data);
+                        const userList = response.data.nearUser.map(user => user._id);
+                        const circleList = response.data.nearCircle.map(circle => circle._id);
+                        const newData = { Coords: nowCoords, userList, circleList };
+                        updateData(newData);
+                    } catch (error) {
+                        console.error('Error sending location:', error);
+                    }
+                } catch (error) {
+                    console.error("geolocation 오류" + error.code + ":" + error.message);
                 }
-                function error(error) {
-                    console.log("geolocation 오류" + error.code + ":" + error.message);
-                }
-            }
-            let userId;
-            if(localStorage.getItem('userId' ? userId = this : userId=0))
-            try {
-                const response = await axios.get(`/index/${userId}`, { params: nowCoords });
-                console.log('Location sent successfully:', response.data);
-                // const userList = response.data.user
-                // const petList = response.data.pet
-                // const newData = { coords : {nowCoords}, useList, petList}
-                // updateData(newData)
-            } catch (error) {
-                console.error('Error sending location:', error);
+            } else {
+                alert('Geolocation is not supported by this browser.');
             }
         };
+
         sendLocation();
     }, []);
-
     return (
         <div>
-            <h1>Geolocation Example</h1>
-            <ul>
-                {/*{userList.map((user, index) => (*/}
-                {/*    <li key={index}>*/}
-                {/*        ID: {user.id}, Latitude: {user.latitude}, Longitude: {user.longitude}*/}
-                {/*    </li>*/}
-                {/*))}*/}
-                {/*{petList.map((pet, index) => (*/}
-                {/*    <li key={index}>*/}
-                {/*        ID: {pet.id}, Latitude: {pet.latitude}, Longitude: {pet.longitude}*/}
-                {/*    </li>*/}
-                {/*))}*/}
-
-            </ul>
+            <p>TEST_VERSION</p>
         </div>
     );
 };

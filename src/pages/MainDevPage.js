@@ -11,31 +11,32 @@ import Load from "../components/Load"
 // 3. 서버에서는 해당 좌표를 가지고 1)주변모임, 2)주변강아지를 가져온다. 이때 특정 갯수보다 적으면, 특정개수로 만큼 뽑아오게 쿼리한다.
 // 4. 응답의 body에서 주변모임, 주변강아지를 가져와 각각 담아둔다.
 // 5. 위 값들을 가지고 map을 그린다.
-
 //맵그리기 ->
 // 주변모임을 가지고 마커를 찍기위해 전달 받는다.
 // 주변 강아지를 mainslider에 전달한다.
-const [LoadData, setLoadData] = useState({
-    Coords: {
-        latitude:33.450701,
-        longitude:126.570667
-    },
-    circleList : [],
-    petList: []
-})
-
-const updateData = (newData)=>{
-    setLoadData(newData);
-};
 
 function MainDevPage() {
+    const [LoadData, setLoadData] = useState({
+        Coords: {
+            latitude: 40.51501771854569,
+            longitude: 127.91874014610266           //기본값 => 이건 거의 사용되지 않는다.
+        },
+        circleList: [],
+        userList: []
+    });
+    const updateData = (newData) => {
+        setLoadData(newData);
+        console.log("데이터가 변경되었습니다."+newData.Coords.latitude)
+    };
+
     return (
 
-        <div className="bg-ye-100" style={{ height: "calc(100vh - 65px)" }}>
-            <Load LoadData = {LoadData} updateData={updateData} />
-            <Kakao_new />
-            <Navbar />
+        <div className="bg-ye-100" style={{height: "calc(100vh - 65px)"}}>
+            <Load LoadData={LoadData} updateData={updateData} />
+            <Kakao_new Coords={LoadData.Coords} circleList={LoadData.circleList} userList={LoadData.userList} />
+            <Navbar/>
         </div>
+
     );
 }
 
