@@ -2,8 +2,29 @@ import React, { useEffect, useState } from "react";
 import TextFieldLine from "../components/TextField";
 import { address } from "../utils/validation";
 
-function RegisterAdr({ hasDog, errors, register }) {
+function RegisterAdr({ hasDog, errors, register, handleAddLoc }) {
+  const { kakao } = window;
   const [uAddress, setUAddress] = useState("");
+
+  //주소 좌표로 변경하기
+  useEffect(() => {
+    var geocoder = new kakao.maps.services.Geocoder();
+
+    var callback = function (result, status) {
+      if (status === kakao.maps.services.Status.OK) {
+        const coords = {
+          latitude: result[0].road_address.y,
+          longtitude: result[0].road_address.x,
+        };
+        // console.log(coords);
+        handleAddLoc(coords);
+      }
+    };
+
+    geocoder.addressSearch(`${uAddress}`, callback);
+  }, [uAddress]);
+
+  //주소 검색하기
   useEffect(() => {
     // 스크립트가 이미 로드되어 있는지 확인
     if (!window.daum) {
