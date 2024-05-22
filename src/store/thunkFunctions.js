@@ -71,3 +71,15 @@ export const logoutUser = createAsyncThunk(
     }
   }
 );
+
+export const signOutUser = createAsyncThunk(
+  "/user/signout",
+  async (state, thunkAPI) => {
+    try {
+      const res = await axiosInstance.delete(`/user/signout/${state}`);
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.response.data || error.message);
+    }
+  }
+);

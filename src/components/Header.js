@@ -38,8 +38,11 @@ function Header() {
       title = "";
   }
   const disPatch = useDispatch();
-  function handleLogout() {
-    disPatch(logoutUser());
+  async function handleLogout() {
+    const result = await disPatch(logoutUser());
+    if (logoutUser.fulfilled.match(result)) {
+      navigate("/intro");
+    }
   }
   return (
     <>
