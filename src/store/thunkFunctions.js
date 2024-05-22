@@ -83,3 +83,18 @@ export const signOutUser = createAsyncThunk(
     }
   }
 );
+
+// createCCpage
+export const createCircle = createAsyncThunk(
+  "/circles/new",
+  async (body, thunkAPI) => {
+    try {
+      const res = await axiosInstance.post("/circles/new", body);
+      console.log("thunkapi 모임생성");
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.response.data || error.message);
+    }
+  }
+);
