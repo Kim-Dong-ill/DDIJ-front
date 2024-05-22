@@ -4,10 +4,10 @@ import ButtonYe from "../components/ButtonYe";
 import { Link, useNavigate } from "react-router-dom";
 import TextFieldLine from "../components/TextField";
 import CheckCircleButton from "../components/CheckCircleButton";
-// import axiosInstance from "../utils/axios";
-import { createCircle } from "../store/thunkFunctions";
+import axiosInstance from "../utils/axios";
+// import { createCircle } from "../store/thunkFunctions";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 // import { Box, FormControl, MenuItem, Select } from "@mui/material";
 // import SelectButton from "../components/SelectButton";
@@ -38,7 +38,9 @@ function CreateCCPage() {
     reset,
     // watch,
   } = useForm({ mode: "onChange" });
-  const dispatch = useDispatch();
+
+  // 디스패치 선언
+  // const dispatch = useDispatch();
 
   const [startshowBox, setStartshowBox] = useState(false); // 출발지 토글박스
   const [endshowBox, setEndshowBox] = useState(false); // 목적지 토글박스
@@ -59,13 +61,14 @@ function CreateCCPage() {
   // // };
 
   // 변수 저장소
-  // const [newCircle, setNewCircle] = useState({
-  //   title: "",
-  //   content: "",
-  //   // startTime: "",
-  //   usingTime: 1,
-  //   max: 1,
-  // });
+  const [newCircle, setNewCircle] = useState({
+    title: "",
+    content: "",
+    startDate: "",
+    startTime: "",
+    usingTime: 1,
+    max: 1,
+  });
 
   // 중복된모임체크
   function handleCheckCircle(result) {
@@ -75,7 +78,7 @@ function CreateCCPage() {
   // useNavigate
   const navigate = useNavigate();
 
-  // onChange thunkfunction하느라 주석
+  // onChange 주석해도됨 위에 onChange잇음
   // function handleChange(e) {
   //   const { name, value } = e.target;
   //   console.log(value, name);
@@ -88,66 +91,66 @@ function CreateCCPage() {
   // }
 
   // thunkFuntion버전
-  async function onSubmit({
-    title,
-    content,
-    startPoint,
-    endPoint,
-    startDate,
-    startTime,
-    usingTime,
-    max,
-  }) {
-    const body = {
-      title,
-      content,
-      startPoint,
-      endPoint,
-      startDate,
-      startTime,
-      usingTime,
-      max,
-    };
+  // async function onSubmit({
+  //   title,
+  //   content,
+  //   startPoint,
+  //   endPoint,
+  //   startDate,
+  //   startTime,
+  //   usingTime,
+  //   max,
+  // }) {
+  //   const body = {
+  //     title,
+  //     content,
+  //     startPoint,
+  //     endPoint,
+  //     startDate,
+  //     startTime,
+  //     usingTime,
+  //     max,
+  //   };
 
-    // dispatch(createCircle(body));
-    // console.log(body);
+  // dispatch(createCircle(body));
+  // console.log(body);
 
-    // reset();
+  // reset();
 
-    try {
-      const res = await dispatch(createCircle(body));
-      console.log("모임생성 성공", res.data);
+  try {
+    //     // const res = await dispatch(createCircle(body));
+    //     // console.log("모임생성 성공", res.data);
 
-      toast.success("👨👩 모임생성을 성공했습니다.", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+    toast.success("👨👩 모임생성을 성공했습니다.", {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
 
-      reset();
+    reset();
 
-      navigate("/circles");
-    } catch (error) {
-      //  에러 토스트가 안뜸
-      console.log("모임생성 실패", error);
+    navigate("/circles");
+  } catch (error) {
+    //     //  에러 토스트가 안뜸
+    //     console.log("모임생성 실패", error);
 
-      toast.error("🤷‍♂️🤷‍♂️🤷‍♂️ 모임생성을 실패했습니다.!!", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-    }
+    toast.error("🤷‍♂️🤷‍♂️🤷‍♂️ 모임생성을 실패했습니다.!!", {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   }
+  // }
 
   const circleTitle = {
     required: {
@@ -193,18 +196,18 @@ function CreateCCPage() {
   };
 
   // handleSubmit navigate 버전
-  // async function onSubmit() {
-  //   alert("ddd");
-  //   const body = {
-  //     ...newCircle,
-  //   };
-  //   try {
-  //     await axiosInstance.post("/workingCircle", body);
-  //     navigate("/circles");
-  //   } catch (error) {
-  //     console.log("handleSubmit error");
-  //   }
-  // }
+  async function onSubmit() {
+    alert("ddd");
+    const body = {
+      ...newCircle,
+    };
+    try {
+      await axiosInstance.post("/workingCircle", body);
+      navigate("/circles");
+    } catch (error) {
+      console.log("handleSubmit error");
+    }
+  }
 
   // no navigate 버전
   // async function handleButtonClick() {
@@ -362,6 +365,7 @@ function CreateCCPage() {
                   alt="돋보기 아이콘"
                   className="block relative  left-[370px] bottom-[37px] cursor-pointer"
                   onClick={endToggleBox}
+                  disabled={checkCircle ? false : true}
                 />
                 {endshowBox && (
                   <div className="bg-gray-100 px-4 py-2 mb-4 border-2 rounded-md">
@@ -539,7 +543,9 @@ function CreateCCPage() {
               </Link>
               {/* <Link to="/circles"> */}
               {/* <ButtonYe onClick={handleButtonClick}>등록</ButtonYe> */}
-              <ButtonYe type="submit">등록</ButtonYe>
+              <ButtonYe type="submit" disabled={checkCircle ? false : true}>
+                등록
+              </ButtonYe>
               {/* <button>등록</button> */}
               {/* </Link> */}
             </div>
