@@ -6,7 +6,6 @@ function RegisterPetAge({ hasDog, errors, register }) {
   const [petAge, setPetAge] = useState();
   function handleAge(e) {
     const age = e.target.value;
-    console.log(age);
     if (age < 0) {
       setPetAge(0);
     } else {
