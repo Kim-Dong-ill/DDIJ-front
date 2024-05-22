@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../utils/axios";
+import { useSelector } from "react-redux";
 
 function AppealCommentList(props) {
   const { userId } = useParams(); // URL의 userId 파라미터 가져오기
   const [appealComment, setAppealComment] = useState([]); // 댓글 목록 상태
   const [textData, setTextData] = useState({ text: "" }); // 입력 필드 상태
+  const [commentNick, setCommentNick] = useState([]);
+  const [loginUserId, setLoginUserId] = useState(null);
+
+  //get에서 가져온 유저값에서 닉네임 뽑아와서 출력해야함!!! 댓글에 꽂아야댐
 
   // 입력 필드 변경 시 호출되는 함수
   function textDataChange(e) {
@@ -21,6 +26,7 @@ function AppealCommentList(props) {
     const body = {
       appealPostId: props.appealPostId, // 부모 컴포넌트에서 전달된 appealPostId
       text: textData.text,
+      userId: loginState,
     };
     try {
       await axiosInstance.post(`appeal/${userId}/comment`, body);
@@ -45,7 +51,22 @@ function AppealCommentList(props) {
 
   useEffect(() => {
     fetchAppealComment(); // 컴포넌트가 마운트될 때 댓글 목록 가져오기
+    // console.log("appealComment", appealComment);
   }, [userId, props.appealPostId]); // userId와 appealPostId가 변경될 때마다 다시 요청
+
+  // useEffect(() => {
+  //   if (appealComment.length > 0) {
+  //     console.log("appealComment.user는::::::::::", appealComment[0].user);
+  //     setCommentUser(appealComment.user);
+  //   }
+  // }, [appealComment]);
+
+  // const state = useSelector(()=>{})
+  // ======== 동일님이 알려준 useSelector____
+  const loginState = useSelector((state) => {
+    return state.user.userData.user.id;
+  });
+  console.log(loginState);
 
   return (
     <>
@@ -74,7 +95,8 @@ function AppealCommentList(props) {
             <div className="flex gap-[1px]">
               <img src="/images/commenticon.svg" alt="" className="block" />
               <div className="flex items-center w-[90px]">
-                <p className="nanumBold">닉네임6글자</p>
+                <p className="nanumBold">{item.user.nickName}</p>
+                {/* <p className="nanumBold">{item.user}</p> */}
               </div>
             </div>
             <div className="nanum flex-wrap w-[280px] overflow-wrap">
