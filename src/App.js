@@ -24,6 +24,7 @@ import ProtectRouter from "./components/ProtectRouter";
 import { authUser } from "./store/thunkFunctions";
 
 function App() {
+  // 원래있던부분
   const isAuth = useSelector((state) => {
     return state.user.isAuth;
   });

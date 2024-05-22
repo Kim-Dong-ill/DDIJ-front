@@ -54,14 +54,6 @@ function AppealCommentList(props) {
     // console.log("appealComment", appealComment);
   }, [userId, props.appealPostId]); // userId와 appealPostId가 변경될 때마다 다시 요청
 
-  // useEffect(() => {
-  //   if (appealComment.length > 0) {
-  //     console.log("appealComment.user는::::::::::", appealComment[0].user);
-  //     setCommentUser(appealComment.user);
-  //   }
-  // }, [appealComment]);
-
-  // const state = useSelector(()=>{})
   // ======== 동일님이 알려준 useSelector____
   const loginState = useSelector((state) => {
     return state.user.userData.user.id;
