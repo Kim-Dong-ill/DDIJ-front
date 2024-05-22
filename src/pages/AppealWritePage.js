@@ -19,6 +19,30 @@ function AppealWritePage() {
   });
   const [mainPetId, setMainPetId] = useState();
 
+  // const [images, setImages] = useState([]); // 이미지 저장
+
+  // async function onSubmit(body) {
+  //   console.log(body);
+  //   body.image = image; // body 객체에 이미지 속성 추가
+
+  //   try {
+  //     const res = await axiosInstance.post(`/appeal/${userId}`, body); //appeal로 body 전송 요청 완료 후, 응답 res에 저장
+  //     console.log(res.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
+  // result -> setImages -> images
+  function handleImg(newImages) {
+    setAppealData((prevState) => {
+      return {
+        ...prevState,
+        images: newImages,
+      };
+    });
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
     const body = {
@@ -57,32 +81,24 @@ function AppealWritePage() {
     findMainPet();
   }, []);
 
-
-  // const [appealData, setAppealData] = useState({
-  //   images: [],
-  // });
-
-  // const { petid } = useParams();
-
-  function handleImage(newImages) {
-    setAppealData((prevState) => {
-      return {
-        ...prevState,
-        images: newImages,
-      };
-    });
-  }
+  // function handleImage(newImages) {
+  //   setAppealData((prevState) => {
+  //     return {
+  //       ...prevState,
+  //       images: newImages,
+  //     };
+  //   });
+  // }
 
   return (
     <>
       <form onSubmit={handleSubmit}>
         {/* <form> */}
         <div className="w-[450px] m-auto px-5 pb-[80px] pt-[150px]">
-          {/* <FileUpload images={appealData.images} onImageChange={handleImage} /> */}
           <FileUpload
-            images={appealData.images}
-            onImageChange={handleImage}
-            userId={userId}
+            images={appealData.images} // 선택된 이미지 FileUpload로 전달
+            onImageChange={handleImg} // 이미지 선택시 handleImg 호출
+            userId={userId} // 유저 아이디 전달
           />
 
           <textarea
