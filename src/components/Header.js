@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../store/thunkFunctions";
 
 function Header() {
   let title = " ";
@@ -35,10 +37,23 @@ function Header() {
     default:
       title = "";
   }
+  const disPatch = useDispatch();
+  async function handleLogout() {
+    const result = await disPatch(logoutUser());
+    if (logoutUser.fulfilled.match(result)) {
+      navigate("/intro");
+    }
+  }
   return (
     <>
       <div className="flex items-end justify-between h-[90px] px-[10px] bg-ye-400 fixed w-[500px] z-50">
-        <div className="flex items-center">
+        <button
+          onClick={handleLogout}
+          className="text-[13px] absolute right-[10px] top-[10px] text-white z-10"
+        >
+          로그아웃
+        </button>
+        <div className="flex items-center ">
           <img
             src="/images/backicon_white.svg"
             alt=""

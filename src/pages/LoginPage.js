@@ -19,7 +19,6 @@ function LoginPage() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // console.log("errorMsg", errorMsg);
   async function onSubmit(body) {
     function handleLoginError(loginError) {
       setErrorMsg(loginError);

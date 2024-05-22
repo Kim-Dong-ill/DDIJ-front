@@ -1,12 +1,16 @@
 import React, { useState } from "react";
-import HasDogButton from "../components/HasDogButton";
+// import HasDogButton from "../components/HasDogButton";
 import TextFieldLine from "../components/TextField";
 import { Link } from "react-router-dom";
 import $ from "jquery";
+import { useDispatch, useSelector } from "react-redux";
+import { signOutUser } from "../store/thunkFunctions";
 
 function UserInfoPage() {
   const [hasDog, setHasDog] = useState(false); //반려동물 있는지 없는지
   const [pageMove, setPageMove] = useState(true);
+  // const [userId, setUserId] = useState(""); //유저아이디
+  const dispatch = useDispatch();
 
   function handleHasDog(result) {
     setHasDog(result);
@@ -20,6 +24,18 @@ function UserInfoPage() {
   function onSubmit() {
     alert("전송");
   }
+
+  //회원 탈퇴
+  async function handleSignout() {
+    if (window.confirm("탈퇴하시겠습니까?")) {
+      await dispatch(signOutUser(state));
+      alert("탈퇴되었습니다.");
+    }
+  }
+  const state = useSelector((state) => {
+    // setUserId(state.user.userData.user.id);
+    return state.user.userData.user.id;
+  });
   return (
     <>
       <div
@@ -128,6 +144,14 @@ function UserInfoPage() {
                 fullWidth
               />
             </div>
+          </div>
+          <div className="text-da-200">
+            <button
+              onClick={handleSignout}
+              className="border border-da-200 rounded-[6px] px-2 py-1 hover:bg-da-200 hover:text-da-300"
+            >
+              회원탈퇴
+            </button>
           </div>
         </div>
       </div>

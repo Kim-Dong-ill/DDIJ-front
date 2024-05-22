@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ButtonBl from "../components/ButtonBl";
 import ButtonYe from "../components/ButtonYe";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -19,6 +19,7 @@ import RegisterPetEtc from "../components/RegisterPetEtc";
 import axiosInstance from "../utils/axios";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import FileUploadOne from "../components/FileUploadOne";
 
 //오류 수정 사항
 //회원가입할때 user페이지에서 validation체크 성공 못했으면 화면 안넘어가게 해야함
@@ -38,7 +39,31 @@ function RegisterPage() {
   const [neuter, setNeuter] = useState(false); //중성화 여부
   const [vaccine, setVaccine] = useState(false); //기본접종 여부
   const [rabies, setRabies] = useState(false); //광견병 여부
-  const [pageMove, setPageMove] = useState(true);
+  const [pageMove, setPageMove] = useState(true); //페이지 이전
+  const [image, setImage] = useState(""); //반려견 이미지
+  const [checkEmailErr, setCheckEmailErr] = useState(false); //이메일 에러
+  const [checkNickErr, setCheckNickErr] = useState(false); //닉네임 에러
+  const [checkErr, setCheckErr] = useState(false);
+
+  useEffect(() => {
+    if (checkEmailErr && checkNickErr) {
+      setCheckErr(true);
+    } else {
+      setCheckErr(false);
+    }
+  }, [checkEmailErr, checkNickErr]);
+
+  function handleNickErr(result) {
+    setCheckNickErr(result);
+  }
+
+  function handleEmailErr(result) {
+    setCheckEmailErr(result);
+  }
+
+  function handleImg(result) {
+    setImage(result);
+  }
 
   function handleHasDog(result) {
     setHasDog(result);
@@ -68,7 +93,8 @@ function RegisterPage() {
   const navigate = useNavigate();
 
   async function onSubmit(body) {
-    alert("dd");
+    console.log(body);
+    body.image = image;
     body.neuter = neuter;
     body.rabies = rabies;
     body.vaccine = vaccine;
@@ -126,7 +152,12 @@ function RegisterPage() {
 
           <RegisterName errors={errors} register={register} hasDog={hasDog} />
 
-          <RegisterEmail errors={errors} register={register} hasDog={hasDog} />
+          <RegisterEmail
+            handleEmailErr={handleEmailErr}
+            errors={errors}
+            register={register}
+            hasDog={hasDog}
+          />
 
           {/* <RegisterPW errors={errors} register={register} hasDog={hasDog} /> */}
           <div className="flex flex-col gap-2 mb-6">
@@ -183,7 +214,12 @@ function RegisterPage() {
             </div>
           </div>
 
-          <RegisterNick errors={errors} register={register} hasDog={hasDog} />
+          <RegisterNick
+            handleNickErr={handleNickErr}
+            errors={errors}
+            register={register}
+            hasDog={hasDog}
+          />
 
           <RegisterAdr errors={errors} register={register} hasDog={hasDog} />
           <div className="flex justify-center gap-3 mb-28">
@@ -199,19 +235,9 @@ function RegisterPage() {
         {/* 강아지 정보 입력 */}
         <div className="w-[400px]" hidden={pageMove ? true : false}>
           <div>저에게 반려견을 소개해 주세요!</div>
-          <div className="flex justify-center py-5">
-            <div className="bg-ye-300 w-[200px] h-[200px] rounded-[25px] flex justify-center items-center">
-              <div className="border border-black w-[150px] h-[150px] rounded-full flex justify-center items-center">
-                <img
-                  onClick={() => {
-                    alert("a");
-                  }}
-                  src="./images/camera1.svg"
-                  alt=""
-                />
-              </div>
-            </div>
-          </div>
+
+          <FileUploadOne handleImg={handleImg} />
+
           <RegisterPetName
             errors={errors}
             register={register}
@@ -249,9 +275,7 @@ function RegisterPage() {
 
           <div className="flex justify-center gap-3 mb-28">
             <ButtonBl onClick={handlePage}>이전</ButtonBl>
-            <ButtonYe>
-              <button>회원가입</button>
-            </ButtonYe>
+            <ButtonYe type={checkErr ? `submit` : `button`}>회원가입</ButtonYe>
           </div>
         </div>
       </form>
