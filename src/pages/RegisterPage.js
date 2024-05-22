@@ -44,6 +44,11 @@ function RegisterPage() {
   const [checkEmailErr, setCheckEmailErr] = useState(false); //이메일 에러
   const [checkNickErr, setCheckNickErr] = useState(false); //닉네임 에러
   const [checkErr, setCheckErr] = useState(false);
+  const [addressLoc, setAddressLoc] = useState([]);
+
+  function handleAddLoc(result) {
+    setAddressLoc(result);
+  }
 
   useEffect(() => {
     if (checkEmailErr && checkNickErr) {
@@ -98,6 +103,7 @@ function RegisterPage() {
     body.neuter = neuter;
     body.rabies = rabies;
     body.vaccine = vaccine;
+    body.coords = addressLoc;
 
     try {
       const res = await axiosInstance.post("/user/register", body);
@@ -221,7 +227,12 @@ function RegisterPage() {
             hasDog={hasDog}
           />
 
-          <RegisterAdr errors={errors} register={register} hasDog={hasDog} />
+          <RegisterAdr
+            handleAddLoc={handleAddLoc}
+            errors={errors}
+            register={register}
+            hasDog={hasDog}
+          />
           <div className="flex justify-center gap-3 mb-28">
             <NavLink to="/intro">
               <ButtonBl>취소</ButtonBl>
