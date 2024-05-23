@@ -10,8 +10,6 @@ function AppealCommentList(props) {
   const [commentNick, setCommentNick] = useState([]);
   const [loginUserId, setLoginUserId] = useState(null);
 
-  //get에서 가져온 유저값에서 닉네임 뽑아와서 출력해야함!!! 댓글에 꽂아야댐
-
   // 입력 필드 변경 시 호출되는 함수
   function textDataChange(e) {
     const { name, value } = e.target;
