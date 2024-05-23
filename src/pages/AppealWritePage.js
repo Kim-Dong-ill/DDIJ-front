@@ -33,7 +33,7 @@ function AppealWritePage() {
   //   }
   // }
 
-  // result -> setImages -> images
+  // result -> setImages -> images 야야
   function handleImg(newImages) {
     setAppealData((prevState) => {
       return {
