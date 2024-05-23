@@ -9,7 +9,7 @@ import AppealCommentList from "./AppealCommentList";
 function AppealPage({}) {
   // userId값 어떻게 가져올지 몰라서 일단 임시로 useParams값으로 가져옴..ㅜㅜ
   const { userId, petId } = useParams();
-  // const [appealPostId, setAppealPostId] = useState([]);
+  // const [appealPostId, setAppealPostId] = useState([]); 얌
 
   const navigate = useNavigate();
 
