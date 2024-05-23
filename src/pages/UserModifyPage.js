@@ -6,21 +6,22 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import {
   defaltPassword,
-  email,
-  name,
-  nickName,
-  password,
+  modEmail,
+  modName,
+  modNickName,
 } from "../utils/validation";
 import { useSelector } from "react-redux";
 import axiosInstance from "../utils/axios";
 
 function UserModifyPage() {
+  const { kakao } = window;
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm({ mode: "onChange" });
+  } = useForm({ mode: "all" });
   const state = useSelector((state) => {
     return state.user.userData.user;
   });
@@ -30,10 +31,82 @@ function UserModifyPage() {
   const [errMsg, setErrMsg] = useState("");
   const [errNMsg, setErrNMsg] = useState("");
   const [nickValue, setNickValue] = useState(state.nickName);
-  const [defaultState, setDefaultState] = useState(false); //기존비번 확인
-  const [nickState, setNickState] = useState(false); //기존비번 확인
-  function onSubmit(body) {
+  const [passwordState, setPasswordState] = useState(false); //기존비번 확인
+  const [nickState, setNickState] = useState(true); //기존 닉네임 확인
+  const [write, setWrite] = useState(false);
+  const [uAddress, setUAddress] = useState("");
+  const [addState, setAddState] = useState(false);
+  const [coords, setCoords] = useState([]);
+
+  //주소 좌표로 변경하기
+  useEffect(() => {
+    var geocoder = new kakao.maps.services.Geocoder();
+
+    var callback = function (result, status) {
+      if (status === kakao.maps.services.Status.OK) {
+        const coords = {
+          latitude: result[0].road_address.y,
+          longtitude: result[0].road_address.x,
+        };
+        console.log(coords);
+        setCoords(coords);
+      }
+    };
+
+    geocoder.addressSearch(`${uAddress}`, callback);
+  }, [uAddress]);
+
+  //주소 검색하기
+  useEffect(() => {
+    // 스크립트가 이미 로드되어 있는지 확인
+    if (!window.daum) {
+      const script = document.createElement("script");
+      script.src =
+        "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
+      script.async = true;
+      // script.onload = () => {
+      //   openPostcode();
+      // };
+      document.head.appendChild(script);
+    } else {
+      // openPostcode();
+    }
+  }, []);
+
+  const openPostcode = () => {
+    new window.daum.Postcode({
+      oncomplete: function (data) {
+        // 팝업에서 검색결과 항목을 클릭했을 때 실행할 코드를 작성하는 부분입니다.
+        // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+        console.log(data.address); // 주소 데이터를 처리하는 코드를 작성합니다.
+        setUAddress(data.address);
+        setAddState(true);
+      },
+    }).open();
+  };
+
+  const handleTextFieldClick = () => {
+    openPostcode(); // TextFieldLine 클릭 시 주소 입력 창 열기
+  };
+
+  // useEffect(() => {
+  //   if (passwordState) {
+  //     setWrite(true);
+  //   } else {
+  //     setWrite(false);
+  //   }
+  // }, [passwordState]);
+
+  async function onSubmit(body) {
     console.log("바디바디", body);
+    body.coords = coords;
+    console.log(state.id);
+    try {
+      const res = await axiosInstance.patch(`/user/${state.id}/update`, body);
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   function defaultPassword(e) {
@@ -46,18 +119,22 @@ function UserModifyPage() {
       console.log(body);
       const res = await axiosInstance.post("/user/checkpassword", body);
       console.log(res.data);
+      setPasswordState(res.data.passwordState);
       setMsg(res.data.message);
       setErrMsg(res.data.errMsg);
     } catch (error) {}
   }
 
-  useEffect(() => {
-    if (msg) {
-      setDefaultState(true);
-    } else {
-      setDefaultState(false);
-    }
-  }, [msg]);
+  // useEffect(() => {
+  //   if (msg) {
+  //     setPasswordState(true);
+  //   } else {
+  //     setPasswordState(false);
+  //     if (defaultP == null) {
+  //       setPasswordState(true);
+  //     }
+  //   }
+  // }, [msg]);
 
   function handleValue(e) {
     setNickValue(e.target.value);
@@ -66,17 +143,31 @@ function UserModifyPage() {
     const body = { nickValue };
     console.log(body);
     const res = await axiosInstance.post("/user/checknickname", body);
+    console.log(res.data);
+    setNickState(res.data.nickState);
+    if (nickValue === state.nickName) {
+      console.log("같음");
+      setNickState(true);
+    }
     setNMsg(res.data.message);
     setErrNMsg(res.data.errorMsg);
   }
-  useEffect(() => {
-    if (nMsg) {
-      setNickState(true);
-    } else {
-      setNickState(false);
-    }
-  }, [nMsg]);
-  console.log(nickState);
+  console.log("nickState", nickState);
+  console.log("SpasswordStatetate", passwordState);
+  // useEffect(() => {
+  //   if (nMsg) {
+  //     setNickState(true);
+  //   } else {
+  //     setNickState(false);
+  //     if (nickValue === state.nickName) {
+  //       // setNickState(true);
+  //     }
+  //   }
+  // }, [nMsg]);
+  // console.log("nickState", nickState);
+  // if (nickState && defaultState) {
+  //   console.log("가입가능");
+  // }
   return (
     <>
       <div
@@ -106,45 +197,6 @@ function UserModifyPage() {
                   className="w-[20px] h-[20px]"
                 />
                 <h2 className="text-[15px]">보호자 정보</h2>
-              </div>
-            </div>
-            <div className="flex flex-col gap-2 mb-6">
-              <label className="w-[100px] nanumBold" htmlFor="name">
-                이름
-              </label>
-              <div>
-                <TextFieldLine
-                  defaultValue={state.name}
-                  id="name"
-                  label="이름"
-                  fullWidth
-                  {...register("name", name)}
-                />
-                {errors.name && (
-                  <div className="nanumBold text-red-500 text-xs mt-1">
-                    {errors.name.message}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-2 mb-6">
-              <label className="w-[100px] nanumBold" htmlFor="email">
-                이메일
-              </label>
-              <div>
-                <TextFieldLine
-                  defaultValue={state.email}
-                  id="email"
-                  label="이메일"
-                  fullWidth
-                  {...register("email", email)}
-                />
-                {errors.email && (
-                  <div className="nanumBold text-red-500 text-xs mt-1">
-                    {errors.email.message}
-                  </div>
-                )}
               </div>
             </div>
             <div className="flex flex-col gap-2 mb-6">
@@ -181,12 +233,53 @@ function UserModifyPage() {
               </div>
             </div>
             <div className="flex flex-col gap-2 mb-6">
+              <label className="w-[100px] nanumBold" htmlFor="name">
+                이름
+              </label>
+              <div>
+                <TextFieldLine
+                  defaultValue={state.name}
+                  id="name"
+                  label="이름"
+                  fullWidth
+                  {...register("name", modName)}
+                />
+                {errors.name && (
+                  <div className="nanumBold text-red-500 text-xs mt-1">
+                    {errors.name.message}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-2 mb-6">
+              <label className="w-[100px] nanumBold" htmlFor="email">
+                이메일
+              </label>
+              <div>
+                <TextFieldLine
+                  disabled={true}
+                  defaultValue={state.email}
+                  id="email"
+                  label="이메일"
+                  fullWidth
+                  {...register("email", modEmail)}
+                />
+                {errors.email && (
+                  <div className="nanumBold text-red-500 text-xs mt-1">
+                    {errors.email.message}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-2 mb-6">
               <label className="w-[100px] nanumBold" htmlFor="password">
                 비밀번호
               </label>
               <div>
                 <TextFieldLine
-                  disabled={defaultState ? false : true}
+                  disabled={passwordState ? false : true}
                   type="password"
                   id="password"
                   label="비밀번호"
@@ -206,7 +299,7 @@ function UserModifyPage() {
               </label>
               <div>
                 <TextFieldLine
-                  disabled={defaultState ? false : true}
+                  disabled={passwordState ? false : true}
                   type="password"
                   id="checkPassword"
                   label="비밀번호 확인"
@@ -246,12 +339,11 @@ function UserModifyPage() {
               <div>
                 <TextFieldLine
                   onInput={handleValue}
-                  // value={nickValue}
-                  value={nickState ? nickValue : state.nickName}
+                  value={nickValue}
                   id="nickName"
                   label="닉네임"
                   fullWidth
-                  {...register("nickName", nickName)}
+                  {...register("nickName", modNickName)}
                 />
                 {errors.nickName && (
                   <div className="nanumBold text-red-500 text-xs mt-1">
@@ -266,10 +358,14 @@ function UserModifyPage() {
               </label>
               <div>
                 <TextFieldLine
+                  onClick={handleTextFieldClick}
+                  // value={uAddress}
+                  value={addState ? uAddress : state.address}
+                  // defaultValue={state.address}
                   id="address"
                   label="주소"
                   fullWidth
-                  defaultValue={state.address}
+                  {...register("address")}
                 />
               </div>
             </div>
@@ -279,7 +375,9 @@ function UserModifyPage() {
             <Link to="/userinfo/:userid">
               <ButtonBl>취소</ButtonBl>
             </Link>
-            <ButtonYe type="submit">수정완료</ButtonYe>
+            <ButtonYe type={passwordState ? `submit` : `button`}>
+              수정완료
+            </ButtonYe>
           </div>
         </form>
       </div>

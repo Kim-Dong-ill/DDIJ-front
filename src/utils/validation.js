@@ -9,11 +9,23 @@ export const name = {
     message: "6자 이내로 입력해주세요",
   },
 };
+export const modName = {
+  maxLength: {
+    value: 6,
+    message: "6자 이내로 입력해주세요",
+  },
+};
 export const email = {
   required: {
     value: true,
     message: "이메일은 필수입니다.",
   },
+  pattern: {
+    value: /^\S+@\S+$/i,
+    message: "이메일 형식을 다시 입력하세요",
+  },
+};
+export const modEmail = {
   pattern: {
     value: /^\S+@\S+$/i,
     message: "이메일 형식을 다시 입력하세요",
@@ -48,6 +60,12 @@ export const nickName = {
     value: true,
     message: "닉네임은 필수입니다.",
   },
+  maxLength: {
+    value: 8,
+    message: "8자 이내로 입력해주세요",
+  },
+};
+export const modNickName = {
   maxLength: {
     value: 8,
     message: "8자 이내로 입력해주세요",
