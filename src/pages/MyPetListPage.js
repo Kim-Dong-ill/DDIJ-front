@@ -49,7 +49,8 @@ function MyPetListPage() {
       })} */}
       {/* 상단 버튼 시작 */}
       <div className="flex mb-[30px]">
-        <Link to={`/userinfo/${loginState}`} className="flex-1">
+        {/* <Link to={`/userinfo/${loginState}`} className="flex-1"> */}
+        <Link to="/userinfo" className="flex-1">
           <button className="w-full border-b  border-gray-200 shadow-bottom px-2 py-3 text-[15px] hover:border-gray-800 ">
             보호자 정보
           </button>

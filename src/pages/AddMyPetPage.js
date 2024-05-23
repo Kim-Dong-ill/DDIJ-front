@@ -9,8 +9,16 @@ import VaccineButton from "../components/VaccineButton";
 import RabiesButton from "../components/RabiesButton";
 import { Link } from "react-router-dom";
 import $ from "jquery";
+import { useForm } from "react-hook-form";
 
 function AddMyPetPage() {
+  const {
+    register, //데이터 담을때
+    handleSubmit, //form데이터 전송할때
+    formState: { errors }, //에러 메세지 나오게 할때
+    reset, //input 초기화할때
+    watch, //비밀번호 재 확인할때 같은지 확인
+  } = useForm({ mode: "onChange" }); //체인지 될때 위게 값 확인
   const [hasDog, setHasDog] = useState(false); //반려동물 있는지 없는지
   const [gender, setGender] = useState(""); //남자인지 여자인지
   const [neuter, setNeuter] = useState(); //중성화 여부
@@ -116,20 +124,36 @@ function AddMyPetPage() {
         </div>
         <div className="flex gap-5 items-center mb-6">
           <div className="nanumBold">성별</div>
-          <PetGenderButton handleGender={handleGender} gender={gender} />
+          <PetGenderButton
+            register={register}
+            handleGender={handleGender}
+            gender={gender}
+          />
         </div>
         <div>
           <div className="mb-6">
             <div className="mb-2 nanumBold">중성화</div>
-            <NeuterButton neuter={neuter} handleNeuter={handleNeuter} />
+            <NeuterButton
+              register={register}
+              neuter={neuter}
+              handleNeuter={handleNeuter}
+            />
           </div>
           <div className="mb-6">
             <div className="mb-2 nanumBold">기본 접종</div>
-            <VaccineButton vaccine={vaccine} handleVaccine={handleVaccine} />
+            <VaccineButton
+              register={register}
+              vaccine={vaccine}
+              handleVaccine={handleVaccine}
+            />
           </div>
           <div className="mb-6">
             <div className="mb-2 nanumBold">광견병</div>
-            <RabiesButton handleRabies={handleRabies} rabies={rabies} />
+            <RabiesButton
+              register={register}
+              handleRabies={handleRabies}
+              rabies={rabies}
+            />
           </div>
         </div>
         <div className="flex flex-col gap-2 mb-6">
