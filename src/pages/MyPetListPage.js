@@ -29,7 +29,7 @@ function MyPetListPage() {
       } catch (error) {}
     };
     loadPetList();
-  }, []);
+  }, [realignment]);
 
   // ===== gpt
   useEffect(() => {
@@ -39,23 +39,23 @@ function MyPetListPage() {
     }
   }, [mypetList]);
 
-  // 펫 index patch로 꽂아넣을예정 ( 대표강아지 1, 대표강아지 아니면 0으로 전부 통일)
-  useEffect(() => {
-    const changeMainPet = async () => {
-      try {
-        const petId1 = "664d520e1fea5d6d9c5fbd9f";
-        const petId2 = "664da0181ed9992e4d18e38d";
-        const res = await axiosInstance.patch("/pet/mainpetindex", {
-          petId1,
-          petId2,
-        });
-        const { pet1, pet2 } = res.data;
-        setRealignment(pet1, pet2);
-      } catch (error) {}
-    };
-    changeMainPet();
-  }, []);
-  // console.log("real머시기", realignment);
+  // // 펫 index patch로 꽂아넣을예정 ( 대표강아지 1, 대표강아지 아니면 0으로 전부 통일)
+  // useEffect(() => {
+  //   const changeMainPet = async () => {
+  //     try {
+  //       const petId1 = "664d520e1fea5d6d9c5fbd9f";
+  //       const petId2 = "664da0181ed9992e4d18e38d";
+  //       const res = await axiosInstance.patch("/pet/mainpetindex", {
+  //         petId1,
+  //         petId2,
+  //       });
+  //       const { pet1, pet2 } = res.data;
+  //       setRealignment(pet1, pet2);
+  //     } catch (error) {}
+  //   };
+  //   changeMainPet();
+  // }, []);
+  // // console.log("real머시기", realignment);
 
   return (
     <div
@@ -83,6 +83,26 @@ function MyPetListPage() {
       {/* 강아지1 시작 */}
 
       {mypetList.map((item, idx) => {
+        async function changeMainPet() {
+          const body = {
+            // mypetList 배열에서 ObjectId 추출
+            petId1: mypetList[0]._id, // 수정
+            petId2: item._id, // 수정
+            // petId1: mypetList[0].index,
+            // petId2: item.index,
+          };
+          // alert("change");
+          // console.log(item.index, mypetList[0].index);
+          try {
+            const res = await axiosInstance.patch("/pet/mainpetindex", body);
+            console.log(res.data);
+          } catch (error) {
+            console.error(
+              "Error:",
+              error.response ? error.response.data : error.message
+            ); // 에러메시지 gpt
+          }
+        }
         return (
           <>
             <div className="w-[450px] m-auto grid mb-[25px] bg-white text-center">
@@ -90,7 +110,10 @@ function MyPetListPage() {
                 {/* {petId==} */}
                 {item.index == 1 ? (
                   <p className="text-right pr-[15px] pt-[15px]">
-                    <button className="bg-ye-600 h-[30px] px-[5px] rounded-lg">
+                    <button
+                      className="bg-ye-600 h-[30px] px-[5px] rounded-lg "
+                      onClick={changeMainPet}
+                    >
                       <img
                         src="/images/star1.svg"
                         className="inline-block align-middle w-[14px] h-[14px] mr-[3px] "
@@ -102,7 +125,10 @@ function MyPetListPage() {
                   </p>
                 ) : (
                   <p className="text-right pr-[15px] pt-[15px]">
-                    <button className="bg-white h-[30px] px-[5px] rounded-lg border border-da-100">
+                    <button
+                      className="bg-white h-[30px] px-[5px] rounded-lg border border-da-100"
+                      onClick={changeMainPet}
+                    >
                       <img
                         src="/images/star1.svg"
                         className="inline-block align-middle w-[14px] h-[14px] mr-[3px] "
