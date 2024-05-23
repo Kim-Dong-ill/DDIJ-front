@@ -3,8 +3,8 @@ import { Navigate, Outlet } from "react-router-dom";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 
-function Layout({ isAuth }) {
-  return isAuth ? (
+function Layout() {
+  return (
     <>
       <div>
         <Header />
@@ -12,9 +12,7 @@ function Layout({ isAuth }) {
         <Navbar />
       </div>
     </>
-  ) : (
-    <Navigate to="/login" />
-  );
+  )
 }
 
 export default Layout;

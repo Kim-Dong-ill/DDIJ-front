@@ -1,14 +1,11 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
-function ProtectRouter({ isAuth }) {
-  console.log("isAuth", isAuth);
-  return isAuth ? (
+function ProtectRouter() {
+  return (
     <div>
       <Outlet />
     </div>
-  ) : (
-    <Navigate to="/login" />
   );
 }
 
