@@ -19,19 +19,17 @@ function AppealWritePage() {
   });
   const [mainPetId, setMainPetId] = useState();
 
-  // const [images, setImages] = useState([]); // 이미지 저장
+  async function onSubmit(body) {
+    console.log(body);
+    // body.image = image; // body 객체에 이미지 속성 추가
 
-  // async function onSubmit(body) {
-  //   console.log(body);
-  //   body.image = image; // body 객체에 이미지 속성 추가
-
-  //   try {
-  //     const res = await axiosInstance.post(`/appeal/${userId}`, body); //appeal로 body 전송 요청 완료 후, 응답 res에 저장
-  //     console.log(res.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }어어어
+    try {
+      const res = await axiosInstance.post(`/appeal/${userId}`, body); //appeal로 body 전송 요청 완료 후, 응답 res에 저장
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   // result -> setImages -> images
   function handleImg(newImages) {
@@ -81,15 +79,6 @@ function AppealWritePage() {
     findMainPet();
   }, []);
 
-  // function handleImage(newImages) {
-  //   setAppealData((prevState) => {
-  //     return {
-  //       ...prevState,
-  //       images: newImages,
-  //     };
-  //   });
-  // }
-
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -121,20 +110,11 @@ function AppealWritePage() {
             >
               취소
             </ButtonBl>
-
-            {/* <button className=" w-[82px] h-[30px] text-[13px] text-center rounded-2xl bg-da-300 text-white hover:bg-ye-600 hover:text-da-300">
-              등록
-            </button>
-            <button className=" w-[82px] h-[30px] text-[13px] text-center rounded-2xl bg-da-300 text-white hover:bg-ye-600 hover:text-da-300">
-              취소
-            </button> */}
           </div>
         </div>
       </form>
     </>
   );
 }
-
-// Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corporis doloribus exercitationem alias, debitis similique velit odio amet, incidunt, ut ipsa iste deserunt earum culpa tempora distinctio soluta! Iusto dignissimos iste voluptatibus dicta, ducimus quae perferendis labore totam fugiat cum tempore excepturi laborum tenetur et recusandae laboriosam veritatis doloribus alias, natus aliquam animi. Libero ducimus obcaecati tempore dolorum mollitia incidunt sequi officia doloribus labore fuga quod, at nisi nulla soluta odio debitis modi numquam? Rem dolores quos delectus voluptatem maiores eius ex quisquam, temporibus, cupiditate aliquam mollitia libero. Vel, quod corrupti. Distinctio impedit, quae architecto nemo velit animi sed! Molestiae, suscipit?
 
 export default AppealWritePage;

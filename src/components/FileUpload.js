@@ -6,7 +6,6 @@ import axiosInstance from "../utils/axios";
 function FileUpload({ images, onImageChange, userId }) {
   const [newImages, setNewImages] = useState([]); // 업로드 이미지 저장
   console.log("images", images);
-  //  const dispatch = useDispatch();
 
   async function handledrop(files) {
     try {
@@ -26,10 +25,6 @@ function FileUpload({ images, onImageChange, userId }) {
 
       setNewImages([...images, res.data.images]); // 서버로부터 받은 이미지 경로를 newImages에 추가
       onImageChange([...images, res.data.images]); // 부모 컴포넌트로 이미지 경로 전달
-
-      // onImageChange([...images, res.data.filename]);
-      // dispatch(addImage(res.data));
-      // Redux 상태에 이미지 추가
     } catch (error) {
       console.log(error);
     }
