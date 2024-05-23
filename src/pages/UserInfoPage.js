@@ -25,7 +25,8 @@ function UserInfoPage() {
         style={{ height: "calc(100% - 65px)" }}
       >
         <div className="flex w-[500px] pt-[90px]">
-          <Link to={`/userinfo/${state.id}`} className="flex-1">
+          {/* <Link to={`/userinfo/${state.id}`} className="flex-1"> */}
+          <Link to={`/userinfo`} className="flex-1">
             <button className="w-full border-b  border-gray-200 shadow-bottom px-2 py-3 text-[15px] hover:border-gray-800 ">
               보호자 정보
             </button>

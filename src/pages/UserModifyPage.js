@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ButtonBl from "../components/ButtonBl";
 import ButtonYe from "../components/ButtonYe";
 import TextFieldLine from "../components/TextField";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import {
   defaltPassword,
@@ -96,14 +96,12 @@ function UserModifyPage() {
   //     setWrite(false);
   //   }
   // }, [passwordState]);
-
+  const navigate = useNavigate();
   async function onSubmit(body) {
-    console.log("바디바디", body);
     body.coords = coords;
-    console.log(state.id);
     try {
       const res = await axiosInstance.patch(`/user/${state.id}/update`, body);
-      console.log(res.data);
+      navigate("/userinfo");
     } catch (error) {
       console.log(error);
     }
@@ -125,17 +123,6 @@ function UserModifyPage() {
     } catch (error) {}
   }
 
-  // useEffect(() => {
-  //   if (msg) {
-  //     setPasswordState(true);
-  //   } else {
-  //     setPasswordState(false);
-  //     if (defaultP == null) {
-  //       setPasswordState(true);
-  //     }
-  //   }
-  // }, [msg]);
-
   function handleValue(e) {
     setNickValue(e.target.value);
   }
@@ -154,20 +141,7 @@ function UserModifyPage() {
   }
   console.log("nickState", nickState);
   console.log("SpasswordStatetate", passwordState);
-  // useEffect(() => {
-  //   if (nMsg) {
-  //     setNickState(true);
-  //   } else {
-  //     setNickState(false);
-  //     if (nickValue === state.nickName) {
-  //       // setNickState(true);
-  //     }
-  //   }
-  // }, [nMsg]);
-  // console.log("nickState", nickState);
-  // if (nickState && defaultState) {
-  //   console.log("가입가능");
-  // }
+
   return (
     <>
       <div
@@ -199,10 +173,13 @@ function UserModifyPage() {
                 <h2 className="text-[15px]">보호자 정보</h2>
               </div>
             </div>
+            <div className="text-red-500 nanumBold text-center py-2">
+              비밀번호 확인은 필수입니다.
+            </div>
             <div className="flex flex-col gap-2 mb-6">
               <div className="flex justify-between relative">
                 <label className="w-[190px]  nanumBold" htmlFor="defaultp">
-                  기존 비밀번호
+                  비밀번호 확인
                   <button type="button" onClick={handleDefaultP}>
                     <i className=" pl-2 text-ye-600 fa-solid fa-circle-check">
                       확인
@@ -251,7 +228,6 @@ function UserModifyPage() {
                 )}
               </div>
             </div>
-
             <div className="flex flex-col gap-2 mb-6">
               <label className="w-[100px] nanumBold" htmlFor="email">
                 이메일
@@ -272,7 +248,6 @@ function UserModifyPage() {
                 )}
               </div>
             </div>
-
             <div className="flex flex-col gap-2 mb-6">
               <label className="w-[100px] nanumBold" htmlFor="password">
                 비밀번호
@@ -282,7 +257,7 @@ function UserModifyPage() {
                   disabled={passwordState ? false : true}
                   type="password"
                   id="password"
-                  label="비밀번호"
+                  label="변경할 때에만 작성해주세요."
                   fullWidth
                   {...register("password", defaltPassword)}
                 />
@@ -295,14 +270,14 @@ function UserModifyPage() {
             </div>
             <div className="flex flex-col gap-2 mb-6">
               <label className="w-[120px] nanumBold" htmlFor="checkPassword">
-                비밀번호 확인
+                비밀번호 재입력
               </label>
               <div>
                 <TextFieldLine
                   disabled={passwordState ? false : true}
                   type="password"
                   id="checkPassword"
-                  label="비밀번호 확인"
+                  label="변경할 때에만 작성해주세요."
                   fullWidth
                   {...register("checkPassword", {
                     validate: (value) => {
