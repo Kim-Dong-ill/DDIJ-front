@@ -33,6 +33,16 @@ export const password = {
     message: "6자 ~ 12자 이내로 입력해주세요",
   },
 };
+export const defaltPassword = {
+  minLength: {
+    value: 6,
+    message: "6자 ~ 12자 이내로 입력해주세요",
+  },
+  maxLength: {
+    value: 12,
+    message: "6자 ~ 12자 이내로 입력해주세요",
+  },
+};
 export const nickName = {
   required: {
     value: true,

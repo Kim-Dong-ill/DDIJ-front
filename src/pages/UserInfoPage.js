@@ -18,7 +18,6 @@ function UserInfoPage() {
   const state = useSelector((state) => {
     return state.user.userData.user;
   });
-  console.log("state", state);
   return (
     <>
       <div

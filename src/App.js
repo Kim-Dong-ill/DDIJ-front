@@ -67,7 +67,7 @@ function App() {
               <Route path="/newcircle" element={<CreateCCPage />} />
               <Route path="/circles/:circleid" element={<CCViewPage />} />
               <Route path="/circles/:circleid/mod" element={<CreateCCPage />} />
-              <Route path="/userinfo/:userid" element={<UserInfoPage />} />
+              <Route path="/userinfo" element={<UserInfoPage />} />
               <Route path="/usermod/:userid" element={<UserModifyPage />} />
               <Route path="/mypet/:userId" element={<MyPetListPage />} />
             </Route>

@@ -1,17 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../assets/global.css";
-import { useSelector } from "react-redux";
 function Navbar() {
-  const loginState = useSelector((state) => {
-    return state.user.userData.user.id;
-  });
   const [activeIndex, setActiveIndex] = useState(-1);
   const menu = [
     { title: "산책하기", route: "" },
     { title: "모임만들기", route: "newcircle" },
     { title: "모임리스트", route: "circles" },
-    { title: "마이펫이지", route: `userinfo/${loginState}` },
+    { title: "마이펫이지", route: `userinfo` },
   ];
 
   const handleMenuClick = (index) => {
