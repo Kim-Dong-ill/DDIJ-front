@@ -3,6 +3,10 @@ import Navbar from "../components/Navbar";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../utils/axios";
 import AppealCommentList from "./AppealCommentList";
+import "react-image-gallery/styles/css/image-gallery.css";
+import ReactImageGallery from "react-image-gallery";
+import "../assets/imageGallery.css";
+import { original } from "@reduxjs/toolkit";
 
 // import axiosInstance from "../../utils/axios";
 // function AppealPage() {
@@ -56,7 +60,7 @@ function AppealPage({}) {
     <div className="relative">
       {/* subHeader */}
 
-      <div className="subHeader  bg-ye-700 w-[500px] top-0 fixed h-[240px] text-center mb-[35px] ">
+      <div className="subHeader  bg-ye-700 w-[500px] top-0 fixed h-[240px] text-center mb-[35px] z-50 ">
         <div className="h-[50px] border-b-2 mb-3 flex justify-between items-center justify-center">
           <h2>
             <img
@@ -97,6 +101,10 @@ function AppealPage({}) {
         return <>{item[0].pName}</>;
       })} */}
       {appealData.map((item, idx) => {
+        const images = item.images.map((image) => ({
+          original: `${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${image}`,
+          // thumbnail: `${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${image}`,
+        }));
         // console.log("appealPostId", appealPostId);
         return (
           <div
@@ -119,28 +127,19 @@ function AppealPage({}) {
               {/* 사진, 내용 넣는 section */}
               {/* 실질적인 글 구간 start ============ */}
 
-              <div className="w-[430px] h-[320px] bg-ye-100 m-auto mb-[25px]">
-                {/* 이미지 */}
-                <div className="flex gap-[25px]">
-                  {item.images &&
-                    item.images.map((image, index) => {
-                      const imageUrl = `${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${image}`;
-                      console.log(imageUrl);
-                      return (
-                        <div key={index} className="w-[80px] h-[80px] relative">
-                          <img
-                            src={imageUrl}
-                            alt=""
-                            className="w-full h-full rounded-md"
-                          />
-                        </div>
-                      );
-                    })}
-                </div>
+              <div className="w-[430px] h-[320px] m-auto mb-[25px]">
+                <div></div>
+                <ReactImageGallery
+                  items={images}
+                  showThumbnails={false}
+                  showFullscreenButton={false}
+                  showPlayButton={false}
+                  additionalClass="image-gallery-size"
+                />
               </div>
-              <div className="text-center mb-[20px]">
+              {/* <div className="text-center mb-[20px]">
                 사진 페이지네이션 들어가야 할 구간
-              </div>
+              </div> */}
               <div className="nanum border-b-2">
                 <p className="nanum mb-[5px]">{item.text}</p>
               </div>
