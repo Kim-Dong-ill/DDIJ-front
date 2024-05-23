@@ -27,7 +27,7 @@ function AppealPage({}) {
     const fetchData = async () => {
       try {
         const res = await axiosInstance.get(`/appeal/${userId}`);
-        console.log(res.data.appealData);
+        console.log("재히", res.data.appealData);
         setAppealData(res.data.appealData);
 
         //gpt
@@ -43,7 +43,7 @@ function AppealPage({}) {
       try {
         const resPetList = await axiosInstance.get(`/pet/list/${userId}`);
         // gpt=======
-        console.log("resPetList", resPetList.data.myPetList[0]);
+        // console.log("resPetList", resPetList.data.myPetList[0]);
         setMainPet(resPetList.data.myPetList[0]);
       } catch (error) {}
     };
@@ -97,7 +97,7 @@ function AppealPage({}) {
         return <>{item[0].pName}</>;
       })} */}
       {appealData.map((item, idx) => {
-        console.log("appealPostId", appealPostId);
+        // console.log("appealPostId", appealPostId);
         return (
           <div
             className="mt-[240px] mb-[65px] p-3 bg-white border-[1px]"
@@ -119,7 +119,25 @@ function AppealPage({}) {
               {/* 사진, 내용 넣는 section */}
               {/* 실질적인 글 구간 start ============ */}
 
-              <div className="w-[430px] h-[320px] bg-ye-100 m-auto mb-[25px]"></div>
+              <div className="w-[430px] h-[320px] bg-ye-100 m-auto mb-[25px]">
+                {/* 이미지 */}
+                <div className="flex gap-[25px]">
+                  {item.images &&
+                    item.images.map((image, index) => {
+                      const imageUrl = `${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${image}`;
+                      console.log(imageUrl);
+                      return (
+                        <div key={index} className="w-[80px] h-[80px] relative">
+                          <img
+                            src={imageUrl}
+                            alt=""
+                            className="w-full h-full rounded-md"
+                          />
+                        </div>
+                      );
+                    })}
+                </div>
+              </div>
               <div className="text-center mb-[20px]">
                 사진 페이지네이션 들어가야 할 구간
               </div>

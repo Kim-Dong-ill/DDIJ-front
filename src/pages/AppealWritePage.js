@@ -17,8 +17,16 @@ function AppealWritePage() {
     text: "",
     images: [],
   });
+  console.log("데이터", appealData);
   const [mainPetId, setMainPetId] = useState();
 
+  // newImages -> handleImg -> appealData:images -> handleSubmit -> 서버
+
+  // const [image, setImage] = useState();
+  // function abcd(img) {
+  //   setImage(img);
+  // }
+  // console.log(image);
   // const [images, setImages] = useState([]); // 이미지 저장
 
   // async function onSubmit(body) {
@@ -34,6 +42,7 @@ function AppealWritePage() {
   // }
 
   // result -> setImages -> images
+  // newImages : FileUpload에서 보낸 이미지 파일들
   function handleImg(newImages) {
     setAppealData((prevState) => {
       return {
@@ -48,6 +57,7 @@ function AppealWritePage() {
     const body = {
       ...appealData,
       mainPetId: mainPetId,
+      // img: image,
     };
     try {
       await axiosInstance.post(`/appeal/${userId}`, body);
@@ -110,8 +120,9 @@ function AppealWritePage() {
             value={appealData.text}
           />
           <div className="flex justify-center h-[50px] gap-2 ">
-            <ButtonYe>
-              <button>등록</button>
+            <ButtonYe type="submit">
+              {/* <button>등록</button> */}
+              등록
             </ButtonYe>
 
             <ButtonBl
