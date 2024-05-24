@@ -1,6 +1,6 @@
 import React from "react";
 
-function NeuterButton({ handleNeuter, neuter, register }) {
+function NeuterButton({ handleNeuter, neuter, register, petNeuter }) {
   function doNeuter() {
     handleNeuter(true);
   }
@@ -15,14 +15,16 @@ function NeuterButton({ handleNeuter, neuter, register }) {
           onClick={doNeuter}
           type="button"
           className={
-            neuter
+            neuter || petNeuter
               ? `bg-black rounded-md w-[100%] h-[35px] border border-black`
               : `bg-white rounded-md w-[100%] h-[35px] border border-black`
           }
         >
           <label
             className={
-              neuter ? `text-white px-12 py-2` : `text-black px-12 py-2`
+              neuter || petNeuter
+                ? `text-white px-12 py-2`
+                : `text-black px-12 py-2`
             }
             htmlFor="doNeuter"
           >
@@ -31,9 +33,9 @@ function NeuterButton({ handleNeuter, neuter, register }) {
         </button>
         <input
           value={neuter}
-          hidden
+          // hidden
           // onClick={doNeuter}
-          checked={neuter ? true : false}
+          checked={neuter || petNeuter ? true : false}
           id="doNeuter"
           type="radio"
           name="pNeuter"
@@ -46,14 +48,16 @@ function NeuterButton({ handleNeuter, neuter, register }) {
           onClick={doNotNeuter}
           type="button"
           className={
-            neuter
+            neuter || petNeuter
               ? `bg-white rounded-md w-[100%] h-[35px] border border-black`
               : `bg-black rounded-md w-[100%] h-[35px] border border-black`
           }
         >
           <label
             className={
-              neuter ? `text-black px-11 py-2` : `text-white px-11 py-2`
+              neuter || petNeuter
+                ? `text-black px-11 py-2`
+                : `text-white px-11 py-2`
             }
             htmlFor="doNotNeuter"
           >
@@ -62,9 +66,9 @@ function NeuterButton({ handleNeuter, neuter, register }) {
         </button>
         <input
           value={neuter}
-          hidden
+          // hidden
           // onClick={doNotNeuter}
-          checked={neuter ? false : true}
+          checked={neuter || petNeuter ? false : true}
           id="doNotNeuter"
           type="radio"
           name="pNeuter"
