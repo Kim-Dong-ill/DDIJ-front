@@ -32,7 +32,7 @@ function VaccineButton({ handleVaccine, vaccine, register }) {
         <input
           value={vaccine}
           hidden
-          // onClick={doVaccine}
+          onClick={doVaccine}
           checked={vaccine ? true : false}
           id="doVaccine"
           type="radio"
@@ -63,7 +63,7 @@ function VaccineButton({ handleVaccine, vaccine, register }) {
         <input
           value={vaccine}
           hidden
-          // onClick={doNotVaccine}
+          onClick={doNotVaccine}
           checked={vaccine ? false : true}
           id="doNotVaccine"
           type="radio"

@@ -15,7 +15,7 @@ function MyPetListPage() {
   const loginState = useSelector((state) => {
     return state.user.userData.user.id;
   });
-  console.log(loginState);
+  // console.log(loginState);
 
   useEffect(() => {
     const loadPetList = async () => {
@@ -119,6 +119,7 @@ function MyPetListPage() {
                         src="/images/star1.svg"
                         className="inline-block align-middle w-[14px] h-[14px] mr-[3px] "
                       />
+
                       <span className="inline-block  text-[14px]">
                         대표
                         {/* / {item.index}/{item._id} */}
@@ -126,23 +127,34 @@ function MyPetListPage() {
                     </button>
                   </p>
                 )}
+                {/* 여기가 펫 이미지 넣는 공간이에용 */}
+                {console.log("item.image", item.image)}
+                {console.log("아이템", item)}
 
                 <img
-                  src="/images/dog1.svg"
-                  className="w-[100px] h-[100px] rounded-full m-auto"
+                  src={item.image}
+                  alt=""
+                  // className="h-full w-full rounded-full"
                 />
+                {/* 이미지가 안들어가있는 강아지일경우 나오는 목업데이터 */}
+                {item.image || (
+                  <img
+                    src="/images/dog1.svg"
+                    className="w-[100px] h-[100px] rounded-full m-auto"
+                  />
+                )}
                 <div>
                   <span className="inline-block leading-[40px] mr-[10px] nanumBold">
                     {item.pName}
                   </span>
-                  {item.pGender == "남" ? (
+                  {item.pGender == "male" || item.pGender == "남" ? (
                     <i className="text-blue-600 text-[14px] fa-solid fa-mars"></i>
                   ) : (
                     <i className="text-pink-600 fa-solid text-[14px] fa-venus"></i>
                   )}
                 </div>
                 <div className="border-t">
-                  <Link to="/mypet/mod/:petid">
+                  <Link to={`/mypet/mod/${item._id}`}>
                     <button className="inilne-block leading-[40px] nanum text-[14px] text-da-500">
                       수정하기
                     </button>

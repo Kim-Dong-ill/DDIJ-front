@@ -87,11 +87,23 @@ export const pName = {
     message: "8자 이내로 입력해주세요",
   },
 };
+export const pModName = {
+  maxLength: {
+    value: 8,
+    message: "8자 이내로 입력해주세요",
+  },
+};
 export const pBreed = {
   required: {
     value: true,
     message: "견종은 필수입니다.",
   },
+  maxLength: {
+    value: 14,
+    message: "14자 이내로 입력해주세요",
+  },
+};
+export const pModBreed = {
   maxLength: {
     value: 14,
     message: "14자 이내로 입력해주세요",
@@ -107,11 +119,23 @@ export const pAge = {
     message: "적절한 나이를 입력해주세요",
   },
 };
+export const pModAge = {
+  maxLength: {
+    value: 2,
+    message: "적절한 나이를 입력해주세요",
+  },
+};
 export const pChar = {
   required: {
     value: true,
     message: "성격은 필수입니다.",
   },
+  maxLength: {
+    value: 30,
+    message: "더이상 입력하 수 없습니다.",
+  },
+};
+export const pModChar = {
   maxLength: {
     value: 30,
     message: "더이상 입력하 수 없습니다.",

@@ -33,7 +33,7 @@ function RabiesButton({ handleRabies, rabies, register }) {
         <input
           value={rabies}
           hidden
-          // onClick={doRabies}
+          onClick={doRabies}
           checked={rabies ? true : false}
           id="doRabies"
           type="checkbox"
@@ -64,7 +64,7 @@ function RabiesButton({ handleRabies, rabies, register }) {
         <input
           value={rabies}
           hidden
-          // onClick={doNotRabies}
+          onClick={doNotRabies}
           checked={rabies ? false : true}
           id="doNotRabies"
           type="checkbox"
