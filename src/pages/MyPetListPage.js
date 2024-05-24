@@ -15,7 +15,7 @@ function MyPetListPage() {
   const loginState = useSelector((state) => {
     return state.user.userData.user.id;
   });
-  console.log(loginState);
+  // console.log(loginState);
 
   useEffect(() => {
     const loadPetList = async () => {
@@ -142,7 +142,7 @@ function MyPetListPage() {
                   )}
                 </div>
                 <div className="border-t">
-                  <Link to="/mypet/mod/:petid">
+                  <Link to={`/mypet/mod/${petId}`}>
                     <button className="inilne-block leading-[40px] nanum text-[14px] text-da-500">
                       수정하기
                     </button>
