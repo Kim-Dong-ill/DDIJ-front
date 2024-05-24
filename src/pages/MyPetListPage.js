@@ -119,6 +119,7 @@ function MyPetListPage() {
                         src="/images/star1.svg"
                         className="inline-block align-middle w-[14px] h-[14px] mr-[3px] "
                       />
+
                       <span className="inline-block  text-[14px]">
                         대표
                         {/* / {item.index}/{item._id} */}
@@ -126,16 +127,24 @@ function MyPetListPage() {
                     </button>
                   </p>
                 )}
-
+                {/* 여기가 펫 이미지 넣는 공간이에용 */}
+                {console.log("item.image", item.image)}
+                {console.log("아이템", item)}
                 <img
+                  src={item.image}
+                  alt=""
+                  // className="h-full w-full rounded-full"
+                />
+                {/* 이거 주석하면서 확인하면 됩니당 */}
+                {/* <img
                   src="/images/dog1.svg"
                   className="w-[100px] h-[100px] rounded-full m-auto"
-                />
+                /> */}
                 <div>
                   <span className="inline-block leading-[40px] mr-[10px] nanumBold">
                     {item.pName}
                   </span>
-                  {item.pGender == "남" ? (
+                  {item.pGender == "male" ? (
                     <i className="text-blue-600 text-[14px] fa-solid fa-mars"></i>
                   ) : (
                     <i className="text-pink-600 fa-solid text-[14px] fa-venus"></i>
