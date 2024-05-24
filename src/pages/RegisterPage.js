@@ -248,7 +248,7 @@ function RegisterPage() {
           <div>저에게 반려견을 소개해 주세요!</div>
 
           <FileUploadOne handleImg={handleImg} />
-
+          {/* 여기서부터 입력값인듯? 이름 / 견종 / 나이 / 성별 / 백신값 */}
           <RegisterPetName
             errors={errors}
             register={register}
