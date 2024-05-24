@@ -8,7 +8,8 @@ function MyPetListPage() {
   const [mypetList, setMyPetList] = useState([]);
   const [petId, setPetId] = useState([]);
   const [realignment, setRealignment] = useState([]);
-  console.log(userId);
+  // console.log("petId", petId);
+  // console.log(userId);
   //   useEffect(() => {
   //     const loadPetList = async () => {};
   //     loadPetList();
@@ -18,7 +19,7 @@ function MyPetListPage() {
   const loginState = useSelector((state) => {
     return state.user.userData.user.id;
   });
-  console.log(loginState);
+  // console.log(loginState);
 
   useEffect(() => {
     const loadPetList = async () => {
@@ -75,6 +76,7 @@ function MyPetListPage() {
             // petId2: item.index,
           };
           // alert("change");
+          console.log("아이디값", item._id);
           // console.log(item.index, mypetList[0].index);
           try {
             const res = await axiosInstance.patch("/pet/mainpetindex", body);
@@ -142,10 +144,10 @@ function MyPetListPage() {
                   <span className="inline-block leading-[40px] mr-[10px] nanumBold">
                     {item.pName}
                   </span>
-                  <i class="fa-solid fa-mars"></i>
+                  <i className="fa-solid fa-mars"></i>
                 </div>
                 <div className="border-t">
-                  <Link to="/mypet/mod/:petid">
+                  <Link to={`/mypet/mod/${petId}`}>
                     <button className="inilne-block leading-[40px] nanum text-[14px] text-da-500">
                       수정하기
                     </button>

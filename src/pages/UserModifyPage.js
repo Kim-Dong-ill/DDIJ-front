@@ -141,7 +141,9 @@ function UserModifyPage() {
   }
   console.log("nickState", nickState);
   console.log("SpasswordStatetate", passwordState);
-
+  const states = useSelector((state) => {
+    return state.user.userData.user;
+  });
   return (
     <>
       <div
@@ -150,12 +152,12 @@ function UserModifyPage() {
         style={{ height: "calc(100% - 65px)" }}
       >
         <div className="flex w-[500px] pt-[90px]">
-          <Link to="/userinfo/:userid" className="flex-1">
+          <Link to="/userinfo" className="flex-1">
             <button className="w-full border-b  border-gray-200 shadow-bottom px-2 py-3 text-[15px] hover:border-gray-800 ">
               보호자 정보
             </button>
           </Link>
-          <Link to="/mypet/:userid" className="flex-1">
+          <Link to={`/mypet/${states.id}`} className="flex-1">
             <button className="w-full  border-b border-gray-200 shadow-bottom px-2 py-3 text-[15px] hover:border-gray-800">
               반려견 정보
             </button>
