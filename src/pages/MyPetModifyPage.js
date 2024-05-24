@@ -7,13 +7,14 @@ import TextFieldLine from "../components/TextField";
 import NeuterButton from "../components/NeuterButton";
 import VaccineButton from "../components/VaccineButton";
 import RabiesButton from "../components/RabiesButton";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import $ from "jquery";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import FileUploadOne from "../components/FileUploadOne";
 import FileFetchOne from "../components/FileFetchOne";
 import {
+  pAge,
   pBreed,
   pModAge,
   pModBreed,
@@ -31,49 +32,65 @@ function MyPetModifyPage() {
     watch,
   } = useForm({ mode: "onChange" });
 
+  const loginState = useSelector((state) => {
+    return state.user.userData.user.id;
+  });
+  const user = useSelector((state) => {
+    return state;
+  });
+  // const [userData, setUserData] = useState();
   const [gender, setGender] = useState(""); //남자인지 여자인지
   const [neuter, setNeuter] = useState(); //중성화 여부
   const [vaccine, setVaccine] = useState(); //기본접종 여부
   const [rabies, setRabies] = useState(); //광견병 여부
-  const [petData, setPetData] = useState(); //pet데이터
   const [petName, setPetName] = useState(); //이름
   const [petBreed, setPetBreed] = useState(); //견종
   const [petAge, setPetAge] = useState(); //나이
   const [petNeuter, setPetNeuter] = useState(); //중성화
   const [petChar, setPetChar] = useState(); //성격
+  // const [petArray, setPetArray] = useState([]); //반려견 배열
+  const [petData, setPetData] = useState(); //pet데이터
   const navigate = useNavigate();
   const petid = useParams();
+  const { pathname } = useLocation(); //page의 path 알려준다.
+  const [ageValue, setAgeValue] = useState();
+  const [petImage, setPetImage] = useState();
+  console.log("이미지이미지이미지", petImage);
+  //배열에 있는 데이터 filter로 가져옴
+  useEffect(() => {
+    const targetId = petid.petid;
 
-  // useEffect(() => {
-  //   async function getData() {
-  //     const res = await axiosInstance.get(`/pet/modify/${petid.petid}`);
-  //     setPetData(res.data.pet);
-  //     setPetName(res.data.pet.pName);
-  //     setPetBreed(res.data.pet.pBreed);
-  //     setPetAge(res.data.pet.pAge);
-  //     setPetNeuter(res.data.pet.neuter);
-  //     setPetChar(res.data.pet.pCharOne);
-  //   }
-  //   getData();
-  // }, [petid]);
-  // console.log(petData);
+    // petArray가 비어 있지 않은지 확인 후 필터링
+    if (user.user.petsData.length > 0) {
+      const filteredData = user.user.petsData.filter(
+        (item) => item._id === targetId
+      );
+      console.log("filteredData", filteredData[0]);
+      setPetData(filteredData[0]);
+      setNeuter(filteredData[0].neuter);
+      setRabies(filteredData[0].rabies);
+      setVaccine(filteredData[0].vaccine);
+      setPetImage(filteredData[0].image);
+    }
+  }, [pathname]);
 
-  // 로그인된 유저 _id값 가져오는과정
-  const loginState = useSelector((state) => {
-    return state.user.userData.user.id;
-  });
-  const pets = useSelector((state) => {
-    return state;
-  });
-  console.log("pets", pets);
-  // console.log(loginState);
-
+  function handleChange(e) {
+    const { id, value } = e.target;
+    console.log("id", id, "value", value);
+    console.log("neuter", neuter);
+    setPetData((prevState) => {
+      return {
+        ...prevState,
+        [id]: value,
+        neuter: neuter,
+        vaccine: vaccine,
+        rabies: rabies,
+      };
+    });
+  }
+  console.log("petData", petData);
   function handleRabies(result) {
     setRabies(result);
-  }
-
-  function handleGender(result) {
-    setGender(result);
   }
 
   function handleNeuter(result) {
@@ -88,31 +105,43 @@ function MyPetModifyPage() {
     $("html, body").scrollTop("0");
   }
 
-  function onSubmit(body) {
-    console.log(body);
-  }
-
-  function handleValue(e) {
-    setPetName(e.target.value);
-  }
-  function handleBreed(e) {
-    setPetBreed(e.target.value);
-  }
-  function handleAge(e) {
-    const age = e.target.value;
-    if (age < 0) {
-      setPetAge(0);
-    } else {
-      setPetAge(age);
+  async function onSubmit(data) {
+    const body = {
+      ...petData,
+    };
+    console.log("바아아아아디", body);
+    try {
+      const res = await axiosInstance.put("/pet/modify", body, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
     }
   }
-  function handleChar(e) {
-    setPetChar(e.target.value);
+
+  function handleAge(e) {
+    const { id, value } = e.target;
+    console.log("하태민", value);
+    if (value < 0) {
+      setAgeValue(0);
+    } else {
+      setAgeValue(value);
+    }
   }
-  // useEffect(async () => {
-  //   // const res = await axiosInstance.get(`pet/modify/${petId}`);
-  //   // console.log(res.data);
-  // }, [petId]);
+  useEffect(() => {
+    const targets = [
+      {
+        target: {
+          id: "pAge",
+          value: parseInt(ageValue),
+        },
+      },
+    ];
+    handleChange(targets[0]);
+  }, [ageValue]);
 
   return (
     <div
@@ -167,7 +196,7 @@ function MyPetModifyPage() {
             </button>
           </div>
         </div> */}
-        <FileFetchOne />
+        <FileFetchOne petImage={petImage} />
       </div>
 
       <div className="w-[400px] mx-auto py-[50px] ">
@@ -178,8 +207,9 @@ function MyPetModifyPage() {
             </label>
             <div>
               <TextFieldLine
-                onInput={handleValue}
-                value={petName}
+                // onInput={handleValue}
+                onInput={handleChange}
+                value={petData?.pName}
                 id="pName"
                 // label={petName}
                 fullWidth
@@ -198,9 +228,10 @@ function MyPetModifyPage() {
             </label>
             <div>
               <TextFieldLine
-                onInput={handleBreed}
+                // onInput={handleBreed}
+                onInput={handleChange}
                 required={false}
-                value={petBreed}
+                value={petData?.pBreed}
                 id="pBreed"
                 fullWidth
                 {...register("pBreed", pModBreed)}
@@ -218,10 +249,11 @@ function MyPetModifyPage() {
             </label>
             <div>
               <TextFieldLine
+                // onInput={handleChange}
                 onInput={handleAge}
-                value={petAge}
+                value={petData?.pAge}
                 type="number"
-                id="petAge"
+                id="pAge"
                 fullWidth
                 {...register("pAge", pModAge)}
               />
@@ -232,19 +264,12 @@ function MyPetModifyPage() {
               )}
             </div>
           </div>
-          {/* <div className="flex gap-5 items-center mb-6">
-            <div className="nanumBold">성별</div>
-            <PetGenderButton
-              register={register}
-              handleGender={handleGender}
-              gender={gender}
-            />
-          </div> */}
+
           <div>
             <div className="mb-6">
               <div className="mb-2 nanumBold">중성화</div>
               <NeuterButton
-                petNeuter={petNeuter}
+                handleChange={handleChange}
                 register={register}
                 neuter={neuter}
                 handleNeuter={handleNeuter}
@@ -253,6 +278,7 @@ function MyPetModifyPage() {
             <div className="mb-6">
               <div className="mb-2 nanumBold">기본 접종</div>
               <VaccineButton
+                handleChange={handleChange}
                 register={register}
                 vaccine={vaccine}
                 handleVaccine={handleVaccine}
@@ -261,6 +287,7 @@ function MyPetModifyPage() {
             <div className="mb-6">
               <div className="mb-2 nanumBold">광견병</div>
               <RabiesButton
+                handleChange={handleChange}
                 register={register}
                 handleRabies={handleRabies}
                 rabies={rabies}
@@ -273,9 +300,10 @@ function MyPetModifyPage() {
             </label>
             <div>
               <TextFieldLine
-                value={petChar}
-                onInput={handleChar}
-                id="petEtc"
+                value={petData?.pCharOne}
+                // onInput={handleChar}
+                onInput={handleChange}
+                id="pCharOne"
                 fullWidth
                 {...register("pChar", pModChar)}
               />
