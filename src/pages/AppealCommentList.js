@@ -79,9 +79,9 @@ function AppealCommentList(props) {
 
       {/* 댓글 목록 */}
       {appealComment.map((item) => (
-        <div key={item._id} className="w-full mb-[30px] p-[5px]">
-          <div className="flex items-center gap-3 justify-between">
-            <div className="flex gap-1">
+        <div key={item._id} className="w-full mb-[30px] p-3">
+          <div className="w-full items-center">
+            <div className="flex gap-2 mb-[10px]">
               <img
                 src="/images/commenticon.svg"
                 alt=""
@@ -89,7 +89,7 @@ function AppealCommentList(props) {
               />
               {/* <img src={item.user.image} alt="" className="block" /> */}
               <div className="items-center w-[90px]">
-                <p className="nanum">{item.user.nickName}안녕</p>
+                <p className="nanumBold">{item.user.nickName}누구야</p>
                 {/* <p className="nanumBold">{item.user}</p> */}
               </div>
             </div>

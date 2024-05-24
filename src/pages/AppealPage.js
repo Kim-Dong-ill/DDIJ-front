@@ -141,7 +141,7 @@ function AppealPage({}) {
               key={idx}
             >
               {/* 글+댓글 시작 */}
-              <div className="w-full">
+              <div className="w-[450px]">
                 {/* 사진+텍스트 시작 */}
                 <div className="border border-da-800 p-[25px] shadow">
                   {/* 강아지 아바타 / 닉네임 section 시작 */}
