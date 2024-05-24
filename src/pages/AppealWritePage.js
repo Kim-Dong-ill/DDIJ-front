@@ -111,6 +111,7 @@ function AppealWritePage() {
             userId={userId} // 유저 아이디 전달
           />
 
+          {/* 글자수 제한 필요? */}
           <textarea
             className="w-full nanum h-[450px] px-[10px] border-b-2 rounded-[10px] resize-none mb-7"
             placeholder="내용을 입력하세요."

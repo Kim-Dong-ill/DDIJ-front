@@ -62,16 +62,18 @@ function AppealCommentList(props) {
     <>
       {/* 댓글 입력 폼 */}
       <form onSubmit={handleSubmit}>
-        <div className="flex my-[20px] gap-[10px]">
+        <div className="flex w-full my-[20px] pl-[10px] pr-[16px] py-[7px] gap-[10px] border rounded-[10px]">
           <input
             type="text"
             placeholder="댓글입력"
-            className="border w-[365px] rounded-[25px] px-[10px] py-[5px] nanum"
+            className="nanum w-[390px]"
             name="text"
             value={textData.text}
             onChange={textDataChange}
           />
-          <button className="w-[50px] bg-da-100 rounded-[50px]">확인</button>
+          <button>
+            <i class="fa-regular fa-paper-plane"></i>
+          </button>
         </div>
       </form>
 
@@ -79,19 +81,22 @@ function AppealCommentList(props) {
       {appealComment.map((item) => (
         <div
           key={item._id}
-          className="flex justify-between mb-[20px] gap-[20px] items-center w-full"
+          className="flex justify-between mb-[30px] gap-[20px] items-center w-full p-[5px]"
         >
           <div className="flex items-center gap-1">
             <div className="flex gap-[1px]">
-              <img src="/images/commenticon.svg" alt="" className="block" />
+              <img
+                src="/images/commenticon.svg"
+                alt=""
+                className="block w-[23px] h-[23px] mr-[3px]"
+              />
+              {/* <img src={item.user.image} alt="" className="block" /> */}
               <div className="flex items-center w-[90px]">
                 <p className="nanumBold">{item.user.nickName}</p>
                 {/* <p className="nanumBold">{item.user}</p> */}
               </div>
             </div>
-            <div className="nanum flex-wrap w-[280px] overflow-wrap">
-              {item.text}
-            </div>
+            <div className="nanum text-balance">{item.text}</div>
           </div>
         </div>
       ))}

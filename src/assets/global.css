@@ -7,7 +7,6 @@
   font-style: normal;
 }
 
-
 a {
   color: inherit;
   visibility: inherit;
@@ -44,6 +43,16 @@ ul {
   font-style: normal;
 }
 
+/* 글 길어지면 ...으로 표시됨 */
+.nanumPlus {
+  font-family: "Nanum Gothic", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 html,
 body {
   background-color: #fffcf3;
@@ -64,6 +73,10 @@ body {
 
 .shadow-bottom {
   box-shadow: 0 3px 4px 0px rgba(0, 0, 0, 0.1);
+}
+
+.shadow-bott {
+  box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.1);
 }
 
 .navbar {
