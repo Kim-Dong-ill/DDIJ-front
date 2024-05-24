@@ -316,8 +316,7 @@ function CreateCCPage() {
                   label="출발지"
                   fullWidth
                   type="String"
-                  disabled
-                  readOnly
+                  disabled={checkCircle ? false : true}
                   className="cursor-pointer"
                 />
               </div>
@@ -333,7 +332,6 @@ function CreateCCPage() {
                 </div>
               )}
             </div>
-
             <div className="mb-4">
               <div>
                 <label
@@ -354,7 +352,7 @@ function CreateCCPage() {
                   label={"목적지"}
                   fullWidth
                   type="String"
-                  disabled
+                  disabled={checkCircle ? false : true}
                   onClick={endToggleBox}
                   className="cursor-pointer"
                 />
@@ -405,7 +403,6 @@ function CreateCCPage() {
                 </div>
               )}
             </div>
-
             <div className="mb-6">
               <label
                 htmlFor="startTime"
@@ -439,7 +436,6 @@ function CreateCCPage() {
                 </div>
               )}
             </div>
-
             <div className="mb-6">
               <label
                 htmlFor="usingTime"
@@ -471,7 +467,6 @@ function CreateCCPage() {
                 })}
               </select>
             </div>
-
             {/* <CustomSelectButton id="usingTime">소요 시간</CustomSelectButton>
             <CustomSelect
               labelId="usingTime"
@@ -486,7 +481,6 @@ function CreateCCPage() {
               <CustomOption value={105}>1시간 45분</CustomOption>
               <CustomOption value={120}>2시간</CustomOption>
             </CustomSelect> */}
-
             <div>
               <label
                 htmlFor="max"
@@ -517,7 +511,6 @@ function CreateCCPage() {
                 })}
               </select>
             </div>
-
             {/* <Box sx={{ minWidth: 120 }} className="mb-6">
               <FormControl fullWidth>
                 <SelectButton id="max">인원수</SelectButton>
