@@ -103,7 +103,12 @@ function AppealPage({}) {
             {/* gpt 조건부 랜더링 */}
 
             <div>
-              {mainPet && mainPet.pGender}
+              {(mainPet && mainPet.pGender == "male") ||
+              (mainPet && mainPet.pGender == "남") ? (
+                <i className="text-blue-600 text-[14px] fa-solid fa-mars"></i>
+              ) : (
+                <i className="text-pink-600 fa-solid text-[14px] fa-venus"></i>
+              )}
               {/* <i className="fa-solid fa-mars"></i> */}
             </div>
           </div>
