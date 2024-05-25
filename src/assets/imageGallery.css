@@ -37,5 +37,13 @@
   .image-gallery-bullet {
   width: 5px; /* 페이지 인디케이터의 너비 */
   height: 5px; /* 페이지 인디케이터의 높이 */
-  border-radius: 50%; /* 페이지 인디케이터를 동그랗게 만듭니다. */
+  border-radius: 50%; /*페이지 인디케이터를 동그랗게 만듭니다.*/
+}
+
+.image-gallery-image {
+  width: 430px;
+  height: 300px;
+  margin: 0 auto;
+  margin-bottom: 25px;
+  overflow: hidden;
 }

@@ -186,18 +186,23 @@ function AppealPage({}) {
                 {/* 사진, 내용 넣는 section */}
                 {/* 실질적인 글 구간 start ============ */}
 
-                <div className="w-[430px] h-[320px] m-auto mb-[25px]">
-                  <div className="flex">
+                {/* <div className="w-[430px] h-[320px] m-auto mb-[25px]"> */}
+                {/* <div className="flex"> */}
+
+                <div className="flex justify-center ">
+                  <div className="w-[430px] h-[320px] m-auto mb-[25px] overflow-hidden">
                     <ReactImageGallery
                       items={images}
                       showBullets={true}
                       showThumbnails={false}
                       showFullscreenButton={false}
                       showPlayButton={false}
-                      additionalClass="custom-image-gallery"
+                      additionalClass="custom-image-gallery h-full object-cover"
                     />
                   </div>
                 </div>
+                {/* </div> */}
+                {/* </div> */}
                 {/* <div className="text-center mb-[20px]">
                   사진 페이지네이션 들어가야 할 구간
                 </div> */}
