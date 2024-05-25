@@ -63,6 +63,7 @@ function MyPetListPage() {
       {/* 강아지1 시작 */}
 
       {mypetList.map((item, idx) => {
+        // console.log(item.image);
         async function changeMainPet() {
           const body = {
             // mypetList 배열에서 ObjectId 추출
@@ -72,11 +73,12 @@ function MyPetListPage() {
             // petId2: item.index,
           };
           // alert("change");
-          console.log("아이디값", item._id);
+          // console.log("아이디값", item._id);
           // console.log(item.index, mypetList[0].index);
           try {
             const res = await axiosInstance.patch("/pet/mainpetindex", body);
-            console.log(res.data);
+            console.log("patch");
+            // console.log(res.data);
             //============================================================== 지금 수정하고있는부분 시작
             setRealignment(res.data);
           } catch (error) {
@@ -128,21 +130,22 @@ function MyPetListPage() {
                   </p>
                 )}
                 {/* 여기가 펫 이미지 넣는 공간이에용 */}
-                {console.log("item.image", item.image)}
+                {/* {console.log("item.image", item.image)}
                 {console.log("아이템", item)}
-
-                <img
-                  src={item.image}
-                  alt=""
-                  // className="h-full w-full rounded-full"
-                />
-                {/* 이미지가 안들어가있는 강아지일경우 나오는 목업데이터 */}
-                {item.image || (
+                {console.log(item.image)} */}
+                {item.image ? (
+                  <img
+                    src={`${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${item.image}`}
+                    // alt=""
+                    className="w-[100px] h-[100px] rounded-full m-auto"
+                  />
+                ) : (
                   <img
                     src="/images/dog1.svg"
                     className="w-[100px] h-[100px] rounded-full m-auto"
                   />
                 )}
+
                 <div>
                   <span className="inline-block leading-[40px] mr-[10px] nanumBold">
                     {item.pName}

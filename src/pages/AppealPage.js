@@ -9,6 +9,7 @@ import "../assets/imageGallery.css";
 import { formatDistanceToNow } from "date-fns";
 import { ko } from "date-fns/locale";
 import { original } from "@reduxjs/toolkit";
+import { useSelector } from "react-redux";
 
 // import axiosInstance from "../../utils/axios";
 // function AppealPage() {
@@ -16,12 +17,16 @@ function AppealPage({}) {
   // userId값 어떻게 가져올지 몰라서 일단 임시로 useParams값으로 가져옴..ㅜㅜ
   const { userId, petId } = useParams();
   // const [appealPostId, setAppealPostId] = useState([]);
+  // const petImage = useSelector((state) => {
+  //   return state.user.userData.pets[0].image;
+  //   // console.log(state);
+  // });
 
   const navigate = useNavigate();
 
   const [appealData, setAppealData] = useState([]);
   const [appealPostId, setAppealPostId] = useState([]);
-  const [mainPet, setMainPet] = useState(null);
+  const [mainPet, setMainPet] = useState("");
   console.log("펫정보에용", mainPet);
 
   const keyPressListener = (event) => {
@@ -34,7 +39,7 @@ function AppealPage({}) {
     const fetchData = async () => {
       try {
         const res = await axiosInstance.get(`/appeal/${userId}`);
-        console.log("재히", res.data.appealData);
+        console.log("재히", res.data);
         setAppealData(res.data.appealData);
 
         //gpt
@@ -51,8 +56,9 @@ function AppealPage({}) {
         const resPetList = await axiosInstance.get(`/pet/list/${userId}`);
         // gpt=======
         // console.log("resPetList", resPetList.data.myPetList[0]);
+        console.log("resPetList", resPetList.data);
         setMainPet(resPetList.data.myPetList[0]);
-        console.log("댕댕이미지주소!!!!!", resPetList.data.myPetList[2].image);
+        // console.log("댕댕이미지주소!!!!!", resPetList.data.myPetList[2].image);
       } catch (error) {}
     };
 
@@ -88,13 +94,19 @@ function AppealPage({}) {
         {/* 헤더 내용 시작 */}
         <div className="grid gap-[3px]">
           <div className="h-[100px] w-[100px] bg-ye-100 m-auto rounded-[50px]  my-[5px]">
-            {mainPet && mainPet.image && (
+            {mainPet.image ? (
               <img
-                src={mainPet.image}
-                alt=""
-                className="h-full w-full rounded-full"
+                src={`${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${mainPet.image}`}
+                // alt=""
+                className="w-[100px] h-[100px] rounded-full m-auto"
+              />
+            ) : (
+              <img
+                src="/images/dog1.svg"
+                className="w-[100px] h-[100px] rounded-full m-auto"
               />
             )}
+            {appealData.image}
           </div>
           <div className="flex justify-center items-center gap-1">
             <div className="nanumBold text-[16px]">
@@ -146,10 +158,22 @@ function AppealPage({}) {
                 {/* 강아지 아바타 / 닉네임 section 시작 */}
                 <div className="flex gap-[15px] mb-[20px]">
                   <div className="w-[50px] h-[50px] rounded-[50px]">
-                    {mainPet && mainPet.image && (
+                    {/* {mainPet && mainPet.image && (
                       <img
                         src={mainPet.image}
                         alt=""
+                        className="h-full w-full rounded-full"
+                      />
+                    )} */}
+                    {mainPet.image ? (
+                      <img
+                        src={`${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${mainPet.image}`}
+                        // alt=""
+                        className="h-full w-full rounded-full"
+                      />
+                    ) : (
+                      <img
+                        src="/images/dog1.svg"
                         className="h-full w-full rounded-full"
                       />
                     )}
