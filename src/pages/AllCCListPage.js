@@ -11,7 +11,7 @@ function AllCCListPage() {
       attend: 0,
     },
     {
-      title: "같이걸어여",
+      title: "x",
       meetingTime: "18시00분",
       meetingLocation: "가산 디지털단지역 코드랩 아카데미 건물 앞",
       attend: 0,
