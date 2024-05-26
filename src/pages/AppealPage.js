@@ -3,6 +3,12 @@ import Navbar from "../components/Navbar";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../utils/axios";
 import AppealCommentList from "./AppealCommentList";
+import "react-image-gallery/styles/css/image-gallery.css";
+import ReactImageGallery from "react-image-gallery";
+import "../assets/imageGallery.css";
+import { formatDistanceToNow } from "date-fns";
+import { ko } from "date-fns/locale";
+import { original } from "@reduxjs/toolkit";
 
 // import axiosInstance from "../../utils/axios";
 // function AppealPage() {
@@ -16,6 +22,7 @@ function AppealPage({}) {
   const [appealData, setAppealData] = useState([]);
   const [appealPostId, setAppealPostId] = useState([]);
   const [mainPet, setMainPet] = useState(null);
+  console.log("펫정보에용", mainPet);
 
   const keyPressListener = (event) => {
     if (event.key === "Enter") {
@@ -27,7 +34,7 @@ function AppealPage({}) {
     const fetchData = async () => {
       try {
         const res = await axiosInstance.get(`/appeal/${userId}`);
-        console.log(res.data.appealData);
+        console.log("재히", res.data.appealData);
         setAppealData(res.data.appealData);
 
         //gpt
@@ -43,8 +50,9 @@ function AppealPage({}) {
       try {
         const resPetList = await axiosInstance.get(`/pet/list/${userId}`);
         // gpt=======
-        console.log("resPetList", resPetList.data.myPetList[0]);
+        // console.log("resPetList", resPetList.data.myPetList[0]);
         setMainPet(resPetList.data.myPetList[0]);
+        console.log("댕댕이미지주소!!!!!", resPetList.data.myPetList[2].image);
       } catch (error) {}
     };
 
@@ -52,12 +60,16 @@ function AppealPage({}) {
     loadPetList();
   }, []);
 
+  // const formatDistanceToNowKorean = (date) => {
+  //   const distance = formatDistanceToNow(date, { locale: ko });
+  //   return distance;
+  // };
+
   return (
     <div className="relative">
-      {/* subHeader */}
-
-      <div className="subHeader  bg-ye-700 w-[500px] top-0 fixed h-[240px] text-center mb-[35px] ">
-        <div className="h-[50px] border-b-2 mb-3 flex justify-between items-center justify-center">
+      {/* 서브헤더 시작*/}
+      <div className="subHeader  bg-ye-600 w-[500px] top-0 fixed h-[240px] text-center mb-[35px] z-50 ">
+        <div className="h-[50px] border mb-3 flex justify-between items-center ">
           <h2>
             <img
               src="/images/backicon.svg"
@@ -68,77 +80,116 @@ function AppealPage({}) {
               className="cursor-pointer"
             />
           </h2>
-          <h2>자랑하개</h2>
+          <h2 className="text-[20px]">자랑하개</h2>
           <h2 className="invisible">
             <img src="/images/backicon.svg" alt="" />
           </h2>
         </div>
-        <div className="h-[100px] w-[100px] bg-ye-100 m-auto rounded-[50px]  my-[5px]"></div>
+        {/* 헤더 내용 시작 */}
+        <div className="grid gap-[3px]">
+          <div className="h-[100px] w-[100px] bg-ye-100 m-auto rounded-[50px]  my-[5px]">
+            {mainPet && mainPet.image && (
+              <img
+                src={mainPet.image}
+                alt=""
+                className="h-full w-full rounded-full"
+              />
+            )}
+          </div>
+          <div className="flex justify-center items-center gap-1">
+            <div className="nanumBold text-[16px]">
+              {mainPet && mainPet.pName}
+            </div>
+            {/* gpt 조건부 랜더링 */}
 
-        <div className="flex justify-center items-center gap-1">
-          <div className="nanumBold">{mainPet && mainPet.pName}</div>
-          {/* gpt 조건부 랜더링 */}
-
-          <div>
-            <i className="fa-solid fa-mars"></i>
+            <div>
+              {mainPet && mainPet.pGender}
+              {/* <i className="fa-solid fa-mars"></i> */}
+            </div>
+          </div>
+          <div className="flex justify-center ">
+            <p className="text-[20px] nanum ">" </p>
+            <p className="text-[14px] nanum mt-[3px]">
+              {mainPet && mainPet.pCharOne}
+            </p>
+            <p className="text-[20px] nanum  "> "</p>
           </div>
         </div>
-        <div className="flex justify-center">
-          <p className="text-[25px] nanum">"</p>
-          <p className="nanum">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </p>
-          <p className="text-[25px] nanum">"</p>
-        </div>
       </div>
-      {/* 자랑하개 mainview _ subheader와 navbar 중간section 전부 */}
-      {/* ======================자랑하개 mainview_ 중간섹션 + 사진 + 글 + 댓글까지 한묶음 start */}
+      {/* 서브헤더 끝 */}
+
       {/* {petList.map((item) => {
         return <>{item[0].pName}</>;
       })} */}
-      {appealData.map((item, idx) => {
-        console.log("appealPostId", appealPostId);
-        return (
-          <div
-            className="mt-[240px] mb-[65px] p-3 bg-white border-[1px]"
-            key={idx}
-          >
-            <div className="py-10 px-5 ">
-              {/* 강아지 아바타 / 닉네임 section 시작 */}
-              <div className="flex justify-between mb-[20px]">
-                <div className="flex gap-3">
-                  <div className="w-[50px] h-[50px] bg-ye-100 rounded-[50px]"></div>
-                  <div>
-                    <div className="nanumBold">{mainPet && mainPet.pName}</div>
-                    <p className="nanum">1일전</p>
+
+      {/* 게시글 시작 */}
+      <div className="mt-[240px] bg-white">
+        {appealData.map((item, idx) => {
+          const images = item.images.map((image) => ({
+            original: `${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${image}`,
+          }));
+          const timeAgo = formatDistanceToNow(new Date(item.createdAt), {
+            addSuffix: true,
+          });
+          // const timeAgo = item.createdAt;
+          // const timeAgo = formatDistanceToNowKorean(new Date(item.createdAt));
+          console.log("날짜", item.createdAt);
+          console.log("날짜에용", timeAgo);
+          return (
+            <div className="p-3 bg-white border-[1px]" key={idx}>
+              <div className="py-10 px-5 ">
+                {/* 강아지 아바타 / 닉네임 section 시작 */}
+                <div className="flex gap-[15px] mb-[20px]">
+                  <div className="w-[50px] h-[50px] rounded-[50px]">
+                    {mainPet && mainPet.image && (
+                      <img
+                        src={mainPet.image}
+                        alt=""
+                        className="h-full w-full rounded-full"
+                      />
+                    )}
                   </div>
-                  <div></div>
+                  <div className="nanumBold text-[15px] mt-[2px]">
+                    {mainPet && mainPet.pName}
+                    <p className="nanum text-[13px]">{timeAgo}</p>
+                  </div>
                 </div>
-                <div></div>
-              </div>
-              {/* 사진, 내용 넣는 section */}
-              {/* 실질적인 글 구간 start ============ */}
+                {/* 사진, 내용 넣는 section */}
+                {/* 실질적인 글 구간 start ============ */}
 
-              <div className="w-[430px] h-[320px] bg-ye-100 m-auto mb-[25px]"></div>
-              <div className="text-center mb-[20px]">
-                사진 페이지네이션 들어가야 할 구간
-              </div>
-              <div className="nanum border-b-2">
-                <p className="nanum mb-[5px]">{item.text}</p>
-              </div>
-              {/* ============ 실질적인 글 구간 end */}
+                <div className="w-[430px] h-[320px] m-auto mb-[25px]">
+                  <div className="flex">
+                    <ReactImageGallery
+                      items={images}
+                      showBullets={true}
+                      showThumbnails={false}
+                      showFullscreenButton={false}
+                      showPlayButton={false}
+                      additionalClass="custom-image-gallery"
+                    />
+                  </div>
+                </div>
+                {/* <div className="text-center mb-[20px]">
+                  사진 페이지네이션 들어가야 할 구간
+                </div> */}
+                <div className="nanum border-b-2">
+                  <p className="nanum mb-[5px]">{item.text}</p>
+                </div>
+                {/* ============ 실질적인 글 구간 end */}
 
-              <AppealCommentList
-                keyPressListener={keyPressListener}
-                appealPostId={appealPostId[idx]}
-              />
-              {/* div*2개 남겨놔야해요 */}
+                <AppealCommentList
+                  keyPressListener={keyPressListener}
+                  appealPostId={appealPostId[idx]}
+                />
+                {/* div*2개 남겨놔야해요 */}
+              </div>
             </div>
-          </div>
-        );
-      })}
-      {/* ======================자랑하개 mainview_ 중간섹션 + 사진 + 글 + 댓글까지 한묶음 end */}
-      {/* 글써보개 고정하기위한작업 시작 */}
+          );
+        })}
+      </div>
+      {/* 게시글 끝 */}
+
+      {/* 글써보개 버튼 시작 */}
       <div className="w-[490px] flex justify-end fixed bottom-[90px] ">
         <Link to={`/appealwrite/${userId}`}>
           <div className=" bg-ye-400 text-white navbar py-2 px-3 rounded-[50px] ">
@@ -146,7 +197,7 @@ function AppealPage({}) {
           </div>
         </Link>
       </div>
-      {/* 글써보개 고정하기위한작업 끝 */}
+      {/* 글써보개 버튼 끝 */}
       <Navbar />
     </div>
   );

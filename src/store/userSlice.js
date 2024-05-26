@@ -11,6 +11,7 @@ const initialState = {
     image: [],
     createAt: "",
   },
+  petsData: [],
   isAuth: false,
   isLoading: false,
 };
@@ -27,6 +28,8 @@ const userSlice = createSlice({
         state.isAuth = true;
         state.isLoading = false;
         state.userData = action.payload.user;
+        // console.log("action.pets", action.payload);
+        // state.petsData = action.payload.pets;
         console.log(action.payload);
         localStorage.setItem("accessToken", action.payload.accessToken);
       })
@@ -43,6 +46,7 @@ const userSlice = createSlice({
       .addCase(authUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.userData = action.payload;
+        state.petsData = action.payload.pets;
         state.isAuth = true;
       })
       .addCase(authUser.rejected, (state, action) => {

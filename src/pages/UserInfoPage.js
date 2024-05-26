@@ -1,59 +1,37 @@
 import React, { useState } from "react";
-// import HasDogButton from "../components/HasDogButton";
 import TextFieldLine from "../components/TextField";
-import { Link } from "react-router-dom";
-import $ from "jquery";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signOutUser } from "../store/thunkFunctions";
 
 function UserInfoPage() {
-  // 로그인된 유저 _id값 가져오는과정_KED
-  const loginState = useSelector((state) => {
-    return state.user.userData.user.id;
-  });
-  const [hasDog, setHasDog] = useState(false); //반려동물 있는지 없는지
-  const [pageMove, setPageMove] = useState(true);
-  // const [userId, setUserId] = useState(""); //유저아이디
   const dispatch = useDispatch();
-
-  function handleHasDog(result) {
-    setHasDog(result);
-  }
-
-  function handlePage() {
-    setPageMove(!pageMove);
-    $("html, body").scrollTop("0");
-  }
-
-  function onSubmit() {
-    alert("전송");
-  }
 
   //회원 탈퇴
   async function handleSignout() {
     if (window.confirm("탈퇴하시겠습니까?")) {
-      await dispatch(signOutUser(state));
+      await dispatch(signOutUser(state.id));
       alert("탈퇴되었습니다.");
     }
   }
+
   const state = useSelector((state) => {
-    // setUserId(state.user.userData.user.id);
-    return state.user.userData.user.id;
+    return state.user.userData.user;
   });
   return (
     <>
       <div
         className="bg-white w-[500px] border border-da-100"
-        // h-[100vh]
         style={{ height: "calc(100% - 65px)" }}
       >
         <div className="flex w-[500px] pt-[90px]">
-          <Link to={`/userinfo/${loginState}`} className="flex-1">
+          {/* <Link to={`/userinfo/${state.id}`} className="flex-1"> */}
+          <Link to={`/userinfo`} className="flex-1">
             <button className="w-full border-b  border-gray-200 shadow-bottom px-2 py-3 text-[15px] hover:border-gray-800 ">
               보호자 정보
             </button>
           </Link>
-          <Link to={`/mypet/${loginState}`} className="flex-1">
+          <Link to={`/mypet/${state.id}`} className="flex-1">
             <button className="w-full  border-b border-gray-200 shadow-bottom px-2 py-3 text-[15px] hover:border-gray-800">
               반려견 정보
             </button>
@@ -78,45 +56,35 @@ function UserInfoPage() {
           </div>
 
           <div className="flex flex-col gap-2 mb-6">
-            <label
-              className={hasDog ? `w-[100px]` : `w-[100px] nanumBold`}
-              htmlFor="userName"
-            >
+            <label className="w-[100px] nanumBold" htmlFor="userName">
               이름
             </label>
             <div>
               <TextFieldLine
-                required
-                disabled={hasDog ? false : true}
+                // required
+                disabled={true}
                 id="userName"
-                label="이름"
+                label={`${state.name}`}
                 fullWidth
               />
             </div>
           </div>
           <div className="flex flex-col gap-2 mb-6">
-            <label
-              className={hasDog ? `w-[100px]` : `w-[100px] nanumBold`}
-              htmlFor="userEmail"
-            >
+            <label className="w-[100px] nanumBold" htmlFor="userEmail">
               이메일
             </label>
             <div>
               <TextFieldLine
-                required
-                disabled={hasDog ? false : true}
+                disabled={true}
                 id="userEmail"
-                label="이메일"
+                label={`${state.email}`}
                 fullWidth
               />
             </div>
           </div>
 
           <div className="flex flex-col gap-2 mb-6">
-            <label
-              className={hasDog ? `w-[100px]` : `w-[100px] nanumBold`}
-              htmlFor=""
-            >
+            <label className="w-[100px] nanumBold" htmlFor="">
               닉네임
               <button type="button">
                 <i className=" pl-1 text-ye-600 fa-solid fa-circle-check"></i>
@@ -124,27 +92,22 @@ function UserInfoPage() {
             </label>
             <div>
               <TextFieldLine
-                required
-                disabled={hasDog ? false : true}
+                disabled={true}
                 id="nickName"
-                label="닉네임"
+                label={state.nickName}
                 fullWidth
               />
             </div>
           </div>
           <div className="flex flex-col gap-2 mb-10">
-            <label
-              className={hasDog ? `w-[100px]` : `w-[100px] nanumBold`}
-              htmlFor="adress"
-            >
+            <label className="w-[100px] nanumBold" htmlFor="adress">
               주소
             </label>
             <div>
               <TextFieldLine
-                required
-                disabled={hasDog ? false : true}
+                disabled={true}
                 id="adress"
-                label="주소"
+                label={state.address}
                 fullWidth
               />
             </div>
