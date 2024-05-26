@@ -66,7 +66,8 @@ function AppealCommentList(props) {
           <input
             type="text"
             placeholder="댓글입력"
-            className="border w-[365px] rounded-[25px] px-[10px] py-[5px] nanum"
+            className="border w-[365px] rounded-[25px] px-[10px] py-[5px] nanum z-10"
+            // z-index를 안넣으면 인풋창 인식이 느려서 넣었습니다
             name="text"
             value={textData.text}
             onChange={textDataChange}
@@ -89,7 +90,7 @@ function AppealCommentList(props) {
                 {/* <p className="nanumBold">{item.user}</p> */}
               </div>
             </div>
-            <div className="nanum flex-wrap w-[280px] overflow-wrap">
+            <div className="nanum flex-wrap w-[280px] overflow-wrap break-words">
               {item.text}
             </div>
           </div>

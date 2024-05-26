@@ -140,88 +140,105 @@ function AppealPage({}) {
       })} */}
 
       {/* 게시글 시작 */}
-      <div className="mt-[240px] bg-white">
-        {appealData.map((item, idx) => {
-          const images = item.images.map((image) => ({
-            original: `${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${image}`,
-          }));
-          const timeAgo = formatDistanceToNow(new Date(item.createdAt), {
-            addSuffix: true,
-          });
-          // const timeAgo = item.createdAt;
-          // const timeAgo = formatDistanceToNowKorean(new Date(item.createdAt));
-          console.log("날짜", item.createdAt);
-          console.log("날짜에용", timeAgo);
-          return (
-            <div className="p-3 bg-white border-[1px]" key={idx}>
-              <div className="py-10 px-5 ">
-                {/* 강아지 아바타 / 닉네임 section 시작 */}
-                <div className="flex gap-[15px] mb-[20px]">
-                  <div className="w-[50px] h-[50px] rounded-[50px]">
-                    {/* {mainPet && mainPet.image && (
+      {/* 게시글이 없을 경우 나와야 할 문구 */}
+      {appealData.length === 0 ? (
+        <div className=" bg-white min-h-screen flex items-center justify-center">
+          <div className="">
+            <p>게시글이 없습니다. 새로운 게시글을 작성해보세요!😘</p>
+            <Link to={`/appealwrite/${userId}`}>
+              <div className="text-center text-lg cursor-pointer bg-ye-700 rounded-[10px] py-[5px]">
+                ❤️🥰우리 강아지도 자랑해보개😎❤️
+              </div>
+            </Link>
+          </div>
+        </div>
+      ) : (
+        // 게시글 데이터가 있을 경우, 게시글 화면 출력
+        <div className="mt-[240px] bg-white">
+          {appealData.map((item, idx) => {
+            const images = item.images.map((image) => ({
+              original: `${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${image}`,
+            }));
+            const timeAgo = formatDistanceToNow(new Date(item.createdAt), {
+              addSuffix: true,
+            });
+            // const timeAgo = item.createdAt;
+            // const timeAgo = formatDistanceToNowKorean(new Date(item.createdAt));
+            console.log("날짜", item.createdAt);
+            console.log("날짜에용", timeAgo);
+            return (
+              <div className="p-3 bg-white border-[1px]" key={idx}>
+                <div className="py-10 px-5 ">
+                  {/* 강아지 아바타 / 닉네임 section 시작 */}
+                  <div className="flex gap-[15px] mb-[20px]">
+                    <div className="w-[50px] h-[50px] rounded-[50px]">
+                      {/* {mainPet && mainPet.image && (
                       <img
                         src={mainPet.image}
                         alt=""
                         className="h-full w-full rounded-full"
                       />
                     )} */}
-                    {mainPet.image ? (
-                      <img
-                        src={`${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${mainPet.image}`}
-                        // alt=""
-                        className="h-full w-full rounded-full"
-                      />
-                    ) : (
-                      <img
-                        src="/images/dog1.svg"
-                        className="h-full w-full rounded-full"
-                      />
-                    )}
+                      {mainPet.image ? (
+                        <img
+                          src={`${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${mainPet.image}`}
+                          // alt=""
+                          className="h-full w-full rounded-full"
+                        />
+                      ) : (
+                        <img
+                          src="/images/dog1.svg"
+                          className="h-full w-full rounded-full"
+                        />
+                      )}
+                    </div>
+                    <div className="nanumBold text-[15px] mt-[2px]">
+                      {mainPet && mainPet.pName}
+                      <p className="nanum text-[13px]">{timeAgo}</p>
+                    </div>
                   </div>
-                  <div className="nanumBold text-[15px] mt-[2px]">
-                    {mainPet && mainPet.pName}
-                    <p className="nanum text-[13px]">{timeAgo}</p>
-                  </div>
-                </div>
-                {/* 사진, 내용 넣는 section */}
-                {/* 실질적인 글 구간 start ============ */}
+                  {/* 사진, 내용 넣는 section */}
+                  {/* 실질적인 글 구간 start ============ */}
 
-                {/* <div className="w-[430px] h-[320px] m-auto mb-[25px]"> */}
-                {/* <div className="flex"> */}
+                  {/* <div className="w-[430px] h-[320px] m-auto mb-[25px]"> */}
+                  {/* <div className="flex"> */}
 
-                <div className="flex justify-center ">
-                  <div className="w-[430px] h-[320px] m-auto mb-[25px] overflow-hidden">
-                    <ReactImageGallery
-                      items={images}
-                      showBullets={true}
-                      showThumbnails={false}
-                      showFullscreenButton={false}
-                      showPlayButton={false}
-                      additionalClass="custom-image-gallery h-full object-cover"
-                    />
+                  <div className="flex justify-center ">
+                    <div className="w-[430px] h-[320px] m-auto mb-[25px] overflow-hidden">
+                      <ReactImageGallery
+                        items={images}
+                        showBullets={true}
+                        showThumbnails={false}
+                        showFullscreenButton={false}
+                        showPlayButton={false}
+                        additionalClass="custom-image-gallery h-full object-cover"
+                      />
+                    </div>
                   </div>
-                </div>
-                {/* </div> */}
-                {/* </div> */}
-                {/* <div className="text-center mb-[20px]">
+                  {/* </div> */}
+                  {/* </div> */}
+                  {/* <div className="text-center mb-[20px]">
                   사진 페이지네이션 들어가야 할 구간
                 </div> */}
-                <div className="nanum border-b-2">
-                  <p className="nanum mb-[5px]">{item.text}</p>
-                </div>
-                {/* ============ 실질적인 글 구간 end */}
+                  <div className="nanum border-b-2">
+                    <p className="nanum mb-[5px]">{item.text}</p>
+                  </div>
 
-                <AppealCommentList
-                  keyPressListener={keyPressListener}
-                  appealPostId={appealPostId[idx]}
-                />
-                {/* div*2개 남겨놔야해요 */}
+                  {/* ============ 실질적인 글 구간 end */}
+
+                  <AppealCommentList
+                    keyPressListener={keyPressListener}
+                    appealPostId={appealPostId[idx]}
+                  />
+                  {/* div*2개 남겨놔야해요 */}
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
-      {/* 게시글 끝 */}
+            );
+          })}
+        </div>
+        // 게시글 끝
+      )}
+      <div></div>
 
       {/* 글써보개 버튼 시작 */}
       <div className="w-[490px] flex justify-end fixed bottom-[90px] ">
