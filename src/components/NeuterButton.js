@@ -42,7 +42,7 @@ function NeuterButton({
         </button>
         <input
           value={neuter}
-          // hidden
+          hidden
           onClick={doNeuter}
           checked={neuter || petNeuter ? true : false}
           id="doNeuter"
@@ -75,7 +75,7 @@ function NeuterButton({
         </button>
         <input
           value={neuter}
-          // hidden
+          hidden
           onClick={doNotNeuter}
           checked={neuter || petNeuter ? false : true}
           id="doNotNeuter"
