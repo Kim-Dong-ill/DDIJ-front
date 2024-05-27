@@ -72,7 +72,7 @@ var imageSize = new kakao.maps.Size(40, 42);
 var imageOption = { offset: new kakao.maps.Point(20, 42) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 
 var currentPosition = []; //현재 위치 좌표
-function Kakao_main() {
+function Kakao_main({ indexPet }) {
   const [message, setMessage] = useState(""); //지도 클릭시 위도 경도 메세지
   const [map, setMap] = useState(null); //카카오 map
   const [markers, setMarkers] = useState([]); //마커들 표시
@@ -567,7 +567,7 @@ function Kakao_main() {
         <div className="dragTarget">
           <i className="fa-solid fa-location-crosshairs"></i>
         </div>
-        <MainSlider></MainSlider>
+        <MainSlider indexPet={indexPet} />
         <div className="flex flex-col absolute bottom-[20px] right-[20px] z-50 gap-2">
           {/* <button onClick={hideMarkers}>마커 감추기</button> */}
           {/* <button onClick={showMarkers}>마커 보이기</button> */}

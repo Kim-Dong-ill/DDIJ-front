@@ -104,7 +104,7 @@ function RegisterPage() {
     body.neuter = neuter;
     body.rabies = rabies;
     body.vaccine = vaccine;
-    body.coords = addressLoc;
+    body.coordinates = addressLoc;
 
     try {
       const res = await axiosInstance.post("/user/register", body);
