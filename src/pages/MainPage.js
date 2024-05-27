@@ -7,6 +7,7 @@ import axiosInstance from "../utils/axios";
 function MainPage() {
   const [userAddress, setUserAddress] = useState();
   const [indexPet, setIndexPet] = useState([]); //상단 메인 반려견 슬라이더 배열
+
   const state = useSelector((state) => {
     return state;
   });

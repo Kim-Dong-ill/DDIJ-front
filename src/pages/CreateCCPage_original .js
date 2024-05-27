@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ButtonBl from "../components/ButtonBl";
 import ButtonYe from "../components/ButtonYe";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,51 +7,30 @@ import CheckCircleButton from "../components/CheckCircleButton";
 // import axiosInstance from "../utils/axios";
 import { createCircle } from "../store/thunkFunctions";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import axiosInstance from "../utils/axios";
-import { format, formatDate } from "date-fns";
 // import { Box, FormControl, MenuItem, Select } from "@mui/material";
 // import SelectButton from "../components/SelectButton";
 // import { SelectUnstyled, OptionUnstyled } from "@mui/base";
 // import { styled } from "@mui/system";
 
-const peoplesOptions = [
-  { key: 1, value: 2, display: "2명" },
-  { key: 2, value: 3, display: "3명" },
-  { key: 3, value: 4, display: "4명" },
-  { key: 4, value: 5, display: "5명" },
+const max = [
+  { key: 1, value: "2명" },
+  { key: 2, value: "3명" },
+  { key: 3, value: "4명" },
+  { key: 4, value: "5명" },
 ];
-
-const usingTimeOptions = [
-  { key: 1, value: 30, display: "30분" },
-  { key: 2, value: 45, display: "45분" },
-  { key: 3, value: 60, display: "1시간" },
-  { key: 4, value: 75, display: "1시간 15분" },
-  { key: 5, value: 90, display: "1시간 30분" },
-  { key: 6, value: 105, display: "1시간 45분" },
-  { key: 7, value: 120, display: "2시간" },
+const usingTime = [
+  { key: 1, value: " 30분" },
+  { key: 2, value: "45분" },
+  { key: 3, value: "1시간" },
+  { key: 4, value: "1시간 15분" },
+  { key: 5, value: "1시간 30분" },
+  { key: 6, value: "1시간 45분" },
+  { key: 7, value: "2시간" },
 ];
 
 function CreateCCPage() {
-  const loginState = useSelector((state) => {
-    return state.user.userData.user.id;
-  });
-  // const loginLocation = useSelector((state) => {
-  //   return state.user.userData.user.location.coordinates;
-  // });
-  // console.log(loginLocation);
-  const [startTime, setStartTime] = useState("");
-  const [usingTime, setUsingTime] = useState([
-    { key: 1, value: " 30분" },
-    { key: 2, value: "45분" },
-    { key: 3, value: "1시간" },
-    { key: 4, value: "1시간 15분" },
-    { key: 5, value: "1시간 30분" },
-    { key: 6, value: "1시간 45분" },
-    { key: 7, value: "2시간" },
-  ]);
-  const [peoples, setPeoples] = useState(null);
   const {
     register,
     handleSubmit,
@@ -64,26 +43,6 @@ function CreateCCPage() {
   const [startshowBox, setStartshowBox] = useState(false); // 출발지 토글박스
   const [endshowBox, setEndshowBox] = useState(false); // 목적지 토글박스
   const [checkCircle, setCheckCircle] = useState(false); // 중복된모임체크
-  const [newCCInfo, setnewCCInfo] = useState({
-    user: loginState,
-    name: "",
-    text: "",
-    startLoc: "",
-    endLoc: "",
-
-    startTime: "",
-    usingTime: "",
-    peoples: "",
-  });
-
-  useEffect(() => {
-    setnewCCInfo((prevState) => ({
-      ...prevState,
-      startTime: startTime,
-      usingTime: usingTime,
-      peoples: peoples,
-    }));
-  }, [startTime, usingTime, peoples]);
 
   // 출발지 토글박스
   const startToggleBox = () => {
@@ -95,6 +54,19 @@ function CreateCCPage() {
     setEndshowBox(!endshowBox);
   };
 
+  // // const handleClick = (button) => {
+  // //   setSelectButton(button);
+  // // };
+
+  // 변수 저장소
+  // const [newCircle, setNewCircle] = useState({
+  //   title: "",
+  //   content: "",
+  //   // startTime: "",
+  //   usingTime: 1,
+  //   max: 1,
+  // });
+
   // 중복된모임체크
   function handleCheckCircle(result) {
     setCheckCircle(result);
@@ -103,33 +75,47 @@ function CreateCCPage() {
   // useNavigate
   const navigate = useNavigate();
 
-  function handleChangeValue(e) {
-    const { name, value } = e.target;
-    if (name && value !== undefined) {
-      setnewCCInfo((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }));
-    }
-  }
+  // onChange thunkfunction하느라 주석
+  // function handleChange(e) {
+  //   const { name, value } = e.target;
+  //   console.log(value, name);
+  //   setNewCircle((prevState) => {
+  //     return {
+  //       ...prevState,
+  //       [name]: value,
+  //     };
+  //   });
+  // }
 
-  async function onSubmit() {
+  // thunkFuntion버전
+  async function onSubmit({
+    title,
+    content,
+    startPoint,
+    endPoint,
+    startDate,
+    startTime,
+    usingTime,
+    max,
+  }) {
     const body = {
-      ...newCCInfo,
-      // startTime을 변경된 형식으로 변환하여 전송
-      startTime:
-        new Date().toISOString().slice(0, 10) +
-        "T" +
-        newCCInfo.startTime +
-        ":00.000Z",
-      // usingTime을 숫자로 변환하여 전송
-      usingTime: parseInt(newCCInfo.usingTime),
+      title,
+      content,
+      startPoint,
+      endPoint,
+      startDate,
+      startTime,
+      usingTime,
+      max,
     };
 
-    console.log("sending Data:::", body);
+    // dispatch(createCircle(body));
+    // console.log(body);
+
+    // reset();
 
     try {
-      const res = await axiosInstance.post(`/circles/new/${loginState}`, body);
+      const res = await dispatch(createCircle(body));
       console.log("모임생성 성공", res.data);
 
       toast.success("👨👩 모임생성을 성공했습니다.", {
@@ -148,7 +134,7 @@ function CreateCCPage() {
       navigate("/circles");
     } catch (error) {
       //  에러 토스트가 안뜸
-      console.log("모임생성 실패", error.message);
+      console.log("모임생성 실패", error);
 
       toast.error("🤷‍♂️🤷‍♂️🤷‍♂️ 모임생성을 실패했습니다.!!", {
         position: "bottom-right",
@@ -163,31 +149,74 @@ function CreateCCPage() {
     }
   }
 
-  const validationRules = {
-    name: {
-      required: "모임명은 필수 입니다.",
-      minLength: {
-        value: 4,
-        message: "최소 4글자 입니다.",
-      },
+  const circleTitle = {
+    required: {
+      value: true,
+      message: "모임명은 필수 입니다.",
     },
-    text: {
-      required: "소개말은 필수입니다.",
-      minLength: {
-        value: 4,
-        message: "최소 4글자 입니다.",
-      },
-    },
-    startTime: {
-      required: "시작 시간은 필수입니다.",
-    },
-    usingTime: {
-      required: "소요 시간을 입력해주세요.",
-    },
-    peoples: {
-      required: "참여 인원수를 지정해주세요.",
+    minLength: {
+      value: 4,
+      message: "최소 4글자 입니다.",
     },
   };
+  const circleContent = {
+    required: {
+      value: true,
+      message: "소개명은 필수입니다.",
+    },
+    minLength: {
+      value: 4,
+      message: "최소 4글자 입니다.",
+    },
+  };
+  const circleStartDate = {
+    required: {
+      value: true,
+      message: "시작날짜는 필수입니다.",
+    },
+  };
+  const circleStartTime = {
+    required: {
+      value: true,
+      message: "시작시간은 필수입니다.",
+    },
+  };
+  const circleUsingTime = {
+    required: {
+      value: true,
+    },
+  };
+  const circleMax = {
+    required: {
+      value: true,
+    },
+  };
+
+  // handleSubmit navigate 버전
+  // async function onSubmit() {
+  //   alert("ddd");
+  //   const body = {
+  //     ...newCircle,
+  //   };
+  //   try {
+  //     await axiosInstance.post("/workingCircle", body);
+  //     navigate("/circles");
+  //   } catch (error) {
+  //     console.log("handleSubmit error");
+  //   }
+  // }
+
+  // no navigate 버전
+  // async function handleButtonClick() {
+  //   const body = { ...newCircle };
+  //   try {
+  //     await axiosInstance.post("/circleRouter", body);
+  //     // 원하는 경로로 이동
+  //     window.location.href = "/circles";
+  //   } catch (error) {
+  //     console.log("handleButtonClick error");
+  //   }
+  // }
 
   return (
     <>
@@ -211,8 +240,8 @@ function CreateCCPage() {
               checkCircle={checkCircle}
             />
           </div>
+          {/* 모임명 */}
           <div>
-            {/* 모임명 start */}
             <div className="flex flex-col mb-6 ">
               <label
                 className={
@@ -223,40 +252,45 @@ function CreateCCPage() {
                 모임명
               </label>
               <TextFieldLine
-                {...register("name", validationRules.name)}
                 required
-                disabled={!checkCircle}
-                id="name"
-                name="name"
+                disabled={checkCircle ? false : true}
+                id="title"
+                name="title"
                 label="모임명"
                 fullWidth
-                onChange={handleChangeValue}
-                value={newCCInfo.name}
-                error={!!errors.name}
-                helperText={errors.name?.message}
+                // onChange={handleChange}
+                // value={newCircle.title}
+                {...register("title", circleTitle)}
               />
+              {errors.title && (
+                <div className="nanumBold text-red-500 text-xs mt-1">
+                  {errors.title.message}
+                </div>
+              )}
             </div>
-            {/* 모임명end */}
+
             {/* 소개말 */}
             <textarea
-              {...register("text", validationRules.text)}
+              // value={newCircle.content}
+              // onChange={handleChange}
+              {...register("content", circleContent)}
               placeholder="소개말을 입력해주세요."
-              id="text"
-              name="text"
+              id="content"
+              name="content"
               className={
                 checkCircle
                   ? `bg-gray-200 rounded-md w-full h-[100px] text-justify mb-3 px-4 py-2 border hover:border-ye-800 focus:border-ye-600 focus:border-2 outline-none`
                   : `bg-gray-200 rounded-md w-full h-[100px] text-justify mb-3 px-4 py-2 border hover:border-ye-800 text-da-500`
               }
-              value={newCCInfo.text}
-              onChange={handleChangeValue}
-              disabled={checkCircle ? false : true}
-              error={!!errors.text}
-              helperText={errors.text?.message}
               // className="bg-gray-200 rounded-md w-full h-[100px] text-justify mb-4 px-4 py-2"
+              disabled={checkCircle ? false : true}
             />
+            {errors.content && (
+              <div className="nanumBold text-red-500 text-xs mb-4 ">
+                {errors.content.message}
+              </div>
+            )}
           </div>
-
           {/* 장소,시간설정 */}
           <div>
             <div>
@@ -274,22 +308,20 @@ function CreateCCPage() {
                   출발지
                 </label>
                 <TextFieldLine
-                  onChange={handleChangeValue}
                   required
-                  id="startLoc"
-                  name="startLoc"
+                  id="startPoint"
                   label="출발지"
                   fullWidth
-                  // readOnly
-                  className="cursor-pointer"
+                  type="String"
                   disabled
-                  value={newCCInfo.startLoc}
+                  readOnly
+                  className="cursor-pointer"
                 />
               </div>
               <img
                 src="/images/plusglass_icon.svg"
-                alt="돋보기 아이콘"
-                className="block relative  left-[370px] bottom-[37px] cursor-pointer"
+                alt="돋보기아이콘"
+                className="block relative  left-[3790px] bottom-[37px] cursor-pointer"
                 onClick={startToggleBox}
               />
               {startshowBox && (
@@ -298,6 +330,7 @@ function CreateCCPage() {
                 </div>
               )}
             </div>
+
             <div className="mb-4">
               <div>
                 <label
@@ -312,18 +345,15 @@ function CreateCCPage() {
                   <img src="/images/plag_icon.svg" alt="깃발아이콘" />
                   목적지
                 </label>
-
                 <TextFieldLine
-                  onChange={handleChangeValue}
                   required
-                  id="endLoc"
-                  name="endLoc"
-                  label="목적지"
+                  id="endPoint"
+                  label={"목적지"}
                   fullWidth
-                  // readOnly
-                  className="cursor-pointer"
+                  type="String"
                   disabled
-                  value={newCCInfo.endLoc}
+                  onClick={endToggleBox}
+                  className="cursor-pointer"
                 />
               </div>
               <img
@@ -338,6 +368,7 @@ function CreateCCPage() {
                 </div>
               )}
             </div>
+
             <div className="mb-6">
               <label
                 htmlFor="startDate"
@@ -351,26 +382,27 @@ function CreateCCPage() {
                 <img src="/images/clock_icon.svg" alt="시계 아이콘" />
                 시작 날짜
               </label>
-
               <TextFieldLine
-                onChange={handleChangeValue}
                 required
                 id="startDate"
                 name="startDate"
+                // label="시작 시간"
                 fullWidth
-                type="date"
+                type="Date"
                 readOnly
+                // value={startTime}
+                // onChange={handleChange}
                 className="cursor-pointer"
                 disabled={checkCircle ? false : true}
-                value={newCCInfo.startDate}
-                {...register("startDate", validationRules.startDate)}
+                {...register("startDate", circleStartDate)}
               />
-              {/* {errors.startDate && (
-              <div className="nanumBold text-red-500 text-xs mt-1">
-                {errors.startDate.message}
-              </div>
-            )} */}
+              {errors.startDate && (
+                <div className="nanumBold text-red-500 text-xs mt-1">
+                  {errors.startDate.message}
+                </div>
+              )}
             </div>
+
             <div className="mb-6">
               <label
                 htmlFor="startTime"
@@ -384,28 +416,28 @@ function CreateCCPage() {
                 <img src="/images/clock_icon.svg" alt="시계 아이콘" />
                 시작 시간
               </label>
-
-              <input
-                {...register("startTime", validationRules.startTime)}
+              <TextFieldLine
                 required
-                // type="datetime-local"
-                type="time"
                 id="startTime"
                 name="startTime"
-                className={
-                  checkCircle
-                    ? `w-full mb-6 py-2 px-4 border rounded-md`
-                    : `w-full mb-6 py-2 px-4 border rounded-md text-da-500`
-                }
-                onChange={(e) => setStartTime(e.target.value)}
+                // label="시작 시간"
+                fullWidth
+                type="Time"
+                readOnly
+                // value={startTime}
+                // onChange={handleChange}
+                className="cursor-pointer"
                 disabled={checkCircle ? false : true}
-                value={newCCInfo.startTime}
-                error={!!errors.startTime}
-                helperText={errors.startTime?.message}
+                {...register("startTime", circleStartTime)}
               />
+              {errors.startTime && (
+                <div className="nanumBold text-red-500 text-xs mt-1">
+                  {errors.startTime.message}
+                </div>
+              )}
             </div>
 
-            <div>
+            <div className="mb-6">
               <label
                 htmlFor="usingTime"
                 className={
@@ -418,71 +450,88 @@ function CreateCCPage() {
                   소요 시간
                 </h4>
               </label>
-
               <select
-                {...register("usingTime", validationRules.usingTime)}
-                id="usingTime"
                 name="usingTime"
-                // className={
-                //   checkCircle
-                //     ? `w-full mb-6 py-2 px-4 border rounded-md`
-                //     : `w-full mb-6 py-2 px-4 border rounded-md text-da-500`
-                // }
+                id="usingTime"
                 className="w-full border px-4 py- 2 mb-4 rounded-md block h-[60px] cursor-pointer border-[#e0e3e7] hover:border-ye-800 focus:border-ye-600 focus:border-2 outline-none"
                 disabled={checkCircle ? false : true}
-                // onChange={(e) => setUsingTime(e.target.value)}
-                onChange={handleChangeValue}
-                value={newCCInfo.usingTime}
-                error={!!errors.usingTime}
-                helperText={errors.usingTime?.message}
+                // onChange={handleChange}
+                // value={newCircle.usingTime}
+                {...register("usingTime", circleUsingTime)}
               >
-                <option value="">소요 시간을 선택해주세요.</option>
-                {usingTimeOptions.map((option) => (
-                  <option key={option.key} value={option.value}>
-                    {option.display}
-                  </option>
-                ))}
+                {usingTime.map((item) => {
+                  return (
+                    <option value={item.value} key={item.key}>
+                      {item.value}
+                    </option>
+                  );
+                })}
               </select>
             </div>
 
+            {/* <CustomSelectButton id="usingTime">소요 시간</CustomSelectButton>
+            <CustomSelect
+              labelId="usingTime"
+              id="usingTime"
+              value={usingTime}
+              onChange={handleUsingTimeChange}
+            >
+              <CustomOption value={30}>30분</CustomOption>
+              <CustomOption value={45}>45분</CustomOption>
+              <CustomOption value={60}>1시간</CustomOption>
+              <CustomOption value={90}>1시간 30분</CustomOption>
+              <CustomOption value={105}>1시간 45분</CustomOption>
+              <CustomOption value={120}>2시간</CustomOption>
+            </CustomSelect> */}
+
             <div>
               <label
-                htmlFor="peoples"
+                htmlFor="max"
                 className={
                   checkCircle ? `block mb-4` : `block mb-4 text-da-500`
                 }
               >
                 <h4 className="flex mb-3 gap-2">
                   <img src="/images/people_icon.svg" alt="사람 아이콘" />
-                  참여 인원 수
+                  인원수
                 </h4>
               </label>
-
               <select
-                {...register("peoples", validationRules.peoples)}
-                id="peoples"
-                name="peoples"
+                name="max"
+                id="max"
                 className="w-full px-4 py-2 mb-10 border rounded-md  h-[60px] cursor-pointer border-[#e0e3e7] hover:border-ye-800 focus:border-ye-600 focus:border-2 outline-none"
                 disabled={checkCircle ? false : true}
-                // className={
-                //   checkCircle
-                //     ? `w-full mb-6 py-2 px-4 border rounded-md`
-                //     : `w-full mb-6 py-2 px-4 border rounded-md text-da-500`
-                // }
-                onChange={handleChangeValue}
-                // onChange={(e) => setPeoples(e.target.value)}
-                value={newCCInfo.peoples}
-                error={!!errors.peoples}
-                helperText={errors.peoples?.message}
+                // value={newCircle.max}
+                // onChange={handleChange}
+                {...register("max", circleMax)}
               >
-                <option value="">참여 인원수를 선택해주세요.</option>
-                {peoplesOptions.map((option) => (
-                  <option key={option.key} value={option.value}>
-                    {option.display}
-                  </option>
-                ))}
+                {max.map((item, idx) => {
+                  return (
+                    <option value={item.value} key={idx}>
+                      {item.value}
+                    </option>
+                  );
+                })}
               </select>
             </div>
+
+            {/* <Box sx={{ minWidth: 120 }} className="mb-6">
+              <FormControl fullWidth>
+                <SelectButton id="max">인원수</SelectButton>
+                <Select
+                  labelId="max"
+                  id="max"
+                  value={max}
+                  label="인원수"
+                  onChange={handleMaxChange}
+                >
+                  <MenuItem value={2}>2명</MenuItem>
+                  <MenuItem value={3}>3명</MenuItem>
+                  <MenuItem value={4}>4명</MenuItem>
+                  <MenuItem value={5}>5명</MenuItem>
+                </Select>
+              </FormControl>
+            </Box> */}
           </div>
           {/* 취소,등록버튼 */}
           <div
