@@ -1,11 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Kakao_main from "../kakaoMap/Kakao_main";
+import { useSelector } from "react-redux";
+import axiosInstance from "../utils/axios";
 
 function MainPage() {
+  const [userAddress, setUserAddress] = useState();
+  const [indexPet, setIndexPet] = useState([]); //상단 메인 반려견 슬라이더 배열
+  const state = useSelector((state) => {
+    return state;
+  });
+  console.log("%%%%%%%%%", state.user.userData.user.location.coordinates);
+
+  useEffect(() => {
+    try {
+      async function findUser() {
+        const body = {
+          lon: state.user.userData.user.location.coordinates[0],
+          lat: state.user.userData.user.location.coordinates[1],
+        };
+        console.log(body);
+        const res = await axiosInstance.post("/index/location", body);
+        console.log(res.data);
+        setIndexPet((prevState) => [
+          { ...prevState, ...res.data.filteredPets },
+        ]);
+      }
+      findUser();
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+  console.log(indexPet[0]); //반려견 배열
   return (
     <div className="bg-ye-100" style={{ height: "calc(100vh - 65px)" }}>
-      <Kakao_main />
+      <Kakao_main indexPet={indexPet[0]} />
       <Navbar />
     </div>
   );

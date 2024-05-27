@@ -1,47 +1,58 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import $ from "jquery";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 //css
 import "../assets/animation.css";
 
 function IntroPage() {
+  const locationHook = useLocation();
+  const [currentFirstUrl, setCurrentFirstUrl] = useState(null);
+  const splitUrl = locationHook?.pathname?.split("/") ?? null;
   function scrollTop() {
     $("html, body").scrollTop("0");
   }
 
-  //스크롤시 섹션 이동 start
-  var mHtml = $("html");
-  var page = 1;
+  useEffect(() => {
+    const location = splitUrl?.length > 0 ? splitUrl[1] : splitUrl[0];
+    setCurrentFirstUrl(location);
+  }, [locationHook]);
+  console.log("위치", currentFirstUrl);
 
-  mHtml.animate({ scrollTop: 0 }, 10);
+  if (currentFirstUrl === "intro") {
+    //스크롤시 섹션 이동 start
+    var mHtml = $("html");
+    var page = 1;
 
-  $(window).on("wheel", function (e) {
-    if (mHtml.is(":animated")) return;
-    if (e.originalEvent.deltaY > 0) {
-      // if (page === 6) return;
-      page++;
-    } else if (e.originalEvent.deltaY < 0) {
-      if (page === 1) return;
-      page--;
-    }
-    if (page > 5) {
-      page = 6;
-      $(".infoArrow").css("display", "none");
-    }
-    if (page < 6) {
-      $(".infoArrow").css("display", "block");
-    }
-    var posTop = (page - 1) * $(window).height();
-    mHtml.animate({ scrollTop: posTop });
-  });
+    mHtml.animate({ scrollTop: 0 }, 10);
 
-  //스크롤시 섹션 이동 end
+    $(window).on("wheel", function (e) {
+      if (mHtml.is(":animated")) return;
+      if (e.originalEvent.deltaY > 0) {
+        // if (page === 6) return;
+        page++;
+      } else if (e.originalEvent.deltaY < 0) {
+        if (page === 1) return;
+        page--;
+      }
+      if (page > 5) {
+        page = 6;
+        $(".infoArrow").css("display", "none");
+      }
+      if (page < 6) {
+        $(".infoArrow").css("display", "block");
+      }
+      var posTop = (page - 1) * $(window).height();
+      mHtml.animate({ scrollTop: posTop });
+    });
+    //스크롤시 섹션 이동 end
+  }
+
   return (
     <div className="box w-[100%] bg-ye-600">
       {/* section 01 */}
       <div className="section h-[100vh] px-2" id="section1">
-        <div className="text-wh-100 flex justify-end gap-2 p-3">
+        <div className="text-white flex justify-end gap-2 p-3">
           <div>
             <NavLink to="/login">로그인</NavLink>
           </div>
@@ -53,7 +64,7 @@ function IntroPage() {
         <div className=" absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
           <img src="./images/intro_logo.svg" alt="" />
         </div>
-        <div className="infoArrow fixed bottom-[40px] left-1/2 -translate-x-1/2 text-wh-100 text-3xl">
+        <div className="infoArrow fixed bottom-[40px] left-1/2 -translate-x-1/2 text-white text-3xl">
           <i class="fa-solid fa-angles-down"></i>
         </div>
       </div>
@@ -64,7 +75,7 @@ function IntroPage() {
         className="section h-[100vh] grid lg:grid-cols-2 px-4 "
         id="section2"
       >
-        <div className="order-2 lg:order-1 text-wh-100 flex justify-center items-center lg:text-7xl text-2xl">
+        <div className="order-2 lg:order-1 text-white flex justify-center items-center lg:text-7xl text-2xl">
           <div>
             지도를 통해 주변 <br />
             산책 모임 위치를 확인해보세요!
@@ -89,7 +100,7 @@ function IntroPage() {
             alt=""
           />
         </div>
-        <div className="text-wh-100 flex justify-center items-center lg:text-7xl text-2xl">
+        <div className="text-white flex justify-center items-center lg:text-7xl text-2xl">
           <div>
             내 주변 모임의 리스트를
             <br />
@@ -101,7 +112,7 @@ function IntroPage() {
 
       {/* section 04 */}
       <div className="section h-[100vh] grid lg:grid-cols-2 px-4" id="section4">
-        <div className="order-2 lg:order-1 text-wh-100 flex justify-center items-center lg:text-7xl text-2xl">
+        <div className="order-2 lg:order-1 text-white flex justify-center items-center lg:text-7xl text-2xl">
           <div>
             여러 강아지들과 함께하는
             <br />
@@ -127,7 +138,7 @@ function IntroPage() {
             alt=""
           />
         </div>
-        <div className="text-wh-100 flex justify-center items-center lg:text-7xl text-2xl">
+        <div className="text-white flex justify-center items-center lg:text-7xl text-2xl">
           <div>
             나 혼자 보기 아까운
             <br />
@@ -141,7 +152,7 @@ function IntroPage() {
 
       {/* section 06 */}
       <div className="section h-[100vh] grid" id="section6">
-        <div className="bg-wh-100 sm:w-[700px] w-[500px] h-[100vh] m-auto flex flex-col items-center">
+        <div className="bg-white sm:w-[700px] w-[500px] h-[100vh] m-auto flex flex-col items-center">
           <div>
             <img src="./images/intro_logo_wh.svg" alt="" />
           </div>
