@@ -33,8 +33,8 @@ function NeuterButton({ handleNeuter, neuter, register, petNeuter }) {
         </button>
         <input
           value={neuter}
-          // hidden
-          // onClick={doNeuter}
+          hidden
+          onClick={doNeuter}
           checked={neuter || petNeuter ? true : false}
           id="doNeuter"
           type="radio"
@@ -66,8 +66,8 @@ function NeuterButton({ handleNeuter, neuter, register, petNeuter }) {
         </button>
         <input
           value={neuter}
-          // hidden
-          // onClick={doNotNeuter}
+          hidden
+          onClick={doNotNeuter}
           checked={neuter || petNeuter ? false : true}
           id="doNotNeuter"
           type="radio"
