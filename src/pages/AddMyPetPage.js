@@ -14,6 +14,8 @@ import axiosInstance from "../utils/axios";
 import { useSelector } from "react-redux";
 import Dropzone from "react-dropzone";
 import FileUploadAddPet from "../components/FileUploadAddPet";
+import { pName, pBreed, pAge, pChar } from "../utils/validation";
+
 function AddMyPetPage() {
   const {
     register, //데이터 담을때
@@ -21,7 +23,7 @@ function AddMyPetPage() {
     formState: { errors }, //에러 메세지 나오게 할때
     reset, //input 초기화할때
     watch, //비밀번호 재 확인할때 같은지 확인
-  } = useForm({ mode: "onChange" }); //체인지 될때 위게 값 확인
+  } = useForm({ mode: "onChange" }); //체인지 될때 위의 값 확인
   const [hasDog, setHasDog] = useState(true); //반려동물 있는지 없는지
   const [gender, setGender] = useState("male"); //남자인지 여자인지
   const [neuter, setNeuter] = useState(false); //중성화 여부
@@ -156,9 +158,11 @@ function AddMyPetPage() {
                 label="이름"
                 fullWidth
                 name="pName"
-                onChange={handleChangeValue}
-                value={addPetInfo.pName}
+                // onChange={handleChangeValue}
+                // value={addPetInfo.pName}
+                {...register("pName", pName)}
               />
+              {errors.pName && <p>{errors.pName.message}</p>}
             </div>
           </div>
           {/* 견종시작 */}
@@ -168,14 +172,16 @@ function AddMyPetPage() {
             </label>
             <div>
               <TextFieldLine
-                onChange={handleChangeValue}
+                // onChange={handleChangeValue}
+                // value={addPetInfo.pBreed}
                 required
                 id="breed"
                 label="견종"
                 name="pBreed"
                 fullWidth
-                value={addPetInfo.pBreed}
+                {...register("pBreed", pBreed)}
               />
+              {errors.pBreed && <p>{errors.pBreed.message}</p>}
             </div>
           </div>
           {/* 나이 시작 */}
@@ -185,14 +191,16 @@ function AddMyPetPage() {
             </label>
             <div>
               <TextFieldLine
-                onChange={handleChangeValue}
+                // onChange={handleChangeValue}
+                // value={addPetInfo.pAge}
                 required
                 id="petAge"
                 label="나이"
                 fullWidth
                 name="pAge"
-                value={addPetInfo.pAge}
+                {...register("pAge", pAge)}
               />
+              {errors.pAge && <p>{errors.pAge.message}</p>}
             </div>
           </div>
           {/* 성별시작 */}
@@ -251,14 +259,16 @@ function AddMyPetPage() {
             </label>
             <div>
               <TextFieldLine
-                onChange={handleChangeValue}
+                // onChange={handleChangeValue}
+                // value={addPetInfo.pCharOne}
                 required
                 id="petEtc"
                 label="성격"
                 fullWidth
                 name="pCharOne"
-                value={addPetInfo.pCharOne}
+                {...register("pCharOne", pChar)}
               />
+              {errors.pCharOne && <p>{errors.pCharOne.message}</p>}
             </div>
           </div>
           {/* 취소+등록버튼 묶음 시작 */}

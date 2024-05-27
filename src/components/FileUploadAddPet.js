@@ -67,7 +67,10 @@ function FileUploadAddPet({ onImageChange, setImage, image }) {
                 )}
               </div>
               <div className="flex justify-center items-center">
-                <div className="w-auto border border-da-300 px-[15px] rounded-xl">
+                <div
+                  className="w-auto border border-da-300 px-[15px] rounded-xl cursor-pointer"
+                  {...getRootProps()}
+                >
                   <span className="inline-block text-[13px] mr-[3px]">
                     사진추가
                   </span>
