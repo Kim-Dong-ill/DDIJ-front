@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../assets/global.css";
 function Navbar() {
@@ -14,10 +14,15 @@ function Navbar() {
     setActiveIndex(index);
   };
 
+  //실선문제 해결을 위해 랜더링
+  useEffect(() => {
+    // 상태가 변경된 후 실행할 동작을 여기에 작성할 수 있습니다.
+  }, [activeIndex]);
+
   return (
     <>
       <div className="z-50 bottom-0 bg-ye-400 fixed h-[65px] w-[500px] flex">
-        <ul className="flex justify-around items-center border w-full">
+        <ul className="flex justify-around items-center border w-full ">
           {" "}
           {/* relative 클래스 추가 */}
           {menu.map((item, idx) => {
