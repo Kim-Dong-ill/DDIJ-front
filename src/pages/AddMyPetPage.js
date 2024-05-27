@@ -23,23 +23,17 @@ function AddMyPetPage() {
     watch, //비밀번호 재 확인할때 같은지 확인
   } = useForm({ mode: "onChange" }); //체인지 될때 위게 값 확인
   const [hasDog, setHasDog] = useState(true); //반려동물 있는지 없는지
-  const [gender, setGender] = useState(""); //남자인지 여자인지
+  const [gender, setGender] = useState("male"); //남자인지 여자인지
   const [neuter, setNeuter] = useState(false); //중성화 여부
   const [vaccine, setVaccine] = useState(false); //기본접종 여부
   const [rabies, setRabies] = useState(false); //광견병 여부
   const [pageMove, setPageMove] = useState(true);
   const [image, setImage] = useState(""); //반려견 이미지
-  // //로그인 유저 _id값 긁어오기
-  // const state = useSelector((state) => {
-  //   return state.user.userData.user;
-  // });
-  // 로그인된 유저 _id값 가져오는과정
+
   const loginState = useSelector((state) => {
     return state.user.userData.user.id;
   });
-  // console.log(loginState);
   const navigate = useNavigate();
-
   const [addPetInfo, setAddPetInfo] = useState({
     index: 0,
     pName: "",
@@ -84,15 +78,7 @@ function AddMyPetPage() {
     $("html, body").scrollTop("0");
   }
 
-  // function handleImg(result) {
-  //   setImage(result);
-  // }
-
-  // function onSubmit(body) {
-  //   alert("전송");
-  // }
-
-  function handleChange(e) {
+  function handleChangeValue(e) {
     const { name, value } = e.target;
     if (name && value !== undefined) {
       setAddPetInfo((prevState) => ({
@@ -105,12 +91,6 @@ function AddMyPetPage() {
   async function onSubmit() {
     // e.preventDefault();
     const body = {
-      // pAge,pCharOne,pBreed,pName, - 변수 선언 해줘야함
-      // gender: gender,
-      // neuter: neuter,
-      // vaccine: vaccine,
-      // rabies: rabies,
-      // index: 0,
       ...addPetInfo,
       image: image,
     };
@@ -133,6 +113,8 @@ function AddMyPetPage() {
     }));
   }
 
+  function handleChange() {}
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div
@@ -153,33 +135,14 @@ function AddMyPetPage() {
             </h2>
           </div>
           {/* name start */}
-          {/* <form> */}
-          {/* <FileUpload images={product.images} onImageChange={handelImage} /> */}
           <div className="grid gap-[15px] pt-[30px]">
             <FileUploadAddPet
-              // images={addPetInfo.image}
               onImageChange={handleImage}
               setImage={setImage}
               image={image}
             />
-
-            {/* button start */}
-            {/* 원래 여기 아이콘잇엇음 망ㄹ함,, */}
-            {/* <div className="flex justify-center items-center">
-              <div className="w-auto border border-da-300 px-[15px] rounded-xl">
-                <span className="inline-block text-[13px] mr-[3px]">
-                  사진추가
-                </span>
-                <img
-                  src="/images/plus.svg"
-                  className="inline-block align-middle w-[14px] h-[14px]"
-                />
-              </div>
-            </div> */}
           </div>
-          {/* </form> */}
         </div>
-        {/* <form onSubmit={handleSubmit(onSubmit)}> */}
         {/* 입력창부분 실질적으로 시작 */}
         <div className="w-[400px] mx-auto py-[50px]">
           <div className="flex flex-col gap-2 mb-6">
@@ -193,7 +156,7 @@ function AddMyPetPage() {
                 label="이름"
                 fullWidth
                 name="pName"
-                onChange={handleChange}
+                onChange={handleChangeValue}
                 value={addPetInfo.pName}
               />
             </div>
@@ -205,7 +168,7 @@ function AddMyPetPage() {
             </label>
             <div>
               <TextFieldLine
-                onChange={handleChange}
+                onChange={handleChangeValue}
                 required
                 id="breed"
                 label="견종"
@@ -222,7 +185,7 @@ function AddMyPetPage() {
             </label>
             <div>
               <TextFieldLine
-                onChange={handleChange}
+                onChange={handleChangeValue}
                 required
                 id="petAge"
                 label="나이"
@@ -239,7 +202,7 @@ function AddMyPetPage() {
               register={register}
               handleGender={handleGender}
               gender={gender}
-              onChange={handleChange}
+              onChange={handleChangeValue}
               value={addPetInfo.pGender}
             />
           </div>
@@ -248,10 +211,11 @@ function AddMyPetPage() {
             <div className="mb-6">
               <div className="mb-2 nanumBold">중성화</div>
               <NeuterButton
+                handleChange={handleChange}
                 register={register}
                 neuter={neuter}
                 handleNeuter={handleNeuter}
-                onChange={handleChange}
+                onChange={handleChangeValue}
                 value={addPetInfo.neuter}
               />
             </div>
@@ -259,10 +223,11 @@ function AddMyPetPage() {
             <div className="mb-6">
               <div className="mb-2 nanumBold">기본 접종</div>
               <VaccineButton
+                handleChange={handleChange}
                 register={register}
                 vaccine={vaccine}
                 handleVaccine={handleVaccine}
-                onChange={handleChange}
+                onChange={handleChangeValue}
                 value={addPetInfo.vaccine}
               />
             </div>
@@ -270,10 +235,11 @@ function AddMyPetPage() {
             <div className="mb-6">
               <div className="mb-2 nanumBold">광견병</div>
               <RabiesButton
+                handleChange={handleChange}
                 register={register}
                 handleRabies={handleRabies}
                 rabies={rabies}
-                onChange={handleChange}
+                onChange={handleChangeValue}
                 value={addPetInfo.vaccine}
               />
             </div>
@@ -285,7 +251,7 @@ function AddMyPetPage() {
             </label>
             <div>
               <TextFieldLine
-                onChange={handleChange}
+                onChange={handleChangeValue}
                 required
                 id="petEtc"
                 label="성격"
@@ -302,12 +268,9 @@ function AddMyPetPage() {
               <ButtonBl onClick={handlePage}>취소</ButtonBl>
             </Link>
             {/* 등록버튼시작 */}
-            {/* <Link to={`/mypet/${loginState}`}> */}
             <ButtonYe type="submit">등록</ButtonYe>
-            {/* </Link> */}
           </div>
         </div>
-        {/* </form> */}
         <Navbar />
       </div>
     </form>

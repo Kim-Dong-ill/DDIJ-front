@@ -9,7 +9,6 @@ function MyPetListPage() {
   const [mypetList, setMyPetList] = useState([]);
   const [petId, setPetId] = useState([]);
   const [realignment, setRealignment] = useState([]);
-  const temporarily = [1, 2]; // 임시배열 생성
   console.log(userId);
 
   //로그인된 유저 반려견 가져옴
@@ -22,7 +21,6 @@ function MyPetListPage() {
   const loginState = useSelector((state) => {
     return state.user.userData.user.id;
   });
-  // console.log(loginState);
 
   useEffect(() => {
     const loadPetList = async () => {
@@ -69,12 +67,8 @@ function MyPetListPage() {
       className="w-[500px] bg-white pt-[90px] pb-[115px] border border-da-100"
       style={{ height: "calc(100% - 65px)" }}
     >
-      {/* {mypetList.map((item, idx) => {
-        return <>{item.pName}</>;
-      })} */}
       {/* 상단 버튼 시작 */}
       <div className="flex mb-[30px]">
-        {/* <Link to={`/userinfo/${loginState}`} className="flex-1"> */}
         <Link to="/userinfo" className="flex-1">
           <button className="w-full border-b  border-gray-200 shadow-bottom px-2 py-3 text-[15px] hover:border-gray-800 ">
             보호자 정보
@@ -89,23 +83,16 @@ function MyPetListPage() {
       {/* 상단 버튼 끝 */}
       {/* 강아지1 시작 */}
       {mypetList.map((item, idx) => {
-        // console.log(item.image);
         async function changeMainPet() {
           const body = {
             // mypetList 배열에서 ObjectId 추출
             petId1: mypetList[0]._id, // 수정
             petId2: item._id, // 수정
-            // petId1: mypetList[0].index,
-            // petId2: item.index,
           };
-          // alert("change");
-          // console.log("아이디값", item._id);
-          // console.log(item.index, mypetList[0].index);
+
           try {
             const res = await axiosInstance.patch("/pet/mainpetindex", body);
             console.log("patch");
-            // console.log(res.data);
-            //============================================================== 지금 수정하고있는부분 시작
             setRealignment(res.data);
           } catch (error) {
             console.error(
@@ -130,10 +117,7 @@ function MyPetListPage() {
                           src="/images/star1.svg"
                           className="inline-block align-middle w-[14px] h-[14px] mr-[3px] "
                         />
-                        <span className="inline-block  text-[14px]">
-                          대표
-                          {/* / {item.index}/{item._id} */}
-                        </span>
+                        <span className="inline-block  text-[14px]">대표</span>
                       </button>
                     </p>
                   </>
@@ -148,17 +132,11 @@ function MyPetListPage() {
                         className="inline-block align-middle w-[14px] h-[14px] mr-[3px] "
                       />
 
-                      <span className="inline-block  text-[14px]">
-                        대표
-                        {/* / {item.index}/{item._id} */}
-                      </span>
+                      <span className="inline-block  text-[14px]">대표</span>
                     </button>
                   </p>
                 )}
                 {/* 여기가 펫 이미지 넣는 공간이에용 */}
-                {/* {console.log("item.image", item.image)}
-                {console.log("아이템", item)}
-                {console.log(item.image)} */}
                 {item.image ? (
                   <img
                     src={`${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${item.image}`}
@@ -248,7 +226,6 @@ function MyPetListPage() {
           </div>
         </div>
       ) : null}
-      a
     </div>
   );
 }
