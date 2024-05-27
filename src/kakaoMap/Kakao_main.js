@@ -183,6 +183,16 @@ function Kakao_main({ indexPet }) {
   const getGeolocation = () => {
     console.log("geolocation 시작");
     if (navigator.geolocation) {
+      var options = {
+        // 가능한 경우, 높은 정확도의 위치(예를 들어, GPS 등) 를 읽어오려면 true로 설정
+        // 그러나 이 기능은 배터리 지속 시간에 영향을 미친다.
+        enableHighAccuracy: true,
+
+        // 위치 정보를 받기 위해 얼마나 오랫동안 대기할 것인가?
+        // 기본값은 Infinity이므로 getCurrentPosition()은 무한정 대기한다.
+        timeout: 15000, // 15초 이상 기다리지 않는다.
+      };
+
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
       navigator.geolocation.getCurrentPosition(success, error);
 
@@ -190,7 +200,7 @@ function Kakao_main({ indexPet }) {
       function success(position) {
         setUserLocation(position.coords); //현재 좌표 저장
         setLocationAvailable(true); //위치사용 가능
-        currentPosition = position.coords; //현재 좌표 저장
+        // currentPosition = position.coords; //현재 좌표 저장
         const time = new Date(position.timestamp); //시각 저장
         const latlng = new kakao.maps.LatLng(
           position.coords.latitude,
@@ -203,11 +213,11 @@ function Kakao_main({ indexPet }) {
         var locPosition = new kakao.maps.LatLng(latlng.Ma, latlng.La), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
           messageMarker = '<div style="padding:5px;">여기에 계신가요?!</div>'; // 인포윈도우에 표시될 내용입니다
         // 마커와 인포윈도우를 표시합니다
-        var message = "변경된 지도 중심좌표는 " + latlng.getLat() + " 이고, ";
-        message += "경도는 " + latlng.getLng() + " 입니다";
-        setMessage(message);
+        // var message = "변경된 지도 중심좌표는 " + latlng.getLat() + " 이고, ";
+        // message += "경도는 " + latlng.getLng() + " 입니다";
+        // setMessage(message);
 
-        console.log(currentPosition);
+        // console.log(currentPosition);
 
         setIsGeolocation(false);
         displayMarker(locPosition, messageMarker);
