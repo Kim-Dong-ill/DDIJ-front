@@ -29,7 +29,6 @@ function AppealPage({}) {
   const [appealData, setAppealData] = useState([]);
   const [appealPostId, setAppealPostId] = useState([]);
   const [mainPet, setMainPet] = useState("");
-  console.log("펫정보에용", mainPet);
 
   const keyPressListener = (event) => {
     if (event.key === "Enter") {
@@ -93,7 +92,6 @@ function AppealPage({}) {
           </h2>
         </div>
         <div className="grid gap-[3px]">
-
           <div className="h-[100px] w-[100px] bg-ye-100 m-auto rounded-[50px]  my-[5px]">
             {/* {mainPet && mainPet.image && (
               <img
@@ -171,7 +169,7 @@ function AppealPage({}) {
           </div>
         )
       ) : (
-        <div className="w-[500px] mt-[240px] bg-white justify-center">
+        <div className="w-[500px] mt-[240px] mb-[65px] bg-white justify-center">
           {appealData.map((item, idx) => {
             const images = item.images.map((image) => ({
               original: `${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${image}`,
@@ -188,7 +186,7 @@ function AppealPage({}) {
             return (
               // 글 내용 묶음 시작
               <div
-                className=" bg-white border-[1px] px-[25px] py-[40px]"
+                className=" bg-white border-[1px] px-[25px] pt-[50px] pb-[85px]"
                 key={idx}
               >
                 {/* 글+댓글 시작 */}
@@ -235,7 +233,7 @@ function AppealPage({}) {
                     </div>
                     {/* 글 텍스트 시작 */}
                     {/* 더보기 구현 ㄱ */}
-                    <p className="nanumPlus pl-[6px] pb-[10px]">{item.text}</p>
+                    <p className="nanum pl-[6px] pb-[10px]">{item.text}</p>
                   </div>
                   {/* 사진 + 텍스트 */}
                   <AppealCommentList
@@ -252,7 +250,6 @@ function AppealPage({}) {
         </div>
       )}
       {/* 게시글 끝 */}
-
 
       <div className="w-[490px] flex justify-end fixed bottom-[90px]">
         <Link to={`/appealwrite/${userId}`}>

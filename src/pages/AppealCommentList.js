@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../utils/axios";
 import { useSelector } from "react-redux";
+import { formatDistance } from "date-fns";
+import { ko } from "date-fns/locale";
 
 function AppealCommentList(props) {
   const { userId } = useParams(); // URL의 userId 파라미터 가져오기
@@ -9,6 +11,7 @@ function AppealCommentList(props) {
   const [textData, setTextData] = useState({ text: "" }); // 입력 필드 상태
   const [commentNick, setCommentNick] = useState([]);
   const [loginUserId, setLoginUserId] = useState(null);
+  const [moreComments, setMoreComments] = useState(false); // 댓글 더보기 상태 추가
 
   // 입력 필드 변경 시 호출되는 함수
   function textDataChange(e) {
@@ -58,6 +61,11 @@ function AppealCommentList(props) {
   });
   console.log(loginState);
 
+  // 댓글 더보기 토글 함수
+  const showComments = () => {
+    setMoreComments((prevState) => !prevState);
+  };
+
   return (
     <>
       {/* 댓글 입력 폼 */}
@@ -76,27 +84,62 @@ function AppealCommentList(props) {
           </button>
         </div>
       </form>
-
       {/* 댓글 목록 */}
-      {appealComment.map((item) => (
-        <div key={item._id} className="w-full mb-[30px] p-3">
-          <div className="w-full items-center">
-            <div className="flex gap-2 mb-[10px]">
-              <img
-                src="/images/commenticon.svg"
-                alt=""
-                className="block w-[23px] h-[23px] mr-[3px]"
-              />
-              {/* <img src={item.user.image} alt="" className="block" /> */}
-              <div className="items-center w-[90px]">
-                <p className="nanumBold">{item.user.nickName}</p>
-                {/* <p className="nanumBold">{item.user}</p> */}
+
+      {/* {appealComment.map((item) => ( */}
+      {appealComment
+        // 더보기 버튼 클릭 전 댓글 1개만 보여줌
+        .slice(0, moreComments ? appealComment.length : 1)
+        .map((item) => {
+          console.log("이미지지지", item.petImage); // petImage를 콘솔로 출력
+          const imageUrl = `${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${item.petImage}`;
+          const createdAtDate = new Date(item.createdAt);
+          let timeAgo = formatDistance(createdAtDate, new Date(), {
+            addSuffix: true,
+            locale: ko,
+          });
+          timeAgo = timeAgo.replace("약 ", "");
+          return (
+            <div key={item._id} className="w-full mb-[30px] p-3">
+              <div className="w-full items-center">
+                <div className="flex items-center gap-2 mb-[10px] text-center">
+                  {/* <img
+                  src="/images/commenticon.svg"
+                  alt=""
+                  className="block w-[23px] h-[23px] mr-[3px]"
+                /> */}
+
+                  {item.petImage && (
+                    <img
+                      src={imageUrl} // 각 댓글의 펫 이미지 URL
+                      alt=""
+                      className="block w-[23px] h-[23px] mr-[3px]"
+                    />
+                  )}
+
+                  <p className="nanum text-[15px] text-da-600">
+                    @ {item.user.nickName}
+                  </p>
+                  <p className="nanum text-xs text-da-200">{timeAgo}</p>
+                </div>
+                <div className="nanum text-wrap break-all">{item.text}</div>
               </div>
             </div>
-            <div className="nanum text-wrap break-all">{item.text}</div>
-          </div>
+          );
+        })}
+
+      {/* 댓글 더보기 버튼 */}
+      {/* 댓글 2개 이상 달리면 더보기 버튼 생성 */}
+      {appealComment.length > 1 && (
+        <div className="text-center mt-2">
+          <button
+            onClick={showComments}
+            className="text-sm nanumBold text-da-300 cursor-pointer"
+          >
+            {moreComments ? "접기" : "댓글 더보기"}
+          </button>
         </div>
-      ))}
+      )}
     </>
   );
 }
