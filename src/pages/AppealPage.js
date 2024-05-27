@@ -22,6 +22,10 @@ function AppealPage({}) {
   //   // console.log(state);
   // });
 
+  const loginState = useSelector((state) => {
+    return state.user.userData.user.id;
+  });
+
   const navigate = useNavigate();
 
   const [appealData, setAppealData] = useState([]);
@@ -142,16 +146,31 @@ function AppealPage({}) {
       {/* 게시글 시작 */}
       {/* 게시글이 없을 경우 나와야 할 문구 */}
       {appealData.length === 0 ? (
-        <div className=" bg-white min-h-screen flex items-center justify-center">
-          <div className="">
-            <p>게시글이 없습니다. 새로운 게시글을 작성해보세요!😘</p>
-            <Link to={`/appealwrite/${userId}`}>
-              <div className="text-center text-lg cursor-pointer bg-ye-700 rounded-[10px] py-[5px]">
-                ❤️🥰우리 강아지도 자랑해보개😎❤️
-              </div>
-            </Link>
+        userId === loginState ? (
+          <div className="bg-white min-h-screen flex items-center justify-center">
+            <div>
+              <p className="text-center">
+                게시글이 없습니다. 새로운 게시글을 작성해보세요!😘
+              </p>
+              <Link to={`/appealwrite/${userId}`}>
+                <div className="text-center text-lg cursor-pointer bg-ye-700 rounded-[10px] py-[5px]">
+                  ❤️🥰우리 강아지도 자랑해보개😎❤️
+                </div>
+              </Link>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="bg-white min-h-screen flex items-center justify-center">
+            <div>
+              <p className="text-center">아직 이 칭구 소식은 알 수 없개...🥲</p>
+              <Link to={"/"}>
+                <div className="text-center text-lg cursor-pointer bg-ye-700 rounded-[10px] py-[5px]">
+                  ❤️다른 댕댕이들도 둘러보러 떠나보개❤️
+                </div>
+              </Link>
+            </div>
+          </div>
+        )
       ) : (
         // 게시글 데이터가 있을 경우, 게시글 화면 출력
         <div className="mt-[240px] bg-white">
