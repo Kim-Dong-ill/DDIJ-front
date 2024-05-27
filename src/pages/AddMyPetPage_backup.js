@@ -12,8 +12,8 @@ import $ from "jquery";
 import { useForm } from "react-hook-form";
 import axiosInstance from "../utils/axios";
 import { useSelector } from "react-redux";
+import FileUploadOne from "../components/FileUploadOne";
 import Dropzone from "react-dropzone";
-import FileUploadAddPet from "../components/FileUploadAddPet";
 function AddMyPetPage() {
   const {
     register, //데이터 담을때
@@ -42,6 +42,7 @@ function AddMyPetPage() {
 
   const [addPetInfo, setAddPetInfo] = useState({
     index: 0,
+    // image: "",
     pName: "",
     pGender: "",
     pBreed: "",
@@ -84,9 +85,9 @@ function AddMyPetPage() {
     $("html, body").scrollTop("0");
   }
 
-  // function handleImg(result) {
-  //   setImage(result);
-  // }
+  function handleImg(result) {
+    setImage(result);
+  }
 
   // function onSubmit(body) {
   //   alert("전송");
@@ -112,7 +113,6 @@ function AddMyPetPage() {
       // rabies: rabies,
       // index: 0,
       ...addPetInfo,
-      image: image,
     };
 
     console.log("Sending data:", body); // 보내는 데이터를 콘솔에 출력
@@ -124,13 +124,6 @@ function AddMyPetPage() {
     } catch (error) {
       console.log("Error message:", error.message); // 오류 메시지 콘솔에 출력
     }
-  }
-
-  function handleImage(newImages) {
-    setAddPetInfo((prevState) => ({
-      ...prevState,
-      images: newImages,
-    }));
   }
 
   return (
@@ -154,28 +147,27 @@ function AddMyPetPage() {
           </div>
           {/* name start */}
           {/* <form> */}
-          {/* <FileUpload images={product.images} onImageChange={handelImage} /> */}
-          <div className="grid gap-[15px] pt-[30px]">
-            <FileUploadAddPet
-              // images={addPetInfo.image}
-              onImageChange={handleImage}
-              setImage={setImage}
-              image={image}
-            />
 
+          <div className="grid gap-[15px] pt-[30px]">
+            <div className=" bg-ye-500 h-[100px] w-[100px] rounded-full flex justify-center items-center m-auto ">
+              <img
+                src="/images/camera1.svg"
+                className="w-[60px] h-[60px] m-auto"
+              />
+            </div>
             {/* button start */}
-            {/* 원래 여기 아이콘잇엇음 망ㄹ함,, */}
-            {/* <div className="flex justify-center items-center">
-              <div className="w-auto border border-da-300 px-[15px] rounded-xl">
-                <span className="inline-block text-[13px] mr-[3px]">
-                  사진추가
-                </span>
-                <img
-                  src="/images/plus.svg"
-                  className="inline-block align-middle w-[14px] h-[14px]"
-                />
-              </div>
-            </div> */}
+
+            <div className="flex justify-center items-center">
+              {/* <button className="w-auto border border-da-300 px-[15px] rounded-xl"> */}
+              <span className="inline-block text-[13px] mr-[3px]">
+                사진추가
+              </span>
+              <img
+                src="/images/plus.svg"
+                className="inline-block align-middle w-[14px] h-[14px]"
+              />
+              {/* </button> */}
+            </div>
           </div>
           {/* </form> */}
         </div>
