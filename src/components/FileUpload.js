@@ -58,7 +58,7 @@ function FileUpload({ images, onImageChange, userId }) {
   };
 
   return (
-    <div className="flex w-full gap-[20px]">
+    <div className="flex w-[400px] gap-[20px]">
       <div className=" border-ye-600 mb-[20px]">
         {/* <p> 이미지추가</p> */}
         <Dropzone onDrop={handledrop} noClick={images.length >= 3}>
@@ -91,9 +91,9 @@ function FileUpload({ images, onImageChange, userId }) {
                   onClick={() => {
                     handleDelete(image);
                   }}
-                  className="w-[20px] h-[20px] flex justify-center items-center bg-er-100 absolute rounded-[50%] right-[-10px] top-[-10px]"
+                  className="w-[20px] h-[20px] flex justify-center items-center bg-white border absolute rounded-[50%] right-[-10px] top-[-10px] cursor-pointer"
                 >
-                  x
+                  <span className="text-red-500">x</span>
                 </div>
 
                 <img
