@@ -75,9 +75,8 @@ function AppealPage({}) {
 
   return (
     <div className="relative bg-white w-[500px] h-full">
-      {/* 서브헤더 시작*/}
-      <div className="subHeader  bg-ye-600 w-[500px] top-0 fixed h-[240px] text-center mb-[35px] borde-b z-50 ">
-        <div className="h-[50px] border mb-3 flex justify-between items-center ">
+      <div className="subHeader bg-ye-600 w-[500px] top-0 fixed h-[240px] text-center mb-[35px] borde-b z-50">
+        <div className="h-[50px] border mb-3 flex justify-between items-center">
           <h2>
             <img
               src="/images/backicon.svg"
@@ -93,8 +92,8 @@ function AppealPage({}) {
             <img src="/images/backicon.svg" alt="" />
           </h2>
         </div>
-        {/* 헤더 내용 시작 */}
         <div className="grid gap-[3px]">
+
           <div className="h-[100px] w-[100px] bg-ye-100 m-auto rounded-[50px]  my-[5px]">
             {/* {mainPet && mainPet.image && (
               <img
@@ -121,8 +120,6 @@ function AppealPage({}) {
             <div className="nanumBold text-[16px]">
               {mainPet && mainPet.pName}
             </div>
-            {/* gpt 조건부 랜더링 */}
-
             <div>
               {(mainPet && mainPet.pGender == "male") ||
               (mainPet && mainPet.pGender == "남") ? (
@@ -133,17 +130,15 @@ function AppealPage({}) {
               {/* <i className="fa-solid fa-mars"></i> */}
             </div>
           </div>
-          <div className="flex justify-center ">
-            <p className="text-[20px] nanum ">" </p>
+          <div className="flex justify-center">
+            <p className="text-[20px] nanum">" </p>
             <p className="text-[14px] nanum mt-[3px]">
               {mainPet && mainPet.pCharOne}
             </p>
-            <p className="text-[20px] nanum  "> "</p>
+            <p className="text-[20px] nanum"> "</p>
           </div>
         </div>
       </div>
-      {/* 서브헤더 끝 */}
-
       {/* {petList.map((item) => {
         return <>{item[0].pName}</>;
       })} */}
@@ -238,13 +233,11 @@ function AppealPage({}) {
                         additionalClass="custom-image-gallery"
                       />
                     </div>
-
                     {/* 글 텍스트 시작 */}
                     {/* 더보기 구현 ㄱ */}
                     <p className="nanumPlus pl-[6px] pb-[10px]">{item.text}</p>
                   </div>
                   {/* 사진 + 텍스트 */}
-
                   <AppealCommentList
                     keyPressListener={keyPressListener}
                     appealPostId={appealPostId[idx]}
@@ -260,15 +253,14 @@ function AppealPage({}) {
       )}
       {/* 게시글 끝 */}
 
-      {/* 글써보개 버튼 시작 */}
-      <div className="w-[490px] flex justify-end fixed bottom-[90px] ">
+
+      <div className="w-[490px] flex justify-end fixed bottom-[90px]">
         <Link to={`/appealwrite/${userId}`}>
-          <div className=" bg-ye-400 text-white navbar py-2 px-3 rounded-[50px] ">
+          <div className="bg-ye-400 text-white navbar py-2 px-3 rounded-[50px]">
             글써보개
           </div>
         </Link>
       </div>
-      {/* 글써보개 버튼 끝 */}
       <Navbar />
     </div>
   );
