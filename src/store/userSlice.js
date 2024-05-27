@@ -9,6 +9,7 @@ const initialState = {
     email: "",
     role: 0,
     image: [],
+    location: "",
     createAt: "",
   },
   petsData: [],

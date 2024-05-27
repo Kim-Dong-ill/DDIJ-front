@@ -92,7 +92,7 @@ function AddMyPetPage() {
   //   alert("전송");
   // }
 
-  function handleChange(e) {
+  function handleChangeValue(e) {
     const { name, value } = e.target;
     if (name && value !== undefined) {
       setAddPetInfo((prevState) => ({
@@ -133,6 +133,7 @@ function AddMyPetPage() {
     }));
   }
 
+  function handleChange() {}
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div
@@ -193,7 +194,7 @@ function AddMyPetPage() {
                 label="이름"
                 fullWidth
                 name="pName"
-                onChange={handleChange}
+                onChange={handleChangeValue}
                 value={addPetInfo.pName}
               />
             </div>
@@ -205,7 +206,7 @@ function AddMyPetPage() {
             </label>
             <div>
               <TextFieldLine
-                onChange={handleChange}
+                onChange={handleChangeValue}
                 required
                 id="breed"
                 label="견종"
@@ -222,7 +223,7 @@ function AddMyPetPage() {
             </label>
             <div>
               <TextFieldLine
-                onChange={handleChange}
+                onChange={handleChangeValue}
                 required
                 id="petAge"
                 label="나이"
@@ -239,7 +240,7 @@ function AddMyPetPage() {
               register={register}
               handleGender={handleGender}
               gender={gender}
-              onChange={handleChange}
+              onChange={handleChangeValue}
               value={addPetInfo.pGender}
             />
           </div>
@@ -248,10 +249,11 @@ function AddMyPetPage() {
             <div className="mb-6">
               <div className="mb-2 nanumBold">중성화</div>
               <NeuterButton
+                handleChange={handleChange}
                 register={register}
                 neuter={neuter}
                 handleNeuter={handleNeuter}
-                onChange={handleChange}
+                onChange={handleChangeValue}
                 value={addPetInfo.neuter}
               />
             </div>
@@ -259,10 +261,11 @@ function AddMyPetPage() {
             <div className="mb-6">
               <div className="mb-2 nanumBold">기본 접종</div>
               <VaccineButton
+                handleChange={handleChange}
                 register={register}
                 vaccine={vaccine}
                 handleVaccine={handleVaccine}
-                onChange={handleChange}
+                onChange={handleChangeValue}
                 value={addPetInfo.vaccine}
               />
             </div>
@@ -270,10 +273,11 @@ function AddMyPetPage() {
             <div className="mb-6">
               <div className="mb-2 nanumBold">광견병</div>
               <RabiesButton
+                handleChange={handleChange}
                 register={register}
                 handleRabies={handleRabies}
                 rabies={rabies}
-                onChange={handleChange}
+                onChange={handleChangeValue}
                 value={addPetInfo.vaccine}
               />
             </div>
@@ -285,7 +289,7 @@ function AddMyPetPage() {
             </label>
             <div>
               <TextFieldLine
-                onChange={handleChange}
+                onChange={handleChangeValue}
                 required
                 id="petEtc"
                 label="성격"

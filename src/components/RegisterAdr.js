@@ -12,12 +12,12 @@ function RegisterAdr({ hasDog, errors, register, handleAddLoc }) {
 
     var callback = function (result, status) {
       if (status === kakao.maps.services.Status.OK) {
-        const coords = {
-          latitude: result[0].road_address.y,
-          longtitude: result[0].road_address.x,
-        };
-        // console.log(coords);
-        handleAddLoc(coords);
+        const coordinates = [
+          Number(result[0].road_address.x),
+          Number(result[0].road_address.y),
+        ];
+        console.log(coordinates);
+        handleAddLoc(coordinates);
       }
     };
 
