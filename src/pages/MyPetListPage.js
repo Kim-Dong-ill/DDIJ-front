@@ -2,20 +2,25 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axiosInstance from "../utils/axios";
 import { useSelector } from "react-redux";
+import MyPetModifyPage from "./MyPetModifyPage";
 
 function MyPetListPage() {
   const { userId } = useParams();
   const [mypetList, setMyPetList] = useState([]);
   const [petId, setPetId] = useState([]);
   const [realignment, setRealignment] = useState([]);
-  const temporarily = [1, 2]; // 임시배열 생성
   console.log(userId);
+
+  //로그인된 유저 반려견 가져옴
+  const pets = useSelector((state) => {
+    return state.user.petsData;
+  });
+  console.log("pets", pets);
 
   // 로그인된 유저 _id값 가져오는과정
   const loginState = useSelector((state) => {
     return state.user.userData.user.id;
   });
-  // console.log(loginState);
 
   useEffect(() => {
     const loadPetList = async () => {
@@ -36,17 +41,34 @@ function MyPetListPage() {
     }
   }, [mypetList]);
 
+  // const deletePet = async (petId) => {
+  //   try {
+  //     await axiosInstance.delete(`/pet/${petId}`);
+  //     setMyPetList(mypetList.filter((pet) => pet._id !== petId));
+  //   } catch (error) {
+  //     console.error("Error deleting pet:", error);
+  //   }
+  // };
+
+  //  펫 Id
+  async function petDelete(petId) {
+    try {
+      const res = await axiosInstance.delete(`/pet/list/${userId}/${petId}`);
+      console.log("펫 삭제 성공!!!!!!:", res);
+      setMyPetList(mypetList.filter((pet) => pet._id !== petId)); // 삭제 후 목록 업데이트
+      //                                    배열에 있는 각 펫의 id , 삭제할 petId
+    } catch (error) {
+      console.log("펫 삭제 실패ㅠㅠㅠ", error);
+    }
+  }
+
   return (
     <div
       className="w-[500px] bg-white pt-[90px] pb-[115px] border border-da-100"
       style={{ height: "calc(100% - 65px)" }}
     >
-      {/* {mypetList.map((item, idx) => {
-        return <>{item.pName}</>;
-      })} */}
       {/* 상단 버튼 시작 */}
       <div className="flex mb-[30px]">
-        {/* <Link to={`/userinfo/${loginState}`} className="flex-1"> */}
         <Link to="/userinfo" className="flex-1">
           <button className="w-full border-b  border-gray-200 shadow-bottom px-2 py-3 text-[15px] hover:border-gray-800 ">
             보호자 정보
@@ -59,25 +81,18 @@ function MyPetListPage() {
         </Link>
       </div>
       {/* 상단 버튼 끝 */}
-
       {/* 강아지1 시작 */}
-
       {mypetList.map((item, idx) => {
         async function changeMainPet() {
           const body = {
             // mypetList 배열에서 ObjectId 추출
             petId1: mypetList[0]._id, // 수정
             petId2: item._id, // 수정
-            // petId1: mypetList[0].index,
-            // petId2: item.index,
           };
-          // alert("change");
-          console.log("아이디값", item._id);
-          // console.log(item.index, mypetList[0].index);
+
           try {
             const res = await axiosInstance.patch("/pet/mainpetindex", body);
-            console.log(res.data);
-            //============================================================== 지금 수정하고있는부분 시작
+            console.log("patch");
             setRealignment(res.data);
           } catch (error) {
             console.error(
@@ -102,10 +117,7 @@ function MyPetListPage() {
                           src="/images/star1.svg"
                           className="inline-block align-middle w-[14px] h-[14px] mr-[3px] "
                         />
-                        <span className="inline-block  text-[14px]">
-                          대표
-                          {/* / {item.index}/{item._id} */}
-                        </span>
+                        <span className="inline-block  text-[14px]">대표</span>
                       </button>
                     </p>
                   </>
@@ -119,41 +131,54 @@ function MyPetListPage() {
                         src="/images/star1.svg"
                         className="inline-block align-middle w-[14px] h-[14px] mr-[3px] "
                       />
-                      <span className="inline-block  text-[14px]">
-                        대표
-                        {/* / {item.index}/{item._id} */}
-                      </span>
+
+                      <span className="inline-block  text-[14px]">대표</span>
                     </button>
                   </p>
                 )}
+                {/* 여기가 펫 이미지 넣는 공간이에용 */}
+                {item.image ? (
+                  <img
+                    src={`${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${item.image}`}
+                    // alt=""
+                    className="w-[100px] h-[100px] rounded-full m-auto"
+                  />
+                ) : (
+                  <img
+                    src="/images/dog1.svg"
+                    className="w-[100px] h-[100px] rounded-full m-auto"
+                  />
+                )}
 
-                <img
-                  src="/images/dog1.svg"
-                  className="w-[100px] h-[100px] rounded-full m-auto"
-                />
                 <div>
                   <span className="inline-block leading-[40px] mr-[10px] nanumBold">
                     {item.pName}
                   </span>
-                  {item.pGender == "남" ? (
+                  {item.pGender == "male" || item.pGender == "남" ? (
                     <i className="text-blue-600 text-[14px] fa-solid fa-mars"></i>
                   ) : (
                     <i className="text-pink-600 fa-solid text-[14px] fa-venus"></i>
                   )}
                 </div>
                 <div className="border-t">
-                  <Link to={`/mypet/mod/${petId}`}>
+                  <Link to={`/mypet/mod/${item._id}`}>
                     <button className="inilne-block leading-[40px] nanum text-[14px] text-da-500">
                       수정하기
                     </button>
                   </Link>
+                  <button
+                    className="inline-block leading-[40px] nanum text-[14px] text-da-500"
+                    onClick={() => petDelete(item._id)}
+                    // 펫 id petDeletefh 전달 후 삭제
+                  >
+                    삭제하기
+                  </button>
                 </div>
               </div>
             </div>
           </>
         );
       })}
-
       {mypetList.length == 1 && (
         <div className="w-[450px] m-auto grid bg-white text-center mb-[25px]">
           <div className="border border-da-100 rounded-lg">
@@ -178,7 +203,6 @@ function MyPetListPage() {
           </div>
         </div>
       )}
-
       {mypetList.length < 3 ? (
         <div className="w-[450px] m-auto grid bg-white text-center">
           <div className="border border-da-100 rounded-lg">

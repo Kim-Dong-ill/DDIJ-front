@@ -1,13 +1,22 @@
 import React from "react";
 
-function NeuterButton({ handleNeuter, neuter, register, petNeuter }) {
-  function doNeuter() {
+function NeuterButton({
+  handleChange,
+  handleNeuter,
+  neuter,
+  register,
+  petNeuter,
+}) {
+  function doNeuter(e) {
+    handleChange(e);
     handleNeuter(true);
   }
 
-  function doNotNeuter() {
+  function doNotNeuter(e) {
+    handleChange(e);
     handleNeuter(false);
   }
+
   return (
     <div className="flex justify-center gap-5">
       <div className="w-[100%]">
@@ -33,8 +42,8 @@ function NeuterButton({ handleNeuter, neuter, register, petNeuter }) {
         </button>
         <input
           value={neuter}
-          // hidden
-          // onClick={doNeuter}
+          hidden
+          onClick={doNeuter}
           checked={neuter || petNeuter ? true : false}
           id="doNeuter"
           type="radio"
@@ -66,8 +75,8 @@ function NeuterButton({ handleNeuter, neuter, register, petNeuter }) {
         </button>
         <input
           value={neuter}
-          // hidden
-          // onClick={doNotNeuter}
+          hidden
+          onClick={doNotNeuter}
           checked={neuter || petNeuter ? false : true}
           id="doNotNeuter"
           type="radio"

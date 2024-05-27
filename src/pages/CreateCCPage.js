@@ -220,10 +220,7 @@ function CreateCCPage() {
 
   return (
     <>
-      <div
-        className="bg-white px-12 border-[1px] border-da-100 "
-        style={{ height: "calc(100%)" }}
-      >
+      <div className="bg-white px-12 border-[1px] border-da-100 ">
         <form
           className="pt-[90px] pb-[100px]"
           onSubmit={handleSubmit(onSubmit)}

@@ -104,15 +104,16 @@ function AppealWritePage() {
     <>
       <form onSubmit={handleSubmit}>
         {/* <form> */}
-        <div className="w-[450px] m-auto px-5 pb-[80px] pt-[150px]">
+        <div className="w-[500px] bg-white border px-12 pb-[80px] pt-[150px]">
           <FileUpload
             images={appealData.images} // 선택된 이미지 FileUpload로 전달
             onImageChange={handleImg} // 이미지 선택시 handleImg 호출
             userId={userId} // 유저 아이디 전달
           />
 
+          {/* 글자수 제한 필요? */}
           <textarea
-            className="w-full nanum h-[450px] px-[10px] border-b-2 rounded-[10px] resize-none mb-7"
+            className="w-[400px] border border-da-200 nanum h-[450px] px-[10px] border-b-2 rounded-[10px] resize-none mb-7"
             placeholder="내용을 입력하세요."
             type="text"
             name="text"
