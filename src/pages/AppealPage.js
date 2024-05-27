@@ -15,6 +15,10 @@ function AppealPage({}) {
   // userId값 어떻게 가져올지 몰라서 일단 임시로 useParams값으로 가져옴..ㅜㅜ
   const { userId, petId } = useParams();
   // const [appealPostId, setAppealPostId] = useState([]);
+  // const petImage = useSelector((state) => {
+  //   return state.user.userData.pets[0].image;
+  //   // console.log(state);
+  // });
 
   const loginState = useSelector((state) => {
     return state.user.userData.user.id;
@@ -24,7 +28,7 @@ function AppealPage({}) {
 
   const [appealData, setAppealData] = useState([]);
   const [appealPostId, setAppealPostId] = useState([]);
-  const [mainPet, setMainPet] = useState(null);
+  const [mainPet, setMainPet] = useState("");
   console.log("펫정보에용", mainPet);
 
   const keyPressListener = (event) => {
@@ -37,7 +41,7 @@ function AppealPage({}) {
     const fetchData = async () => {
       try {
         const res = await axiosInstance.get(`/appeal/${userId}`);
-        console.log("재히", res.data.appealData);
+        console.log("재히", res.data);
         setAppealData(res.data.appealData);
 
         //gpt
@@ -54,14 +58,20 @@ function AppealPage({}) {
         const resPetList = await axiosInstance.get(`/pet/list/${userId}`);
         // gpt=======
         // console.log("resPetList", resPetList.data.myPetList[0]);
-        setMainPet(resPetList.data.myPetList[8]);
-        console.log("댕댕이미지주소!!!!!", resPetList.data.myPetList[2].image);
+        console.log("resPetList", resPetList.data);
+        setMainPet(resPetList.data.myPetList[0]);
+        // console.log("댕댕이미지주소!!!!!", resPetList.data.myPetList[2].image);
       } catch (error) {}
     };
 
     fetchData();
     loadPetList();
   }, []);
+
+  // const formatDistanceToNowKorean = (date) => {
+  //   const distance = formatDistanceToNow(date, { locale: ko });
+  //   return distance;
+  // };
 
   return (
     <div className="relative bg-white w-[500px] h-full">
@@ -83,26 +93,42 @@ function AppealPage({}) {
           </h2>
         </div>
         <div className="grid gap-[3px]">
-          <div className="h-[100px] w-[100px] bg-ye-100 m-auto rounded-[50px] my-[5px]">
-            {mainPet && mainPet.image && (
+
+          <div className="h-[100px] w-[100px] bg-ye-100 m-auto rounded-[50px]  my-[5px]">
+            {/* {mainPet && mainPet.image && (
               <img
-                src={mainPet.image}
-                alt=""
-                className="h-full w-full rounded-full"
+                src={`${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${mainPet.image}`}
+                // alt=""
+                className="w-[100px] h-[100px] rounded-full m-auto"
+              />
+            )} */}
+            {mainPet.image ? (
+              <img
+                src={`${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${mainPet.image}`}
+                // alt=""
+                className="w-[100px] h-[100px] rounded-full m-auto"
+              />
+            ) : (
+
+              <img
+                src="/images/dog1.svg"
+                className="w-[100px] h-[100px] rounded-full m-auto"
               />
             )}
+            {appealData.image}
           </div>
           <div className="flex justify-center items-center gap-1">
             <div className="nanumBold text-[16px]">
               {mainPet && mainPet.pName}
             </div>
             <div>
-              {mainPet &&
-                (mainPet.pGender === "남" ? (
-                  <i className="fa-solid fa-mars"></i>
-                ) : mainPet.pGender === "여" ? (
-                  <i className="fa-solid fa-venus"></i>
-                ) : null)}
+              {(mainPet && mainPet.pGender == "male") ||
+              (mainPet && mainPet.pGender == "남") ? (
+                <i className="text-blue-600 text-[14px] fa-solid fa-mars"></i>
+              ) : (
+                <i className="text-pink-600 fa-solid text-[14px] fa-venus"></i>
+              )}
+              {/* <i className="fa-solid fa-mars"></i> */}
             </div>
           </div>
           <div className="flex justify-center">
@@ -157,27 +183,45 @@ function AppealPage({}) {
             timeAgo = timeAgo.replace("about ", "");
 
             return (
+
+              // 글 내용 묶음 시작
               <div
-                className="bg-white border-[1px] px-[25px] py-[40px]"
+                className=" bg-white border-[1px] px-[25px] py-[40px]"
                 key={idx}
               >
+                {/* 글+댓글 시작 */}
                 <div className="w-[450px]">
+                  {/* 사진+텍스트 시작 */}
                   <div className="border border-da-800 p-[25px] shadow">
+                    {/* 강아지 아바타 / 닉네임 section 시작 */}
                     <div className="w-full flex gap-[15px] mb-[25px] ml-[2px] border-yellow-500">
-                      <div className="w-[50px] h-[50px] rounded-[50px]">
-                        {mainPet && mainPet.image && (
-                          <img
-                            src={mainPet.image}
-                            alt=""
-                            className="h-full w-full rounded-full"
-                          />
-                        )}
-                      </div>
+                      {/* 강아지 사진 시작 */}
+
+                      {mainPet.image ? (
+                        <img
+                          src={`${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${mainPet.image}`}
+                          // alt=""
+                          className="w-[50px] h-[50px] rounded-[50px]"
+                        />
+                      ) : (
+                        <img
+                          src="/images/dog1.svg"
+                          className="w-[50px] h-[50px] rounded-[50px]"
+                        />
+                      )}
+                      {appealData.image}
+                      {/* 강아지 사진 끝*/}
+                      {/* 강아지 이름 + 날짜 시작*/}
+
                       <div className="nanumBold text-[15px] mt-[2px]">
                         {mainPet && mainPet.pName}
                         <p className="nanum text-[13px]">{timeAgo}</p>
                       </div>
+                      {/* 강아지 이름 + 날짜 끝*/}
                     </div>
+                    {/* 강아지 아바타 / 닉네임 section 끝 */}
+
+                    {/* 실질적인 글 구간 start ============ */}
                     <div className="mb-[30px]">
                       <ReactImageGallery
                         items={images}
@@ -188,18 +232,31 @@ function AppealPage({}) {
                         additionalClass="custom-image-gallery"
                       />
                     </div>
+                    {/* 글 텍스트 시작 */}
+                    {/* 더보기 구현 ㄱ */}
                     <p className="nanumPlus pl-[6px] pb-[10px]">{item.text}</p>
                   </div>
+                  {/* 사진 + 텍스트 */}
+
+
                   <AppealCommentList
                     keyPressListener={keyPressListener}
                     appealPostId={appealPostId[idx]}
                   />
+
+                  {/* 댓글 끝 */}
                 </div>
+                {/* 글 + 댓글 끝 */}
               </div>
+              // 글 내용 묶음 끝
+
             );
           })}
         </div>
       )}
+
+      {/* 게시글 끝 */}
+
 
       <div className="w-[490px] flex justify-end fixed bottom-[90px]">
         <Link to={`/appealwrite/${userId}`}>
