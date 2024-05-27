@@ -11,12 +11,14 @@ function RegisterPetVC({
   handleNeuter,
   handleVaccine,
   handleRabies,
+  handleChange,
 }) {
   return (
     <div>
       <div className="mb-6">
         <div className="mb-2">중성화</div>
         <NeuterButton
+          handleChange={handleChange}
           register={register}
           neuter={neuter}
           handleNeuter={handleNeuter}
@@ -25,6 +27,7 @@ function RegisterPetVC({
       <div className="mb-6">
         <div className="mb-2">기본 접종</div>
         <VaccineButton
+          handleChange={handleChange}
           register={register}
           vaccine={vaccine}
           handleVaccine={handleVaccine}
@@ -33,6 +36,7 @@ function RegisterPetVC({
       <div className="mb-6">
         <div className="mb-2">광견병</div>
         <RabiesButton
+          handleChange={handleChange}
           register={register}
           handleRabies={handleRabies}
           rabies={rabies}

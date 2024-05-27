@@ -1,10 +1,12 @@
 import React from "react";
 
-function VaccineButton({ handleVaccine, vaccine, register }) {
-  function doVaccine() {
+function VaccineButton({ handleChange, handleVaccine, vaccine, register }) {
+  function doVaccine(e) {
+    handleChange(e);
     handleVaccine(true);
   }
-  function doNotVaccine() {
+  function doNotVaccine(e) {
+    handleChange(e);
     handleVaccine(false);
   }
 

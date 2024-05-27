@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axiosInstance from "../utils/axios";
 import { useSelector } from "react-redux";
+import MyPetModifyPage from "./MyPetModifyPage";
 
 function MyPetListPage() {
   const { userId } = useParams();
@@ -10,6 +11,12 @@ function MyPetListPage() {
   const [realignment, setRealignment] = useState([]);
   const temporarily = [1, 2]; // 임시배열 생성
   console.log(userId);
+
+  //로그인된 유저 반려견 가져옴
+  const pets = useSelector((state) => {
+    return state.user.petsData;
+  });
+  console.log("pets", pets);
 
   // 로그인된 유저 _id값 가져오는과정
   const loginState = useSelector((state) => {
@@ -59,9 +66,7 @@ function MyPetListPage() {
         </Link>
       </div>
       {/* 상단 버튼 끝 */}
-
       {/* 강아지1 시작 */}
-
       {mypetList.map((item, idx) => {
         // console.log(item.image);
         async function changeMainPet() {
@@ -168,7 +173,6 @@ function MyPetListPage() {
           </>
         );
       })}
-
       {mypetList.length == 1 && (
         <div className="w-[450px] m-auto grid bg-white text-center mb-[25px]">
           <div className="border border-da-100 rounded-lg">
@@ -193,7 +197,6 @@ function MyPetListPage() {
           </div>
         </div>
       )}
-
       {mypetList.length < 3 ? (
         <div className="w-[450px] m-auto grid bg-white text-center">
           <div className="border border-da-100 rounded-lg">
@@ -217,6 +220,7 @@ function MyPetListPage() {
           </div>
         </div>
       ) : null}
+      a
     </div>
   );
 }

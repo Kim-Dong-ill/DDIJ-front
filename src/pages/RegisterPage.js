@@ -94,6 +94,7 @@ function RegisterPage() {
     setPageMove(!pageMove);
     $("html, body").scrollTop("0");
   }
+  function handleChange(e) {}
 
   const navigate = useNavigate();
 
@@ -273,6 +274,7 @@ function RegisterPage() {
           </div>
 
           <RegisterPetVC
+            handleChange={handleChange}
             register={register}
             neuter={neuter}
             vaccine={vaccine}

@@ -1,11 +1,13 @@
 import React from "react";
 
-function RabiesButton({ handleRabies, rabies, register }) {
-  function doRabies() {
+function RabiesButton({ handleChange, handleRabies, rabies, register }) {
+  function doRabies(e) {
+    handleChange(e);
     handleRabies(true);
   }
 
-  function doNotRabies() {
+  function doNotRabies(e) {
+    handleChange(e);
     handleRabies(false);
   }
 
