@@ -62,37 +62,38 @@ function AppealCommentList(props) {
     <>
       {/* 댓글 입력 폼 */}
       <form onSubmit={handleSubmit}>
-        <div className="flex my-[20px] gap-[10px]">
+        <div className="flex w-full my-[20px] pl-[10px] pr-[16px] py-[7px] gap-[10px] border rounded-[10px]">
           <input
             type="text"
             placeholder="댓글입력"
-            className="border w-[365px] rounded-[25px] px-[10px] py-[5px] nanum z-10"
-            // z-index를 안넣으면 인풋창 인식이 느려서 넣었습니다
+            className="nanum w-[390px]"
             name="text"
             value={textData.text}
             onChange={textDataChange}
           />
-          <button className="w-[50px] bg-da-100 rounded-[50px]">확인</button>
+          <button>
+            <i class="fa-regular fa-paper-plane"></i>
+          </button>
         </div>
       </form>
 
       {/* 댓글 목록 */}
       {appealComment.map((item) => (
-        <div
-          key={item._id}
-          className="flex justify-between mb-[20px] gap-[20px] items-center w-full"
-        >
-          <div className="flex items-center gap-1">
-            <div className="flex gap-[1px]">
-              <img src="/images/commenticon.svg" alt="" className="block" />
-              <div className="flex items-center w-[90px]">
+        <div key={item._id} className="w-full mb-[30px] p-3">
+          <div className="w-full items-center">
+            <div className="flex gap-2 mb-[10px]">
+              <img
+                src="/images/commenticon.svg"
+                alt=""
+                className="block w-[23px] h-[23px] mr-[3px]"
+              />
+              {/* <img src={item.user.image} alt="" className="block" /> */}
+              <div className="items-center w-[90px]">
                 <p className="nanumBold">{item.user.nickName}</p>
                 {/* <p className="nanumBold">{item.user}</p> */}
               </div>
             </div>
-            <div className="nanum flex-wrap w-[280px] overflow-wrap break-words">
-              {item.text}
-            </div>
+            <div className="nanum text-wrap break-all">{item.text}</div>
           </div>
         </div>
       ))}

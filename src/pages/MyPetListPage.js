@@ -41,6 +41,27 @@ function MyPetListPage() {
     }
   }, [mypetList]);
 
+  // const deletePet = async (petId) => {
+  //   try {
+  //     await axiosInstance.delete(`/pet/${petId}`);
+  //     setMyPetList(mypetList.filter((pet) => pet._id !== petId));
+  //   } catch (error) {
+  //     console.error("Error deleting pet:", error);
+  //   }
+  // };
+
+  //  펫 Id
+  async function petDelete(petId) {
+    try {
+      const res = await axiosInstance.delete(`/pet/list/${userId}/${petId}`);
+      console.log("펫 삭제 성공!!!!!!:", res);
+      setMyPetList(mypetList.filter((pet) => pet._id !== petId)); // 삭제 후 목록 업데이트
+      //                                    배열에 있는 각 펫의 id , 삭제할 petId
+    } catch (error) {
+      console.log("펫 삭제 실패ㅠㅠㅠ", error);
+    }
+  }
+
   return (
     <div
       className="w-[500px] bg-white pt-[90px] pb-[115px] border border-da-100"
@@ -145,6 +166,13 @@ function MyPetListPage() {
                       수정하기
                     </button>
                   </Link>
+                  <button
+                    className="inline-block leading-[40px] nanum text-[14px] text-da-500"
+                    onClick={() => petDelete(item._id)}
+                    // 펫 id petDeletefh 전달 후 삭제
+                  >
+                    삭제하기
+                  </button>
                 </div>
               </div>
             </div>
