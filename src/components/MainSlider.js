@@ -10,74 +10,17 @@ import { Link } from "react-router-dom";
 
 function MainSlider({ indexPet }) {
   const [iPet, setIPet] = useState([]);
-  const myDog = [
-    {
-      img: "./images/main_dog1.svg",
-      name: "나무",
-    },
-    {
-      img: "./images/main_dog1.svg",
-      name: "나무",
-    },
-    {
-      img: "./images/main_dog1.svg",
-      name: "나무",
-    },
-    {
-      img: "./images/main_dog1.svg",
-      name: "나무",
-    },
-    {
-      img: "./images/main_dog1.svg",
-      name: "나무",
-    },
-    {
-      img: "./images/main_dog1.svg",
-      name: "나무",
-    },
-    {
-      img: "./images/main_dog1.svg",
-      name: "나무",
-    },
-    {
-      img: "./images/main_dog1.svg",
-      name: "나무",
-    },
-    {
-      img: "./images/main_dog1.svg",
-      name: "나무",
-    },
-    {
-      img: "./images/main_dog1.svg",
-      name: "나무",
-    },
-    {
-      img: "./images/main_dog1.svg",
-      name: "나무",
-    },
-    {
-      img: "./images/main_dog1.svg",
-      name: "나무",
-    },
-    {
-      img: "./images/main_dog1.svg",
-      name: "나무",
-    },
-    {
-      img: "./images/main_dog1.svg",
-      name: "나무",
-    },
-    {
-      img: "./images/main_dog1.svg",
-      name: "나무",
-    },
-  ];
+
   useEffect(() => {
-    setIPet(indexPet);
+    if (indexPet) {
+      const indexPetArray = Object.values(indexPet);
+      setIPet(indexPetArray);
+    }
   }, [indexPet]);
 
-  console.log(myDog);
+  // console.log(myDog);
   console.log(iPet);
+
   return (
     <>
       <Swiper
@@ -89,12 +32,12 @@ function MainSlider({ indexPet }) {
         // modules={[Pagination]}
         className="mapDogList"
       >
-        {/* {iPet?.map((item, idx) => {
+        {iPet?.map((item, idx) => {
           return (
             <SwiperSlide key={idx} className="mapDogListCard ">
               <div>
                 <div className=" w-[55px] h-[55px] rounded-full overflow-hidden">
-                  <Link to="/appeal/:userid">
+                  <Link to={`/appeal/${item.user}`}>
                     <img
                       src={`${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${item.image}`}
                       alt=""
@@ -102,21 +45,6 @@ function MainSlider({ indexPet }) {
                   </Link>
                 </div>
                 <div className="text-sm nanumBold">{item.pName}</div>
-              </div>
-            </SwiperSlide>
-          );
-        })} */}
-
-        {myDog.map((item, idx) => {
-          return (
-            <SwiperSlide key={idx} className="mapDogListCard ">
-              <div>
-                <div className=" w-[55px] h-[55px] rounded-full overflow-hidden">
-                  <Link to="/appeal/:userid">
-                    <img src={item.img} alt="" />
-                  </Link>
-                </div>
-                <div className="text-sm nanumBold">{item.name}</div>
               </div>
             </SwiperSlide>
           );
