@@ -109,7 +109,6 @@ function AppealPage({}) {
                 className="w-[100px] h-[100px] rounded-full m-auto"
               />
             ) : (
-
               <img
                 src="/images/dog1.svg"
                 className="w-[100px] h-[100px] rounded-full m-auto"
@@ -140,7 +139,11 @@ function AppealPage({}) {
           </div>
         </div>
       </div>
+      {/* {petList.map((item) => {
+        return <>{item[0].pName}</>;
+      })} */}
 
+      {/* 게시글 시작 */}
       {appealData.length === 0 ? (
         userId === loginState ? (
           <div className="bg-white min-h-screen flex items-center justify-center">
@@ -183,7 +186,6 @@ function AppealPage({}) {
             timeAgo = timeAgo.replace("about ", "");
 
             return (
-
               // 글 내용 묶음 시작
               <div
                 className=" bg-white border-[1px] px-[25px] py-[40px]"
@@ -212,7 +214,6 @@ function AppealPage({}) {
                       {appealData.image}
                       {/* 강아지 사진 끝*/}
                       {/* 강아지 이름 + 날짜 시작*/}
-
                       <div className="nanumBold text-[15px] mt-[2px]">
                         {mainPet && mainPet.pName}
                         <p className="nanum text-[13px]">{timeAgo}</p>
@@ -237,24 +238,19 @@ function AppealPage({}) {
                     <p className="nanumPlus pl-[6px] pb-[10px]">{item.text}</p>
                   </div>
                   {/* 사진 + 텍스트 */}
-
-
                   <AppealCommentList
                     keyPressListener={keyPressListener}
                     appealPostId={appealPostId[idx]}
                   />
-
                   {/* 댓글 끝 */}
                 </div>
                 {/* 글 + 댓글 끝 */}
               </div>
               // 글 내용 묶음 끝
-
             );
           })}
         </div>
       )}
-
       {/* 게시글 끝 */}
 
 
