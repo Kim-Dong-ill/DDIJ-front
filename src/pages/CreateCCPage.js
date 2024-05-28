@@ -34,6 +34,9 @@ const usingTimeOptions = [
   { key: 7, value: 120, display: "2시간" },
 ];
 
+//            circle/new에 post요청보내기 // address를 coord로 변환하기
+
+
 function CreateCCPage() {
   const { kakao } = window;
   const [endAddress, setEndAddress] = useState(""); //시작주소
