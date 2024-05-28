@@ -74,7 +74,7 @@ function AppealPage({}) {
 
   return (
     <div className="relative bg-white w-[500px] h-full">
-      <div className="subHeader bg-ye-600 w-[500px] top-0 fixed h-[240px] text-center mb-[35px] borde-b z-50">
+      <div className="subHeader bg-ye-600 w-[500px] top-0 fixed h-[240px] text-center mb-[35px] border z-50">
         <div className="h-[50px] border mb-3 flex justify-between items-center">
           <h2>
             <img
@@ -186,7 +186,7 @@ function AppealPage({}) {
             return (
               // 글 내용 묶음 시작
               <div
-                className=" bg-white border-[1px] px-[25px] pt-[50px] pb-[85px]"
+                className=" bg-white border-[1px] px-[25px] pt-[50px] pb-[60px]"
                 key={idx}
               >
                 {/* 글+댓글 시작 */}

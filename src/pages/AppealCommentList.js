@@ -12,13 +12,16 @@ function AppealCommentList(props) {
   const [commentNick, setCommentNick] = useState([]);
   const [loginUserId, setLoginUserId] = useState(null);
   const [moreComments, setMoreComments] = useState(false); // 댓글 더보기 상태 추가
+  const maxTextLength = 150;
 
   // 입력 필드 변경 시 호출되는 함수
   function textDataChange(e) {
     const { name, value } = e.target;
-    setTextData((prevState) => {
-      return { ...prevState, [name]: value };
-    });
+    if (value.length <= maxTextLength) {
+      setTextData((prevState) => {
+        return { ...prevState, [name]: value };
+      });
+    }
   }
 
   // 댓글 작성 후 제출하는 함수
@@ -78,6 +81,7 @@ function AppealCommentList(props) {
             name="text"
             value={textData.text}
             onChange={textDataChange}
+            maxLength={maxTextLength}
           />
           <button>
             <i class="fa-regular fa-paper-plane"></i>
@@ -91,7 +95,6 @@ function AppealCommentList(props) {
         // 더보기 버튼 클릭 전 댓글 1개만 보여줌
         .slice(0, moreComments ? appealComment.length : 1)
         .map((item) => {
-          console.log("이미지지지", item.petImage); // petImage를 콘솔로 출력
           const imageUrl = `${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${item.petImage}`;
           const createdAtDate = new Date(item.createdAt);
           let timeAgo = formatDistance(createdAtDate, new Date(), {
@@ -100,29 +103,29 @@ function AppealCommentList(props) {
           });
           timeAgo = timeAgo.replace("약 ", "");
           return (
-            <div key={item._id} className="w-full mb-[30px] p-3">
-              <div className="w-full items-center">
-                <div className="flex items-center gap-2 mb-[10px] text-center">
-                  {/* <img
-                  src="/images/commenticon.svg"
-                  alt=""
-                  className="block w-[23px] h-[23px] mr-[3px]"
-                /> */}
-
-                  {item.petImage && (
-                    <img
-                      src={imageUrl} // 각 댓글의 펫 이미지 URL
-                      alt=""
-                      className="block w-[23px] h-[23px] mr-[3px]"
-                    />
-                  )}
-
-                  <p className="nanum text-[15px] text-da-600">
-                    @ {item.user.nickName}
-                  </p>
-                  <p className="nanum text-xs text-da-200">{timeAgo}</p>
+            <div key={item._id} className="w-full pt-[5px]">
+              <div className="flex w-full items-center pl-[6px] mb-6">
+                {item.petImage && (
+                  <img
+                    src={imageUrl} // 각 댓글의 펫 이미지 URL
+                    alt=""
+                    className="w-[37px] h-[37px] mr-[18px] rounded-full"
+                  />
+                )}
+                <div>
+                  {/* 닉네임 + 시간 */}
+                  <div className="flex items-center gap-2 mb-[5px]">
+                    <p className="nanum text-[15px] text-da-600">
+                      <span className="nanum mr-[3px] text-[13px] text-da-600">
+                        @
+                      </span>
+                      {item.user.nickName}
+                    </p>
+                    <p className="nanum text-xs text-da-200">{timeAgo}</p>
+                  </div>
+                  {/* 닉네임 + 시간 */}
+                  <div className="nanum text-wrap break-all">{item.text}</div>
                 </div>
-                <div className="nanum text-wrap break-all">{item.text}</div>
               </div>
             </div>
           );
@@ -134,9 +137,20 @@ function AppealCommentList(props) {
         <div className="text-center mt-2">
           <button
             onClick={showComments}
-            className="text-sm nanumBold text-da-300 cursor-pointer"
+            className="text-sm text-da-300 cursor-pointer mt-10"
           >
-            {moreComments ? "접기" : "댓글 더보기"}
+            {/* {moreComments ? "접기" : "댓글 더보기"} */}
+            {moreComments ? (
+              <>
+                <span className="nanumBold">접기</span>
+                <i className="fa-solid fa-caret-up text-da-300 ml-2"></i>
+              </>
+            ) : (
+              <>
+                <span className="nanumBold">댓글 더보기</span>
+                <i className="fa-solid fa-caret-down text-da-300 ml-2"></i>
+              </>
+            )}
           </button>
         </div>
       )}
