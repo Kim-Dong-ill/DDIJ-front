@@ -10,8 +10,8 @@ function MainPage() {
   const state = useSelector((state) => {
     return state;
   });
-  console.log("%%%%%%%%%", state.user.userData.user.location.coordinates);
 
+  console.log("a%%%%%%%%%%%%%%%%%%%%%%%%%", state);
   useEffect(() => {
     try {
       async function findUser() {
@@ -19,9 +19,8 @@ function MainPage() {
           lon: state.user.userData.user.location.coordinates[0],
           lat: state.user.userData.user.location.coordinates[1],
         };
-        console.log(body);
         const res = await axiosInstance.post("/index/location", body);
-        console.log(res.data);
+        // console.log(res.data);
         setIndexPet((prevState) => [
           { ...prevState, ...res.data.filteredPets },
         ]);
@@ -31,7 +30,6 @@ function MainPage() {
       console.log(error);
     }
   }, []);
-  console.log(indexPet[0]); //반려견 배열
   return (
     <div className="bg-ye-100" style={{ height: "calc(100vh - 65px)" }}>
       <Kakao_main indexPet={indexPet[0]} />

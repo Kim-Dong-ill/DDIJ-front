@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ButtonBl from "../components/ButtonBl";
 import ButtonYe from "../components/ButtonYe";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,6 +9,7 @@ import { createCircle } from "../store/thunkFunctions";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import Kakao_point from "../kakaoMap/Kakao_point";
 // import { Box, FormControl, MenuItem, Select } from "@mui/material";
 // import SelectButton from "../components/SelectButton";
 // import { SelectUnstyled, OptionUnstyled } from "@mui/base";
@@ -31,6 +32,9 @@ const usingTime = [
 ];
 
 function CreateCCPage() {
+  const { kakao } = window;
+  const [endAddress, setEndAddress] = useState(""); //시작주소
+  const [endCoord, setEndCoord] = useState();
   const {
     register,
     handleSubmit,
@@ -218,6 +222,57 @@ function CreateCCPage() {
   //   }
   // }
 
+  //주소 좌표로 변경하기
+  useEffect(() => {
+    var geocoder = new kakao.maps.services.Geocoder();
+
+    var callback = function (result, status) {
+      if (status === kakao.maps.services.Status.OK) {
+        const coordinates = [
+          Number(result[0].road_address.x),
+          Number(result[0].road_address.y),
+        ];
+        console.log(coordinates);
+        setEndCoord(coordinates);
+        endToggleBox();
+      }
+    };
+
+    geocoder.addressSearch(`${endAddress}`, callback);
+  }, [endAddress]);
+
+  //주소 검색하기
+  useEffect(() => {
+    // 스크립트가 이미 로드되어 있는지 확인
+    if (!window.daum) {
+      const script = document.createElement("script");
+      script.src =
+        "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
+      script.async = true;
+      // script.onload = () => {
+      //   openPostcode();
+      // };
+      document.head.appendChild(script);
+    } else {
+      // openPostcode();
+    }
+  }, []);
+
+  const openPostcode = () => {
+    new window.daum.Postcode({
+      oncomplete: function (data) {
+        // 팝업에서 검색결과 항목을 클릭했을 때 실행할 코드를 작성하는 부분입니다.
+        // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+        console.log(data.address); // 주소 데이터를 처리하는 코드를 작성합니다.
+        setEndAddress(data.address);
+      },
+    }).open();
+  };
+
+  const handleTextFieldClick = () => {
+    openPostcode(); // TextFieldLine 클릭 시 주소 입력 창 열기
+  };
+
   return (
     <>
       <div className="bg-white px-12 border-[1px] border-da-100 ">
@@ -326,7 +381,7 @@ function CreateCCPage() {
               />
               {startshowBox && (
                 <div className="bg-gray-100 px-4 py-2 mb-4 border-2 rounded-md">
-                  지도 창
+                  <Kakao_point />
                 </div>
               )}
             </div>
@@ -360,11 +415,15 @@ function CreateCCPage() {
                 src="/images/plusglass_icon.svg"
                 alt="돋보기 아이콘"
                 className="block relative  left-[370px] bottom-[37px] cursor-pointer"
-                onClick={endToggleBox}
+                // onClick={endToggleBox}
+                onClick={handleTextFieldClick}
               />
               {endshowBox && (
-                <div className="bg-gray-100 px-4 py-2 mb-4 border-2 rounded-md">
-                  지도 창
+                <div className=" bg-gray-100 p-1  mb-4 border-2 rounded-md">
+                  <Kakao_point
+                    endCoord={endCoord && endCoord}
+                    endToggleBox={endToggleBox}
+                  />
                 </div>
               )}
             </div>

@@ -166,13 +166,15 @@ function MyPetListPage() {
                       수정하기
                     </button>
                   </Link>
-                  <button
-                    className="inline-block leading-[40px] nanum text-[14px] text-da-500"
-                    onClick={() => petDelete(item._id)}
-                    // 펫 id petDeletefh 전달 후 삭제
-                  >
-                    삭제하기
-                  </button>
+                  {item.index == 1 ? null : (
+                    <button
+                      className="inline-block leading-[40px] nanum text-[14px] text-da-500"
+                      onClick={() => petDelete(item._id)}
+                      // 펫 id petDeletefh 전달 후 삭제
+                    >
+                      삭제하기
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
