@@ -42,7 +42,6 @@ function CreateCCPage() {
   // });
   // console.log(loginLocation);
   const [startTime, setStartTime] = useState("");
-  const [startDate, setStartDate] = useState("");
   const [usingTime, setUsingTime] = useState([
     { key: 1, value: " 30분" },
     { key: 2, value: "45분" },
@@ -71,7 +70,7 @@ function CreateCCPage() {
     text: "",
     startLoc: "",
     endLoc: "",
-    startDate: "",
+
     startTime: "",
     usingTime: "",
     peoples: "",
@@ -81,11 +80,10 @@ function CreateCCPage() {
     setnewCCInfo((prevState) => ({
       ...prevState,
       startTime: startTime,
-      startDate: startDate,
       usingTime: usingTime,
       peoples: peoples,
     }));
-  }, [startTime, usingTime, peoples, startDate]);
+  }, [startTime, usingTime, peoples]);
 
   // 출발지 토글박스
   const startToggleBox = () => {
@@ -115,8 +113,7 @@ function CreateCCPage() {
     }
   }
 
-  async function onSubmit(test) {
-    console.log(test);
+  async function onSubmit() {
     const body = {
       ...newCCInfo,
       // startTime을 변경된 형식으로 변환하여 전송
@@ -356,30 +353,18 @@ function CreateCCPage() {
               </label>
 
               <TextFieldLine
-                // onChange={(e) => {
-                //   const newStartDate = e.target.value;
-                //   setStartDate(newStartDate); // 상태 업데이트
-                //   setnewCCInfo((prev) => ({
-                //     ...prev,
-                //     startDate: newStartDate,
-                //   })); // newCCInfo도 업데이트
-                // }}
-                {...register("startDate", validationRules.startDate)}
-                onChange={(e) => setStartDate(e.target.value)}
-                // onInput={(e) => setStartDate(e.target.value)}
+                onChange={handleChangeValue}
                 required
                 id="startDate"
                 name="startDate"
                 fullWidth
                 type="date"
-                readOnly={false} // readOnly 속성 제거 또는 조건적으로 false 설정
+                readOnly
                 className="cursor-pointer"
-                disabled={!checkCircle} // 조건식을 명확하게
+                disabled={checkCircle ? false : true}
                 value={newCCInfo.startDate}
-                error={!!errors.startDate}
-                helperText={errors.startDate?.message}
+                {...register("startDate", validationRules.startDate)}
               />
-
               {/* {errors.startDate && (
               <div className="nanumBold text-red-500 text-xs mt-1">
                 {errors.startDate.message}

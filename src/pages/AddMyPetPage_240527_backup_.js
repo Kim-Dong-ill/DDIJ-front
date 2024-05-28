@@ -115,34 +115,60 @@ function AddMyPetPage() {
 
   function handleChange() {}
 
-  const validationRules = {
-    pName: {
-      required: "반려견 이름은 필수입니다.",
-      maxLength: {
-        value: 8,
-        message: "8자 이내로 입력해주세요",
-      },
+  const addPetName = {
+    required: {
+      value: true,
+      message: "이름을 입력해주세요",
     },
-    pBreed: {
-      required: "견종은 필수입니다.",
-      maxLength: {
-        value: 14,
-        message: "14자 이내로 입력해주세요",
-      },
+    minLength: {
+      value: 1,
+      message: "최소 1자입니다.",
     },
-    pCharOne: {
-      required: "성격은 필수입니다.",
-      maxLength: {
-        value: 30,
-        message: "더이상 입력할 수 없습니다.",
-      },
+    maxLength: {
+      value: 6,
+      message: "최대 6자입니다.",
     },
-    pAge: {
-      required: "나이는 필수입니다.",
-      maxLength: {
-        value: 2,
-        message: "적절한 나이를 입력해주세요",
-      },
+  };
+  const addPetBreed = {
+    required: {
+      value: true,
+      message: "견종을 입력해주세요",
+    },
+    minLength: {
+      value: 1,
+      message: "최소 1자입니다.",
+    },
+    maxLength: {
+      value: 10,
+      message: "최대 10자입니다.",
+    },
+  };
+  const addPetCharOne = {
+    required: {
+      value: true,
+      message: "어떤 성격인지 알려주세요",
+    },
+    minLength: {
+      value: 3,
+      message: "최소 3자입니다.",
+    },
+    maxLength: {
+      value: 30,
+      message: "최대 30자입니다.",
+    },
+  };
+  const addPetAge = {
+    required: {
+      value: true,
+      message: "어떤 성격인지 알려주세요",
+    },
+    minLength: {
+      value: 3,
+      message: "최소 3자입니다.",
+    },
+    maxLength: {
+      value: 30,
+      message: "최대 30자입니다.",
     },
   };
 
@@ -181,9 +207,7 @@ function AddMyPetPage() {
               이름
             </label>
             <div>
-              {/* 이름 입력 필드 */}
               <TextFieldLine
-                {...register("pName", validationRules.pName)}
                 required
                 id="petName"
                 label="이름"
@@ -191,9 +215,10 @@ function AddMyPetPage() {
                 name="pName"
                 onChange={handleChangeValue}
                 value={addPetInfo.pName}
-                error={!!errors.pName}
-                helperText={errors.pName?.message}
               />
+              {/* {errors.pName && (
+                <span className="text-red-500">{errors.pName.message}</span>
+              )} */}
             </div>
           </div>
           {/* 견종시작 */}
@@ -210,8 +235,6 @@ function AddMyPetPage() {
                 name="pBreed"
                 fullWidth
                 value={addPetInfo.pBreed}
-                error={!!errors.pBreed} // 오류 상태를 pBreed의 유무로 결정
-                helperText={errors.pBreed?.message} // pBreed 관련 오류 메시지를 표시
               />
             </div>
           </div>
@@ -226,15 +249,12 @@ function AddMyPetPage() {
                 required
                 id="petAge"
                 label="나이"
-                name="pAge"
                 fullWidth
+                name="pAge"
                 value={addPetInfo.pAge}
-                error={!!errors.pAge} // 오류 상태를 pAge의 유무로 결정
-                helperText={errors.pAge?.message} // pAge 관련 오류 메시지를 표시
               />
             </div>
           </div>
-
           {/* 성별시작 */}
           <div className="flex gap-5 items-center mb-6">
             <div className="nanumBold">성별</div>
@@ -291,16 +311,13 @@ function AddMyPetPage() {
             </label>
             <div>
               <TextFieldLine
-                {...register("pCharOne", validationRules.pCharOne)}
+                onChange={handleChangeValue}
                 required
                 id="petEtc"
                 label="성격"
                 fullWidth
                 name="pCharOne"
-                onChange={handleChangeValue}
                 value={addPetInfo.pCharOne}
-                error={!!errors.pCharOne}
-                helperText={errors.pCharOne?.message}
               />
             </div>
           </div>
