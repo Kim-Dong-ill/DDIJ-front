@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Dropzone from "react-dropzone";
 import axiosInstance from "../utils/axios";
 
+// MyPetModifyPage에서 받아온 이미지
 function FileFetchOne({ petImage }) {
   const [image, setImage] = useState(null);
 

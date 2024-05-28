@@ -54,7 +54,7 @@ function MyPetModifyPage() {
   const petid = useParams();
   const { pathname } = useLocation(); //page의 path 알려준다.
   const [ageValue, setAgeValue] = useState();
-  const [petImage, setPetImage] = useState();
+  const [petImage, setPetImage] = useState(); // FileFetchOne으로 전달
   console.log("이미지이미지이미지", petImage);
   //배열에 있는 데이터 filter로 가져옴
   useEffect(() => {
@@ -197,6 +197,7 @@ function MyPetModifyPage() {
           </div>
         </div> */}
         <FileFetchOne petImage={petImage} />
+        {/* // FileFetchOne으로 전달 */}
       </div>
 
       <div className="w-[400px] mx-auto py-[50px] ">
