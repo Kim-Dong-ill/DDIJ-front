@@ -54,7 +54,7 @@ function MyPetModifyPage() {
   const petid = useParams();
   const { pathname } = useLocation(); //page의 path 알려준다.
   const [ageValue, setAgeValue] = useState();
-  const [petImage, setPetImage] = useState();
+  const [petImage, setPetImage] = useState(); // FileFetchOne으로 전달
   console.log("이미지이미지이미지", petImage);
   //배열에 있는 데이터 filter로 가져옴
   useEffect(() => {
@@ -145,12 +145,12 @@ function MyPetModifyPage() {
 
   return (
     <div
-      className="bg-white w-[500px] border border-da-100 "
+      className="bg-white w-[500px] border"
       style={{ height: "calc(100% - 65px)" }}
     >
       {/* subheader start */}
-      <div className="subHeader bg-ye-600 w-[500px] top-0 text-center h-[265px] border border-da-100">
-        <div className="h-[50px] border-b-2 flex  justify-between items-center">
+      <div className="subHeader bg-ye-600 w-full top-0 text-center h-[250px] border-b">
+        <div className="h-[50px] border-b flex  justify-between items-center">
           <h2>
             <img
               src="/images/backicon.svg"
@@ -197,11 +197,12 @@ function MyPetModifyPage() {
           </div>
         </div> */}
         <FileFetchOne petImage={petImage} />
+        {/* // FileFetchOne으로 전달 */}
       </div>
 
       <div className="w-[400px] mx-auto py-[50px] ">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex flex-col gap-2 mb-6">
+          <div className="flex flex-col gap-2 mb-7">
             <label className={`w-[100px] nanumBold`} htmlFor="pName">
               이름
             </label>
@@ -222,7 +223,7 @@ function MyPetModifyPage() {
               )}
             </div>
           </div>
-          <div className="flex flex-col gap-2 mb-6">
+          <div className="flex flex-col gap-2 mb-7">
             <label className={`w-[100px] nanumBold`} htmlFor="pBreed">
               견종
             </label>
@@ -243,7 +244,7 @@ function MyPetModifyPage() {
               )}
             </div>
           </div>
-          <div className="flex flex-col gap-2 mb-6">
+          <div className="flex flex-col gap-2 mb-7">
             <label className={`w-[100px] nanumBold`} htmlFor="petAge">
               나이
             </label>
@@ -266,8 +267,8 @@ function MyPetModifyPage() {
           </div>
 
           <div>
-            <div className="mb-6">
-              <div className="mb-2 nanumBold">중성화</div>
+            <div className="mb-8">
+              <div className="mb-3 nanumBold">중성화</div>
               <NeuterButton
                 handleChange={handleChange}
                 register={register}
@@ -275,8 +276,8 @@ function MyPetModifyPage() {
                 handleNeuter={handleNeuter}
               />
             </div>
-            <div className="mb-6">
-              <div className="mb-2 nanumBold">기본 접종</div>
+            <div className="mb-8">
+              <div className="mb-3 nanumBold">기본 접종</div>
               <VaccineButton
                 handleChange={handleChange}
                 register={register}
@@ -284,8 +285,8 @@ function MyPetModifyPage() {
                 handleVaccine={handleVaccine}
               />
             </div>
-            <div className="mb-6">
-              <div className="mb-2 nanumBold">광견병</div>
+            <div className="mb-8">
+              <div className="mb-3 nanumBold">광견병</div>
               <RabiesButton
                 handleChange={handleChange}
                 register={register}
@@ -294,7 +295,7 @@ function MyPetModifyPage() {
               />
             </div>
           </div>
-          <div className="flex flex-col gap-2 mb-6">
+          <div className="flex flex-col gap-2 mb-12">
             <label className={`w-[110px] nanumBold`} htmlFor="petEtc">
               우리 아이 성격
             </label>

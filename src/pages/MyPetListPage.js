@@ -140,7 +140,7 @@ function MyPetListPage() {
                 {item.image ? (
                   <img
                     src={`${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${item.image}`}
-                    // alt=""
+                    alt=""
                     className="w-[100px] h-[100px] rounded-full m-auto"
                   />
                 ) : (
