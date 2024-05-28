@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import "../kakaoMap/kakaoMap.css";
 //draggable 마커 이벤트 적용하기
 
 //출발지 입력시 해당 주소로 이동하여 마커 찍기
@@ -78,19 +78,22 @@ function Kakao_point({ endCoord, endToggleBox }) {
 
   return (
     <div>
-      <div id="map" style={{ width: "100%", height: "400px" }}>
-        <div className="startMarker">
-          <div className="startName">출발지</div>
-          <img src="./images/marker.svg" alt="" />
+      <div
+        className="relative"
+        id="map"
+        style={{ width: "100%", height: "400px" }}
+      >
+        <div className="endMarker z-50">
+          <img className="w-[35px]" src="./images/marker.svg" alt="" />
         </div>
       </div>
+
       <div
         onClick={endToggleBox}
         className="result p-2 border border-da-200 rounded-md m-2 text-center"
       >
         여기로 하기
       </div>
-      <p id="result"></p>
     </div>
   );
 }
