@@ -190,6 +190,32 @@ function CreateCCPage() {
     },
   };
 
+  // handleSubmit navigate 버전
+  // async function onSubmit() {
+  //   alert("ddd");
+  //   const body = {
+  //     ...newCircle,
+  //   };
+  //   try {
+  //     await axiosInstance.post("/workingCircle", body);
+  //     navigate("/circles");
+  //   } catch (error) {
+  //     console.log("handleSubmit error");
+  //   }
+  // }
+
+  // no navigate 버전
+  // async function handleButtonClick() {
+  //   const body = { ...newCircle };
+  //   try {
+  //     await axiosInstance.post("/circleRouter", body);
+  //     // 원하는 경로로 이동
+  //     window.location.href = "/circles";
+  //   } catch (error) {
+  //     console.log("handleButtonClick error");
+  //   }
+  // }
+
   //주소 좌표로 변경하기
   useEffect(() => {
     var geocoder = new kakao.maps.services.Geocoder();
@@ -438,6 +464,7 @@ function CreateCCPage() {
               </div>
             )} */}
             </div>
+
             <div className="mb-6">
               <label
                 htmlFor="startTime"
