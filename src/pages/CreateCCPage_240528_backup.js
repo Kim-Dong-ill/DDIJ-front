@@ -9,7 +9,6 @@ import { createCircle } from "../store/thunkFunctions";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import Kakao_point from "../kakaoMap/Kakao_point";
 import axiosInstance from "../utils/axios";
 import { format, formatDate } from "date-fns";
 // import { Box, FormControl, MenuItem, Select } from "@mui/material";
@@ -35,9 +34,6 @@ const usingTimeOptions = [
 ];
 
 function CreateCCPage() {
-  const { kakao } = window;
-  const [endAddress, setEndAddress] = useState(""); //시작주소
-  const [endCoord, setEndCoord] = useState();
   const loginState = useSelector((state) => {
     return state.user.userData.user.id;
   });
@@ -46,7 +42,6 @@ function CreateCCPage() {
   // });
   // console.log(loginLocation);
   const [startTime, setStartTime] = useState("");
-  const [startDate, setStartDate] = useState("");
   const [usingTime, setUsingTime] = useState([
     { key: 1, value: " 30분" },
     { key: 2, value: "45분" },
@@ -75,7 +70,7 @@ function CreateCCPage() {
     text: "",
     startLoc: "",
     endLoc: "",
-    startDate: "",
+
     startTime: "",
     usingTime: "",
     peoples: "",
@@ -85,11 +80,10 @@ function CreateCCPage() {
     setnewCCInfo((prevState) => ({
       ...prevState,
       startTime: startTime,
-      startDate: startDate,
       usingTime: usingTime,
       peoples: peoples,
     }));
-  }, [startTime, usingTime, peoples, startDate]);
+  }, [startTime, usingTime, peoples]);
 
   // 출발지 토글박스
   const startToggleBox = () => {
@@ -119,8 +113,7 @@ function CreateCCPage() {
     }
   }
 
-  async function onSubmit(test) {
-    console.log(test);
+  async function onSubmit() {
     const body = {
       ...newCCInfo,
       // startTime을 변경된 형식으로 변환하여 전송
@@ -194,57 +187,6 @@ function CreateCCPage() {
     peoples: {
       required: "참여 인원수를 지정해주세요.",
     },
-  };
-
-  //주소 좌표로 변경하기
-  useEffect(() => {
-    var geocoder = new kakao.maps.services.Geocoder();
-
-    var callback = function (result, status) {
-      if (status === kakao.maps.services.Status.OK) {
-        const coordinates = [
-          Number(result[0].road_address.x),
-          Number(result[0].road_address.y),
-        ];
-        console.log(coordinates);
-        setEndCoord(coordinates);
-        endToggleBox();
-      }
-    };
-
-    geocoder.addressSearch(`${endAddress}`, callback);
-  }, [endAddress]);
-
-  //주소 검색하기
-  useEffect(() => {
-    // 스크립트가 이미 로드되어 있는지 확인
-    if (!window.daum) {
-      const script = document.createElement("script");
-      script.src =
-        "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
-      script.async = true;
-      // script.onload = () => {
-      //   openPostcode();
-      // };
-      document.head.appendChild(script);
-    } else {
-      // openPostcode();
-    }
-  }, []);
-
-  const openPostcode = () => {
-    new window.daum.Postcode({
-      oncomplete: function (data) {
-        // 팝업에서 검색결과 항목을 클릭했을 때 실행할 코드를 작성하는 부분입니다.
-        // 예제를 참고하여 다양한 활용법을 확인해 보세요.
-        console.log(data.address); // 주소 데이터를 처리하는 코드를 작성합니다.
-        setEndAddress(data.address);
-      },
-    }).open();
-  };
-
-  const handleTextFieldClick = () => {
-    openPostcode(); // TextFieldLine 클릭 시 주소 입력 창 열기
   };
 
   return (
@@ -352,7 +294,7 @@ function CreateCCPage() {
               />
               {startshowBox && (
                 <div className="bg-gray-100 px-4 py-2 mb-4 border-2 rounded-md">
-                  <Kakao_point />
+                  지도 창
                 </div>
               )}
             </div>
@@ -388,15 +330,11 @@ function CreateCCPage() {
                 src="/images/plusglass_icon.svg"
                 alt="돋보기 아이콘"
                 className="block relative  left-[370px] bottom-[37px] cursor-pointer"
-                // onClick={endToggleBox}
-                onClick={handleTextFieldClick}
+                onClick={endToggleBox}
               />
               {endshowBox && (
-                <div className=" bg-gray-100 p-1  mb-4 border-2 rounded-md">
-                  <Kakao_point
-                    endCoord={endCoord && endCoord}
-                    endToggleBox={endToggleBox}
-                  />
+                <div className="bg-gray-100 px-4 py-2 mb-4 border-2 rounded-md">
+                  지도 창
                 </div>
               )}
             </div>
@@ -415,30 +353,18 @@ function CreateCCPage() {
               </label>
 
               <TextFieldLine
-                // onChange={(e) => {
-                //   const newStartDate = e.target.value;
-                //   setStartDate(newStartDate); // 상태 업데이트
-                //   setnewCCInfo((prev) => ({
-                //     ...prev,
-                //     startDate: newStartDate,
-                //   })); // newCCInfo도 업데이트
-                // }}
-                {...register("startDate", validationRules.startDate)}
-                onChange={(e) => setStartDate(e.target.value)}
-                // onInput={(e) => setStartDate(e.target.value)}
+                onChange={handleChangeValue}
                 required
                 id="startDate"
                 name="startDate"
                 fullWidth
                 type="date"
-                readOnly={false} // readOnly 속성 제거 또는 조건적으로 false 설정
+                readOnly
                 className="cursor-pointer"
-                disabled={!checkCircle} // 조건식을 명확하게
+                disabled={checkCircle ? false : true}
                 value={newCCInfo.startDate}
-                error={!!errors.startDate}
-                helperText={errors.startDate?.message}
+                {...register("startDate", validationRules.startDate)}
               />
-
               {/* {errors.startDate && (
               <div className="nanumBold text-red-500 text-xs mt-1">
                 {errors.startDate.message}
