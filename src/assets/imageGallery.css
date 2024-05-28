@@ -1,7 +1,7 @@
-.custom-image-gallery .image-gallery-size {
-  width: 430px;
-  height: 250px;
-  z-index: 10;
+.custom-image-gallery .image-gallery-image {
+  width: 100%;
+  height: 350px;
+  /* z-index: 10; */
   object-fit: cover;
 }
 
@@ -21,29 +21,4 @@
 
 .custom-image-gallery .image-gallery-right-nav:hover svg {
   stroke: #ffbc11;
-}
-
-/* 페이지 인디케이터의 크기 조절 */
-.custom-image-gallery .image-gallery-thumbnails .image-gallery-thumbnail {
-  width: 5px; /* 페이지 인디케이터의 너비 */
-  height: 5px; /* 페이지 인디케이터의 높이 */
-  border-radius: 50%; /* 페이지 인디케이터를 동그랗게 만듭니다. */
-}
-
-/* 페이지 인디케이터의 크기 조절 */
-.custom-image-gallery
-  .image-gallery-bullets
-  .image-gallery-bullets-container
-  .image-gallery-bullet {
-  width: 5px; /* 페이지 인디케이터의 너비 */
-  height: 5px; /* 페이지 인디케이터의 높이 */
-  border-radius: 50%; /*페이지 인디케이터를 동그랗게 만듭니다.*/
-}
-
-.image-gallery-image {
-  width: 430px;
-  height: 300px;
-  margin: 0 auto;
-  margin-bottom: 25px;
-  overflow: hidden;
 }

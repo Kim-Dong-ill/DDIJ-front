@@ -160,7 +160,7 @@ function MyPetListPage() {
                     <i className="text-pink-600 fa-solid text-[14px] fa-venus"></i>
                   )}
                 </div>
-                <div className="border-t">
+                <div className="border-t relative">
                   <Link to={`/mypet/mod/${item._id}`}>
                     <button className="inilne-block leading-[40px] nanum text-[14px] text-da-500">
                       수정하기
@@ -168,9 +168,12 @@ function MyPetListPage() {
                   </Link>
                   {item.index == 1 ? null : (
                     <button
-                      className="inline-block leading-[40px] nanum text-[14px] text-da-500"
-                      onClick={() => petDelete(item._id)}
-                      // 펫 id petDeletefh 전달 후 삭제
+                      className="inline-block leading-[40px] nanum text-[14px] text-da-500 absolute right-5"
+                      onClick={() => {
+                        if (window.confirm("정말 삭제하시겠습니까?")) {
+                          petDelete(item._id);
+                        }
+                      }}
                     >
                       삭제하기
                     </button>
