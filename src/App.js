@@ -74,7 +74,7 @@ function App() {
 
             {/* header 없는 layout */}
 
-            <Route element={<ProtectRouter />}>
+            <Route element={<ProtectRouter isAuth={isAuth} />}>
               <Route index element={<MainPage />} />
               <Route path="/appeal/:userId" element={<AppealPage />} />
               <Route path="/mypet/mod/:petid" element={<MyPetModifyPage />} />
