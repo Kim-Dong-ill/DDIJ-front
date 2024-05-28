@@ -44,39 +44,34 @@ function FileFetchOne({ petImage }) {
   }
   console.log("이미지", image);
   return (
-    <div className="flex justify-center mt-[30px] relative">
+    <div className="flex flex-col items-center justify-center mt-[30px] h-auto">
       {image ? (
         <img
-          className="border border-white border-4 w-[150px] h-[150px] rounded-full overflow-hidden"
+          className="w-[100px] h-[100px] rounded-full overflow-hidden"
           src={`${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${image.fetchImage}`}
         />
       ) : (
         <img
-          className="border border-white border-4 w-[150px] h-[150px] rounded-full overflow-hidden"
+          className="w-[100px] h-[100px] rounded-full overflow-hidden"
           src={`${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${petImage}`}
         />
       )}
-      <Dropzone onDrop={handleDrop}>
-        {({ getRootProps, getInputProps }) => (
-          <section>
-            <div
-              className="border border-white border-2 px-2 text-white py-1 rounded-full absolute top-0 right-4"
-              {...getRootProps()}
-            >
-              <input {...getInputProps()} />
-              사진 변경
-              {/* {image ? (
-                <img
-                  className="w-full h-full"
-                  src={`${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${image}`}
-                />
-              ) : (
-                <img className="w-[70px] h-[70px]" src="./images/camera1.svg" />
-              )} */}
-            </div>
-          </section>
-        )}
-      </Dropzone>
+      <div className="mt-[18px] w-auto">
+        <Dropzone onDrop={handleDrop}>
+          {({ getRootProps, getInputProps }) => (
+            <section>
+              <div
+                className="border-black border px-3 text-black rounded-full cursor-pointer hover:shadow-md"
+                {...getRootProps()}
+              >
+                <input {...getInputProps()} />
+                <span class="mr-2 text-[14px]">사진 변경</span>
+                <i class="fa-solid fa-camera fa-sm"></i>
+              </div>
+            </section>
+          )}
+        </Dropzone>
+      </div>
     </div>
   );
 }
