@@ -88,7 +88,7 @@ function AppealWritePage() {
           {/* 입력 글자 수 표시 */}
           <div className="relative w-[400px] mb-7">
             <textarea
-              className="w-full nanum h-[450px] px-[10px] resize-none border border-li-100 rounded-[10px]"
+              className="w-full nanum h-[450px] px-[10px] resize-none border border-li-100 rounded-[5px]"
               placeholder="내용을 입력하세요."
               type="text"
               name="text"
