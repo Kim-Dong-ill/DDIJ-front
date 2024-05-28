@@ -18,9 +18,6 @@ function MainSlider({ indexPet }) {
     }
   }, [indexPet]);
 
-  // console.log(myDog);
-  console.log(iPet);
-
   return (
     <>
       <Swiper
