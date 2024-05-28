@@ -18,6 +18,7 @@ function Kakao_main({ indexPet }) {
   const [circles, setCircles] = useState([]); //모임 배열
   const [markers, setMarkers] = useState([]); //마커들 표시
   const [currentLocationMarker, setCurrentLocationMarker] = useState(null); // 위치 정보 상태 변수 추가
+  const [markersInitialized, setMarkersInitialized] = useState(false);
 
   useEffect(() => {
     if (!map) {
@@ -168,18 +169,28 @@ function Kakao_main({ indexPet }) {
         lat: 37.5062528,
       };
       console.log(body);
-      const res = await axiosInstance.post("/index/geolocation", body);
-      console.log(res.data);
-      setCircles(res.data.circles);
-      initializeMarkers(map);
+      try {
+        const res = await axiosInstance.post("/index/geolocation", body);
+        console.log(res.data);
+        setCircles(res.data.circles);
+        setMarkersInitialized(true);
+        initializeMarkers(map);
+      } catch (error) {
+        console.log(error);
+      }
     }
     findCircle();
   }, []);
+
+  useEffect(() => {
+    initializeMarkers(map);
+  }, [markersInitialized, circles, map]);
 
   // 초기 마커 추가해놓기
   const initializeMarkers = (map) => {
     console.log("초기 마커 추가");
     console.log(circles);
+
     clearMarkers();
     const newMarkers = [];
     if (circles) {
