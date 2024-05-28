@@ -47,7 +47,7 @@ function FileUploadAddPet({ onImageChange, setImage, image }) {
           <>
             <section>
               <div
-                className="border border-white border-4 mb-5 w-[100px] h-[100px] rounded-full flex justify-center items-center overflow-hidden"
+                className="mb-5 w-[100px] h-[100px] rounded-full flex justify-center items-center overflow-hidden"
                 {...getRootProps()}
               >
                 <input {...getInputProps()} />
@@ -61,23 +61,19 @@ function FileUploadAddPet({ onImageChange, setImage, image }) {
                   <div className=" bg-ye-500 h-[100px] w-[100px] rounded-full flex justify-center items-center m-auto ">
                     <img
                       src="/images/camera1.svg"
-                      className="w-[60px] h-[60px] m-auto"
+                      className="w-[55px] h-[55px] m-auto"
                     />
                   </div>
                 )}
               </div>
-              <div className="flex justify-center items-center">
+              <div className="flex justify-center items-center ">
                 <div
-                  className="w-auto border border-da-300 px-[15px] rounded-xl cursor-pointer"
+                  className="w-auto border-black border px-3 rounded-full cursor-pointer hover:shadow-md"
                   {...getRootProps()}
                 >
-                  <span className="inline-block text-[13px] mr-[3px]">
-                    사진추가
-                  </span>
-                  <img
-                    src="/images/plus.svg"
-                    className="inline-block align-middle w-[14px] h-[14px]"
-                  />
+                  <span class="mr-2 text-[14px]">사진 추가</span>
+                  <i class="fa-solid fa-plus fa-sm"></i>
+                  {/* <i class="fa-solid fa-camera fa-sm"></i> */}
                 </div>
               </div>
             </section>

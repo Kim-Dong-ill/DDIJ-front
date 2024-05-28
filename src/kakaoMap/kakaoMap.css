@@ -1,3 +1,10 @@
+.endMarker {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-10%, -90%);
+}
+
 .dragTarget {
   display: none;
   font-size: 35px;
