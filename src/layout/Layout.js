@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 
 function Layout({ isAuth }) {
+
   return isAuth ? (
     <>
       <div>
@@ -15,6 +16,7 @@ function Layout({ isAuth }) {
   ) : (
     <Navigate to="/login" />
   );
+
 }
 
 export default Layout;

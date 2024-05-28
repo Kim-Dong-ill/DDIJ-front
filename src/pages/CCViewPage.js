@@ -13,6 +13,7 @@ function CCViewPage() {
     setCommentList([textData, ...temp]);
     setTextData("");
   }
+  //                get-> /detail/:circleid ->  circle에 대한 정보, 참여중인 User 상세정보, mainPet 정보를 받아온다. 알맞은 정보를 골라서 뿌려줘야한다.
   return (
     <>
       <div className="grid gap-3 bg-da-400 pt-[90px] pb-[100px] border-[1px]">
