@@ -40,7 +40,7 @@ function CreateCCPage() {
   const [endAddress, setEndAddress] = useState(""); //시작주소
   const [startAddress, setStartAddress] = useState(""); //시작주소
   const [endCoord, setEndCoord] = useState();
-  const [coordinates, setCoordinates] = useState([]);
+  const [startCoord, setStartCoord] = useState();
   const loginState = useSelector((state) => {
     return state.user.userData.user.id;
   });
@@ -91,12 +91,8 @@ function CreateCCPage() {
       startDate: startDate,
       usingTime: usingTime,
       peoples: peoples,
-      startLoc: { coordinates: coordinates },
-      // startLoc: { type: "Point", coordinates: coordinates },
-      // startLoc: coordinates,
-      // endLoc: endCoord,
     }));
-  }, [startTime, usingTime, peoples, startDate, coordinates]);
+  }, [startTime, usingTime, peoples, startDate]);
 
   // 출발지 토글박스
   const startToggleBox = () => {
@@ -130,12 +126,10 @@ function CreateCCPage() {
     console.log(test);
     const body = {
       ...newCCInfo,
-      // // startTime을 변경된 형식으로 변환하여 전송
-      // startTime: new Date().toISOString().slice(0, 10),
-      // // usingTime을 숫자로 변환하여 전송
-      // usingTime: parseInt(newCCInfo.usingTime),
-      // startTime: new Date(`${startDate}T${startTime}`).toISOString(), // 수정된 부분: 날짜와 시간을 결합하여 ISO 형식으로 변환
-      // usingTime: parseInt(newCCInfo.usingTime), // 수정된 부분: usingTime을 숫자로 변환
+      // startTime을 변경된 형식으로 변환하여 전송
+      startTime: new Date().toISOString().slice(0, 10),
+      // usingTime을 숫자로 변환하여 전송
+      usingTime: parseInt(newCCInfo.usingTime),
     };
 
     console.log("sending Data:::", body);
@@ -245,11 +239,8 @@ function CreateCCPage() {
       const geocoder = new kakao.maps.services.Geocoder();
       geocoder.addressSearch(startAddress, (result, status) => {
         if (status === kakao.maps.services.Status.OK) {
-          const coordinates = [
-            Number(result[0].road_address.x),
-            Number(result[0].road_address.y),
-          ];
-          setCoordinates(coordinates);
+          const coordinates = [Number(result[0].x), Number(result[0].y)];
+          setStartCoord(coordinates);
           console.log("Start Coordinates:", coordinates); // 출발지 좌표 출력
 
           setnewCCInfo((prevState) => ({
@@ -268,10 +259,7 @@ function CreateCCPage() {
       const geocoder = new kakao.maps.services.Geocoder();
       geocoder.addressSearch(endAddress, (result, status) => {
         if (status === kakao.maps.services.Status.OK) {
-          const coordinates = [
-            Number(result[0].road_address.x),
-            Number(result[0].road_address.y),
-          ];
+          const coordinates = [Number(result[0].x), Number(result[0].y)];
           setEndCoord(coordinates);
           console.log("End Coordinates:", coordinates); // 목적지 좌표 출력
           setnewCCInfo((prevState) => ({
@@ -435,7 +423,7 @@ function CreateCCPage() {
               {startshowBox && (
                 <div className="bg-gray-100 px-4 py-2 mb-4 border-2 rounded-md z-10 startstart">
                   <Kakao_start_point
-                    startCoord={coordinates && coordinates}
+                    startCoord={startCoord && startCoord}
                     startToggleBox={startToggleBox}
                   />
                 </div>
