@@ -108,6 +108,7 @@ function Kakao_main({ indexPet }) {
 
     //드래그 중심좌표 얻어오는 함수
     kakao.maps.event.addListener(map, "dragend", function () {
+      setMarkers(null);
       // setIsDrag(true);
       // 지도 중심좌표를 얻어옵니다
       var latlng = map.getCenter();
@@ -117,7 +118,7 @@ function Kakao_main({ indexPet }) {
       document.querySelector(".dragTarget").style.display = "block";
     });
 
-    setIsDrag(true);
+    // setIsDrag(true);
   };
 
   //반경 구해서 모임 가져오기
