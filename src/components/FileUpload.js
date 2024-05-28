@@ -91,7 +91,7 @@ function FileUpload({ images, onImageChange, userId }) {
                   onClick={() => {
                     handleDelete(image);
                   }}
-                  className="w-[20px] h-[20px] flex justify-center items-center bg-er-100 absolute rounded-[50%] right-[-10px] top-[-10px]"
+                  className="w-[20px] h-[20px] flex justify-center items-center absolute bg-white border rounded-[50%] right-[-10px] top-[-10px] text-er-200 cursor-pointer"
                 >
                   x
                 </div>
