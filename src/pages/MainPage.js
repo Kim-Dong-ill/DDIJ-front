@@ -12,19 +12,20 @@ function MainPage() {
     return state;
   });
 
-  console.log("a%%%%%%%%%%%%%%%%%%%%%%%%%", state);
   useEffect(() => {
     try {
       async function findUser() {
-        const body = {
-          lon: state.user.userData.user.location.coordinates[0],
-          lat: state.user.userData.user.location.coordinates[1],
-        };
-        const res = await axiosInstance.post("/index/location", body);
-        // console.log(res.data);
-        setIndexPet((prevState) => [
-          { ...prevState, ...res.data.filteredPets },
-        ]);
+        if (state) {
+          const body = {
+            lon: state.user.userData.user.location.coordinates[0],
+            lat: state.user.userData.user.location.coordinates[1],
+          };
+          const res = await axiosInstance.post("/index/location", body);
+          // console.log(res.data);
+          setIndexPet((prevState) => [
+            { ...prevState, ...res.data.filteredPets },
+          ]);
+        }
       }
       findUser();
     } catch (error) {

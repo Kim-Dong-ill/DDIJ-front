@@ -33,16 +33,16 @@ function FileFetchOne({ petImage }) {
     }
   }
 
-  async function handleDelete() {
-    try {
-      const res = await axiosInstance.delete(`/user/register/image/${image}`);
-      console.log(res.data);
-      setImage("");
-      //   handleImg("");
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // async function handleDelete() {
+  //   try {
+  //     const res = await axiosInstance.delete(`/user/register/image/${image}`);
+  //     console.log(res.data);
+  //     setImage("");
+  //     //   handleImg("");
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
   console.log("이미지", image);
   return (
     <div className="flex flex-col items-center justify-center mt-[30px] h-auto">

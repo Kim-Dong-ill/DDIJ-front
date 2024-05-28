@@ -1,4 +1,13 @@
 import React, { useEffect, useState } from "react";
+import "../kakaoMap/kakaoMap.css";
+//draggable 마커 이벤트 적용하기
+
+//출발지 입력시 해당 주소로 이동하여 마커 찍기
+//이후 상세하게 지도 or 마커 움직여서 정확한 중심점 찾기
+
+//
+//------------------------------kakao map start----------------------------//
+//
 
 function Kakao_point({ endCoord, endToggleBox }) {
   const { kakao } = window;
@@ -30,7 +39,16 @@ function Kakao_point({ endCoord, endToggleBox }) {
 
   return (
     <div>
-      <div id="endMap" style={{ width: "100%", height: "400px" }}></div>
+      <div
+        className="relative"
+        id="map"
+        style={{ width: "100%", height: "400px" }}
+      >
+        <div className="endMarker z-50">
+          <img className="w-[35px]" src="./images/marker.svg" alt="" />
+        </div>
+      </div>
+
       <div
         onClick={endToggleBox}
         className="result p-2 border border-da-200 rounded-md m-2 text-center"
