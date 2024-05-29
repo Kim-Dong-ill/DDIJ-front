@@ -149,12 +149,12 @@ function AddMyPetPage() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div
-        className="bg-white w-[500px] border border-da-100 "
+        className="bg-white w-[500px] border"
         style={{ height: "calc(100% - 65px)" }}
       >
         {/* subheader start */}
-        <div className="subHeader bg-ye-600 w-[500px] h-[265px] top-0 text-center border border-da-100">
-          <div className="h-[50px] border-b-2 flex  justify-between items-center">
+        <div className="subHeader bg-ye-600 w-full h-[250px] top-0 text-center border-b">
+          <div className="h-[50px] border-b flex  justify-between items-center">
             <Link to="/mypet/:userid">
               <h2>
                 <img src="/images/backicon.svg" alt="" />
@@ -176,7 +176,7 @@ function AddMyPetPage() {
         </div>
         {/* 입력창부분 실질적으로 시작 */}
         <div className="w-[400px] mx-auto py-[50px]">
-          <div className="flex flex-col gap-2 mb-6">
+          <div className="flex flex-col gap-2 mb-7">
             <label className="w-[100px] nanumBold" htmlFor="petName">
               이름
             </label>
@@ -197,7 +197,7 @@ function AddMyPetPage() {
             </div>
           </div>
           {/* 견종시작 */}
-          <div className="flex flex-col gap-2 mb-6">
+          <div className="flex flex-col gap-2 mb-7">
             <label className="w-[100px] nanumBold" htmlFor="breed">
               견종
             </label>
@@ -216,7 +216,7 @@ function AddMyPetPage() {
             </div>
           </div>
           {/* 나이 시작 */}
-          <div className="flex flex-col gap-2 mb-6">
+          <div className="flex flex-col gap-2 mb-7">
             <label className="w-[100px] nanumBold" htmlFor="petAge">
               나이
             </label>
@@ -236,7 +236,7 @@ function AddMyPetPage() {
           </div>
 
           {/* 성별시작 */}
-          <div className="flex gap-5 items-center mb-6">
+          <div className="flex gap-5 items-center mb-7">
             <div className="nanumBold">성별</div>
             <PetGenderButton
               register={register}
@@ -248,7 +248,7 @@ function AddMyPetPage() {
           </div>
           <div>
             {/* 중성화버튼 시작 */}
-            <div className="mb-6">
+            <div className="mb-8">
               <div className="mb-2 nanumBold">중성화</div>
               <NeuterButton
                 handleChange={handleChange}
@@ -260,7 +260,7 @@ function AddMyPetPage() {
               />
             </div>
             {/* 백신버튼시작 */}
-            <div className="mb-6">
+            <div className="mb-8">
               <div className="mb-2 nanumBold">기본 접종</div>
               <VaccineButton
                 handleChange={handleChange}
@@ -272,7 +272,7 @@ function AddMyPetPage() {
               />
             </div>
             {/* 광견병접종버튼시작 */}
-            <div className="mb-6">
+            <div className="mb-8">
               <div className="mb-2 nanumBold">광견병</div>
               <RabiesButton
                 handleChange={handleChange}
@@ -285,7 +285,7 @@ function AddMyPetPage() {
             </div>
           </div>
           {/* 성격입력버튼시작 */}
-          <div className="flex flex-col gap-2 mb-6">
+          <div className="flex flex-col gap-2 mb-12">
             <label className="w-[110px] nanumBold" htmlFor="petEtc">
               우리 아이 성격
             </label>

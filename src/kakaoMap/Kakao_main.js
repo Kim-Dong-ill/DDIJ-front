@@ -17,21 +17,21 @@ function Kakao_main({ indexPet }) {
   const [isGeolocaation, setIsGeolocation] = useState(false); //내위치
   const [circles, setCircles] = useState([]); //모임 배열
   const [markers, setMarkers] = useState([]); //마커들 표시
+  const [currentLocationMarker, setCurrentLocationMarker] = useState(null); // 위치 정보 상태 변수 추가
+  const [markersInitialized, setMarkersInitialized] = useState(false);
 
   useEffect(() => {
     if (!map) {
       mapscript();
     } else {
-      initializeMarkers(map);
-      //geolocation start
-      if (isDrag === false) {
-        getGeolocation(); //현재위치 가져오는 함수
-      }
+      getGeolocation(); //현재위치 가져오는 함수
+
       getDragLocation(); //드래그위치 가져오는 함수
     }
   }, [map]);
 
   const mapscript = () => {
+    console.log("mapscript시작");
     var mapContainer = document.getElementById("map"),
       mapOption = {
         center: new kakao.maps.LatLng(37.4800384, 126.8842496), // 지도의 중심좌표
@@ -41,7 +41,6 @@ function Kakao_main({ indexPet }) {
 
     const map = new kakao.maps.Map(mapContainer, mapOption);
     setMap(map);
-    initializeMarkers(map);
   };
 
   //현재위치 가져오는 함수
@@ -50,11 +49,9 @@ function Kakao_main({ indexPet }) {
     if (navigator.geolocation) {
       var options = {
         // 가능한 경우, 높은 정확도의 위치(예를 들어, GPS 등) 를 읽어오려면 true로 설정
-        // 그러나 이 기능은 배터리 지속 시간에 영향을 미친다.
         enableHighAccuracy: true,
 
         // 위치 정보를 받기 위해 얼마나 오랫동안 대기할 것인가?
-        // 기본값은 Infinity이므로 getCurrentPosition()은 무한정 대기한다.
         timeout: 15000, // 15초 이상 기다리지 않는다.
       };
 
@@ -64,7 +61,6 @@ function Kakao_main({ indexPet }) {
       //성공했을떄
       async function success(position) {
         setLocationAvailable(true); //위치사용 가능
-        // currentPosition = position.coords; //현재 좌표 저장
         const time = new Date(position.timestamp); //시각 저장
         const coordinates = {
           lon: position.coords.longitude,
@@ -108,45 +104,93 @@ function Kakao_main({ indexPet }) {
 
     //드래그 중심좌표 얻어오는 함수
     kakao.maps.event.addListener(map, "dragend", function () {
+      // setMarkers(null);
       // setIsDrag(true);
       // 지도 중심좌표를 얻어옵니다
       var latlng = map.getCenter();
-      setDragMapCenter(latlng);
-      setUserLocation({ latitude: latlng.Ma, longitude: latlng.La });
+
+      setDragMapCenter([latlng.Ma, latlng.La]); //드래그 중심좌표 저장
 
       document.querySelector(".dragTarget").style.display = "block";
     });
-
-    setIsDrag(true);
   };
+
+  //현재 위치로 보기 버튼 클릭시 좌표반경 데이터 가져오기
+  async function findDragLoc() {
+    try {
+      console.log("현재위치로 보기 버튼 클릭시 데이터가져오기");
+      // console.log("@@@@@@@@@@", dragMapCenter);
+      const body = {
+        lon: dragMapCenter[1],
+        lat: dragMapCenter[0],
+      };
+      const res = await axiosInstance.post("/index/geolocation/drag", body);
+      console.log("드래그좌표 근처 모임 찾기", res.data);
+      setCircles(res.data.circles);
+      clearMarkers();
+      initializeMarkers(map);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  //내 위치로 보기 클릭시 좌표반경 데이터 가져오기
+  async function findCircle() {
+    console.log("내위치로 보기 클릭시 죄표 반경");
+    const body = userLocation;
+    // const body = {
+    //   //임시
+    //   lon: 126.943232,
+    //   lat: 37.5062528,
+    // };
+    console.log(body);
+    try {
+      const res = await axiosInstance.post("/index/geolocation", body);
+      console.log("geoLoc위치로 모임 가져오기", res.data);
+      setCircles(res.data.circles || []);
+      clearMarkers();
+      initializeMarkers(map);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   //반경 구해서 모임 가져오기
   useEffect(() => {
+    console.log("반경 구해서 모임 가져오기");
     async function findCircle() {
-      // const body = userLocation;
-      const body = {
-        //임시
-        lon: 126.943232,
-        lat: 37.5062528,
-      };
+      const body = userLocation;
+      // const body = {
+      //   //임시
+      //   lon: 126.943232,
+      //   lat: 37.5062528,
+      // };
       console.log(body);
-      const res = await axiosInstance.post("/index/geolocation", body);
-      console.log(res.data);
-      setCircles(res.data.circles);
-      initializeMarkers(map);
-      // for (let i = 0; i < res.data.circles.length; i++) {
-      //   console.log(res.data.circles[i]);
-      // }
+      try {
+        const res = await axiosInstance.post("/index/geolocation", body);
+        console.log(res.data);
+        setCircles(res.data.circles);
+        setMarkersInitialized(true);
+        initializeMarkers(map);
+      } catch (error) {
+        console.log(error);
+      }
     }
     findCircle();
-  }, [userLocation]);
+  }, []);
 
-  // 초기 마커 추가해놓기
+  useEffect(() => {
+    initializeMarkers(map);
+  }, [markersInitialized, circles, map]);
+
+  //마커 추가해놓기
   const initializeMarkers = (map) => {
-    console.log("aaaaaaaaa");
+    console.log("초기 마커 추가");
     console.log(circles);
+
+    clearMarkers();
     const newMarkers = [];
-    if (circles) {
+    if (circles && circles.length > 0) {
       //기존 마커 배열 지도에 표시
       for (let i = 0; i < circles.length; i++) {
         let latlng = new kakao.maps.LatLng(
@@ -157,31 +201,23 @@ function Kakao_main({ indexPet }) {
         const marker = addMarker(latlng, map, imageSrc, imageSize, imageOption);
         newMarkers.push(marker);
       }
+      setMarkers(newMarkers);
     }
-    setMarkers(newMarkers);
-  };
-  // initializeMarkers();
-
-  const initializeMap = () => {
-    setMap(null);
-    console.log("initializeMap : true");
-    console.log(userLocation);
-    var mapContainer = document.getElementById("map");
-    var mapOption = {
-      center: new kakao.maps.LatLng(
-        userLocation.latitude,
-        userLocation.longitude
-      ),
-      level: 5,
-      mapTypeId: kakao.maps.MapTypeId.ROADMAP,
-    };
-    const map = new kakao.maps.Map(mapContainer, mapOption);
-    setMap(map);
-
-    // 마커 초기화
-    initializeMarkers(map);
   };
 
+  // 마커 제거 함수
+  const clearMarkers = () => {
+    if (markers) {
+      markers.forEach((marker) => {
+        if (marker && marker.setMap) {
+          marker.setMap(null);
+        }
+      });
+      setMarkers([]); // markers 배열 초기화
+    }
+  };
+
+  //마커 생성
   const addMarker = (latlng, map, imageSrc, imageSize, imageOption) => {
     if (!map) return;
     console.log("마커 생성(addMarker)");
@@ -199,61 +235,37 @@ function Kakao_main({ indexPet }) {
       // title: title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
       image: markerImage, // 마커 이미지
     });
-
-    // 마커를 클릭
-    kakao.maps.event.addListener(marker, "click", function () {
-      console.log("마커 클릭event");
-
-      //마커 클릭시 해당 마커로 중심좌표 이동
-      var mapContainer = document.getElementById("map"),
-        mapOption = {
-          center: new kakao.maps.LatLng(
-            marker.getPosition().Ma,
-            marker.getPosition().La
-          ), // 지도의 중심좌표
-          level: 5, // 지도의 확대 레벨
-          mapTypeId: kakao.maps.MapTypeId.ROADMAP, // 지도종류
-        };
-      const map = new kakao.maps.Map(mapContainer, mapOption);
-      setMap(map);
-    });
+    console.log("마커 생성 완료");
+    return marker; // 마커 객체 반환
   };
-
-  //위치정보 동작, 드래그 동작, 내위치 클릭 useEffect
-  // useEffect(() => {
-  //   if (!map) {
-  //     mapscript();
-  //   } else {
-  //     if (isLocationAvailable || isDrag || isGeolocaation) {
-  //       initializeMap(); // 위치 정보 사용 가능할 때마다 지도 초기화
-  //     }
-  //   }
-  // }, [isLocationAvailable, isDrag, isGeolocaation]);
 
   //내 위치 보기 클릭시
   const myLocation = () => {
     console.log("내위치보기 클릭");
+    clearMarkers();
     document.querySelector(".dragTarget").style.display = "none";
     setIsGeolocation(true);
     setIsDrag(false);
     // getCurrentLocation(); // getCurrentLocation 함수 호출
     getGeolocation();
-    setMap(null);
+    findCircle(); //axios 태우는 함수
+    // setMap(null);
   };
 
   //현 위치에서 보기 클릭시
   const dragLocation = () => {
-    setIsDrag(true);
-    setIsGeolocation(false);
+    // setMap(null);
+    // setIsDrag(true);
+    // setIsGeolocation(false);
     document.querySelector(".dragTarget").style.display = "block";
-    setMap(null);
+    findDragLoc(); //axios 태우는 함수
   };
 
   function displayMarker(locPosition, message) {
     // 이전 마커가 있으면 제거
-    // if (currentLocationMarker) {
-    //   currentLocationMarker.setMap(null);
-    // }
+    if (currentLocationMarker) {
+      currentLocationMarker.setMap(null);
+    }
 
     // 마커를 생성합니다
     var marker = new kakao.maps.Marker({
@@ -274,7 +286,7 @@ function Kakao_main({ indexPet }) {
     infowindow.open(map, marker);
 
     // 현재 마커를 상태 변수에 저장
-    // setCurrentLocationMarker(marker);
+    setCurrentLocationMarker(marker);
 
     // 지도 중심좌표를 접속위치로 변경합니다
     map.setCenter(locPosition);

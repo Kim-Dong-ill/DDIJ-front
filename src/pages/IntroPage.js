@@ -1,52 +1,52 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import $ from "jquery";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 //css
 import "../assets/animation.css";
 
 function IntroPage() {
-  const locationHook = useLocation();
-  const [currentFirstUrl, setCurrentFirstUrl] = useState(null);
-  const splitUrl = locationHook?.pathname?.split("/") ?? null;
+  // const locationHook = useLocation();
+  // const [currentFirstUrl, setCurrentFirstUrl] = useState(null);
+  // const splitUrl = locationHook?.pathname?.split("/") ?? null;
   function scrollTop() {
     $("html, body").scrollTop("0");
   }
 
-  useEffect(() => {
-    const location = splitUrl?.length > 0 ? splitUrl[1] : splitUrl[0];
-    setCurrentFirstUrl(location);
-  }, [locationHook]);
-  console.log("위치", currentFirstUrl);
+  // useEffect(() => {
+  //   const location = splitUrl?.length > 0 ? splitUrl[1] : splitUrl[0];
+  //   setCurrentFirstUrl(location);
+  // }, [locationHook]);
+  // console.log("위치", currentFirstUrl);
 
-  if (currentFirstUrl === "intro") {
-    //스크롤시 섹션 이동 start
-    var mHtml = $("html");
-    var page = 1;
+  // if (currentFirstUrl === "intro") {
+  //   //스크롤시 섹션 이동 start
+  //   var mHtml = $("html");
+  //   var page = 1;
 
-    mHtml.animate({ scrollTop: 0 }, 10);
+  //   mHtml.animate({ scrollTop: 0 }, 10);
 
-    $(window).on("wheel", function (e) {
-      if (mHtml.is(":animated")) return;
-      if (e.originalEvent.deltaY > 0) {
-        // if (page === 6) return;
-        page++;
-      } else if (e.originalEvent.deltaY < 0) {
-        if (page === 1) return;
-        page--;
-      }
-      if (page > 5) {
-        page = 6;
-        $(".infoArrow").css("display", "none");
-      }
-      if (page < 6) {
-        $(".infoArrow").css("display", "block");
-      }
-      var posTop = (page - 1) * $(window).height();
-      mHtml.animate({ scrollTop: posTop });
-    });
-    //스크롤시 섹션 이동 end
-  }
+  //   $(window).on("wheel", function (e) {
+  //     if (mHtml.is(":animated")) return;
+  //     if (e.originalEvent.deltaY > 0) {
+  //       // if (page === 6) return;
+  //       page++;
+  //     } else if (e.originalEvent.deltaY < 0) {
+  //       if (page === 1) return;
+  //       page--;
+  //     }
+  //     if (page > 5) {
+  //       page = 6;
+  //       $(".infoArrow").css("display", "none");
+  //     }
+  //     if (page < 6) {
+  //       $(".infoArrow").css("display", "block");
+  //     }
+  //     var posTop = (page - 1) * $(window).height();
+  //     mHtml.animate({ scrollTop: posTop });
+  //   });
+  //   //스크롤시 섹션 이동 end
+  // }
 
   return (
     <div className="box w-[100%] bg-ye-600">

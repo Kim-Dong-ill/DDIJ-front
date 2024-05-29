@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import Kakao_StrEnd from "../kakaoMap/Kakao_StrEnd";
 import axiosInstance from "../utils/axios";
@@ -52,10 +53,11 @@ function CCViewPage() {
   // }
 
   // onChange
+
   function textDataChange(e) {
     setTextData(e.target.value);
-    // console.log(textData);
   }
+
   // function clickListener() {
   //   let temp = [...commentList];
   //   setCommentList([textData, ...temp]);
@@ -118,6 +120,7 @@ function CCViewPage() {
     },
   };
 
+
   return (
     <>
       <div className="grid gap-3 bg-da-400 pt-[90px] pb-[100px] border-[1px]">
@@ -153,32 +156,36 @@ function CCViewPage() {
               </div>
             </div>
             <div>
-              <h2 className="nanumBold text-center">" 나만 따라오개 ! "</h2>
+              <h2 className="nanumBold text-center"> {item.name}</h2>
             </div>
           </div>
           {/* =======박스 안 contents end */}
           <div className="grid gap-[5px] px-[25px] mb-[20px]">
             <p className="nanumBold text-[18px]">어서오시개</p>
-            <p className="nanum text-[15px] text-da-800">
-              [저녁] 7시 30분 ~ 9시 00분
+            <hr className="mb-[20px] border-da-900"/>
+            <p className="nanum text-[15px] text-da-800 mb-[20px]">
+              출발 : {item.DateData} {item.TimeData}
             </p>
             <p className="nanum text-[15px] text-da-800 mb-[20px]">
-              가산 디지털단지역 코드랩 아카데미 건물앞
+              예상 종료시간  : {item.finishTime.split("T")[1].split(":")[0]}시 {item.finishTime.split("T")[1].split(":")[1]}분
             </p>
-            <hr className="mb-[20px] border-da-900" />
+            <p className="nanum text-[15px] text-da-800 mb-[20px]">
+              출발 장소 : {item.startAdd}
+            </p>
+            <hr className="mb-[20px] border-da-900"/>
           </div>
           <div className="grid gap-[5px] px-[25px] mb-[50px]">
-            <p className="nanumBold text-[18px]">소개말</p>
+            <p className="nanumBold mt-[30px] text-[18px]">소개말</p>
+            <hr className="mb-[20px] border-da-900"/>
             <p className="nanum text-[15px] text-da-800 mb-[20px]">
-              날씨도 좋은데 퇴근하고 같이 강아지 산책시키실분들 계신가요???
-              저녁은 각자 해결하고 7시 30분에 모여서 안양천 산책해요!! 모임
-              장소는 코드랩 건물 앞입니다!
+              {item.text}
             </p>
-            <hr className="mb-[30px] border-da-900" />
+            <hr className="mb-[30px] border-da-900"/>
             <div className="w-full grid gap-3 ">
-              <p className="nanumBold text-[18px]">참석댕명단 4/5</p>
+              <p className="nanumBold mt-[30px] text-[18px]">참석댕명단 {item.nowUser}/{item.peoples}</p>
               {/* 참석자명단시작! - map돌려야합니다 */}
-              <div className="w-full h-auto rounded-[10px] flex items-center px-[15px] py-[5px] gap-3 mb-3 border border-da-900">
+              <div
+                  className="w-full h-auto rounded-[10px] flex items-center px-[15px] py-[5px] gap-3 mb-3 border border-da-900">
                 <div>
                   <div className="w-[45px] h-[45px] rounded-[50px] bg-slate-300"></div>
                 </div>
@@ -195,11 +202,12 @@ function CCViewPage() {
               {/* 참석자명단 end - 여기까지 map돌립니다 */}
             </div>
             {/* 글 contents 섹션 완료 */}
-            <hr className="my-[30px] border-da-900" />
+            <hr className="my-[30px] border-da-900"/>
             {/* 댓글구간 시작============= */}
             <div>
               <p className="nanumBold text-[18px]">할 말이 있개!</p>
             </div>
+
 
             {/* 댓글입력창 */}
             <div
@@ -208,11 +216,13 @@ function CCViewPage() {
             >
               <form onSubmit={handleSubmit(onSubmit)}>
                 <input
+
                   type="text"
                   placeholder="댓글입력"
                   className=" border w-[365px] rounded-[25px] px-[10px] py-[5px] nanum"
                   onChange={textDataChange}
                   value={textData}
+
                   id="commentText"
                   {...register("commentText", commentText)}
                 />
@@ -225,6 +235,7 @@ function CCViewPage() {
                   등록
                 </button>
               </form>
+
             </div>
             {/* <div className="flex justify-between mb-[20px] gap-[20px] items-center w-full">
               <div className="flex items-center gap-1">
@@ -238,6 +249,7 @@ function CCViewPage() {
                     <p className="nanumBold">닉네임6글자</p>
                   </div>
                 </div> */}
+
 
             {commentList
               .slice(0, moreComments ? commentList.length : 1)
@@ -262,12 +274,15 @@ function CCViewPage() {
                         </div>
                         <div className="nanum flex-wrap w-[280px] overflow-wrap">
                           {item.content}
+
                         </div>
                       </div>
                     </div>
                   </>
+
                 );
               })}
+
             {/* </div>
             </div> */}
             {/*=============== 댓글구간 끝 */}
@@ -279,7 +294,7 @@ function CCViewPage() {
                 alert("참석완료");
               }}
             >
-              참석하기 4/5
+              참석하기 {item.nowUser}/{item.peoples}
               {/* 정원 꽉 차면 버튼색상 #222222 - 정원이 다 찼개... 로 버튼변경  */}
               {/* 참석하기 완료되면 취소하기 버튼으로 버튼 변경 - #313131 */}
               {/* 글작성자의 경우 수정하기 / 삭제하기 버튼으로 노출 - #313131 */}

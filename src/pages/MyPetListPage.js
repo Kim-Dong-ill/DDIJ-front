@@ -83,6 +83,7 @@ function MyPetListPage() {
       {/* 상단 버튼 끝 */}
       {/* 강아지1 시작 */}
       {mypetList.map((item, idx) => {
+        console.log("펫 리스트 펫이미징 item.image", item.image);
         async function changeMainPet() {
           const body = {
             // mypetList 배열에서 ObjectId 추출
@@ -136,11 +137,12 @@ function MyPetListPage() {
                     </button>
                   </p>
                 )}
+
                 {/* 여기가 펫 이미지 넣는 공간이에용 */}
                 {item.image ? (
                   <img
                     src={`${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${item.image}`}
-                    // alt=""
+                    alt=""
                     className="w-[100px] h-[100px] rounded-full m-auto"
                   />
                 ) : (

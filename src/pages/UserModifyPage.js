@@ -12,6 +12,7 @@ import {
 } from "../utils/validation";
 import { useSelector } from "react-redux";
 import axiosInstance from "../utils/axios";
+import { toast } from "react-toastify";
 
 function UserModifyPage() {
   const { kakao } = window;
@@ -144,6 +145,21 @@ function UserModifyPage() {
   const states = useSelector((state) => {
     return state.user.userData.user;
   });
+
+  function handleCheck(e) {
+    if (e.target.type === "button") {
+      toast.error("비밀번호 확인은 필수입니다!!", {
+        position: "bottom-right",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }
   return (
     <>
       <div
@@ -165,8 +181,8 @@ function UserModifyPage() {
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="w-[400px] m-auto grid gap-3 pt-[50px] ">
-            <div className="h-[45px] flex justify-between py-[10px] pr-[5px] mb-[30px]">
+          <div className="w-[400px] m-auto grid gap-3 pt-[40px] ">
+            {/* <div className="h-[45px] flex justify-between py-[10px] pr-[5px] mb-[30px]">
               <div className="flex justify-start gap-2">
                 <img
                   src="/images/user-profile.svg"
@@ -174,17 +190,20 @@ function UserModifyPage() {
                 />
                 <h2 className="text-[15px]">보호자 정보</h2>
               </div>
-            </div>
-            <div className="text-red-500 nanumBold text-center py-2">
+            </div> */}
+            <div className="text-red-500 nanumBold text-center mb-6">
               비밀번호 확인은 필수입니다.
             </div>
             <div className="flex flex-col gap-2 mb-6">
               <div className="flex justify-between relative">
-                <label className="w-[190px]  nanumBold" htmlFor="defaultp">
+                <label
+                  className="w-[190px] nanumBold text-[15px] mb-2"
+                  htmlFor="defaultp"
+                >
                   비밀번호 확인
                   <button type="button" onClick={handleDefaultP}>
-                    <i className=" pl-2 text-ye-600 fa-solid fa-circle-check">
-                      확인
+                    <i className=" pl-3 text-ye-600 fa-solid fa-circle-check">
+                      <span className="ml-1">확인</span>
                     </i>
                   </button>
                 </label>
@@ -212,7 +231,10 @@ function UserModifyPage() {
               </div>
             </div>
             <div className="flex flex-col gap-2 mb-6">
-              <label className="w-[100px] nanumBold" htmlFor="name">
+              <label
+                className="w-[100px] nanumBold text-[15px] mb-2"
+                htmlFor="name"
+              >
                 이름
               </label>
               <div>
@@ -231,7 +253,10 @@ function UserModifyPage() {
               </div>
             </div>
             <div className="flex flex-col gap-2 mb-6">
-              <label className="w-[100px] nanumBold" htmlFor="email">
+              <label
+                className="w-[100px] nanumBold text-[15px] mb-2"
+                htmlFor="email"
+              >
                 이메일
               </label>
               <div>
@@ -251,7 +276,10 @@ function UserModifyPage() {
               </div>
             </div>
             <div className="flex flex-col gap-2 mb-6">
-              <label className="w-[100px] nanumBold" htmlFor="password">
+              <label
+                className="w-[100px] nanumBold text-[15px]"
+                htmlFor="password"
+              >
                 비밀번호
               </label>
               <div>
@@ -271,7 +299,10 @@ function UserModifyPage() {
               </div>
             </div>
             <div className="flex flex-col gap-2 mb-6">
-              <label className="w-[120px] nanumBold" htmlFor="checkPassword">
+              <label
+                className="w-[120px] nanumBold text-[15px]"
+                htmlFor="checkPassword"
+              >
                 비밀번호 재입력
               </label>
               <div>
@@ -298,11 +329,14 @@ function UserModifyPage() {
             </div>
             <div className="flex flex-col gap-2 mb-6">
               <div className="flex justify-between relative">
-                <label className="w-[190px] nanumBold" htmlFor="nickName">
+                <label
+                  className="w-[190px] nanumBold text-[15px] mb-2"
+                  htmlFor="nickName"
+                >
                   닉네임
                   <button type="button" onClick={checkNickname}>
-                    <i className=" pl-1 text-ye-600 fa-solid fa-circle-check">
-                      중복체크
+                    <i className=" pl-3 text-ye-600 fa-solid fa-circle-check">
+                      <span className="ml-1">중복체크</span>
                     </i>
                   </button>
                 </label>
@@ -330,7 +364,10 @@ function UserModifyPage() {
               </div>
             </div>
             <div className="flex flex-col gap-2 mb-10">
-              <label className="w-[100px] nanumBold" htmlFor="address">
+              <label
+                className="w-[100px] nanumBold text-[15px] mb-2"
+                htmlFor="address"
+              >
                 주소
               </label>
               <div>
@@ -352,7 +389,10 @@ function UserModifyPage() {
             <Link to="/userinfo/:userid">
               <ButtonBl>취소</ButtonBl>
             </Link>
-            <ButtonYe type={passwordState ? `submit` : `button`}>
+            <ButtonYe
+              type={passwordState ? `submit` : `button`}
+              onClick={handleCheck}
+            >
               수정완료
             </ButtonYe>
           </div>

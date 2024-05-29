@@ -39,24 +39,27 @@ function UserInfoPage() {
         </div>
 
         <div className="w-[400px] m-auto grid gap-3 pt-[50px] pb-[115px]">
-          <div className="h-[45px] flex justify-between py-[10px] pr-[5px] mb-[30px]">
+          <div className="h-[45px] flex justify-between pr-[5px] mb-3">
             <div className="flex justify-start gap-2">
               <img
                 src="/images/user-profile.svg"
                 className="w-[20px] h-[20px]"
               />
-              <h2 className="text-[15px]">보호자 정보</h2>
+              <h2 className="text-[17px]">내 정보</h2>
             </div>
 
             <Link to="/usermod/:userid`">
-              <button className="px-2 bg-ye-600 w-[55px] h-[25px] text-[11px] text-center rounded-2xl">
+              <button className="px-2 border border-da-200 w-full h-[25px] text-[12px] text-center rounded-md">
                 수정하기
               </button>
             </Link>
           </div>
 
           <div className="flex flex-col gap-2 mb-6">
-            <label className="w-[100px] nanumBold" htmlFor="userName">
+            <label
+              className="w-[100px] nanumBold text-[15px]"
+              htmlFor="userName"
+            >
               이름
             </label>
             <div>
@@ -70,7 +73,10 @@ function UserInfoPage() {
             </div>
           </div>
           <div className="flex flex-col gap-2 mb-6">
-            <label className="w-[100px] nanumBold" htmlFor="userEmail">
+            <label
+              className="w-[100px] nanumBold text-[15px]"
+              htmlFor="userEmail"
+            >
               이메일
             </label>
             <div>
@@ -84,10 +90,10 @@ function UserInfoPage() {
           </div>
 
           <div className="flex flex-col gap-2 mb-6">
-            <label className="w-[100px] nanumBold" htmlFor="">
+            <label className="w-[100px] nanumBold text-[15px] " htmlFor="">
               닉네임
               <button type="button">
-                <i className=" pl-1 text-ye-600 fa-solid fa-circle-check"></i>
+                <i className="pl-2 text-ye-600 fa-solid fa-circle-check"></i>
               </button>
             </label>
             <div>
@@ -99,8 +105,8 @@ function UserInfoPage() {
               />
             </div>
           </div>
-          <div className="flex flex-col gap-2 mb-10">
-            <label className="w-[100px] nanumBold" htmlFor="adress">
+          <div className="flex flex-col gap-2 mb-16">
+            <label className="w-[100px] nanumBold text-[15px]" htmlFor="adress">
               주소
             </label>
             <div>
@@ -115,7 +121,7 @@ function UserInfoPage() {
           <div className="text-da-200">
             <button
               onClick={handleSignout}
-              className="border border-da-200 rounded-[6px] px-2 py-1 hover:bg-da-200 hover:text-da-300"
+              className="border border-da-500 rounded-[6px] px-2 py-1 nanum text-[12px] hover:bg-da-200 hover:text-da-300"
             >
               회원탈퇴
             </button>

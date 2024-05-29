@@ -65,7 +65,7 @@ function CreateCCPage() {
     formState: { errors },
     reset,
     // watch,
-  } = useForm({ mode: "all" });
+  } = useForm({ mode: "onChange" });
   const dispatch = useDispatch();
 
   const [startshowBox, setStartshowBox] = useState(false); // 출발지 토글박스
@@ -83,26 +83,20 @@ function CreateCCPage() {
     peoples: "",
   });
 
-  useEffect(() => {
-    setnewCCInfo((prevState) => ({
-      ...prevState,
-      startTime: startTime,
-      startDate: startDate,
-      usingTime: usingTime,
-      peoples: peoples,
-      startLoc: { coordinates: coordinates },
-      endLoc: { endCoordinates: endCoord },
-      startAdd: startAddress,
-    }));
-  }, [
-    startTime,
-    usingTime,
-    peoples,
-    startDate,
-    coordinates,
-    endCoord,
-    startAddress,
-  ]);
+  // useEffect(() => {
+  //   setnewCCInfo((prevState) => ({
+  //     ...prevState,
+  //     startTime: startTime,
+  //     // startDate: startDate,
+  //     // usingTime: usingTime,
+  //     // peoples: peoples,
+  //     // startLoc: { coordinates: coordinates },
+  //     // endLoc: { endCoordinates: endCoord },
+  //   }));
+  // }, [
+  //   startTime,
+  //   // usingTime, peoples, startDate, coordinates, endCoord
+  // ]);
 
   // 출발지 토글박스
   const startToggleBox = () => {
@@ -153,7 +147,6 @@ function CreateCCPage() {
         position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: true,
-
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
@@ -183,11 +176,7 @@ function CreateCCPage() {
 
   const validationRules = {
     name: {
-      required: {
-        value: true,
-        message: "비밀번호는 필수입니다.",
-      },
-
+      required: "모임명은 필수 입니다.",
       maxLength: {
         value: 10,
         message: "최대 10글자 입니다.",
@@ -304,7 +293,7 @@ function CreateCCPage() {
   };
 
   const handleTextFieldClick = () => {
-    return openPostcode(); // TextFieldLine 클릭 시 주소 입력 창 열기
+    openPostcode(); // TextFieldLine 클릭 시 주소 입력 창 열기
   };
   const starthandleTextFieldClick = () => {
     startOpenPostcode(); // TextFieldLine 클릭 시 주소 입력 창 열기
@@ -353,14 +342,9 @@ function CreateCCPage() {
                 fullWidth
                 onChange={handleChangeValue}
                 value={newCCInfo.name}
-                // error={!!errors.name}
-                // helperText={errors.name?.message}
+                error={!!errors.name}
+                helperText={errors.name?.message}
               />
-              {checkCircle && errors.name && (
-                <div className="nanumBold text-red-500 text-xs mt-1">
-                  {errors.name.message}
-                </div>
-              )}
             </div>
             {/* 모임명end */}
             {/* 소개말 */}
@@ -399,37 +383,39 @@ function CreateCCPage() {
                   <img src="/images/plag_icon.svg" alt="깃발아이콘" />
                   출발지
                 </label>
-                <TextFieldLine
+                {/* <TextFieldLine
                   onChange={handleChangeValue}
                   required
                   id="startLoc"
                   name="startLoc"
-                  label="출발지"
+                  label={`${startAddress}`}
                   fullWidth
                   // readOnly
                   className="cursor-pointer"
                   disabled
-                  // value={newCCInfo.startLoc}
-                  value={startAddress}
+                  value={newCCInfo.startLoc}
+                /> */}
+
+                <input
+                  type="text"
+                  onChange={handleChangeValue}
+                  required
+                  id="startLoc"
+                  disabled
+                  value={newCCInfo.startLoc}
+                  style={{
+                    borderColor: "#ddd",
+                    borderStyle: "solid",
+                    borderWidth: "1px",
+                  }}
                 />
               </div>
-              <div className="relative h-[37px]">
-                {checkCircle && (
-                  <img
-                    src="/images/plusglass_icon.svg"
-                    alt="돋보기 아이콘"
-                    className="block absolute left-[369px] bottom-[57px] cursor-pointer"
-                    onClick={starthandleTextFieldClick}
-                    disabled={!checkCircle}
-                  />
-                )}
-              </div>
-              {/* <img
+              <img
                 src="/images/plusglass_icon.svg"
                 alt="돋보기 아이콘"
                 className="block relative  left-[370px] bottom-[37px] cursor-pointer"
                 onClick={starthandleTextFieldClick}
-              /> */}
+              />
               {startshowBox && (
                 <div className="bg-gray-100 px-4 py-2 mb-4 border-2 rounded-md z-10 startstart">
                   <Kakao_start_point
@@ -459,33 +445,21 @@ function CreateCCPage() {
                   required
                   id="endLoc"
                   name="endLoc"
-                  label="목적지"
+                  // label={`${endAddress}`}
                   fullWidth
-                  // readOnly
+                  readOnly
                   className="cursor-pointer"
                   disabled
-                  // value={newCCInfo.endLoc}
-                  value={endAddress}
+                  value={newCCInfo.endLoc}
                 />
               </div>
-              <div className="relative h-[37px]">
-                {checkCircle && (
-                  <img
-                    src="/images/plusglass_icon.svg"
-                    alt="돋보기 아이콘"
-                    className="block absolute left-[369px] bottom-[57px] cursor-pointer"
-                    onClick={handleTextFieldClick}
-                    disabled={!checkCircle}
-                  />
-                )}
-              </div>
-              {/* <img
+              <img
                 src="/images/plusglass_icon.svg"
                 alt="돋보기 아이콘"
                 className="block relative  left-[370px] bottom-[37px] cursor-pointer"
                 // onClick={endToggleBox}
                 onClick={handleTextFieldClick}
-              /> */}
+              />
               {endshowBox && (
                 <div className=" bg-gray-100 p-1  mb-4 border-2 rounded-md ">
                   <Kakao_point
@@ -510,7 +484,7 @@ function CreateCCPage() {
                 시작 날짜
               </label>
 
-              <TextFieldLine
+              {/* <TextFieldLine
                 {...register("startDate", validationRules.startDate)}
                 onChange={(e) => setStartDate(e.target.value)}
                 required
@@ -524,6 +498,14 @@ function CreateCCPage() {
                 value={newCCInfo.startDate}
                 error={!!errors.startDate}
                 helperText={errors.startDate?.message}
+              /> */}
+
+              <input
+                type="date"
+                id="startDate"
+                name="startDate"
+                onChange={(e) => setStartDate(e.target.value)}
+                value={newCCInfo.startDate}
               />
             </div>
             <div className="mb-6">
@@ -555,14 +537,9 @@ function CreateCCPage() {
                 onChange={(e) => setStartTime(e.target.value)}
                 disabled={checkCircle ? false : true}
                 value={newCCInfo.startTime}
-                // error={!!errors.startTime}
-                // helperText={errors.startTime?.message}
+                error={!!errors.startTime}
+                helperText={errors.startTime?.message}
               />
-              {checkCircle && errors.startTime && (
-                <div className="nanumBold text-red-500 text-xs mt-1">
-                  {errors.startTime.message}
-                </div>
-              )}
             </div>
 
             <div>
@@ -654,10 +631,9 @@ function CreateCCPage() {
               {/* <button>취소</button> */}
             </Link>
             {/* <Link to="/circles"> */}
-            <ButtonYe type="submit" disabled={checkCircle ? false : true}>
-              등록
-            </ButtonYe>
-            {/* <ButtonYe type="submit">등록</ButtonYe> */}
+            {/* <ButtonYe onClick={handleButtonClick}>등록</ButtonYe> */}
+            <ButtonYe type="submit">등록</ButtonYe>
+            {/* <button>등록</button> */}
             {/* </Link> */}
           </div>
         </form>
