@@ -22,6 +22,7 @@ import AddMyPetPage from "./pages/AddMyPetPage";
 import { useDispatch, useSelector } from "react-redux";
 import ProtectRouter from "./components/ProtectRouter";
 import { authUser } from "./store/thunkFunctions";
+import ErrPathPage from "./pages/ErrPathPage";
 
 function App() {
   // 원래있던부분
@@ -80,6 +81,7 @@ function App() {
               <Route path="/mypet/mod/:petid" element={<MyPetModifyPage />} />
               <Route path="/mypet/add" element={<AddMyPetPage />} />
             </Route>
+            <Route path="/*" element={<ErrPathPage />} />
           </Routes>
         </div>
       </div>
