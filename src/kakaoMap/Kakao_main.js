@@ -24,11 +24,8 @@ function Kakao_main({ indexPet }) {
     if (!map) {
       mapscript();
     } else {
-      // initializeMarkers(map);
-      //geolocation start
-      // if (isDrag === false) {
       getGeolocation(); //현재위치 가져오는 함수
-      // }
+
       getDragLocation(); //드래그위치 가져오는 함수
     }
   }, [map]);
@@ -44,7 +41,6 @@ function Kakao_main({ indexPet }) {
 
     const map = new kakao.maps.Map(mapContainer, mapOption);
     setMap(map);
-    // initializeMarkers(map);
   };
 
   //현재위치 가져오는 함수
@@ -65,7 +61,6 @@ function Kakao_main({ indexPet }) {
       //성공했을떄
       async function success(position) {
         setLocationAvailable(true); //위치사용 가능
-        // currentPosition = position.coords; //현재 좌표 저장
         const time = new Date(position.timestamp); //시각 저장
         const coordinates = {
           lon: position.coords.longitude,
