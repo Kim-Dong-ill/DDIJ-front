@@ -119,14 +119,15 @@ function Kakao_main({ indexPet }) {
   async function findDragLoc() {
     try {
       console.log("현재위치로 보기 버튼 클릭시 데이터가져오기");
-      console.log("@@@@@@@@@@", dragMapCenter);
+      // console.log("@@@@@@@@@@", dragMapCenter);
       const body = {
         lon: dragMapCenter[1],
         lat: dragMapCenter[0],
       };
       const res = await axiosInstance.post("/index/geolocation/drag", body);
-      console.log(res.data);
+      console.log("드래그좌표 근처 모임 찾기", res.data);
       setCircles(res.data.circles);
+      clearMarkers();
       initializeMarkers(map);
     } catch (error) {
       console.log(error);
@@ -136,17 +137,18 @@ function Kakao_main({ indexPet }) {
   //내 위치로 보기 클릭시 좌표반경 데이터 가져오기
   async function findCircle() {
     console.log("내위치로 보기 클릭시 죄표 반경");
-    // const body = userLocation;
-    const body = {
-      //임시
-      lon: 126.943232,
-      lat: 37.5062528,
-    };
+    const body = userLocation;
+    // const body = {
+    //   //임시
+    //   lon: 126.943232,
+    //   lat: 37.5062528,
+    // };
     console.log(body);
     try {
       const res = await axiosInstance.post("/index/geolocation", body);
-      console.log("########", res.data);
-      setCircles(res.data.circles);
+      console.log("geoLoc위치로 모임 가져오기", res.data);
+      setCircles(res.data.circles || []);
+      clearMarkers();
       initializeMarkers(map);
     } catch (error) {
       console.log(error);
@@ -157,12 +159,12 @@ function Kakao_main({ indexPet }) {
   useEffect(() => {
     console.log("반경 구해서 모임 가져오기");
     async function findCircle() {
-      // const body = userLocation;
-      const body = {
-        //임시
-        lon: 126.943232,
-        lat: 37.5062528,
-      };
+      const body = userLocation;
+      // const body = {
+      //   //임시
+      //   lon: 126.943232,
+      //   lat: 37.5062528,
+      // };
       console.log(body);
       try {
         const res = await axiosInstance.post("/index/geolocation", body);
@@ -181,14 +183,14 @@ function Kakao_main({ indexPet }) {
     initializeMarkers(map);
   }, [markersInitialized, circles, map]);
 
-  // 초기 마커 추가해놓기
+  //마커 추가해놓기
   const initializeMarkers = (map) => {
     console.log("초기 마커 추가");
     console.log(circles);
 
     clearMarkers();
     const newMarkers = [];
-    if (circles) {
+    if (circles && circles.length > 0) {
       //기존 마커 배열 지도에 표시
       for (let i = 0; i < circles.length; i++) {
         let latlng = new kakao.maps.LatLng(
@@ -198,8 +200,8 @@ function Kakao_main({ indexPet }) {
         console.log(latlng);
         const marker = addMarker(latlng, map, imageSrc, imageSize, imageOption);
         newMarkers.push(marker);
-        setMarkers(newMarkers);
       }
+      setMarkers(newMarkers);
     }
   };
 
@@ -240,6 +242,7 @@ function Kakao_main({ indexPet }) {
   //내 위치 보기 클릭시
   const myLocation = () => {
     console.log("내위치보기 클릭");
+    clearMarkers();
     document.querySelector(".dragTarget").style.display = "none";
     setIsGeolocation(true);
     setIsDrag(false);

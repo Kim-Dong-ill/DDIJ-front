@@ -12,6 +12,7 @@ import {
 } from "../utils/validation";
 import { useSelector } from "react-redux";
 import axiosInstance from "../utils/axios";
+import { toast } from "react-toastify";
 
 function UserModifyPage() {
   const { kakao } = window;
@@ -144,6 +145,21 @@ function UserModifyPage() {
   const states = useSelector((state) => {
     return state.user.userData.user;
   });
+
+  function handleCheck(e) {
+    if (e.target.type === "button") {
+      toast.error("비밀번호 확인은 필수입니다!!", {
+        position: "bottom-right",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }
   return (
     <>
       <div
@@ -373,7 +389,10 @@ function UserModifyPage() {
             <Link to="/userinfo/:userid">
               <ButtonBl>취소</ButtonBl>
             </Link>
-            <ButtonYe type={passwordState ? `submit` : `button`}>
+            <ButtonYe
+              type={passwordState ? `submit` : `button`}
+              onClick={handleCheck}
+            >
               수정완료
             </ButtonYe>
           </div>

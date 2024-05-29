@@ -4,8 +4,11 @@ import ButtonBl from "../components/ButtonBl";
 import axiosInstance from "../utils/axios";
 import FileUpload from "../components/FileUpload";
 import { useNavigate, useParams } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 function AppealWritePage() {
+  const loginState = useSelector((state) => {
+    return state.user.userData.user.id;
+  });
   const navigate = useNavigate();
   const { userId } = useParams();
   const [appealData, setAppealData] = useState({
@@ -77,44 +80,50 @@ function AppealWritePage() {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        {/* <form> */}
-        <div className="w-[500px] bg-white border px-12 pb-[80px] pt-[120px]">
-          <FileUpload
-            images={appealData.images} // 선택된 이미지 FileUpload로 전달
-            onImageChange={handleImg} // 이미지 선택시 handleImg 호출
-            userId={userId} // 유저 아이디 전달
-          />
-          {/* 입력 글자 수 표시 */}
-          <div className="relative w-[400px] mb-7">
-            <textarea
-              className="w-full nanum h-[450px] px-[10px] resize-none border border-li-100 rounded-[5px]"
-              placeholder="내용을 입력하세요."
-              type="text"
-              name="text"
-              onChange={handleChange}
-              value={appealData.text}
-              maxLength={maxTextLength}
+      {loginState == userId ? (
+        <form onSubmit={handleSubmit}>
+          {/* <form> */}
+          <div className="w-[500px] bg-white border px-12 pb-[80px] pt-[120px]">
+            <FileUpload
+              images={appealData.images} // 선택된 이미지 FileUpload로 전달
+              onImageChange={handleImg} // 이미지 선택시 handleImg 호출
+              userId={userId} // 유저 아이디 전달
             />
-            <div className="absolute bottom-4 right-3 nanum text-da-500 text-sm">
-              {textLength}/{maxTextLength}
+            {/* 입력 글자 수 표시 */}
+            <div className="relative w-[400px] mb-7">
+              <textarea
+                className="w-full nanum h-[450px] px-[10px] resize-none border border-li-100 rounded-[5px]"
+                placeholder="내용을 입력하세요."
+                type="text"
+                name="text"
+                onChange={handleChange}
+                value={appealData.text}
+                maxLength={maxTextLength}
+              />
+              <div className="absolute bottom-4 right-3 nanum text-da-500 text-sm">
+                {textLength}/{maxTextLength}
+              </div>
+            </div>
+            <div className="flex justify-center h-[50px] gap-2 ">
+              <ButtonYe type="submit">
+                {/* <button>등록</button> */}
+                등록
+              </ButtonYe>
+              <ButtonBl
+                onClick={() => {
+                  navigate(-1);
+                }}
+              >
+                취소
+              </ButtonBl>
             </div>
           </div>
-          <div className="flex justify-center h-[50px] gap-2 ">
-            <ButtonYe type="submit">
-              {/* <button>등록</button> */}
-              등록
-            </ButtonYe>
-            <ButtonBl
-              onClick={() => {
-                navigate(-1);
-              }}
-            >
-              취소
-            </ButtonBl>
-          </div>
+        </form>
+      ) : (
+        <div className="w-[500px] bg-white border min-h-screen px-12 pb-[120px] pt-[120px]">
+          <img src="/images/errorPage05.svg" alt="" />
         </div>
-      </form>
+      )}
     </>
   );
 }
