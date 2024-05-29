@@ -114,17 +114,14 @@ function MyPetModifyPage() {
   }
 
   // petImage 값을 변경하는 함수
-  // onImageChane(handleImageChange) 콜백을 통해 새 이미지 명을 petImage로 업데이트
   const handleImageChange = (newImageName) => {
-    setPetImage(newImageName); // 새 이미지 명을 petImage로 업데이트
-    // setPetData를 통해 petData 안에 image를 새로운 이미지로 업데이트
+    setPetImage(newImageName);
     setPetData((prevState) => ({
       ...prevState,
       image: newImageName,
     }));
   };
 
-  // 새로 업데이트 된 petData를 서버로 전송
   async function onSubmit(data) {
     const body = {
       ...petData,
@@ -220,7 +217,7 @@ function MyPetModifyPage() {
         <FileFetchOne
           petData={petData}
           petImage={petImage}
-          onImageChange={handleImageChange} //onImageChane 콜백을 통해 새 이미지 명을 petImage로 업데이트
+          onImageChange={handleImageChange}
         />
         {/* // FileFetchOne으로 전달 */}
       </div>
