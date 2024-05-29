@@ -112,7 +112,7 @@ function RegisterPage() {
 
       toast.success("👨👩 회원가입을 성공했습니다.", {
         position: "bottom-right",
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
@@ -125,7 +125,7 @@ function RegisterPage() {
 
       toast.error("🤷‍♂️🤷‍♂️🤷‍♂️ 회원가입을 실패했습니다.!!", {
         position: "bottom-right",
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
