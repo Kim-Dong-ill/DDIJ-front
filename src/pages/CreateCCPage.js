@@ -41,7 +41,7 @@ function CreateCCPage() {
   const { kakao } = window;
   const [endAddress, setEndAddress] = useState(""); //시작주소
   const [startAddress, setStartAddress] = useState(""); //시작주소
-  const [endCoord, setEndCoord] = useState();
+  const [endCoord, setEndCoord] = useState([]);
   const [coordinates, setCoordinates] = useState([]);
   const loginState = useSelector((state) => {
     return state.user.userData.user.id;
@@ -91,6 +91,7 @@ function CreateCCPage() {
       usingTime: usingTime,
       peoples: peoples,
       startLoc: { coordinates: coordinates },
+      endLoc: { coordinates: endCoord },
     }));
   }, [startTime, usingTime, peoples, startDate, coordinates]);
 
