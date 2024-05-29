@@ -35,9 +35,6 @@ const usingTimeOptions = [
   { key: 7, value: 120, display: "2시간" },
 ];
 
-//            circle/new에 post요청보내기 // address를 coord로 변환하기
-
-
 function CreateCCPage() {
   const { kakao } = window;
   const [endAddress, setEndAddress] = useState(""); //시작주소
@@ -133,11 +130,12 @@ function CreateCCPage() {
     console.log(test);
     const body = {
       ...newCCInfo,
-
-      startTime: new Date(newCCInfo.startDate+"T"+newCCInfo.startTime+":00.000Z"),
-      usingTime: new Date(Number(newCCInfo.usingTime)),
-
-     
+      // // startTime을 변경된 형식으로 변환하여 전송
+      // startTime: new Date().toISOString().slice(0, 10),
+      // // usingTime을 숫자로 변환하여 전송
+      // usingTime: parseInt(newCCInfo.usingTime),
+      // startTime: new Date(`${startDate}T${startTime}`).toISOString(), // 수정된 부분: 날짜와 시간을 결합하여 ISO 형식으로 변환
+      // usingTime: parseInt(newCCInfo.usingTime), // 수정된 부분: usingTime을 숫자로 변환
     };
 
     console.log("sending Data:::", body);
@@ -203,34 +201,6 @@ function CreateCCPage() {
     },
   };
 
-  // handleSubmit navigate 버전
-  // async function onSubmit() {
-  //   alert("ddd");
-  //   const body = {
-  //     ...newCircle,
-  //   };
-  //   try {
-  //     await axiosInstance.post("/workingCircle", body);
-  //     navigate("/circles");
-  //   } catch (error) {
-  //     console.log("handleSubmit error");
-  //   }
-  // }
-
-  // no navigate 버전
-  // async function handleButtonClick() {
-  //   const body = { ...newCircle };
-  //   try {
-  //     await axiosInstance.post("/circleRouter", body);
-  //     // 원하는 경로로 이동
-  //     window.location.href = "/circles";
-  //   } catch (error) {
-  //     console.log("handleButtonClick error");
-  //   }
-  // }
-
-  //주소 좌표로 변경하기
-
   // //주소 좌표로 변경하기
   // useEffect(() => {
   //   var geocoder = new kakao.maps.services.Geocoder();
@@ -270,7 +240,6 @@ function CreateCCPage() {
   // }, [startAddress]);
 
   // 출발지 주소 좌표로 변경하기
-
   useEffect(() => {
     if (startAddress) {
       const geocoder = new kakao.maps.services.Geocoder();
@@ -352,13 +321,6 @@ function CreateCCPage() {
       },
     }).open();
   };
-
-  const checkDate =(date) =>{
-    if(new Date((date.startDate + "T" + date.startTime + ":00.000Z").getTime()) > (new Date.now())){
-      return false;
-    }
-    else handleChangeValue()
-  }
 
   const handleTextFieldClick = () => {
     openPostcode(); // TextFieldLine 클릭 시 주소 입력 창 열기
@@ -539,6 +501,14 @@ function CreateCCPage() {
               </label>
 
               <TextFieldLine
+                // onChange={(e) => {
+                //   const newStartDate = e.target.value;
+                //   setStartDate(newStartDate); // 상태 업데이트
+                //   setnewCCInfo((prev) => ({
+                //     ...prev,
+                //     startDate: newStartDate,
+                //   })); // newCCInfo도 업데이트
+                // }}
                 {...register("startDate", validationRules.startDate)}
                 onChange={(e) => setStartDate(e.target.value)}
                 // onInput={(e) => setStartDate(e.target.value)}
@@ -561,7 +531,6 @@ function CreateCCPage() {
               </div>
             )} */}
             </div>
-
             <div className="mb-6">
               <label
                 htmlFor="startTime"
@@ -621,6 +590,7 @@ function CreateCCPage() {
                 // }
                 className="w-full border px-4 py- 2 mb-4 rounded-md block h-[60px] cursor-pointer border-[#e0e3e7] hover:border-ye-800 focus:border-ye-600 focus:border-2 outline-none"
                 disabled={checkCircle ? false : true}
+                // onChange={(e) => setUsingTime(e.target.value)}
                 onChange={handleChangeValue}
                 value={newCCInfo.usingTime}
                 error={!!errors.usingTime}
@@ -628,7 +598,7 @@ function CreateCCPage() {
               >
                 <option value="">소요 시간을 선택해주세요.</option>
                 {usingTimeOptions.map((option) => (
-                  <option key={option.key} value={option.value*1000*60}>
+                  <option key={option.key} value={option.value}>
                     {option.display}
                   </option>
                 ))}
