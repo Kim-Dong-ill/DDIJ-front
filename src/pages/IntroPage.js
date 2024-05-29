@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import $ from "jquery";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 //css
 import "../assets/animation.css";
 
 function IntroPage() {
-  const locationHook = useLocation();
-  const [currentFirstUrl, setCurrentFirstUrl] = useState(null);
-  const splitUrl = locationHook?.pathname?.split("/") ?? null;
+  // const locationHook = useLocation();
+  // const [currentFirstUrl, setCurrentFirstUrl] = useState(null);
+  // const splitUrl = locationHook?.pathname?.split("/") ?? null;
   function scrollTop() {
     $("html, body").scrollTop("0");
   }
