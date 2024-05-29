@@ -35,6 +35,8 @@ const usingTimeOptions = [
   { key: 7, value: 120, display: "2시간" },
 ];
 
+//            circle/new에 post요청보내기 // address를 coord로 변환하기
+
 function CreateCCPage() {
   const { kakao } = window;
   const [endAddress, setEndAddress] = useState(""); //시작주소
@@ -124,6 +126,11 @@ function CreateCCPage() {
     console.log(test);
     const body = {
       ...newCCInfo,
+
+      startTime: new Date(
+        newCCInfo.startDate + "T" + newCCInfo.startTime + ":00.000Z"
+      ),
+      usingTime: new Date(Number(newCCInfo.usingTime)),
     };
 
     console.log("sending Data:::", body);
@@ -166,16 +173,16 @@ function CreateCCPage() {
   const validationRules = {
     name: {
       required: "모임명은 필수 입니다.",
-      minLength: {
-        value: 4,
-        message: "최소 4글자 입니다.",
+      maxLength: {
+        value: 10,
+        message: "최대 10글자 입니다.",
       },
     },
     text: {
       required: "소개말은 필수입니다.",
-      minLength: {
-        value: 4,
-        message: "최소 4글자 입니다.",
+      maxLength: {
+        value: 100,
+        message: "100자 이내로 작성해 주세요.",
       },
     },
     startTime: {
@@ -270,6 +277,15 @@ function CreateCCPage() {
         setStartAddress(data.address);
       },
     }).open();
+  };
+
+  const checkDate = (date) => {
+    if (
+      new Date((date.startDate + "T" + date.startTime + ":00.000Z").getTime()) >
+      new Date.now()
+    ) {
+      return false;
+    } else handleChangeValue();
   };
 
   const handleTextFieldClick = () => {
@@ -533,7 +549,7 @@ function CreateCCPage() {
               >
                 <option value="">소요 시간을 선택해주세요.</option>
                 {usingTimeOptions.map((option) => (
-                  <option key={option.key} value={option.value}>
+                  <option key={option.key} value={option.value * 1000 * 60}>
                     {option.display}
                   </option>
                 ))}
