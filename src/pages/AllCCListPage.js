@@ -1,12 +1,16 @@
 import React, { useState,useEffect } from "react";
-import { Link,useParams} from "react-router-dom";
+import { Link} from "react-router-dom";
 import axiosInstance from "../utils/axios";
 import { useSelector } from "react-redux";
 
 function AllCCListPage({}) {
   const [tempArray, setTempArray] = useState([]);
   const userLocation = useSelector((state) => {
-    return [state.user.userData.user.location.coordinates[0],state.user.userData.user.location.coordinates[1]]
+    console.log(state)
+    return [
+      state.user.userData.user.location.coordinates[0],
+      state.user.userData.user.location.coordinates[1]
+    ]
   });
   const loginState = useSelector((state) => {
     return state.user.userData.user.id;
@@ -107,7 +111,6 @@ function AllCCListPage({}) {
             <span className="text-[15px]">거리순</span>
           </button>
         </div>
-        버튼 3{/* 모임 리스트 - map돌릴구간 */}
         <div className="w-[500px] px-[18px] flex justify-between">
           <div className="w-[100%] flex flex-col items-center">
             {ViewData.map((item, idx) => {
@@ -115,9 +118,13 @@ function AllCCListPage({}) {
               return (
                 <>
                   {rest === 0 ? (
-                    <Link to="/circles/:circleid">
+                     <Link
+                         to={`/circles/${item._id}`}
+                         state={{item}}
+                         key={item._id}
+                     >
                       <div className="w-[400px] h-auto bg-ye-300 mb-[20px] rounded-lg px-[12px] py-[10px]">
-                        <p className="text-right nanumBold text-xs">3/5</p>
+                        <p className="text-right nanumBold text-xs">{item.nowUser}/{item.peoples}</p>
                         <div className="flex gap-3 items-center">
                           <div className="w-[80px] h-[80px] bg-slate-400 rounded-[50px] flex-shrink-0 mr-[5px] text-center">
                             <img
@@ -150,9 +157,13 @@ function AllCCListPage({}) {
                       </div>
                     </Link>
                   ) : (
-                    <Link to="/circles/:circleid">
+                      <Link
+                          to={`/circles/${item._id}`}
+                          state={{item}}
+                          key={item._id}
+                      >
                       <div className="w-[400px] h-auto bg-ye-200 mb-[20px] rounded-lg px-[12px] py-[10px]">
-                        <p className="text-right nanumBold text-xs">3/5</p>  {/*user수를 구해와서 연산을붙여야함*/}
+                        <p className="text-right nanumBold text-xs">{item.nowUser}/{item.peoples}</p>
                         <div className="flex gap-3 items-center">
                           <div className="w-[80px] h-[80px] bg-slate-400 rounded-[50px] flex-shrink-0 mr-[5px] text-center">
                             <img
