@@ -41,15 +41,12 @@ function CreateCCPage() {
   const { kakao } = window;
   const [endAddress, setEndAddress] = useState(""); //시작주소
   const [startAddress, setStartAddress] = useState(""); //시작주소
-  const [endCoord, setEndCoord] = useState();
+  const [endCoord, setEndCoord] = useState([]);
   const [coordinates, setCoordinates] = useState([]);
   const loginState = useSelector((state) => {
     return state.user.userData.user.id;
   });
-  // const loginLocation = useSelector((state) => {
-  //   return state.user.userData.user.location.coordinates;
-  // });
-  // console.log(loginLocation);
+
   const [startTime, setStartTime] = useState("");
   const [startDate, setStartDate] = useState("");
   const [usingTime, setUsingTime] = useState([
@@ -68,7 +65,7 @@ function CreateCCPage() {
     formState: { errors },
     reset,
     // watch,
-  } = useForm({ mode: "onChange" });
+  } = useForm({ mode: "all" });
   const dispatch = useDispatch();
 
   const [startshowBox, setStartshowBox] = useState(false); // 출발지 토글박스
@@ -94,11 +91,18 @@ function CreateCCPage() {
       usingTime: usingTime,
       peoples: peoples,
       startLoc: { coordinates: coordinates },
-      // startLoc: { type: "Point", coordinates: coordinates },
-      // startLoc: coordinates,
-      // endLoc: endCoord,
+      endLoc: { endCoordinates: endCoord },
+      startAdd: startAddress,
     }));
-  }, [startTime, usingTime, peoples, startDate, coordinates]);
+  }, [
+    startTime,
+    usingTime,
+    peoples,
+    startDate,
+    coordinates,
+    endCoord,
+    startAddress,
+  ]);
 
   // 출발지 토글박스
   const startToggleBox = () => {
@@ -149,6 +153,7 @@ function CreateCCPage() {
         position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: true,
+
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
@@ -178,7 +183,11 @@ function CreateCCPage() {
 
   const validationRules = {
     name: {
-      required: "모임명은 필수 입니다.",
+      required: {
+        value: true,
+        message: "비밀번호는 필수입니다.",
+      },
+
       maxLength: {
         value: 10,
         message: "최대 10글자 입니다.",
@@ -202,74 +211,7 @@ function CreateCCPage() {
     },
   };
 
-  // handleSubmit navigate 버전
-  // async function onSubmit() {
-  //   alert("ddd");
-  //   const body = {
-  //     ...newCircle,
-  //   };
-  //   try {
-  //     await axiosInstance.post("/workingCircle", body);
-  //     navigate("/circles");
-  //   } catch (error) {
-  //     console.log("handleSubmit error");
-  //   }
-  // }
-
-  // no navigate 버전
-  // async function handleButtonClick() {
-  //   const body = { ...newCircle };
-  //   try {
-  //     await axiosInstance.post("/circleRouter", body);
-  //     // 원하는 경로로 이동
-  //     window.location.href = "/circles";
-  //   } catch (error) {
-  //     console.log("handleButtonClick error");
-  //   }
-  // }
-
-  //주소 좌표로 변경하기
-
-  // //주소 좌표로 변경하기
-  // useEffect(() => {
-  //   var geocoder = new kakao.maps.services.Geocoder();
-
-  //   var callback = function (result, status) {
-  //     if (status === kakao.maps.services.Status.OK) {
-  //       const coordinates = [
-  //         Number(result[0].road_address.x),
-  //         Number(result[0].road_address.y),
-  //       ];
-  //       console.log(coordinates);
-  //       setEndCoord(coordinates);
-  //       endToggleBox();
-  //     }
-  //   };
-
-  //   geocoder.addressSearch(`${endAddress}`, callback);
-  // }, [endAddress]);
-
-  // //주소 좌표로 변경하기
-  // useEffect(() => {
-  //   var startGeocoder = new kakao.maps.services.Geocoder();
-
-  //   var callback = function (result, status) {
-  //     if (status === kakao.maps.services.Status.OK) {
-  //       const coordinates = [
-  //         Number(result[0].road_address.x),
-  //         Number(result[0].road_address.y),
-  //       ];
-  //       console.log(coordinates);
-  //       setStartCoord(coordinates);
-  //       startToggleBox();
-  //     }
-  //   };
-
-  //   startGeocoder.addressSearch(`${startAddress}`, callback);
-  // }, [startAddress]);
-
   // 출발지 주소 좌표로 변경하기
-
   useEffect(() => {
     if (startAddress) {
       const geocoder = new kakao.maps.services.Geocoder();
@@ -411,9 +353,14 @@ function CreateCCPage() {
                 fullWidth
                 onChange={handleChangeValue}
                 value={newCCInfo.name}
-                error={!!errors.name}
-                helperText={errors.name?.message}
+                // error={!!errors.name}
+                // helperText={errors.name?.message}
               />
+              {checkCircle && errors.name && (
+                <div className="nanumBold text-red-500 text-xs mt-1">
+                  {errors.name.message}
+                </div>
+              )}
             </div>
             {/* 모임명end */}
             {/* 소개말 */}
@@ -462,15 +409,27 @@ function CreateCCPage() {
                   // readOnly
                   className="cursor-pointer"
                   disabled
-                  value={newCCInfo.startLoc}
+                  // value={newCCInfo.startLoc}
+                  value={startAddress}
                 />
               </div>
-              <img
+              <div className="relative h-[37px]">
+                {checkCircle && (
+                  <img
+                    src="/images/plusglass_icon.svg"
+                    alt="돋보기 아이콘"
+                    className="block absolute left-[369px] bottom-[57px] cursor-pointer"
+                    onClick={starthandleTextFieldClick}
+                    disabled={!checkCircle}
+                  />
+                )}
+              </div>
+              {/* <img
                 src="/images/plusglass_icon.svg"
                 alt="돋보기 아이콘"
                 className="block relative  left-[370px] bottom-[37px] cursor-pointer"
                 onClick={starthandleTextFieldClick}
-              />
+              /> */}
               {startshowBox && (
                 <div className="bg-gray-100 px-4 py-2 mb-4 border-2 rounded-md z-10 startstart">
                   <Kakao_start_point
@@ -505,16 +464,28 @@ function CreateCCPage() {
                   // readOnly
                   className="cursor-pointer"
                   disabled
-                  value={newCCInfo.endLoc}
+                  // value={newCCInfo.endLoc}
+                  value={endAddress}
                 />
               </div>
-              <img
+              <div className="relative h-[37px]">
+                {checkCircle && (
+                  <img
+                    src="/images/plusglass_icon.svg"
+                    alt="돋보기 아이콘"
+                    className="block absolute left-[369px] bottom-[57px] cursor-pointer"
+                    onClick={handleTextFieldClick}
+                    disabled={!checkCircle}
+                  />
+                )}
+              </div>
+              {/* <img
                 src="/images/plusglass_icon.svg"
                 alt="돋보기 아이콘"
                 className="block relative  left-[370px] bottom-[37px] cursor-pointer"
                 // onClick={endToggleBox}
                 onClick={handleTextFieldClick}
-              />
+              /> */}
               {endshowBox && (
                 <div className=" bg-gray-100 p-1  mb-4 border-2 rounded-md ">
                   <Kakao_point
@@ -542,7 +513,6 @@ function CreateCCPage() {
               <TextFieldLine
                 {...register("startDate", validationRules.startDate)}
                 onChange={(e) => setStartDate(e.target.value)}
-                // onInput={(e) => setStartDate(e.target.value)}
                 required
                 id="startDate"
                 name="startDate"
@@ -555,14 +525,7 @@ function CreateCCPage() {
                 error={!!errors.startDate}
                 helperText={errors.startDate?.message}
               />
-
-              {/* {errors.startDate && (
-              <div className="nanumBold text-red-500 text-xs mt-1">
-                {errors.startDate.message}
-              </div>
-            )} */}
             </div>
-
             <div className="mb-6">
               <label
                 htmlFor="startTime"
@@ -592,9 +555,14 @@ function CreateCCPage() {
                 onChange={(e) => setStartTime(e.target.value)}
                 disabled={checkCircle ? false : true}
                 value={newCCInfo.startTime}
-                error={!!errors.startTime}
-                helperText={errors.startTime?.message}
+                // error={!!errors.startTime}
+                // helperText={errors.startTime?.message}
               />
+              {checkCircle && errors.startTime && (
+                <div className="nanumBold text-red-500 text-xs mt-1">
+                  {errors.startTime.message}
+                </div>
+              )}
             </div>
 
             <div>
@@ -622,6 +590,7 @@ function CreateCCPage() {
                 // }
                 className="w-full border px-4 py- 2 mb-4 rounded-md block h-[60px] cursor-pointer border-[#e0e3e7] hover:border-ye-800 focus:border-ye-600 focus:border-2 outline-none"
                 disabled={checkCircle ? false : true}
+                // onChange={(e) => setUsingTime(e.target.value)}
                 onChange={handleChangeValue}
                 value={newCCInfo.usingTime}
                 error={!!errors.usingTime}
@@ -685,9 +654,10 @@ function CreateCCPage() {
               {/* <button>취소</button> */}
             </Link>
             {/* <Link to="/circles"> */}
-            {/* <ButtonYe onClick={handleButtonClick}>등록</ButtonYe> */}
-            <ButtonYe type="submit">등록</ButtonYe>
-            {/* <button>등록</button> */}
+            <ButtonYe type="submit" disabled={checkCircle ? false : true}>
+              등록
+            </ButtonYe>
+            {/* <ButtonYe type="submit">등록</ButtonYe> */}
             {/* </Link> */}
           </div>
         </form>

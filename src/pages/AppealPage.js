@@ -251,13 +251,16 @@ function AppealPage({}) {
       )}
       {/* 게시글 끝 */}
 
-      <div className="w-[490px] flex justify-end fixed bottom-[90px]">
-        <Link to={`/appealwrite/${userId}`}>
-          <div className="bg-ye-400 text-white navbar py-2 px-3 rounded-[50px]">
-            글써보개
-          </div>
-        </Link>
-      </div>
+      {userId == loginState ? (
+        <div className="w-[490px] flex justify-end fixed bottom-[90px]">
+          <Link to={`/appealwrite/${userId}`}>
+            <div className="bg-ye-400 text-white navbar py-2 px-3 rounded-[50px]">
+              글써보개
+            </div>
+          </Link>
+        </div>
+      ) : null}
+
       <Navbar />
     </div>
   );
