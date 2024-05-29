@@ -1,18 +1,123 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Kakao_StrEnd from "../kakaoMap/Kakao_StrEnd";
+import axiosInstance from "../utils/axios";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 function CCViewPage() {
-  let [textData, setTextData] = useState("");
-  const [commentList, setCommentList] = useState([]);
+  // 유효성 검사
+  const {
+    register,
+    handleSubmit,
+    formState: { error },
+    reset,
+    // watch,
+  } = useForm({ mode: "onChange" });
+  const dispatch = useDispatch();
+
+  function onSubmit({ textData }) {
+    const body = {
+      textData,
+    };
+    textData.preventDefault(); // 폼의 기본제출 동작 막기
+    handleInsertComment(textData); // 댓글추가
+  }
+
+  let [textData, setTextData] = useState(""); // 댓글 입력
+  const [commentList, setCommentList] = useState([]); // 댓글 리스트
+  const [circleViewCon, setCircleViewCon] = useState(null); // 모임 content (circles/detail)
+  const [moreComments, setMoreComments] = useState(false); // 댓글 더보기
+  const userData = useSelector((state) => state.user?.userData); // 유저데이터 가져오기
+
+  const { circleId } = useParams();
+
+  // 현재 로그인한 사용자 ID
+  // const loggedInUserId = userData.user.id;
+  // 댓글 작성자 ID
+  // const commentAuthorId = commentList.user.id;
+  // 현재 로그인한 사용자가 댓글의 작성자인지 여부 (만약 댓글삭제가 생길꺼라면 추가)
+  // const isCommentAuthor = loggedInUserId === commentAuthorId;
+
+  // 댓글 더보기
+  const showComments = () => {
+    setMoreComments((prevState) => !prevState);
+  };
+
+  // handleSubmit
+  // function handleSubmit(e) {
+  //   e.preventDefault(); // 폼의 기본제출 동작 막기
+  //   handleInsertComment(textData); // 댓글추가
+  //   setTextData(""); // 입력필드 초기화
+  // }
+
+  // onChange
   function textDataChange(e) {
     setTextData(e.target.value);
     // console.log(textData);
   }
-  function clickListener() {
-    let temp = [...commentList];
-    setCommentList([textData, ...temp]);
-    setTextData("");
-  }
+  // function clickListener() {
+  //   let temp = [...commentList];
+  //   setCommentList([textData, ...temp]);
+  //   setTextData("");
+  // }
+
+  // 모임 정보 가져오기
+  // useEffect(() => {
+  //   async function loadCircleViewCon() {
+  //     try {
+  //       const res = await axiosInstance.get(`/ciecles`);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // });
+
+  // 모임댓글 가져오기 -Get
+  useEffect(() => {
+    async function comment() {
+      try {
+        const res = await axiosInstance.get(`circles/${circleId}/comment`);
+        setCommentList(res.data.circleComment);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    comment();
+  }, []);
+  if (!circleViewCon) return null;
+
+  // 모임댓글 추가-Post
+  const handleInsertComment = async (commentContent) => {
+    const commentData = {
+      content: commentContent,
+      circleId: circleId,
+      userId: userData.user.id,
+    };
+    try {
+      const res = await axiosInstance.post(
+        `/circles/${circleId}/comment`,
+        commentData
+      );
+      const newComment = res.data.comment;
+      setCommentList([...commentList, newComment]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // 모임 댓글 유효성검사
+  const commentText = {
+    required: {
+      value: true,
+      message: "댓글을 입력해 주세요.",
+    },
+    maxLength: {
+      value: 50,
+      message: "최대 50자 입니다.",
+    },
+  };
+
   return (
     <>
       <div className="grid gap-3 bg-da-400 pt-[90px] pb-[100px] border-[1px]">
@@ -95,20 +200,31 @@ function CCViewPage() {
             <div>
               <p className="nanumBold text-[18px]">할 말이 있개!</p>
             </div>
-            <div className=" flex my-[20px] gap-[10px] text-black">
-              <input
-                type="text"
-                placeholder="댓글입력"
-                className=" border w-[365px] rounded-[25px] px-[10px] py-[5px] nanum"
-                onChange={textDataChange}
-                value={textData}
-              />
-              <button
-                className="w-[50px] bg-da-100 rounded-[50px]"
-                onClick={clickListener}
-              >
-                등록
-              </button>
+
+            {/* 댓글입력창 */}
+            <div
+              className=" flex my-[20px] gap-[10px] text-black"
+              onClick={handleInsertComment}
+            >
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <input
+                  type="text"
+                  placeholder="댓글입력"
+                  className=" border w-[365px] rounded-[25px] px-[10px] py-[5px] nanum"
+                  onChange={textDataChange}
+                  value={textData}
+                  id="commentText"
+                  {...register("commentText", commentText)}
+                />
+                {error.commentText && <div>{error.commentText.message}</div>}
+                <button
+                  className="w-[50px] bg-da-100 rounded-[50px]"
+                  // onClick={clickListener}
+                  type="submit"
+                >
+                  등록
+                </button>
+              </form>
             </div>
             {/* <div className="flex justify-between mb-[20px] gap-[20px] items-center w-full">
               <div className="flex items-center gap-1">
@@ -123,29 +239,35 @@ function CCViewPage() {
                   </div>
                 </div> */}
 
-            {commentList.map((item, idx) => {
-              return (
-                <>
-                  <div className="flex justify-between mb-[20px] gap-[20px] items-center w-full ">
-                    <div className="flex items-center gap-1">
-                      <div className="flex gap-[1px] ">
-                        <img
-                          src="/images/commenticon_white.svg"
-                          alt=""
-                          className="block"
-                        />
-                        <div className="flex items-center w-[90px]">
-                          <p className="nanumBold">닉네임6글자</p>
+            {commentList
+              .slice(0, moreComments ? commentList.length : 1)
+              .map((item, idx) => {
+                return (
+                  <>
+                    <div
+                      className="flex justify-between mb-[20px] gap-[20px] items-center w-full"
+                      comment={item}
+                      key={idx}
+                    >
+                      <div className="flex items-center gap-1">
+                        <div className="flex gap-[1px] ">
+                          <img
+                            src="/images/commenticon_white.svg"
+                            alt=""
+                            className="block"
+                          />
+                          <div className="flex items-center w-[90px]">
+                            <p className="nanumBold">{item.user.nickName}</p>
+                          </div>
+                        </div>
+                        <div className="nanum flex-wrap w-[280px] overflow-wrap">
+                          {item.content}
                         </div>
                       </div>
-                      <div className="nanum flex-wrap w-[280px] overflow-wrap">
-                        {item}
-                      </div>
                     </div>
-                  </div>
-                </>
-              );
-            })}
+                  </>
+                );
+              })}
             {/* </div>
             </div> */}
             {/*=============== 댓글구간 끝 */}
