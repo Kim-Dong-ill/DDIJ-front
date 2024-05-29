@@ -1,51 +1,84 @@
 import React, { useState,useEffect } from "react";
-import { Link,useParams} from "react-router-dom";
+import { Link} from "react-router-dom";
 import axiosInstance from "../utils/axios";
 import { useSelector } from "react-redux";
 
 function AllCCListPage({}) {
   const [tempArray, setTempArray] = useState([]);
+  const userLocation = useSelector((state) => {
+    console.log(state)
+    return [
+      state.user.userData.user.location.coordinates[0],
+      state.user.userData.user.location.coordinates[1]
+    ]
+  });
   const loginState = useSelector((state) => {
     return state.user.userData.user.id;
   });
-
+  const [FLAG, setFLAG] = useState(0);// 0->전체목록, 1-> 내목록
   // -> 이미지 매칭시키기, 약속시간 형식수정하기, 출발장소 띄워주기, 현재 인원수 총인원수 계산해서 띄워주기, 내모임,시간순,거리순 반응하기
   const [AllCircleData, setAllCircleData] = useState([]);
+  const [UserCircleData, setUserCircleData] = useState([])
+  const [AllCircleByDate, setAllCircleByDate] = useState([])
+  const [AllCircleByDist, setAllCircleByDist] = useState([])
+  const [UserCircleByDate, setUserCircleByDate] = useState([])
+  const [UserCircleByDist, setUserCircleByDist] = useState([])
+
   const [ViewData, setViewData] = useState([{
     name: " ",
     startTime : " "
   }]);
-  const [UserCircleData, setUserCircleData] = useState([])
+
 
   useEffect(() => {
     const loadCCList = async () => {
       try {
-        const res = await axiosInstance.get(`/circles/${loginState}`)
+        const userid = loginState
+        console.log(userid)
+        const res = await axiosInstance.get(`/circles/${userid}`)
         const body ={
-
+          userLocation : userLocation
         }
-        const resByData = await axiosInstance.post(`/circles/${loginState}`,body)
-        console.log("cclist입니다=>>>>>>", res.data.allCircles);
+        console.log(body)
+        const sortRes =  await axiosInstance.post(`/circles/${loginState}`,body)
         setAllCircleData(res.data.allCircles);
-        setUserCircleData(res.data.userCircles)
+        setUserCircleData(res.data.userCircles);
+        setAllCircleByDate(sortRes.data.byDate)
+        setAllCircleByDist(sortRes.data.byDist)
+        setUserCircleByDate(sortRes.data.userByDate)
+        setUserCircleByDist(sortRes.data.userByDist)
         setViewData(res.data.allCircles)
       } catch (error) {}
     };
     loadCCList();
   }, [loginState]);
+
+  //=============버튼클릭 핸들러=====================
+  const AllButtonClick =()=>{
+    setViewData(AllCircleData);
+    setFLAG(0)
+  }
+
+  const UserButtonClick =() =>{
+    setViewData(UserCircleData);
+    setFLAG(1)
+  }
+
+
+
   // realignment
   return (
     <div className="pt-[90px] pb-[100px] bg-white border-[1px] ">
       {/* 상단버튼section start */}
       <div className=" flex justify-between mb-[25px]">
         <button className=" w-1/2  border-b  border-gray-200 shadow-bottom px-2 py-3 text-[15px] hover:border-gray-800 "
-          onClick={() => setViewData(AllCircleData)}
+          onClick={AllButtonClick}
         >
           전체
         </button>
         <button
           className="w-1/2 border-b border-gray-200 shadow-bottom px-2 py-3 text-[15px] hover:border-gray-800"
-          onClick={() => setViewData(UserCircleData)}
+          onClick={UserButtonClick}
         >
           내가 참여 할 모임
         </button>
@@ -53,21 +86,24 @@ function AllCCListPage({}) {
       <div className="flex flex-col items-center ">
         <div className="w-[400px] flex justify-start mb-[10px] gap-[10px]">
           <button className="flex items-center rounded-[10px] h-[27px] p-[5px] border border-da-200"
-                  onClick={ViewData===AllCircleData ? ()=>setViewData(AllCircleData) : ()=>setViewData(UserCircleData)}          >
+                  onClick={FLAG===0? ()=>setViewData(AllCircleData) : ()=>setViewData(UserCircleData)}          >
             <img
               src="/images/icon_filter.svg"
               className="w-[15px] h-[15px] mr-[3px]"
             />
             <span className="text-[15px]">전체보기</span>
           </button>
-          <button className="flex items-center rounded-[10px] h-[27px] p-[5px] border border-da-100">
+          <button className="flex items-center rounded-[10px] h-[27px] p-[5px] border border-da-100"
+                  onClick={ FLAG===0? ()=>setViewData(AllCircleByDate): ()=>setViewData(UserCircleByDate)}
+          >
             <img
               src="/images/icon_alarm.svg"
               className="w-[17px] h-[17px] mt-[3px] mr-[3px]"
             />
             <span className="text-[15px]">시간순</span>
           </button>
-          <button className="flex items-center rounded-[10px] h-[27px] p-[5px] border border-da-100">
+          <button className="flex items-center rounded-[10px] h-[27px] p-[5px] border border-da-100"
+                  onClick={ FLAG===0? ()=>setViewData(AllCircleByDist): ()=>setViewData(UserCircleByDist)}>
             <img
               src="/images/icon_flag.svg"
               className="w-[17px] h-[17px] mt-[3px] mr-[3px]"
@@ -75,7 +111,6 @@ function AllCCListPage({}) {
             <span className="text-[15px]">거리순</span>
           </button>
         </div>
-        버튼 3{/* 모임 리스트 - map돌릴구간 */}
         <div className="w-[500px] px-[18px] flex justify-between">
           <div className="w-[100%] flex flex-col items-center">
             {ViewData.map((item, idx) => {
@@ -83,9 +118,13 @@ function AllCCListPage({}) {
               return (
                 <>
                   {rest === 0 ? (
-                    <Link to="/circles/:circleid">
+                     <Link
+                         to={`/circles/${item._id}`}
+                         state={{item}}
+                         key={item._id}
+                     >
                       <div className="w-[400px] h-auto bg-ye-300 mb-[20px] rounded-lg px-[12px] py-[10px]">
-                        <p className="text-right nanumBold text-xs">3/5</p>
+                        <p className="text-right nanumBold text-xs">{item.nowUser}/{item.peoples}</p>
                         <div className="flex gap-3 items-center">
                           <div className="w-[80px] h-[80px] bg-slate-400 rounded-[50px] flex-shrink-0 mr-[5px] text-center">
                             <img
@@ -102,7 +141,7 @@ function AllCCListPage({}) {
                                 약속시간{" "}
                               </p>
                               <span className="text-da-200 nanum text-[13px]">
-                                {item.startTime}
+                                {item.DateData} {item.TimeData}
                               </span>
                             </div>
                             <div className="flex gap-[7px]">
@@ -110,8 +149,7 @@ function AllCCListPage({}) {
                                 출발장소{" "}
                               </p>
                               <span className="text-da-200 nanum text-[13px]">
-                                {/*{item.startLoc}*/}
-                                {/*{item.endLoc}*/}
+                                  {item.startAdd}
                               </span>
                             </div>
                           </div>
@@ -119,9 +157,13 @@ function AllCCListPage({}) {
                       </div>
                     </Link>
                   ) : (
-                    <Link to="/circles/:circleid">
+                      <Link
+                          to={`/circles/${item._id}`}
+                          state={{item}}
+                          key={item._id}
+                      >
                       <div className="w-[400px] h-auto bg-ye-200 mb-[20px] rounded-lg px-[12px] py-[10px]">
-                        <p className="text-right nanumBold text-xs">3/5</p>  {/*user수를 구해와서 연산을붙여야함*/}
+                        <p className="text-right nanumBold text-xs">{item.nowUser}/{item.peoples}</p>
                         <div className="flex gap-3 items-center">
                           <div className="w-[80px] h-[80px] bg-slate-400 rounded-[50px] flex-shrink-0 mr-[5px] text-center">
                             <img
@@ -138,7 +180,7 @@ function AllCCListPage({}) {
                                 약속시간{" "}
                               </p>
                               <span className="text-da-200 nanum text-[13px]">
-                                {item.startTime}
+                                 {item.DateData} {item.TimeData}
                               </span>
                             </div>
                             <div className="flex gap-[7px]">
@@ -146,8 +188,7 @@ function AllCCListPage({}) {
                                 출발장소{" "}
                               </p>
                               <span className="text-da-200 nanum text-[13px]">
-                                 {/*{item.startLoc}*/}
-                                {/*{item.endLoc}*/}
+                               {item.startAdd}
                               </span>
                             </div>
                           </div>
