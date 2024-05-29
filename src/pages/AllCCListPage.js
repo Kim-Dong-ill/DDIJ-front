@@ -61,6 +61,7 @@ function AllCCListPage({}) {
   }
 
 
+
   // realignment
   return (
     <div className="pt-[90px] pb-[100px] bg-white border-[1px] ">
@@ -133,7 +134,7 @@ function AllCCListPage({}) {
                                 약속시간{" "}
                               </p>
                               <span className="text-da-200 nanum text-[13px]">
-                                {item.startTime}
+                                {item.DateData} {item.TimeData}
                               </span>
                             </div>
                             <div className="flex gap-[7px]">
@@ -141,8 +142,7 @@ function AllCCListPage({}) {
                                 출발장소{" "}
                               </p>
                               <span className="text-da-200 nanum text-[13px]">
-                                {/*{item.startLoc}*/}
-                                {/*{item.endLoc}*/}
+                                  {item.startAdd}
                               </span>
                             </div>
                           </div>
@@ -169,7 +169,7 @@ function AllCCListPage({}) {
                                 약속시간{" "}
                               </p>
                               <span className="text-da-200 nanum text-[13px]">
-                                {item.startTime}
+                                 {item.DateData} {item.TimeData}
                               </span>
                             </div>
                             <div className="flex gap-[7px]">
@@ -177,8 +177,7 @@ function AllCCListPage({}) {
                                 출발장소{" "}
                               </p>
                               <span className="text-da-200 nanum text-[13px]">
-                                 {/*{item.startLoc}*/}
-                                {/*{item.endLoc}*/}
+                               {item.startAdd}
                               </span>
                             </div>
                           </div>

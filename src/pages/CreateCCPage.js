@@ -361,7 +361,7 @@ function CreateCCPage() {
   }
 
   const handleTextFieldClick = () => {
-    openPostcode(); // TextFieldLine 클릭 시 주소 입력 창 열기
+    return openPostcode(); // TextFieldLine 클릭 시 주소 입력 창 열기
   };
   const starthandleTextFieldClick = () => {
     startOpenPostcode(); // TextFieldLine 클릭 시 주소 입력 창 열기
@@ -461,7 +461,6 @@ function CreateCCPage() {
                   // readOnly
                   className="cursor-pointer"
                   disabled
-                  value={newCCInfo.startLoc}
                 />
               </div>
               <img
@@ -504,7 +503,6 @@ function CreateCCPage() {
                   // readOnly
                   className="cursor-pointer"
                   disabled
-                  value={newCCInfo.endLoc}
                 />
               </div>
               <img
