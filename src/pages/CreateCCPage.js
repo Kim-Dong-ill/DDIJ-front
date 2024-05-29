@@ -44,10 +44,7 @@ function CreateCCPage() {
   const loginState = useSelector((state) => {
     return state.user.userData.user.id;
   });
-  // const loginLocation = useSelector((state) => {
-  //   return state.user.userData.user.location.coordinates;
-  // });
-  // console.log(loginLocation);
+
   const [startTime, setStartTime] = useState("");
   const [startDate, setStartDate] = useState("");
   const [usingTime, setUsingTime] = useState([
@@ -92,9 +89,6 @@ function CreateCCPage() {
       usingTime: usingTime,
       peoples: peoples,
       startLoc: { coordinates: coordinates },
-      // startLoc: { type: "Point", coordinates: coordinates },
-      // startLoc: coordinates,
-      // endLoc: endCoord,
     }));
   }, [startTime, usingTime, peoples, startDate, coordinates]);
 
@@ -130,12 +124,6 @@ function CreateCCPage() {
     console.log(test);
     const body = {
       ...newCCInfo,
-      // // startTime을 변경된 형식으로 변환하여 전송
-      // startTime: new Date().toISOString().slice(0, 10),
-      // // usingTime을 숫자로 변환하여 전송
-      // usingTime: parseInt(newCCInfo.usingTime),
-      // startTime: new Date(`${startDate}T${startTime}`).toISOString(), // 수정된 부분: 날짜와 시간을 결합하여 ISO 형식으로 변환
-      // usingTime: parseInt(newCCInfo.usingTime), // 수정된 부분: usingTime을 숫자로 변환
     };
 
     console.log("sending Data:::", body);
@@ -200,44 +188,6 @@ function CreateCCPage() {
       required: "참여 인원수를 지정해주세요.",
     },
   };
-
-  // //주소 좌표로 변경하기
-  // useEffect(() => {
-  //   var geocoder = new kakao.maps.services.Geocoder();
-
-  //   var callback = function (result, status) {
-  //     if (status === kakao.maps.services.Status.OK) {
-  //       const coordinates = [
-  //         Number(result[0].road_address.x),
-  //         Number(result[0].road_address.y),
-  //       ];
-  //       console.log(coordinates);
-  //       setEndCoord(coordinates);
-  //       endToggleBox();
-  //     }
-  //   };
-
-  //   geocoder.addressSearch(`${endAddress}`, callback);
-  // }, [endAddress]);
-
-  // //주소 좌표로 변경하기
-  // useEffect(() => {
-  //   var startGeocoder = new kakao.maps.services.Geocoder();
-
-  //   var callback = function (result, status) {
-  //     if (status === kakao.maps.services.Status.OK) {
-  //       const coordinates = [
-  //         Number(result[0].road_address.x),
-  //         Number(result[0].road_address.y),
-  //       ];
-  //       console.log(coordinates);
-  //       setStartCoord(coordinates);
-  //       startToggleBox();
-  //     }
-  //   };
-
-  //   startGeocoder.addressSearch(`${startAddress}`, callback);
-  // }, [startAddress]);
 
   // 출발지 주소 좌표로 변경하기
   useEffect(() => {
@@ -501,17 +451,8 @@ function CreateCCPage() {
               </label>
 
               <TextFieldLine
-                // onChange={(e) => {
-                //   const newStartDate = e.target.value;
-                //   setStartDate(newStartDate); // 상태 업데이트
-                //   setnewCCInfo((prev) => ({
-                //     ...prev,
-                //     startDate: newStartDate,
-                //   })); // newCCInfo도 업데이트
-                // }}
                 {...register("startDate", validationRules.startDate)}
                 onChange={(e) => setStartDate(e.target.value)}
-                // onInput={(e) => setStartDate(e.target.value)}
                 required
                 id="startDate"
                 name="startDate"
@@ -524,12 +465,6 @@ function CreateCCPage() {
                 error={!!errors.startDate}
                 helperText={errors.startDate?.message}
               />
-
-              {/* {errors.startDate && (
-              <div className="nanumBold text-red-500 text-xs mt-1">
-                {errors.startDate.message}
-              </div>
-            )} */}
             </div>
             <div className="mb-6">
               <label
