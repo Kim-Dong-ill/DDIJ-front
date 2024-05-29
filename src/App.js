@@ -82,8 +82,9 @@ function App() {
             </Route>
           </Routes>
         </div>
+        </div>
       </>
-  );
+ )
 }
 
 export default App;
