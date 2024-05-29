@@ -91,9 +91,9 @@ function CreateCCPage() {
       usingTime: usingTime,
       peoples: peoples,
       startLoc: { coordinates: coordinates },
-      endLoc: { coordinates: endCoord },
+      endLoc: { endCoordinates: endCoord },
     }));
-  }, [startTime, usingTime, peoples, startDate, coordinates]);
+  }, [startTime, usingTime, peoples, startDate, coordinates, endCoord]);
 
   // 출발지 토글박스
   const startToggleBox = () => {
