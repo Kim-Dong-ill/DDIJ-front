@@ -41,7 +41,7 @@ function Kakao_point({ endCoord, endToggleBox }) {
     <div>
       <div
         className="relative"
-        id="map"
+        id="endMap"
         style={{ width: "100%", height: "400px" }}
       >
         <div className="endMarker z-50">

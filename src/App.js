@@ -41,39 +41,39 @@ function App() {
     }
   }, [isAuth, dispatch, pathname]); // 세개의 값중 하나가 변화하면 실행
   return (
-      <>
-        {/* 인트로 페이지 */}
-        <Routes>
-          <Route path="/intro" element={<IntroPage />} />
-        </Routes>
+    <>
+      {/* 인트로 페이지 */}
+      <Routes>
+        <Route path="/intro" element={<IntroPage />} />
+      </Routes>
 
-        <div className="bg-ye-100 w-[100%]">
-          {/* 로그인 안되어있으면 hidden */}
-          <div className="bg-ye-300 w-[500px] m-auto ">
-            {/* auth user */}
-            <Routes>
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
+      <div className="bg-ye-100 w-[100%]">
+        {/* 로그인 안되어있으면 hidden */}
+        <div className="bg-ye-300 w-[500px] m-auto ">
+          {/* auth user */}
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
 
-              {/* header 있는 layout */}
+            {/* header 있는 layout */}
 
-              <Route element={<Layout isAuth={isAuth} />}>
-                <Route
-                    path="/appealwrite/:userId"
-                    element={<AppealWritePage />}
-                />
+            <Route element={<Layout isAuth={isAuth} />}>
+              <Route
+                path="/appealwrite/:userId"
+                element={<AppealWritePage />}
+              />
 
-                <Route path="/circles" element={<AllCCListPage />} />
-                <Route path="/newcircle" element={<CreateCCPage />} />
-                <Route path="/circles/:circleid" element={<CCViewPage />} />
-                <Route path="/circles/:circleid/mod" element={<CreateCCPage />} />
-                <Route path="/userinfo/:userid" element={<UserInfoPage />} />
-                <Route path="/userinfo" element={<UserInfoPage />} />
-                <Route path="/usermod/:userid" element={<UserModifyPage />} />
-                <Route path="/mypet/:userId" element={<MyPetListPage />} />
-              </Route>
+              <Route path="/circles" element={<AllCCListPage />} />
+              <Route path="/newcircle" element={<CreateCCPage />} />
+              <Route path="/circles/:circleid" element={<CCViewPage />} />
+              <Route path="/circles/:circleid/mod" element={<CreateCCPage />} />
+              <Route path="/userinfo/:userid" element={<UserInfoPage />} />
+              <Route path="/userinfo" element={<UserInfoPage />} />
+              <Route path="/usermod/:userid" element={<UserModifyPage />} />
+              <Route path="/mypet/:userId" element={<MyPetListPage />} />
+            </Route>
 
-              {/* header 없는 layout */}
+            {/* header 없는 layout */}
             <Route element={<ProtectRouter isAuth={isAuth} />}>
               <Route index element={<MainPage />} />
               <Route path="/appeal/:userId" element={<AppealPage />} />
@@ -82,9 +82,9 @@ function App() {
             </Route>
           </Routes>
         </div>
-      </>
+      </div>
+    </>
   );
 }
 
 export default App;
-
