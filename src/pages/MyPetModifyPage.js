@@ -55,7 +55,7 @@ function MyPetModifyPage() {
   const { pathname } = useLocation(); //page의 path 알려준다.
   const [ageValue, setAgeValue] = useState();
   const [petImage, setPetImage] = useState(); // FileFetchOne으로 전달
-  console.log("이미지이미지이미지", petImage);
+  console.log("수정페이지 petImage", petImage);
   //배열에 있는 데이터 filter로 가져옴
   useEffect(() => {
     const targetId = petid.petid;
@@ -74,9 +74,13 @@ function MyPetModifyPage() {
     }
   }, [pathname]);
 
+  // useEffect(() => {
+  //   setPetImage(petImage);
+  // }, [petImage]);
+
   function handleChange(e) {
-    const { id, value } = e.target;
-    console.log("id", id, "value", value);
+    const { id, value, petImage } = e.target;
+    console.log("id&&&&&&&&&&&&", id, "petImage", petImage);
     console.log("neuter", neuter);
     setPetData((prevState) => {
       return {
@@ -85,10 +89,12 @@ function MyPetModifyPage() {
         neuter: neuter,
         vaccine: vaccine,
         rabies: rabies,
+        image: petImage,
       };
     });
   }
-  console.log("petData", petData);
+
+  console.log("petData///////", petData);
   function handleRabies(result) {
     setRabies(result);
   }
@@ -105,6 +111,12 @@ function MyPetModifyPage() {
     $("html, body").scrollTop("0");
   }
 
+  // petImage 값을 변경하는 함수
+  const handleImageChange = (newImageName) => {
+    setPetImage(newImageName);
+    handleChange({ target: { id: "image", petImage: newImageName } }); // 이미지 변경 시 handleChange 호출
+  };
+
   async function onSubmit(data) {
     const body = {
       ...petData,
@@ -120,6 +132,7 @@ function MyPetModifyPage() {
     } catch (error) {
       console.log(error);
     }
+    navigate(-1);
   }
 
   function handleAge(e) {
@@ -196,12 +209,22 @@ function MyPetModifyPage() {
             </button>
           </div>
         </div> */}
-        <FileFetchOne petImage={petImage} />
+        <FileFetchOne
+          petData={petData}
+          petImage={petImage}
+          onImageChange={handleImageChange}
+        />
         {/* // FileFetchOne으로 전달 */}
       </div>
 
       <div className="w-[400px] mx-auto py-[50px] ">
         <form onSubmit={handleSubmit(onSubmit)}>
+          {/* <div>
+            <FileFetchOne
+              petImage={petImage}
+              onImageChange={handleImageChange}
+            />
+          </div> */}
           <div className="flex flex-col gap-2 mb-7">
             <label className={`w-[100px] nanumBold`} htmlFor="pName">
               이름
