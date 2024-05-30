@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import Kakao_point from "../kakaoMap/Kakao_point";
 import axiosInstance from "../utils/axios";
-import { format, formatDate, set } from "date-fns";
+import { format, formatDate } from "date-fns";
 import Kakao_start_point from "../kakaoMap/Kakao_start_point";
 // import { Box, FormControl, MenuItem, Select } from "@mui/material";
 // import SelectButton from "../components/SelectButton";
@@ -82,6 +82,7 @@ function CreateCCPage() {
     usingTime: "",
     peoples: "",
   });
+
   useEffect(() => {
     setnewCCInfo((prevState) => ({
       ...prevState,
@@ -243,12 +244,6 @@ function CreateCCPage() {
     }
   }, [startAddress]);
 
-  //출발지 드래그시 위치 업데이트함수
-  function handleDragLoc(coordinates) {
-    console.log("출발지 드래그시 위치 업데이트함수");
-    setCoordinates(coordinates);
-  }
-
   // 목적지 주소 좌표로 변경하기
   useEffect(() => {
     if (endAddress) {
@@ -392,8 +387,8 @@ function CreateCCPage() {
               value={newCCInfo.text}
               onChange={handleChangeValue}
               disabled={checkCircle ? false : true}
-              // error={!!errors.text}
-              // helperText={errors.text?.message}
+              error={!!errors.text}
+              helperText={errors.text?.message}
               // className="bg-gray-200 rounded-md w-full h-[100px] text-justify mb-4 px-4 py-2"
             />
             {checkCircle && errors.text && (
@@ -454,7 +449,6 @@ function CreateCCPage() {
               {startshowBox && (
                 <div className="bg-gray-100 px-4 py-2 mb-4 border-2 rounded-md z-10 startstart">
                   <Kakao_start_point
-                    handleDragLoc={handleDragLoc}
                     startCoord={coordinates && coordinates}
                     startToggleBox={startToggleBox}
                   />
