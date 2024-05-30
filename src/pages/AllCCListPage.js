@@ -34,13 +34,16 @@ function AllCCListPage({}) {
   useEffect(() => {
     const loadCCList = async () => {
       try {
-        const userId = loginState
-        console.log(userId)
-        const res = await axiosInstance.get(`/circles/${userId}`)
-        const body ={
-          userLocation : userLocation
-        }
-        const sortRes =  await axiosInstance.post(`/circles/${loginState}`,body)
+        const userId = loginState;
+        console.log(userId);
+        const res = await axiosInstance.get(`/circles/${userId}`);
+        const body = {
+          userLocation: userLocation,
+        };
+        const sortRes = await axiosInstance.post(
+          `/circles/${loginState}`,
+          body
+        );
 
         setAllCircleData(res.data.allCircles);
         setUserCircleData(res.data.userCircles);
@@ -67,7 +70,7 @@ function AllCCListPage({}) {
 
   // realignment
   return (
-    <div className="pt-[90px] pb-[100px] bg-white border-[1px] h-screen">
+    <div className="pt-[90px] pb-[90px] bg-white border-[1px] min-h-screen">
       {/* 상단버튼section start */}
       <div className=" flex justify-between mb-[25px]">
         <button
@@ -222,6 +225,16 @@ function AllCCListPage({}) {
             })}
           </div>
         </div>
+        {ViewData.length === 0 && (
+          <div className="text-center mt-[250px]">
+            <p>근처에 생성된 모임이 없습니다..🥲</p>
+            <Link to="/newcircle">
+              <div className="text-center text-lg cursor-pointer bg-ye-700 rounded-[10px] py-[5px]">
+                ❤️🥰 모임 만들러 가기 😎❤️
+              </div>
+            </Link>
+          </div>
+        )}
         {/* <div className="w-[10%]">
           <img src="/images/filter.svg" className="" alt="" />
         </div> */}
