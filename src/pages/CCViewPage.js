@@ -19,13 +19,13 @@ function CCViewPage() {
   let [textData, setTextData] = useState(""); // 댓글 입력
   const [commentList, setCommentList] = useState([]); // 댓글 리스트
   const [moreComments, setMoreComments] = useState(false); // 댓글 더보기
+  const [circleUserData, setCircleUserData] = useState([]); // 모임 사용자 데이터
   const userData = useSelector((state) => state.user?.userData); // 유저데이터 가져오기
 
   const circleId = item._id
 
   async function onSubmit({ commentText }) {
     handleInsertComment(commentText); // 댓글추가
-
     reset();
   }
   // 댓글 더보기
@@ -45,8 +45,13 @@ function CCViewPage() {
 
   // 모임댓글 가져오기 -Get
   useEffect(() => {
-    async function comment() {
+    async function fetchData() {
       try {
+        const resForUser = await axiosInstance.get(`circles/detail/${circleId}`);
+        const userData = resForUser.data.member;
+        console.log("보여줄게요잘봐요:? " + JSON.stringify(userData));
+        setCircleUserData(Array.isArray(userData) ? userData : []); // 사용자 데이터를 상태로 설정, 배열이 아닌 경우 빈 배열로 설정
+
         const res = await axiosInstance.get(`circles/${circleId}/comment`);
         if (res.data.circleComment.length) {
           setCommentList(res.data.circleComment);
@@ -59,9 +64,18 @@ function CCViewPage() {
     }
 
     if (circleId) {
-      comment();
+      fetchData();
     }
   }, [circleId]);
+  const handleAddCircleMember = () =>{
+    if(item.users.length<item.peoples){
+
+    }
+    else {
+
+    }
+  }
+
 
   // 모임댓글 추가-Post
   const handleInsertComment = async (commentContent) => {
@@ -72,8 +86,8 @@ function CCViewPage() {
     };
     try {
       const res = await axiosInstance.post(
-        `/circles/${circleId}/comment`,
-        commentData
+          `/circles/${circleId}/comment`,
+          commentData
       );
       const newComment = res.data.circleComment;
       setCommentList([...commentList, newComment]);
@@ -160,20 +174,28 @@ function CCViewPage() {
                 참석댕명단 {item.nowUser}/{item.peoples}
               </p>
               {/* 참석자명단시작! - map돌려야합니다 */}
-              <div className="w-full h-auto rounded-[10px] flex items-center px-[15px] py-[5px] gap-3 mb-3 border border-da-900">
-                <div>
-                  <div className="w-[45px] h-[45px] rounded-[50px] bg-slate-300"></div>
-                </div>
-                <div>
-                  <p className="text-wh-100 text-[15px] nanumBold pb-[2px]">
-                    겨울이엄마
-                  </p>
-                  <p className="text-da-800 text-xs nanum">
-                    겨울이 여 5세 "활발한 편이에요 / 활동량이 많아요 / 뛰는걸
-                    좋아해요"
-                  </p>
-                </div>
-              </div>
+              {Array.isArray(circleUserData) ? (
+                  circleUserData.map((user, idx) => (
+                      <div
+                          key={idx}
+                          className="w-full h-auto rounded-[10px] flex items-center px-[15px] py-[5px] gap-3 mb-3 border border-da-900"
+                      >
+                        <div>
+                          <div className="w-[45px] h-[45px] rounded-[50px] bg-slate-300"></div>
+                        </div>
+                        <div>
+                          <p className="text-wh-100 text-[18px] nanumBold pb-[2px]">
+                            {user.mainPetName}
+                          </p>
+                          <p className="text-da-800 text-xs nanum">
+                            {user.mainPetAge}세 {user.mainPetBreed}
+                          </p>
+                        </div>
+                      </div>
+                  ))
+              ) : (
+                  <p>Loading...</p>
+              )}
               {/* 참석자명단 end - 여기까지 map돌립니다 */}
             </div>
             {/* 글 contents 섹션 완료 */}
