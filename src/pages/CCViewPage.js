@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import Kakao_StrEnd from "../kakaoMap/Kakao_StrEnd";
 import axiosInstance from "../utils/axios";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation} from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import JoinModal from "../components/JoinModal";
 
 function CCViewPage() {
   const location = useLocation();
-  const item = location.state?.item||{};  // 유효성 검사
+  const item = location.state?.item || {}; // 유효성 검사
   const {
     register,
     handleSubmit,
@@ -15,14 +16,13 @@ function CCViewPage() {
     reset,
   } = useForm({ mode: "onChange" });
 
-
   let [textData, setTextData] = useState(""); // 댓글 입력
   const [commentList, setCommentList] = useState([]); // 댓글 리스트
   const [moreComments, setMoreComments] = useState(false); // 댓글 더보기
   const [circleUserData, setCircleUserData] = useState([]); // 모임 사용자 데이터
   const userData = useSelector((state) => state.user?.userData); // 유저데이터 가져오기
 
-  const circleId = item._id
+  const { circleId } = useParams();
 
   async function onSubmit({ commentText }) {
     handleInsertComment(commentText); // 댓글추가
@@ -47,7 +47,9 @@ function CCViewPage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const resForUser = await axiosInstance.get(`circles/detail/${circleId}`);
+        const resForUser = await axiosInstance.get(
+          `circles/detail/${circleId}`
+        );
         const userData = resForUser.data.member;
         console.log("보여줄게요잘봐요:? " + JSON.stringify(userData));
         setCircleUserData(Array.isArray(userData) ? userData : []); // 사용자 데이터를 상태로 설정, 배열이 아닌 경우 빈 배열로 설정
@@ -56,7 +58,6 @@ function CCViewPage() {
           setCommentList(res.data.circleComment);
         } else {
           setCommentList(["댓글이 없습니다."]);
-
         }
       } catch (error) {
         console.log(error);
@@ -67,15 +68,11 @@ function CCViewPage() {
       fetchData();
     }
   }, [circleId]);
-  const handleAddCircleMember = () =>{
-    if(item.users.length<item.peoples){
-
+  const handleAddCircleMember = () => {
+    if (item.users.length < item.peoples) {
+    } else {
     }
-    else {
-
-    }
-  }
-
+  };
 
   // 모임댓글 추가-Post
   const handleInsertComment = async (commentContent) => {
@@ -86,8 +83,8 @@ function CCViewPage() {
     };
     try {
       const res = await axiosInstance.post(
-          `/circles/${circleId}/comment`,
-          commentData
+        `/circles/${circleId}/comment`,
+        commentData
       );
       const newComment = res.data.circleComment;
       setCommentList([...commentList, newComment]);
@@ -112,7 +109,7 @@ function CCViewPage() {
     <>
       <div className="grid gap-3 bg-da-400 pt-[90px] pb-[100px] border-[1px]">
         <div className="w-[500px] h-[255px] bg-slate-300">
-          <Kakao_StrEnd />
+          <Kakao_StrEnd startLoc={startLoc} endLoc={endLoc} />
         </div>
         <div className="text-wh-100">
           {/* 박스 안 contents start======= */}
@@ -175,26 +172,26 @@ function CCViewPage() {
               </p>
               {/* 참석자명단시작! - map돌려야합니다 */}
               {Array.isArray(circleUserData) ? (
-                  circleUserData.map((user, idx) => (
-                      <div
-                          key={idx}
-                          className="w-full h-auto rounded-[10px] flex items-center px-[15px] py-[5px] gap-3 mb-3 border border-da-900"
-                      >
-                        <div>
-                          <div className="w-[45px] h-[45px] rounded-[50px] bg-slate-300"></div>
-                        </div>
-                        <div>
-                          <p className="text-wh-100 text-[18px] nanumBold pb-[2px]">
-                            {user.mainPetName}
-                          </p>
-                          <p className="text-da-800 text-xs nanum">
-                            {user.mainPetAge}세 {user.mainPetBreed}
-                          </p>
-                        </div>
-                      </div>
-                  ))
+                circleUserData.map((user, idx) => (
+                  <div
+                    key={idx}
+                    className="w-full h-auto rounded-[10px] flex items-center px-[15px] py-[5px] gap-3 mb-3 border border-da-900"
+                  >
+                    <div>
+                      <div className="w-[45px] h-[45px] rounded-[50px] bg-slate-300"></div>
+                    </div>
+                    <div>
+                      <p className="text-wh-100 text-[18px] nanumBold pb-[2px]">
+                        {user.mainPetName}
+                      </p>
+                      <p className="text-da-800 text-xs nanum">
+                        {user.mainPetAge}세 {user.mainPetBreed}
+                      </p>
+                    </div>
+                  </div>
+                ))
               ) : (
-                  <p>Loading...</p>
+                <p>Loading...</p>
               )}
               {/* 참석자명단 end - 여기까지 map돌립니다 */}
             </div>
@@ -236,31 +233,31 @@ function CCViewPage() {
               </form>
             </div>
             {commentList
-                .slice(0, moreComments ? commentList.length : 1)
-                .map((comment, idx) => {
-                  return (
-                      <div
-                          className="flex justify-between mb-[20px] gap-[20px] items-center w-full"
-                          key={idx}
-                      >
-                        <div className="flex items-center gap-1">
-                          <div className="flex gap-[1px] ">
-                            <img
-                                src="/images/commenticon_white.svg"
-                                alt=""
-                                className="block"
-                            />
-                            <div className="flex items-center w-[90px]">
-                              <p className="nanumBold">{comment.user?.nickName}</p>
-                            </div>
-                          </div>
-                          <div className="nanum flex-wrap w-[280px] overflow-wrap">
-                            {comment.content}
-                          </div>
+              .slice(0, moreComments ? commentList.length : 1)
+              .map((comment, idx) => {
+                return (
+                  <div
+                    className="flex justify-between mb-[20px] gap-[20px] items-center w-full"
+                    key={idx}
+                  >
+                    <div className="flex items-center gap-1">
+                      <div className="flex gap-[1px] ">
+                        <img
+                          src="/images/commenticon_white.svg"
+                          alt=""
+                          className="block"
+                        />
+                        <div className="flex items-center w-[90px]">
+                          <p className="nanumBold">{comment.user?.nickName}</p>
                         </div>
                       </div>
-                  );
-                })}
+                      <div className="nanum flex-wrap w-[280px] overflow-wrap">
+                        {comment.content}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
 
             {/* 댓글 더보기 */}
             {commentList.length > 1 && (
@@ -303,6 +300,9 @@ function CCViewPage() {
             </button>
           </div>
         </div>
+      </div>
+      <div className="">
+        <JoinModal />
       </div>
     </>
   );

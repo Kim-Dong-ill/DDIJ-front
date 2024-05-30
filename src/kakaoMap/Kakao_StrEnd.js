@@ -12,7 +12,7 @@ const { kakao } = window;
 //------------------------------kakao map start----------------------------//
 //
 
-function Kakao_StrEnd() {
+function Kakao_StrEnd({ startLoc, endLoc }) {
   const [map, setMap] = useState(null); //카카오 map
   const [positions, setPositions] = useState([
     {
@@ -24,7 +24,6 @@ function Kakao_StrEnd() {
       latlng: new kakao.maps.LatLng(33.450936, 126.569477),
     },
   ]);
-
   const startMa = positions[0].latlng.Ma;
   const startLa = positions[0].latlng.La;
   const endMa = positions[1].latlng.Ma;

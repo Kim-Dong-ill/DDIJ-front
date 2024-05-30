@@ -90,7 +90,7 @@ function Kakao_main({ indexPet }) {
         console.log("geolocation 오류" + error.code + ":" + error.message);
         toast.info("GPS로 위치를 가져올수 없어요ㅠㅠ", {
           position: "bottom-right",
-          autoClose: 3000,
+          autoClose: 2000,
           hideProgressBar: true,
           closeOnClick: true,
           pauseOnHover: true,
@@ -171,11 +171,7 @@ function Kakao_main({ indexPet }) {
     console.log("반경 구해서 모임 가져오기");
     async function findCircle() {
       const body = userLocation;
-      // const body = {
-      //   //임시
-      //   lon: 126.943232,
-      //   lat: 37.5062528,
-      // };
+
       console.log(body);
       try {
         const res = await axiosInstance.post("/index/geolocation", body);
@@ -194,7 +190,7 @@ function Kakao_main({ indexPet }) {
     initializeMarkers(map);
   }, [markersInitialized, circles, map]);
 
-  //마커 추가해놓기
+  //모임 마커 추가
   const initializeMarkers = (map) => {
     console.log("초기 마커 추가");
     console.log(circles);
@@ -243,7 +239,6 @@ function Kakao_main({ indexPet }) {
     var marker = new kakao.maps.Marker({
       map: map, // 마커를 표시할 지도
       position: latlng, // 마커를 표시할 위치
-      // title: title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
       image: markerImage, // 마커 이미지
     });
     console.log("마커 생성 완료");
@@ -257,44 +252,23 @@ function Kakao_main({ indexPet }) {
     document.querySelector(".dragTarget").style.display = "none";
     setIsGeolocation(true);
     setIsDrag(false);
-    // getCurrentLocation(); // getCurrentLocation 함수 호출
     getGeolocation();
     findCircle(); //axios 태우는 함수
-    // setMap(null);
   };
 
   //현 위치에서 보기 클릭시
   const dragLocation = () => {
-    // setMap(null);
-    // setIsDrag(true);
-    // setIsGeolocation(false);
     document.querySelector(".dragTarget").style.display = "block";
     findDragLoc(); //axios 태우는 함수
   };
 
+  //유저 위치 마커 추가
   function displayMarker(locPosition, message) {
-    // 이전 마커가 있으면 제거
-    if (currentLocationMarker) {
-      currentLocationMarker.setMap(null);
-    }
-
     // 마커를 생성합니다
     var marker = new kakao.maps.Marker({
       map: map,
       position: locPosition,
     });
-
-    var iwContent = message, // 인포윈도우에 표시할 내용
-      iwRemoveable = true;
-
-    // 인포윈도우를 생성합니다
-    var infowindow = new kakao.maps.InfoWindow({
-      content: iwContent,
-      removable: iwRemoveable,
-    });
-
-    // 인포윈도우를 마커위에 표시합니다
-    infowindow.open(map, marker);
 
     // 현재 마커를 상태 변수에 저장
     setCurrentLocationMarker(marker);
@@ -330,7 +304,7 @@ function Kakao_main({ indexPet }) {
             className="bg-ye-600 px-3 py-1 rounded-full flex items-center gap-1"
             onClick={dragLocation}
           >
-            현재 위치로
+            현위치 검색
             <i class="fa-regular fa-compass"></i>
           </button>
         </div>
