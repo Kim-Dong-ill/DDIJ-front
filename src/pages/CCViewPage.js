@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Kakao_StrEnd from "../kakaoMap/Kakao_StrEnd";
 import axiosInstance from "../utils/axios";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import JoinModal from "../components/JoinModal";
 
@@ -109,7 +109,7 @@ function CCViewPage() {
     <>
       <div className="grid gap-3 bg-da-400 pt-[90px] pb-[100px] border-[1px]">
         <div className="w-[500px] h-[255px] bg-slate-300">
-          <Kakao_StrEnd startLoc={startLoc} endLoc={endLoc} />
+          {/* <Kakao_StrEnd startLoc={startLoc} endLoc={endLoc} /> */}
         </div>
         <div className="text-wh-100">
           {/* 박스 안 contents start======= */}
