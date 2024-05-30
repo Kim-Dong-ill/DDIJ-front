@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import Kakao_StrEnd from "../kakaoMap/Kakao_StrEnd";
 import axiosInstance from "../utils/axios";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 
 function CCViewPage() {
   // 유효성 검사
+  const location = useLocation();
+  const item = location.state?.item || {};
+
   const {
     register,
     handleSubmit,

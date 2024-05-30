@@ -65,7 +65,7 @@ function CreateCCPage() {
     formState: { errors },
     reset,
     // watch,
-  } = useForm({ mode: "onChange" });
+  } = useForm({ mode: "all" });
   const dispatch = useDispatch();
 
   const [startshowBox, setStartshowBox] = useState(false); // 출발지 토글박스
@@ -83,20 +83,26 @@ function CreateCCPage() {
     peoples: "",
   });
 
-  // useEffect(() => {
-  //   setnewCCInfo((prevState) => ({
-  //     ...prevState,
-  //     startTime: startTime,
-  //     // startDate: startDate,
-  //     // usingTime: usingTime,
-  //     // peoples: peoples,
-  //     // startLoc: { coordinates: coordinates },
-  //     // endLoc: { endCoordinates: endCoord },
-  //   }));
-  // }, [
-  //   startTime,
-  //   // usingTime, peoples, startDate, coordinates, endCoord
-  // ]);
+  useEffect(() => {
+    setnewCCInfo((prevState) => ({
+      ...prevState,
+      startTime: startTime,
+      startDate: startDate,
+      usingTime: usingTime,
+      peoples: peoples,
+      startLoc: { coordinates: coordinates },
+      endLoc: { endCoordinates: endCoord },
+      startAdd: startAddress,
+    }));
+  }, [
+    startTime,
+    usingTime,
+    peoples,
+    startDate,
+    coordinates,
+    endCoord,
+    startAddress,
+  ]);
 
   // 출발지 토글박스
   const startToggleBox = () => {
@@ -147,6 +153,7 @@ function CreateCCPage() {
         position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: true,
+
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
@@ -161,22 +168,33 @@ function CreateCCPage() {
       //  에러 토스트가 안뜸
       console.log("모임생성 실패", error.message);
 
-      toast.error("🤷‍♂️🤷‍♂️🤷‍♂️ 모임생성을 실패했습니다.!!", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error(
+        <div>
+          모임생성을 실패했습니다.!!
+          <br />
+          출발지와 목적지를 다시 해주세요
+        </div>,
+        {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
     }
   }
 
   const validationRules = {
     name: {
-      required: "모임명은 필수 입니다.",
+      required: {
+        value: true,
+        message: "모임명을 입력해주세요.",
+      },
+
       maxLength: {
         value: 10,
         message: "최대 10글자 입니다.",
@@ -188,6 +206,9 @@ function CreateCCPage() {
         value: 100,
         message: "100자 이내로 작성해 주세요.",
       },
+    },
+    startDate: {
+      required: "시작 날짜는 필수입니다.",
     },
     startTime: {
       required: "시작 시간은 필수입니다.",
@@ -293,7 +314,7 @@ function CreateCCPage() {
   };
 
   const handleTextFieldClick = () => {
-    openPostcode(); // TextFieldLine 클릭 시 주소 입력 창 열기
+    return openPostcode(); // TextFieldLine 클릭 시 주소 입력 창 열기
   };
   const starthandleTextFieldClick = () => {
     startOpenPostcode(); // TextFieldLine 클릭 시 주소 입력 창 열기
@@ -342,9 +363,14 @@ function CreateCCPage() {
                 fullWidth
                 onChange={handleChangeValue}
                 value={newCCInfo.name}
-                error={!!errors.name}
-                helperText={errors.name?.message}
+                // error={!!errors.name}
+                // helperText={errors.name?.message}
               />
+              {checkCircle && errors.name && (
+                <div className="nanumBold text-red-500 text-xs mt-1">
+                  {errors.name.message}
+                </div>
+              )}
             </div>
             {/* 모임명end */}
             {/* 소개말 */}
@@ -355,16 +381,21 @@ function CreateCCPage() {
               name="text"
               className={
                 checkCircle
-                  ? `bg-gray-200 rounded-md w-full h-[100px] text-justify mb-3 px-4 py-2 border hover:border-ye-800 focus:border-ye-600 focus:border-2 outline-none`
-                  : `bg-gray-200 rounded-md w-full h-[100px] text-justify mb-3 px-4 py-2 border hover:border-ye-800 text-da-500`
+                  ? `bg-gray-200 rounded-md w-full h-[100px] text-justify px-4 py-2 border hover:border-ye-800 focus:border-ye-600 focus:border-2 outline-none`
+                  : `bg-gray-200 rounded-md w-full h-[100px] text-justify px-4 py-2 border hover:border-ye-800 text-da-500`
               }
               value={newCCInfo.text}
               onChange={handleChangeValue}
               disabled={checkCircle ? false : true}
-              error={!!errors.text}
-              helperText={errors.text?.message}
+              // error={!!errors.text}
+              // helperText={errors.text?.message}
               // className="bg-gray-200 rounded-md w-full h-[100px] text-justify mb-4 px-4 py-2"
             />
+            {checkCircle && errors.text && (
+              <div className="nanumBold text-red-500 text-xs mt-1">
+                {errors.text.message}
+              </div>
+            )}
           </div>
 
           {/* 장소,시간설정 */}
@@ -375,47 +406,46 @@ function CreateCCPage() {
                   htmlFor="startPoint"
                   className={
                     checkCircle
-                      ? `mb-4 flex gap-2`
-                      : `mb-4 flex gap-2 text-da-500`
+                      ? `mb-2 flex gap-2 mt-4`
+                      : `mb-2 flex gap-2 text-da-500 mt-4`
                   }
                 >
                   {/* <label htmlFor="startPoint" className=" mb-4 flex gap-2 "> */}
                   <img src="/images/plag_icon.svg" alt="깃발아이콘" />
                   출발지
                 </label>
-                {/* <TextFieldLine
+                <TextFieldLine
                   onChange={handleChangeValue}
+                  onClick={starthandleTextFieldClick}
                   required
                   id="startLoc"
                   name="startLoc"
-                  label={`${startAddress}`}
+                  label="출발지"
                   fullWidth
-                  // readOnly
+                  readOnly
                   className="cursor-pointer"
-                  disabled
-                  value={newCCInfo.startLoc}
-                /> */}
-
-                <input
-                  type="text"
-                  onChange={handleChangeValue}
-                  required
-                  id="startLoc"
-                  disabled
-                  value={newCCInfo.startLoc}
-                  style={{
-                    borderColor: "#ddd",
-                    borderStyle: "solid",
-                    borderWidth: "1px",
-                  }}
+                  disabled={!checkCircle}
+                  // value={newCCInfo.startLoc}
+                  value={startAddress}
                 />
               </div>
-              <img
+              {/* <div className="relative h-[37px]">
+                {checkCircle && (
+                  <img
+                    src="/images/plusglass_icon.svg"
+                    alt="돋보기 아이콘"
+                    className="block absolute left-[369px] bottom-[57px] cursor-pointer"
+                    onClick={starthandleTextFieldClick}
+                    disabled={!checkCircle}
+                  />
+                )}
+              </div> */}
+              {/* <img
                 src="/images/plusglass_icon.svg"
                 alt="돋보기 아이콘"
                 className="block relative  left-[370px] bottom-[37px] cursor-pointer"
                 onClick={starthandleTextFieldClick}
-              />
+              /> */}
               {startshowBox && (
                 <div className="bg-gray-100 px-4 py-2 mb-4 border-2 rounded-md z-10 startstart">
                   <Kakao_start_point
@@ -431,8 +461,8 @@ function CreateCCPage() {
                   htmlFor="endPoint"
                   className={
                     checkCircle
-                      ? `mb-4 flex gap-2`
-                      : `mb-4 flex gap-2 text-da-500`
+                      ? `mb-2 flex gap-2 mt-4`
+                      : `mb-2 flex gap-2 text-da-500 mt-4`
                   }
                 >
                   {/* <label htmlFor="endPoint" className=" mb-4 flex gap-2 "> */}
@@ -441,25 +471,39 @@ function CreateCCPage() {
                 </label>
 
                 <TextFieldLine
+                  onClick={handleTextFieldClick}
                   onChange={handleChangeValue}
                   required
                   id="endLoc"
                   name="endLoc"
-                  // label={`${endAddress}`}
+                  label="목적지"
                   fullWidth
-                  readOnly
+                  // readOnly
                   className="cursor-pointer"
-                  disabled
-                  value={newCCInfo.endLoc}
+                  // value={newCCInfo.endLoc}
+                  value={endAddress}
+                  disabled={!checkCircle}
                 />
               </div>
-              <img
+              {/* <div className="relative h-[37px]">
+                {checkCircle && (
+                  <img
+                    src="/images/plusglass_icon.svg"
+                    alt="돋보기 아이콘"
+                    className="block absolute left-[369px] bottom-[
+                      57px] cursor-pointer"
+                    onClick={handleTextFieldClick}
+                    disabled={!checkCircle}
+                  />
+                )}
+              </div> */}
+              {/* <img
                 src="/images/plusglass_icon.svg"
                 alt="돋보기 아이콘"
                 className="block relative  left-[370px] bottom-[37px] cursor-pointer"
                 // onClick={endToggleBox}
                 onClick={handleTextFieldClick}
-              />
+              /> */}
               {endshowBox && (
                 <div className=" bg-gray-100 p-1  mb-4 border-2 rounded-md ">
                   <Kakao_point
@@ -475,8 +519,8 @@ function CreateCCPage() {
                 htmlFor="startDate"
                 className={
                   checkCircle
-                    ? `mb-4 flex gap-2`
-                    : `mb-4 flex gap-2 text-da-500`
+                    ? `mb-2 flex gap-2 mt-4`
+                    : `mb-2 flex gap-2 text-da-500 mt-4`
                 }
               >
                 {/* <label htmlFor="startTime" className=" mb-4 flex gap-2 "> */}
@@ -484,7 +528,7 @@ function CreateCCPage() {
                 시작 날짜
               </label>
 
-              {/* <TextFieldLine
+              <TextFieldLine
                 {...register("startDate", validationRules.startDate)}
                 onChange={(e) => setStartDate(e.target.value)}
                 required
@@ -492,29 +536,27 @@ function CreateCCPage() {
                 name="startDate"
                 fullWidth
                 type="date"
-                readOnly={false} // readOnly 속성 제거 또는 조건적으로 false 설정
+                // readOnly={false} // readOnly 속성 제거 또는 조건적으로 false 설정
+                readOnly // readOnly 속성 제거 또는 조건적으로 false 설정
                 className="cursor-pointer"
                 disabled={!checkCircle} // 조건식을 명확하게
                 value={newCCInfo.startDate}
-                error={!!errors.startDate}
-                helperText={errors.startDate?.message}
-              /> */}
-
-              <input
-                type="date"
-                id="startDate"
-                name="startDate"
-                onChange={(e) => setStartDate(e.target.value)}
-                value={newCCInfo.startDate}
+                // error={!!errors.startDate}
+                // helperText={errors.startDate?.message}
               />
+              {checkCircle && errors.startDate && (
+                <div className="nanumBold text-red-500 text-xs mt-1">
+                  {errors.startDate.message}
+                </div>
+              )}
             </div>
-            <div className="mb-6">
+            <div className="mb-4">
               <label
                 htmlFor="startTime"
                 className={
                   checkCircle
-                    ? `mb-4 flex gap-2`
-                    : `mb-4 flex gap-2 text-da-500`
+                    ? `mb-2 flex gap-2 mt-4`
+                    : `mb-2 flex gap-2 text-da-500 mt-4`
                 }
               >
                 {/* <label htmlFor="startTime" className=" mb-4 flex gap-2 "> */}
@@ -531,26 +573,31 @@ function CreateCCPage() {
                 name="startTime"
                 className={
                   checkCircle
-                    ? `w-full mb-6 py-2 px-4 border rounded-md`
-                    : `w-full mb-6 py-2 px-4 border rounded-md text-da-500`
+                    ? `w-full mb-2 py-2 px-4 border rounded-md `
+                    : `w-full mb-2 py-2 px-4 border rounded-md text-da-500`
                 }
                 onChange={(e) => setStartTime(e.target.value)}
-                disabled={checkCircle ? false : true}
+                disabled={!checkCircle}
                 value={newCCInfo.startTime}
-                error={!!errors.startTime}
-                helperText={errors.startTime?.message}
+                // error={!!errors.startTime}
+                // helperText={errors.startTime?.message}
               />
+              {checkCircle && errors.startTime && (
+                <div className="nanumBold text-red-500 text-xs mt-1">
+                  {errors.startTime.message}
+                </div>
+              )}
             </div>
 
             <div>
               <label
                 htmlFor="usingTime"
                 className={
-                  checkCircle ? `block mb-4` : `block mb-4 text-da-500`
+                  checkCircle ? `block mb-2` : `block mb-4 text-da-500`
                 }
               >
                 {/* <label htmlFor="usingTime" className="block mb-4"> */}
-                <h4 className="flex mb-3 gap-2">
+                <h4 className="flex gap-2">
                   <img src="/images/clock_icon.svg" alt="시계 아이콘" />
                   소요 시간
                 </h4>
@@ -566,7 +613,7 @@ function CreateCCPage() {
                 //     : `w-full mb-6 py-2 px-4 border rounded-md text-da-500`
                 // }
                 className="w-full border px-4 py- 2 mb-4 rounded-md block h-[60px] cursor-pointer border-[#e0e3e7] hover:border-ye-800 focus:border-ye-600 focus:border-2 outline-none"
-                disabled={checkCircle ? false : true}
+                disabled={!checkCircle}
                 // onChange={(e) => setUsingTime(e.target.value)}
                 onChange={handleChangeValue}
                 value={newCCInfo.usingTime}
@@ -580,16 +627,21 @@ function CreateCCPage() {
                   </option>
                 ))}
               </select>
+              {checkCircle && errors.usingTime && (
+                <div className="nanumBold text-red-500 text-xs mt-1">
+                  {errors.usingTime.message}
+                </div>
+              )}
             </div>
 
-            <div>
+            <div className="mt-4">
               <label
                 htmlFor="peoples"
                 className={
-                  checkCircle ? `block mb-4` : `block mb-4 text-da-500`
+                  checkCircle ? `block mb-4` : `block mb-4 text-da-500 `
                 }
               >
-                <h4 className="flex mb-3 gap-2">
+                <h4 className="flex mb-3 gap-2 ">
                   <img src="/images/people_icon.svg" alt="사람 아이콘" />
                   참여 인원 수
                 </h4>
@@ -600,7 +652,7 @@ function CreateCCPage() {
                 id="peoples"
                 name="peoples"
                 className="w-full px-4 py-2 mb-10 border rounded-md  h-[60px] cursor-pointer border-[#e0e3e7] hover:border-ye-800 focus:border-ye-600 focus:border-2 outline-none"
-                disabled={checkCircle ? false : true}
+                disabled={!checkCircle}
                 // className={
                 //   checkCircle
                 //     ? `w-full mb-6 py-2 px-4 border rounded-md`
@@ -609,8 +661,8 @@ function CreateCCPage() {
                 onChange={handleChangeValue}
                 // onChange={(e) => setPeoples(e.target.value)}
                 value={newCCInfo.peoples}
-                error={!!errors.peoples}
-                helperText={errors.peoples?.message}
+                // error={!!errors.peoples}
+                // helperText={errors.peoples?.message}
               >
                 <option value="">참여 인원수를 선택해주세요.</option>
                 {peoplesOptions.map((option) => (
@@ -619,21 +671,27 @@ function CreateCCPage() {
                   </option>
                 ))}
               </select>
+              {checkCircle && errors.peoples && (
+                <div className="nanumBold text-red-500 text-xs mt-1">
+                  {errors.peoples.message}
+                </div>
+              )}
             </div>
           </div>
           {/* 취소,등록버튼 */}
           <div
             className="flex justify-center items-center gap-10"
-            disabled={checkCircle ? false : true}
+            disabled={!checkCircle}
           >
             <Link to="/circles">
               <ButtonBl>취소</ButtonBl>
               {/* <button>취소</button> */}
             </Link>
             {/* <Link to="/circles"> */}
-            {/* <ButtonYe onClick={handleButtonClick}>등록</ButtonYe> */}
-            <ButtonYe type="submit">등록</ButtonYe>
-            {/* <button>등록</button> */}
+            <ButtonYe type="submit" disabled={checkCircle ? false : true}>
+              등록
+            </ButtonYe>
+            {/* <ButtonYe type="submit">등록</ButtonYe> */}
             {/* </Link> */}
           </div>
         </form>
