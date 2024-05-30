@@ -4,7 +4,6 @@ import axiosInstance from "../utils/axios";
 import { useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useLocation } from "react-router-dom";
 import JoinModal from "../components/JoinModal";
 
 function CCViewPage() {
