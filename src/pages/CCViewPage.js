@@ -68,9 +68,8 @@ function CCViewPage() {
         const resForUser = await axiosInstance.get(
           `circles/detail/${circleId}`
         );
-        const userData = resForUser.data.member;
-        console.log("보여줄게요잘봐요:? " + JSON.stringify(userData));
-        setCircleUserData(Array.isArray(userData) ? userData : []); // 사용자 데이터를 상태로 설정, 배열이 아닌 경우 빈 배열로 설정
+        const tempData = resForUser.data.member;
+        setCircleUserData(Array.isArray(tempData) ? tempData : []); // 사용자 데이터를 상태로 설정, 배열이 아닌 경우 빈 배열로 설정
         const res = await axiosInstance.get(`circles/${circleId}/comment`);
         if (res.data.circleComment.length) {
           setCommentList(res.data.circleComment);
@@ -86,9 +85,49 @@ function CCViewPage() {
       fetchData();
     }
   }, [circleId]);
-  const handleAddCircleMember = () => {
-    if (item.users.length < item.peoples) {
-    } else {
+
+  const handleAddCircleMember = async () => {
+    try {
+      const response = await axiosInstance.patch(
+          `/circles/${circleId}/join`,
+          { userId: userData.user._id }
+      );
+      if (response.status === 200) {
+        alert("참석 완료!");
+        setItem((prevItem) => ({
+          ...prevItem,
+          users: [...prevItem.users, userData.user._id],
+          nowUser: prevItem.nowUser + 1
+        }));
+      }
+    } catch (error) {
+      console.error(error);
+      alert(error.response.data.message || "참석에 실패했습니다.");
+    }
+  };
+
+  const handleRemoveCircleMember = async () => {
+    if (userData.user._id === item.user) {
+      alert("작성자는 취소할 수 없습니다.");
+      return;
+    }
+
+    try {
+      const response = await axiosInstance.patch(
+          `/circles/${circleId}/leave`,
+          { userId: userData.user._id }
+      );
+      if (response.status === 200) {
+        alert("취소 완료!");
+        setItem((prevItem) => ({
+          ...prevItem,
+          users: prevItem.users.filter(id => id !== userData.user._id),
+          nowUser: prevItem.nowUser - 1
+        }));
+      }
+    } catch (error) {
+      console.error(error);
+      alert(error.response.data.message || "취소에 실패했습니다.");
     }
   };
 
@@ -134,8 +173,8 @@ function CCViewPage() {
           <div className=" border border-da-900 mx-5 my-[30px] rounded-lg p-5">
             <div className="flex mb-[20px] ">
               <img
-                src="/images/dog3.svg"
-                className="w-[100px] h-[100px] rounded-full"
+                  src="/images/dog3.svg"
+                  className="w-[100px] h-[100px] rounded-full"
               />
 
               <div className="grid gap-[3px] ml-[20px]">
@@ -164,7 +203,7 @@ function CCViewPage() {
           {/* =======박스 안 contents end */}
           <div className="grid gap-[5px] px-[25px] mb-[20px]">
             <p className="nanumBold text-[18px]">어서오시개</p>
-            <hr className="mb-[20px] border-da-900" />
+            <hr className="mb-[20px] border-da-900"/>
             <p className="nanum text-[15px] text-da-800 mb-[20px]">
               출발 : {item?.DateData} {item?.TimeData}
             </p>
@@ -175,46 +214,46 @@ function CCViewPage() {
             <p className="nanum text-[15px] text-da-800 mb-[20px]">
               출발 장소 : {item?.startAdd}
             </p>
-            <hr className="mb-[20px] border-da-900" />
+            <hr className="mb-[20px] border-da-900"/>
           </div>
           <div className="grid gap-[5px] px-[25px] mb-[50px]">
             <p className="nanumBold mt-[30px] text-[18px]">소개말</p>
-            <hr className="mb-[20px] border-da-900" />
+            <hr className="mb-[20px] border-da-900"/>
             <p className="nanum text-[15px] text-da-800 mb-[20px]">
               {item?.text}
             </p>
-            <hr className="mb-[30px] border-da-900" />
+            <hr className="mb-[30px] border-da-900"/>
             <div className="w-full grid gap-3 ">
               <p className="nanumBold mt-[30px] text-[18px]">
                 참석댕명단 {item?.nowUser}/{item?.peoples}
               </p>
               {/* 참석자명단시작! - map돌려야합니다 */}
               {Array.isArray(circleUserData) ? (
-                circleUserData.map((user, idx) => (
-                  <div
-                    key={idx}
-                    className="w-full h-auto rounded-[10px] flex items-center px-[15px] py-[5px] gap-3 mb-3 border border-da-900"
-                  >
-                    <div>
-                      <div className="w-[45px] h-[45px] rounded-[50px] bg-slate-300"></div>
-                    </div>
-                    <div>
-                      <p className="text-wh-100 text-[18px] nanumBold pb-[2px]">
-                        {user.mainPetName}
-                      </p>
-                      <p className="text-da-800 text-xs nanum">
-                        {user.mainPetAge}세 {user.mainPetBreed}
-                      </p>
-                    </div>
-                  </div>
-                ))
+                  circleUserData.map((user, idx) => (
+                      <div
+                          key={idx}
+                          className="w-full h-auto rounded-[10px] flex items-center px-[15px] py-[5px] gap-3 mb-3 border border-da-900"
+                      >
+                        <div>
+                          <div className="w-[45px] h-[45px] rounded-[50px] bg-slate-300"></div>
+                        </div>
+                        <div>
+                          <p className="text-wh-100 text-[18px] nanumBold pb-[2px]">
+                            {user.mainPetName}
+                          </p>
+                          <p className="text-da-800 text-xs nanum">
+                            {user.mainPetAge}세 {user.mainPetBreed}
+                          </p>
+                        </div>
+                      </div>
+                  ))
               ) : (
-                <p>Loading...</p>
+                  <p>Loading...</p>
               )}
               {/* 참석자명단 end - 여기까지 map돌립니다 */}
             </div>
             {/* 글 contents 섹션 완료 */}
-            <hr className="my-[30px] border-da-900" />
+            <hr className="my-[30px] border-da-900"/>
             {/* 댓글구간 시작============= */}
             <div>
               <p className="nanumBold text-[18px]">할 말이 있개!</p>
@@ -222,82 +261,82 @@ function CCViewPage() {
 
             {/* 댓글입력창 */}
             <div
-              className=" flex my-[20px] gap-[10px] text-black"
-              onClick={handleInsertComment}
+                className=" flex my-[20px] gap-[10px] text-black"
+                onClick={handleInsertComment}
             >
               <form onSubmit={handleSubmit(onSubmit)}>
                 <input
-                  type="text"
-                  placeholder="댓글입력"
-                  className=" border w-[365px] rounded-[25px] px-[10px] py-[5px] nanum"
-                  onChange={textDataChange}
-                  value={textData}
-                  id="commentText"
-                  {...register("commentText", commentText)}
+                    type="text"
+                    placeholder="댓글입력"
+                    className=" border w-[365px] rounded-[25px] px-[10px] py-[5px] nanum"
+                    onChange={textDataChange}
+                    value={textData}
+                    id="commentText"
+                    {...register("commentText", commentText)}
                 />
                 {errors.commentText && (
-                  <div className="text-red-500 text-xs mt-1">
-                    {errors.commentText.message}
-                  </div>
+                    <div className="text-red-500 text-xs mt-1">
+                      {errors.commentText.message}
+                    </div>
                 )}
                 <button
-                  onClick={clickListener}
-                  className="w-[50px] bg-da-100 rounded-[50px]"
-                  // onClick={clickListener}
-                  type="submit"
+                    onClick={clickListener}
+                    className="w-[50px] bg-da-100 rounded-[50px]"
+                    // onClick={clickListener}
+                    type="submit"
                 >
                   등록
                 </button>
               </form>
             </div>
             {commentList
-              .slice(0, moreComments ? commentList.length : 1)
-              .map((comment, idx) => {
-                return (
-                  <div
-                    className="flex justify-between mb-[20px] gap-[20px] items-center w-full"
-                    key={idx}
-                  >
-                    <div className="flex items-center gap-1">
-                      <div className="flex gap-[1px] ">
-                        <img
-                          src="/images/commenticon_white.svg"
-                          alt=""
-                          className="block"
-                        />
-                        <div className="flex items-center w-[90px]">
-                          <p className="nanumBold">{comment.user?.nickName}</p>
+                .slice(0, moreComments ? commentList.length : 1)
+                .map((comment, idx) => {
+                  return (
+                      <div
+                          className="flex justify-between mb-[20px] gap-[20px] items-center w-full"
+                          key={idx}
+                      >
+                        <div className="flex items-center gap-1">
+                          <div className="flex gap-[1px] ">
+                            <img
+                                src="/images/commenticon_white.svg"
+                                alt=""
+                                className="block"
+                            />
+                            <div className="flex items-center w-[90px]">
+                              <p className="nanumBold">{comment.user?.nickName}</p>
+                            </div>
+                          </div>
+                          <div className="nanum flex-wrap w-[280px] overflow-wrap">
+                            {comment.content}
+                          </div>
                         </div>
                       </div>
-                      <div className="nanum flex-wrap w-[280px] overflow-wrap">
-                        {comment.content}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
 
             {/* 댓글 더보기 */}
             {commentList.length > 1 && (
-              <div className="text-center mt-2">
-                <button
-                  onClick={showComments}
-                  className="text-sm text-da-300 cursor-pointer mt-10"
-                >
-                  {/* {moreComments ? "접기" : "댓글 더보기"} */}
-                  {moreComments ? (
-                    <>
-                      <span className="nanumBold">접기</span>
-                      <i className="fa-solid fa-caret-up text-da-300 ml-2"></i>
-                    </>
-                  ) : (
-                    <>
-                      <span className="nanumBold">댓글 더보기</span>
-                      <i className="fa-solid fa-caret-down text-da-300 ml-2"></i>
-                    </>
-                  )}
-                </button>
-              </div>
+                <div className="text-center mt-2">
+                  <button
+                      onClick={showComments}
+                      className="text-sm text-da-300 cursor-pointer mt-10"
+                  >
+                    {/* {moreComments ? "접기" : "댓글 더보기"} */}
+                    {moreComments ? (
+                        <>
+                          <span className="nanumBold">접기</span>
+                          <i className="fa-solid fa-caret-up text-da-300 ml-2"></i>
+                        </>
+                    ) : (
+                        <>
+                          <span className="nanumBold">댓글 더보기</span>
+                          <i className="fa-solid fa-caret-down text-da-300 ml-2"></i>
+                        </>
+                    )}
+                  </button>
+                </div>
             )}
 
             {/* </div>
@@ -305,25 +344,33 @@ function CCViewPage() {
             {/*/!*=============== 댓글구간 끝 *!/*/}
           </div>
           <div className="w-full flex justify-center">
-            <button
-              className="fixed bottom-[60px] w-[150px] h-[40px] m-auto text-[13px] text-center rounded-[20px] bg-ye-600 text-black my-4"
-              onClick={() => {
-                alert("참석완료");
-              }}
-            >
-              참석하기 {item?.nowUser}/{item?.peoples}
-              {/* 정원 꽉 차면 버튼색상 #222222 - 정원이 다 찼개... 로 버튼변경  */}
-              {/* 참석하기 완료되면 취소하기 버튼으로 버튼 변경 - #313131 */}
-              {/* 글작성자의 경우 수정하기 / 삭제하기 버튼으로 노출 - #313131 */}
-            </button>
-          </div>
-        </div>
-      </div>
-      <div className="">
-        <JoinModal />
-      </div>
-    </>
-  );
-}
+            {item?.users.includes(userData.user._id) ? (
+                <button
+                    className="fixed bottom-[60px] w-[150px] h-[40px] m-auto text-[13px] text-center rounded-[20px] bg-ye-600 text-black my-4"
+                    onClick={handleRemoveCircleMember}
+                >
+                  취소하기 {item?.nowUser}/{item?.peoples}
+                </button>
+            ) : (
+                <button
+                    className="fixed bottom-[60px] w-[150px] h-[40px] m-auto text-[13px] text-center rounded-[20px] bg-ye-600 text-black my-4"
+                    onClick={handleAddCircleMember}
+                >
+                  참석하기 {item?.nowUser}/{item?.peoples}
+                </button>
+            )}
+            {/* 정원 꽉 차면 버튼색상 #222222 - 정원이 다 찼개... 로 버튼변경  */}
+            {/* 참석하기 완료되면 취소하기 버튼으로 버튼 변경 - #313131 */}
+            {/* 글작성자의 경우 수정하기 / 삭제하기 버튼으로 노출 - #313131 */}
+              </div>
+              </div>
+              </div>
+              <div className="">
+              <JoinModal/>
+              </div>
+              </>
+              )
+              ;
+            }
 
 export default CCViewPage;

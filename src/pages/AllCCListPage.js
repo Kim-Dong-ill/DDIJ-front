@@ -135,92 +135,96 @@ function AllCCListPage({}) {
           <div className="w-[100%] flex flex-col items-center">
             {ViewData.map((item, idx) => {
               const rest = idx % 2;
+              const cardClassName = item.complete
+                  ? "w-[400px] h-auto bg-gray-400 mb-[20px] rounded-lg px-[12px] py-[10px] opacity-50"
+                  : "w-[400px] h-auto bg-ye-300 mb-[20px] rounded-lg px-[12px] py-[10px]";
+
               return (
-                <>
-                  {rest === 0 ? (
-                    <Link
-                      to={`/circles/${item._id}`}
-                      state={{ item }}
-                      key={item._id}
-                    >
-                      <div className="w-[400px] h-auto bg-ye-300 mb-[20px] rounded-lg px-[12px] py-[10px]">
-                        <p className="text-right nanumBold text-xs">
-                          {item.nowUser}/{item.peoples}
-                        </p>
-                        <div className="flex gap-3 items-center">
-                          <div className="w-[80px] h-[80px] bg-slate-400 rounded-[50px] flex-shrink-0 mr-[5px] text-center">
-                            <img
-                              src="/images/dog4.svg"
-                              className="w-[80px] h-[80px] rounded-full m-auto inline-block"
-                            />
-                          </div>
-                          <div>
-                            <p className="nanumBold text-[16px] mb-[5px]">
-                              {item.name}
+                  <>
+                    {rest === 0 ? (
+                        <Link
+                            to={`/circles/${item._id}`}
+                            state={{ item }}
+                            key={item._id}
+                        >
+                          <div className={cardClassName}>
+                            <p className="text-right nanumBold text-xs">
+                              {item.nowUser}/{item.peoples}
                             </p>
-                            <div className="flex gap-[7px] ">
-                              <p className="nanum text-sm whitespace-nowrap">
-                                약속시간{" "}
-                              </p>
-                              <span className="text-da-200 nanum text-[13px]">
+                            <div className="flex gap-3 items-center">
+                              <div className="w-[80px] h-[80px] bg-slate-400 rounded-[50px] flex-shrink-0 mr-[5px] text-center">
+                                <img
+                                    src="/images/dog4.svg"
+                                    className="w-[80px] h-[80px] rounded-full m-auto inline-block"
+                                />
+                              </div>
+                              <div>
+                                <p className="nanumBold text-[16px] mb-[5px]">
+                                  {item.name}
+                                </p>
+                                <div className="flex gap-[7px] ">
+                                  <p className="nanum text-sm whitespace-nowrap">
+                                    약속시간{" "}
+                                  </p>
+                                  <span className="text-da-200 nanum text-[13px]">
                                 {item.DateData} {item.TimeData}
                               </span>
-                            </div>
-                            <div className="flex gap-[7px]">
-                              <p className="nanum text-sm whitespace-nowrap">
-                                출발장소{" "}
-                              </p>
-                              <span className="text-da-200 nanum text-[13px]">
+                                </div>
+                                <div className="flex gap-[7px]">
+                                  <p className="nanum text-sm whitespace-nowrap">
+                                    출발장소{" "}
+                                  </p>
+                                  <span className="text-da-200 nanum text-[13px]">
                                 {item.startAdd}
                               </span>
+                                </div>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                    </Link>
-                  ) : (
-                    <Link
-                      to={`/circles/${item._id}`}
-                      state={{ item }}
-                      key={item._id}
-                    >
-                      <div className="w-[400px] h-auto bg-ye-200 mb-[20px] rounded-lg px-[12px] py-[10px]">
-                        <p className="text-right nanumBold text-xs">
-                          {item.nowUser}/{item.peoples}
-                        </p>
-                        <div className="flex gap-3 items-center">
-                          <div className="w-[80px] h-[80px] bg-slate-400 rounded-[50px] flex-shrink-0 mr-[5px] text-center">
-                            <img
-                              src="/images/dog5.svg"
-                              className="w-[80px] h-[80px] rounded-full m-auto inline-block"
-                            />
-                          </div>
-                          <div>
-                            <p className="nanumBold text-[16px] mb-[5px]">
-                              {item.name}
+                        </Link>
+                    ) : (
+                        <Link
+                            to={`/circles/${item._id}`}
+                            state={{ item }}
+                            key={item._id}
+                        >
+                          <div className={cardClassName}>
+                            <p className="text-right nanumBold text-xs">
+                              {item.nowUser}/{item.peoples}
                             </p>
-                            <div className="flex gap-[7px]">
-                              <p className="nanum text-sm whitespace-nowrap">
-                                약속시간{" "}
-                              </p>
-                              <span className="text-da-200 nanum text-[13px]">
+                            <div className="flex gap-3 items-center">
+                              <div className="w-[80px] h-[80px] bg-slate-400 rounded-[50px] flex-shrink-0 mr-[5px] text-center">
+                                <img
+                                    src="/images/dog5.svg"
+                                    className="w-[80px] h-[80px] rounded-full m-auto inline-block"
+                                />
+                              </div>
+                              <div>
+                                <p className="nanumBold text-[16px] mb-[5px]">
+                                  {item.name}
+                                </p>
+                                <div className="flex gap-[7px]">
+                                  <p className="nanum text-sm whitespace-nowrap">
+                                    약속시간{" "}
+                                  </p>
+                                  <span className="text-da-200 nanum text-[13px]">
                                 {item.DateData} {item.TimeData}
                               </span>
-                            </div>
-                            <div className="flex gap-[7px]">
-                              <p className="nanum text-sm whitespace-nowrap">
-                                출발장소{" "}
-                              </p>
-                              <span className="text-da-200 nanum text-[13px]">
+                                </div>
+                                <div className="flex gap-[7px]">
+                                  <p className="nanum text-sm whitespace-nowrap">
+                                    출발장소{" "}
+                                  </p>
+                                  <span className="text-da-200 nanum text-[13px]">
                                 {item.startAdd}
                               </span>
+                                </div>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                    </Link>
-                  )}
-                </>
+                        </Link>
+                    )}
+                  </>
               );
             })}
           </div>
