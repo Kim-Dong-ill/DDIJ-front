@@ -125,7 +125,7 @@ function MyPetModifyPage() {
     const body = {
       ...petData,
     };
-    console.log("바아아아아디", body);
+    console.log("바디", body);
     try {
       const res = await axiosInstance.put("/pet/modify", body, {
         headers: {
@@ -141,7 +141,6 @@ function MyPetModifyPage() {
 
   function handleAge(e) {
     const { id, value } = e.target;
-    console.log("하태민", value);
     if (value < 0) {
       setAgeValue(0);
     } else {

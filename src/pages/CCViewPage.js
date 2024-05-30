@@ -8,7 +8,8 @@ import JoinModal from "../components/JoinModal";
 
 function CCViewPage() {
   const location = useLocation();
-  const item = location.state?.item || {}; // 유효성 검사
+  // const item = location.state?.item || {}; // 유효성 검사
+  const [item, setItem] = useState(); // 유효성 검사
   const {
     register,
     handleSubmit,
@@ -21,8 +22,25 @@ function CCViewPage() {
   const [moreComments, setMoreComments] = useState(false); // 댓글 더보기
   const [circleUserData, setCircleUserData] = useState([]); // 모임 사용자 데이터
   const userData = useSelector((state) => state.user?.userData); // 유저데이터 가져오기
-
+  const [startLoc, setStartLoc] = useState(); //모임 출발 좌표
+  const [endLoc, setEndLoc] = useState(); //모임 도착 좌표
   const { circleId } = useParams();
+
+  useEffect(() => {
+    setItem(location.state?.item || {});
+    console.log(location.state.item.endLoc.endCoordinates);
+    console.log(location.state.item.startLoc.coordinates);
+    setStartLoc(location.state.item.startLoc.coordinates);
+    setEndLoc(location.state.item.endLoc.endCoordinates);
+  }, [location]);
+
+  // console.log(item.startLoc.coordinates);
+  //출발지 목적지 좌표 저장
+  // useEffect(() => {
+  //   setStartLoc(item.startLoc.coordinates);
+  //   setEndLoc(item.endLoc.endCoordinates);
+  // }, [item]);
+  // console.log(startLoc, endLoc);
 
   async function onSubmit({ commentText }) {
     handleInsertComment(commentText); // 댓글추가
@@ -109,7 +127,7 @@ function CCViewPage() {
     <>
       <div className="grid gap-3 bg-da-400 pt-[90px] pb-[100px] border-[1px]">
         <div className="w-[500px] h-[255px] bg-slate-300">
-          {/* <Kakao_StrEnd startLoc={startLoc} endLoc={endLoc} /> */}
+          <Kakao_StrEnd startLoc={startLoc} endLoc={endLoc} />
         </div>
         <div className="text-wh-100">
           {/* 박스 안 contents start======= */}
@@ -140,7 +158,7 @@ function CCViewPage() {
               </div>
             </div>
             <div>
-              <h2 className="nanumBold text-center"> {item.name}</h2>
+              <h2 className="nanumBold text-center"> {item?.name}</h2>
             </div>
           </div>
           {/* =======박스 안 contents end */}
@@ -148,14 +166,14 @@ function CCViewPage() {
             <p className="nanumBold text-[18px]">어서오시개</p>
             <hr className="mb-[20px] border-da-900" />
             <p className="nanum text-[15px] text-da-800 mb-[20px]">
-              출발 : {item.DateData} {item.TimeData}
+              출발 : {item?.DateData} {item?.TimeData}
             </p>
             <p className="nanum text-[15px] text-da-800 mb-[20px]">
-              예상 종료시간 : {item.finishTime.split("T")[1].split(":")[0]}시{" "}
-              {item.finishTime.split("T")[1].split(":")[1]}분
+              예상 종료시간 : {item?.finishTime.split("T")[1].split(":")[0]}시{" "}
+              {item?.finishTime.split("T")[1].split(":")[1]}분
             </p>
             <p className="nanum text-[15px] text-da-800 mb-[20px]">
-              출발 장소 : {item.startAdd}
+              출발 장소 : {item?.startAdd}
             </p>
             <hr className="mb-[20px] border-da-900" />
           </div>
@@ -163,12 +181,12 @@ function CCViewPage() {
             <p className="nanumBold mt-[30px] text-[18px]">소개말</p>
             <hr className="mb-[20px] border-da-900" />
             <p className="nanum text-[15px] text-da-800 mb-[20px]">
-              {item.text}
+              {item?.text}
             </p>
             <hr className="mb-[30px] border-da-900" />
             <div className="w-full grid gap-3 ">
               <p className="nanumBold mt-[30px] text-[18px]">
-                참석댕명단 {item.nowUser}/{item.peoples}
+                참석댕명단 {item?.nowUser}/{item?.peoples}
               </p>
               {/* 참석자명단시작! - map돌려야합니다 */}
               {Array.isArray(circleUserData) ? (
@@ -293,7 +311,7 @@ function CCViewPage() {
                 alert("참석완료");
               }}
             >
-              참석하기 {item.nowUser}/{item.peoples}
+              참석하기 {item?.nowUser}/{item?.peoples}
               {/* 정원 꽉 차면 버튼색상 #222222 - 정원이 다 찼개... 로 버튼변경  */}
               {/* 참석하기 완료되면 취소하기 버튼으로 버튼 변경 - #313131 */}
               {/* 글작성자의 경우 수정하기 / 삭제하기 버튼으로 노출 - #313131 */}
