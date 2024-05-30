@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Kakao_StrEnd from "../kakaoMap/Kakao_StrEnd";
 import axiosInstance from "../utils/axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
@@ -15,16 +15,12 @@ function CCViewPage() {
     handleSubmit,
     formState: { errors },
     reset,
-    // watch,
   } = useForm({ mode: "onChange" });
-  const dispatch = useDispatch();
 
-  function onSubmit({ textData }) {
-    const body = {
-      textData,
-    };
-    textData.preventDefault(); // 폼의 기본제출 동작 막기
-    handleInsertComment(textData); // 댓글추가
+  async function onSubmit({ commentText }) {
+    handleInsertComment(commentText); // 댓글추가
+
+    reset();
   }
 
   let [textData, setTextData] = useState(""); // 댓글 입력
@@ -103,7 +99,7 @@ function CCViewPage() {
         `/circles/${circleId}/comment`,
         commentData
       );
-      const newComment = res.data.comment;
+      const newComment = res.data.circleComment;
       setCommentList([...commentList, newComment]);
     } catch (error) {
       console.log(error);
@@ -226,7 +222,11 @@ function CCViewPage() {
                   id="commentText"
                   {...register("commentText", commentText)}
                 />
-                {errors.commentText && <div>{errors.commentText.message}</div>}
+                {errors.commentText && (
+                  <div className="text-red-500 text-xs mt-1">
+                    {errors.commentText.message}
+                  </div>
+                )}
                 <button
                   className="w-[50px] bg-da-100 rounded-[50px]"
                   // onClick={clickListener}
@@ -249,35 +249,63 @@ function CCViewPage() {
                   </div>
                 </div> */}
 
-            {commentList
-              .slice(0, moreComments ? commentList.length : 1)
-              .map((item, idx) => {
-                return (
-                  <>
-                    <div
-                      className="flex justify-between mb-[20px] gap-[20px] items-center w-full"
-                      comment={item}
-                      key={idx}
-                    >
-                      <div className="flex items-center gap-1">
-                        <div className="flex gap-[1px] ">
-                          <img
-                            src="/images/commenticon_white.svg"
-                            alt=""
-                            className="block"
-                          />
-                          <div className="flex items-center w-[90px]">
-                            <p className="nanumBold">{item.user.nickName}</p>
+            {/* 댓글나타나는곳 */}
+            {commentList.length === 0 ? (
+              <p className="nanum mt-4">아직 댓글이 없습니다.</p>
+            ) : (
+              commentList
+                .slice(0, moreComments ? commentList.length : 1)
+                .map((item, idx) => {
+                  return (
+                    <>
+                      <div
+                        className="flex justify-between mb-[20px] gap-[20px] items-center w-full"
+                        comment={item}
+                        key={idx}
+                      >
+                        <div className="flex items-center gap-1">
+                          <div className="flex gap-[1px] ">
+                            <img
+                              src="/images/commenticon_white.svg"
+                              alt=""
+                              className="block"
+                            />
+                            <div className="flex items-center w-[90px]">
+                              <p className="nanumBold">{item.user.nickName}</p>
+                            </div>
+                          </div>
+                          <div className="nanum flex-wrap w-[280px] overflow-wrap">
+                            {item.content}
                           </div>
                         </div>
-                        <div className="nanum flex-wrap w-[280px] overflow-wrap">
-                          {item.content}
-                        </div>
                       </div>
-                    </div>
-                  </>
-                );
-              })}
+                    </>
+                  );
+                })
+            )}
+
+            {/* 댓글 더보기 */}
+            {commentList.length > 1 && (
+              <div className="text-center mt-2">
+                <button
+                  onClick={showComments}
+                  className="text-sm text-da-300 cursor-pointer mt-10"
+                >
+                  {/* {moreComments ? "접기" : "댓글 더보기"} */}
+                  {moreComments ? (
+                    <>
+                      <span className="nanumBold">접기</span>
+                      <i className="fa-solid fa-caret-up text-da-300 ml-2"></i>
+                    </>
+                  ) : (
+                    <>
+                      <span className="nanumBold">댓글 더보기</span>
+                      <i className="fa-solid fa-caret-down text-da-300 ml-2"></i>
+                    </>
+                  )}
+                </button>
+              </div>
+            )}
 
             {/* </div>
             </div> */}
