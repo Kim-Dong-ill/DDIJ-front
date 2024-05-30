@@ -1,98 +1,101 @@
 import React, { useEffect, useState } from "react";
 import Kakao_StrEnd from "../kakaoMap/Kakao_StrEnd";
 import axiosInstance from "../utils/axios";
-import { useDispatch, useSelector } from "react-redux";
-import { useLocation} from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+// import { useForm } from "react-hook-form";
+import CCViewCommentList from "../components/CCViewCommentList";
+import CCViewCommentWrite from "../components/CCViewCommentWrite";
 
 function CCViewPage() {
   const location = useLocation();
-  const item = location.state?.item||{};  // 유효성 검사
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm({ mode: "onChange" });
+  const item = location.state?.item || {}; // 유효성 검사
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  //   reset,
+  // } = useForm({ mode: "onChange" });
 
-
-  let [textData, setTextData] = useState(""); // 댓글 입력
-  const [commentList, setCommentList] = useState([]); // 댓글 리스트
+  // let [textData, setTextData] = useState(""); // 댓글 입력
+  const [comment, setComment] = useState([]); // 댓글 리스트
   const [moreComments, setMoreComments] = useState(false); // 댓글 더보기
   const userData = useSelector((state) => state.user?.userData); // 유저데이터 가져오기
 
-  const circleId = item._id
+  const circleId = item._id;
 
-  async function onSubmit({ commentText }) {
-    handleInsertComment(commentText); // 댓글추가
+  // async function onSubmit({ commentText }) {
+  // handleInsertComment(commentText); // 댓글추가
+  // setTextData("");
 
-    reset();
-  }
+  // reset();
+  // }
+
   // 댓글 더보기
   const showComments = () => {
     setMoreComments((prevState) => !prevState);
   };
 
-  function textDataChange(e) {
-    setTextData(e.target.value);
-  }
+  // function textDataChange(e) {
+  //   setTextData(e.target.value);
+  // }
 
-  function clickListener() {
-    let temp = [...commentList];
-    setCommentList([textData, ...temp]);
-    setTextData("");
-  }
+  // function clickListener() {
+  //   let temp = [...commentList];
+  //   setCommentList([textData, ...temp]);
+  //   setTextData("");
+  // }
 
   // 모임댓글 가져오기 -Get
   useEffect(() => {
     async function comment() {
       try {
-        const res = await axiosInstance.get(`circles/${circleId}/comment`);
-        if (res.data.circleComment.length) {
-          setCommentList(res.data.circleComment);
-        } else {
-          setCommentList(["댓글이 없습니다."]);
-        }
+        const res = await axiosInstance.get(`/circles/${circleId}/comment`);
+        setComment(res.data.comment);
       } catch (error) {
         console.log(error);
       }
     }
-
-    if (circleId) {
-      comment();
-    }
-  }, [circleId]);
-
-  // 모임댓글 추가-Post
+    comment();
+  }, []);
   const handleInsertComment = async (commentContent) => {
     const commentData = {
       content: commentContent,
-      circleId: circleId,
-      userId: userData.user._id,
+      userId: userData.user.id,
     };
+    // 모임댓글 추가-Post
     try {
       const res = await axiosInstance.post(
         `/circles/${circleId}/comment`,
         commentData
       );
-      const newComment = res.data.circleComment;
-      setCommentList([...commentList, newComment]);
+      const newComment = res.data.comment;
+      setComment([...comment, newComment]);
     } catch (error) {
       console.log(error);
     }
   };
 
+  // 모임댓글 삭제
+  // const deleteComment = async (commentId)=>{
+  //   try {
+
+  //   } catch (error) {
+
+  //   }
+  // }
+
   // 모임 댓글 유효성검사
-  const commentText = {
-    required: {
-      value: true,
-      message: "댓글을 입력해 주세요.",
-    },
-    maxLength: {
-      value: 50,
-      message: "최대 50자 입니다.",
-    },
-  };
+  // const commentText = {
+  //   required: {
+  //     value: true,
+  //     message: "댓글을 입력해 주세요.",
+  //   },
+  //   maxLength: {
+  //     value: 50,
+  //     message: "최대 50자 입니다.",
+  //   },
+  // };
 
   return (
     <>
@@ -182,73 +185,58 @@ function CCViewPage() {
             <div>
               <p className="nanumBold text-[18px]">할 말이 있개!</p>
             </div>
-
             {/* 댓글입력창 */}
-            <div
-              className=" flex my-[20px] gap-[10px] text-black"
-              onClick={handleInsertComment}
-            >
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <input
-                  type="text"
-                  placeholder="댓글입력"
-                  className=" border w-[365px] rounded-[25px] px-[10px] py-[5px] nanum"
-                  onChange={textDataChange}
-                  value={textData}
-                  id="commentText"
-                  {...register("commentText", commentText)}
-                />
-                {errors.commentText && (
-                  <div className="text-red-500 text-xs mt-1">
-                    {errors.commentText.message}
-                  </div>
-                )}
-                <button
-                  onClick={clickListener}
-                  className="w-[50px] bg-da-100 rounded-[50px]"
-                  // onClick={clickListener}
-                  type="submit"
-                >
-                  등록
-                </button>
-              </form>
-            </div>
+            <CCViewCommentWrite onSubmit={handleInsertComment} />
 
-            {commentList
-                .slice(0, moreComments ? commentList.length : 1)
-                .map((comment, idx) => {
-                  return (
-                      <div
-                          className="flex justify-between mb-[20px] gap-[20px] items-center w-full"
-                          key={idx}
-                      >
-                        <div className="flex items-center gap-1">
-                          <div className="flex gap-[1px] ">
-                            <img
-                                src="/images/commenticon_white.svg"
-                                alt=""
-                                className="block"
-                            />
-                            <div className="flex items-center w-[90px]">
-                              <p className="nanumBold">{comment.user?.nickName}</p>
-                            </div>
-                          </div>
-                          <div className="nanum flex-wrap w-[280px] overflow-wrap">
-                            {comment.content}
-                          </div>
+            {/* 댓글 리스트 */}
+            {comment.length === 0 ? (
+              <p>댓글없네요!!!!!</p>
+            ) : (
+              comment &&
+              comment.map((item, idx) => {
+                return (
+                  <CCViewCommentList
+                    comment={item}
+                    key={idx}
+                    // deleteComment={deleteComment}
+                  />
+                );
+              })
+            )}
+            {/* {commentList
+              .slice(0, moreComments ? commentList.length : 1)
+              .map((comment, idx) => {
+                return (
+                  <div
+                    className="flex justify-between mb-[20px] gap-[20px] items-center w-full"
+                    key={idx}
+                  >
+                    <div className="flex items-center gap-1">
+                      <div className="flex gap-[1px] ">
+                        <img
+                          src="/images/commenticon_white.svg"
+                          alt=""
+                          className="block"
+                        />
+                        <div className="flex items-center w-[90px]">
+                          <p className="nanumBold">{comment.user?.nickName}</p>
                         </div>
                       </div>
-                  );
-                })}
-
+                      <div className="nanum flex-wrap w-[280px] overflow-wrap">
+                        {comment.content}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })} */}
             {/* 댓글 더보기 */}
-            {commentList.length > 1 && (
+            {/* {commentList.length > 1 && (
               <div className="text-center mt-2">
                 <button
                   onClick={showComments}
                   className="text-sm text-da-300 cursor-pointer mt-10"
                 >
-                  {/* {moreComments ? "접기" : "댓글 더보기"} */}
+                  {moreComments ? "접기" : "댓글 더보기"}
                   {moreComments ? (
                     <>
                       <span className="nanumBold">접기</span>
@@ -262,8 +250,7 @@ function CCViewPage() {
                   )}
                 </button>
               </div>
-            )}
-
+            )} */}
             {/* </div>
             </div> */}
             {/*/!*=============== 댓글구간 끝 *!/*/}
