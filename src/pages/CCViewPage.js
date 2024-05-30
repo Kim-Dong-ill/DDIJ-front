@@ -3,11 +3,12 @@ import React, { useEffect, useState } from "react";
 import Kakao_StrEnd from "../kakaoMap/Kakao_StrEnd";
 import axiosInstance from "../utils/axios";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams,useLocation} from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 function CCViewPage() {
-  // 유효성 검사
+  const location = useLocation();
+  const item = location.state?.item||{};  // 유효성 검사
   const {
     register,
     handleSubmit,
@@ -32,13 +33,6 @@ function CCViewPage() {
   const userData = useSelector((state) => state.user?.userData); // 유저데이터 가져오기
 
   const { circleId } = useParams();
-
-  // 현재 로그인한 사용자 ID
-  // const loggedInUserId = userData.user.id;
-  // 댓글 작성자 ID
-  // const commentAuthorId = commentList.user.id;
-  // 현재 로그인한 사용자가 댓글의 작성자인지 여부 (만약 댓글삭제가 생길꺼라면 추가)
-  // const isCommentAuthor = loggedInUserId === commentAuthorId;
 
   // 댓글 더보기
   const showComments = () => {
@@ -79,14 +73,20 @@ function CCViewPage() {
   useEffect(() => {
     async function comment() {
       try {
-        const res = await axiosInstance.get(`circles/${circleId}/comment`);
-        setCommentList(res.data.circleComment);
+        const res = await axiosInstance.get(`circles/${item._id}/comment`);
+        if(res){
+          setCommentList(res.data.circleComment)
+        }
+        else{
+          setCommentList("댓글이 없습니다.")
+        }
       } catch (error) {
         console.log(error);
       }
     }
     comment();
   }, []);
+
   if (!circleViewCon) return null;
 
   // 모임댓글 추가-Post
@@ -94,7 +94,7 @@ function CCViewPage() {
     const commentData = {
       content: commentContent,
       circleId: circleId,
-      userId: userData.user.id,
+      userId: userData.user._id,
     };
     try {
       const res = await axiosInstance.post(

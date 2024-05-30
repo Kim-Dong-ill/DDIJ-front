@@ -33,13 +33,12 @@ function AllCCListPage({}) {
   useEffect(() => {
     const loadCCList = async () => {
       try {
-        const userid = loginState
-        console.log(userid)
-        const res = await axiosInstance.get(`/circles/${userid}`)
+        const userId = loginState
+        console.log(userId)
+        const res = await axiosInstance.get(`/circles/${userId}`)
         const body ={
           userLocation : userLocation
         }
-        console.log(body)
         const sortRes =  await axiosInstance.post(`/circles/${loginState}`,body)
         setAllCircleData(res.data.allCircles);
         setUserCircleData(res.data.userCircles);
