@@ -8,9 +8,6 @@ import { useLocation } from "react-router-dom";
 
 function CCViewPage() {
   // 유효성 검사
-  const location = useLocation();
-  const item = location.state?.item || {};
-
 
   const {
     register,
@@ -75,11 +72,10 @@ function CCViewPage() {
     async function comment() {
       try {
         const res = await axiosInstance.get(`circles/${item._id}/comment`);
-        if(res){
-          setCommentList(res.data.circleComment)
-        }
-        else{
-          setCommentList("댓글이 없습니다.")
+        if (res) {
+          setCommentList(res.data.circleComment);
+        } else {
+          setCommentList("댓글이 없습니다.");
         }
       } catch (error) {
         console.log(error);
@@ -253,7 +249,6 @@ function CCViewPage() {
                   </div>
                 </div> */}
 
-
             {/* 댓글나타나는곳 */}
             {commentList.length === 0 ? (
               <p className="nanum mt-4">아직 댓글이 없습니다.</p>
@@ -311,7 +306,6 @@ function CCViewPage() {
                 </button>
               </div>
             )}
-
 
             {/* </div>
             </div> */}
