@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../kakaoMap/kakaoMap.css";
 import MainSlider from "../components/MainSlider";
 import axiosInstance from "../utils/axios";
+import { toast } from "react-toastify";
 
 const { kakao } = window;
 // 마커 이미지의 이미지 주소입니다
@@ -87,6 +88,16 @@ function Kakao_main({ indexPet }) {
       function error(error) {
         setLocationAvailable(false); //위치 사용 불가
         console.log("geolocation 오류" + error.code + ":" + error.message);
+        toast.info("GPS로 위치를 가져올수 없어요ㅠㅠ", {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       }
     } else {
       // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
