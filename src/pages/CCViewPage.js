@@ -1,29 +1,26 @@
 import React, { useEffect, useState } from "react";
 import Kakao_StrEnd from "../kakaoMap/Kakao_StrEnd";
 import axiosInstance from "../utils/axios";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useLocation, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 import JoinModal from "../components/JoinModal";
 
 function CCViewPage() {
   // 유효성 검사
+
   const {
     register,
     handleSubmit,
-    formState: { error },
+    formState: { errors },
     reset,
-    // watch,
   } = useForm({ mode: "onChange" });
-  const dispatch = useDispatch();
 
-  function onSubmit({ textData }) {
-    const body = {
-      textData,
-    };
-    textData.preventDefault(); // 폼의 기본제출 동작 막기
-    handleInsertComment(textData); // 댓글추가
+  async function onSubmit({ commentText }) {
+    handleInsertComment(commentText); // 댓글추가
+
+    reset();
   }
 
   const location = useLocation();
@@ -35,13 +32,6 @@ function CCViewPage() {
   const userData = useSelector((state) => state.user?.userData); // 유저데이터 가져오기
 
   const { circleId } = useParams();
-
-  // 현재 로그인한 사용자 ID
-  // const loggedInUserId = userData.user.id;
-  // 댓글 작성자 ID
-  // const commentAuthorId = commentList.user.id;
-  // 현재 로그인한 사용자가 댓글의 작성자인지 여부 (만약 댓글삭제가 생길꺼라면 추가)
-  // const isCommentAuthor = loggedInUserId === commentAuthorId;
 
   // 댓글 더보기
   const showComments = () => {
@@ -82,14 +72,19 @@ function CCViewPage() {
   useEffect(() => {
     async function comment() {
       try {
-        const res = await axiosInstance.get(`circles/${circleId}/comment`);
-        setCommentList(res.data.circleComment);
+        const res = await axiosInstance.get(`circles/${item._id}/comment`);
+        if (res) {
+          setCommentList(res.data.circleComment);
+        } else {
+          setCommentList("댓글이 없습니다.");
+        }
       } catch (error) {
         console.log(error);
       }
     }
     comment();
   }, []);
+
   if (!circleViewCon) return null;
 
   // 모임댓글 추가-Post
@@ -97,14 +92,14 @@ function CCViewPage() {
     const commentData = {
       content: commentContent,
       circleId: circleId,
-      userId: userData.user.id,
+      userId: userData.user._id,
     };
     try {
       const res = await axiosInstance.post(
         `/circles/${circleId}/comment`,
         commentData
       );
-      const newComment = res.data.comment;
+      const newComment = res.data.circleComment;
       setCommentList([...commentList, newComment]);
     } catch (error) {
       console.log(error);
@@ -227,7 +222,11 @@ function CCViewPage() {
                   id="commentText"
                   {...register("commentText", commentText)}
                 />
-                {error.commentText && <div>{error.commentText.message}</div>}
+                {errors.commentText && (
+                  <div className="text-red-500 text-xs mt-1">
+                    {errors.commentText.message}
+                  </div>
+                )}
                 <button
                   onClick={clickListener}
                   className="w-[50px] bg-da-100 rounded-[50px]"
@@ -251,35 +250,63 @@ function CCViewPage() {
                   </div>
                 </div> */}
 
-            {commentList
-              .slice(0, moreComments ? commentList.length : 1)
-              .map((item, idx) => {
-                return (
-                  <>
-                    <div
-                      className="flex justify-between mb-[20px] gap-[20px] items-center w-full"
-                      comment={item}
-                      key={idx}
-                    >
-                      <div className="flex items-center gap-1">
-                        <div className="flex gap-[1px] ">
-                          <img
-                            src="/images/commenticon_white.svg"
-                            alt=""
-                            className="block"
-                          />
-                          <div className="flex items-center w-[90px]">
-                            <p className="nanumBold">{item.user.nickName}</p>
+            {/* 댓글나타나는곳 */}
+            {commentList.length === 0 ? (
+              <p className="nanum mt-4">아직 댓글이 없습니다.</p>
+            ) : (
+              commentList
+                .slice(0, moreComments ? commentList.length : 1)
+                .map((item, idx) => {
+                  return (
+                    <>
+                      <div
+                        className="flex justify-between mb-[20px] gap-[20px] items-center w-full"
+                        comment={item}
+                        key={idx}
+                      >
+                        <div className="flex items-center gap-1">
+                          <div className="flex gap-[1px] ">
+                            <img
+                              src="/images/commenticon_white.svg"
+                              alt=""
+                              className="block"
+                            />
+                            <div className="flex items-center w-[90px]">
+                              <p className="nanumBold">{item.user.nickName}</p>
+                            </div>
+                          </div>
+                          <div className="nanum flex-wrap w-[280px] overflow-wrap">
+                            {item.content}
                           </div>
                         </div>
-                        <div className="nanum flex-wrap w-[280px] overflow-wrap">
-                          {item.content}
-                        </div>
                       </div>
-                    </div>
-                  </>
-                );
-              })}
+                    </>
+                  );
+                })
+            )}
+
+            {/* 댓글 더보기 */}
+            {commentList.length > 1 && (
+              <div className="text-center mt-2">
+                <button
+                  onClick={showComments}
+                  className="text-sm text-da-300 cursor-pointer mt-10"
+                >
+                  {/* {moreComments ? "접기" : "댓글 더보기"} */}
+                  {moreComments ? (
+                    <>
+                      <span className="nanumBold">접기</span>
+                      <i className="fa-solid fa-caret-up text-da-300 ml-2"></i>
+                    </>
+                  ) : (
+                    <>
+                      <span className="nanumBold">댓글 더보기</span>
+                      <i className="fa-solid fa-caret-down text-da-300 ml-2"></i>
+                    </>
+                  )}
+                </button>
+              </div>
+            )}
 
             {/* </div>
             </div> */}
