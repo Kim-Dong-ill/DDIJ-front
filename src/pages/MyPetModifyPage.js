@@ -55,7 +55,7 @@ function MyPetModifyPage() {
   const { pathname } = useLocation(); //page의 path 알려준다.
   const [ageValue, setAgeValue] = useState();
   const [petImage, setPetImage] = useState(); // FileFetchOne으로 전달
-  console.log("수정페이지 petImage", petImage);
+
   //배열에 있는 데이터 filter로 가져옴
   useEffect(() => {
     const targetId = petid.petid;
@@ -65,21 +65,19 @@ function MyPetModifyPage() {
       const filteredData = user.user.petsData.filter(
         (item) => item._id === targetId
       );
-      console.log("filteredData", filteredData[0]);
-      setPetData(filteredData[0]);
-      setNeuter(filteredData[0].neuter);
-      setRabies(filteredData[0].rabies);
-      setVaccine(filteredData[0].vaccine);
-      setPetImage(filteredData[0].image);
+      if (filteredData.length > 0) {
+        const pet = filteredData[0];
+        setPetData(pet);
+        setNeuter(pet.neuter);
+        setRabies(pet.rabies);
+        setVaccine(pet.vaccine);
+        setPetImage(pet.image);
+      }
     }
-  }, [pathname]);
-
-  // useEffect(() => {
-  //   setPetImage(petImage);
-  // }, [petImage]);
+  }, [pathname, user.user.petsData]);
 
   function handleChange(e) {
-    const { id, value, petImage } = e.target;
+    const { id, value } = e.target;
     console.log("id&&&&&&&&&&&&", id, "petImage", petImage);
     console.log("neuter", neuter);
     setPetData((prevState) => {
@@ -113,10 +111,15 @@ function MyPetModifyPage() {
 
   // petImage 값을 변경하는 함수
   const handleImageChange = (newImageName) => {
-    setPetImage(newImageName);
-    handleChange({ target: { id: "image", petImage: newImageName } }); // 이미지 변경 시 handleChange 호출
+    setPetImage(newImageName); // 새 이미지 명을 petImage로 업데이트
+    // setPetData를 통해 petData 안에 image를 새로운 이미지로 업데이트
+    setPetData((prevState) => ({
+      ...prevState,
+      image: newImageName,
+    }));
   };
 
+  // 새로 업데이트 된 petData를 서버로 전송
   async function onSubmit(data) {
     const body = {
       ...petData,
@@ -128,11 +131,11 @@ function MyPetModifyPage() {
           "Content-Type": "application/json",
         },
       });
+      navigate(-1);
       console.log(res.data);
     } catch (error) {
       console.log(error);
     }
-    navigate(-1);
   }
 
   function handleAge(e) {
@@ -181,50 +184,15 @@ function MyPetModifyPage() {
           </h2>
         </div>
 
-        {/* name start */}
-        {/* <div className="grid gap-2 pt-[15px]">
-          <img
-            src="/images/dog1.svg"
-            alt=""
-            className="w-[100px] h-[100px] rounded-full m-auto my-[5px]"
-          />
-
-          <div className="flex justify-center items-center gap-1">
-            <div className="nanumBold">뚜비</div>
-            <div>
-              <i class="fa-solid fa-mars"></i>
-            </div>
-          </div> */}
-
-        {/* button start */}
-        {/* <div className="flex justify-center items-center">
-            <button className="w-auto border border-da-300 px-[15px] rounded-xl">
-              <span className="inline-block text-[13px] mr-[3px]">
-                사진변경
-              </span>
-              <img
-                src="/images/plus.svg"
-                className="inline-block align-middle w-[14px] h-[14px]"
-              />
-            </button>
-          </div>
-        </div> */}
         <FileFetchOne
           petData={petData}
           petImage={petImage}
           onImageChange={handleImageChange}
         />
-        {/* // FileFetchOne으로 전달 */}
       </div>
 
       <div className="w-[400px] mx-auto py-[50px] ">
         <form onSubmit={handleSubmit(onSubmit)}>
-          {/* <div>
-            <FileFetchOne
-              petImage={petImage}
-              onImageChange={handleImageChange}
-            />
-          </div> */}
           <div className="flex flex-col gap-2 mb-7">
             <label className={`w-[100px] nanumBold`} htmlFor="pName">
               이름
