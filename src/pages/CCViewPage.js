@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Kakao_StrEnd from "../kakaoMap/Kakao_StrEnd";
 import axiosInstance from "../utils/axios";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import JoinModal from "../components/JoinModal";
 
@@ -109,11 +109,11 @@ function CCViewPage() {
     <>
       <div className="grid gap-3 bg-da-400 pt-[90px] pb-[100px] border-[1px]">
         <div className="w-[500px] h-[255px] bg-slate-300">
-          <Kakao_StrEnd startLoc={startLoc} endLoc={endLoc} />
+          {/* <Kakao_StrEnd startLoc={startLoc} endLoc={endLoc} /> */}
         </div>
         <div className="text-wh-100">
           {/* 박스 안 contents start======= */}
-          <div className=" border border-da-900 mx-5 my-[30px] rounded-lg p-5">
+          <div className=" border border-da-900 mx-5 my-[35px] rounded-lg p-5">
             <div className="flex mb-[20px] ">
               <img
                 src="/images/dog3.svg"
@@ -144,30 +144,27 @@ function CCViewPage() {
             </div>
           </div>
           {/* =======박스 안 contents end */}
-          <div className="grid gap-[5px] px-[25px] mb-[20px]">
-            <p className="nanumBold text-[18px]">어서오시개</p>
-            <hr className="mb-[20px] border-da-900" />
-            <p className="nanum text-[15px] text-da-800 mb-[20px]">
-              출발 : {item.DateData} {item.TimeData}
+          <div className="grid gap-[5px] px-[25px] ">
+            <p className="nanumBold text-[18px] mb-3">어서오시개</p>
+            <p className="nanum text-[15px] text-da-800 mb-1">
+              시작시간 : {item.DateData} {item.TimeData}
             </p>
-            <p className="nanum text-[15px] text-da-800 mb-[20px]">
+            <p className="nanum text-[15px] text-da-800 mb-1">
               예상 종료시간 : {item.finishTime.split("T")[1].split(":")[0]}시{" "}
               {item.finishTime.split("T")[1].split(":")[1]}분
             </p>
-            <p className="nanum text-[15px] text-da-800 mb-[20px]">
+            <p className="nanum text-[15px] text-da-800 mb-6">
               출발 장소 : {item.startAdd}
             </p>
             <hr className="mb-[20px] border-da-900" />
           </div>
-          <div className="grid gap-[5px] px-[25px] mb-[50px]">
-            <p className="nanumBold mt-[30px] text-[18px]">소개말</p>
+          <div className="grid gap-[5px] px-[25px]">
+            <p className="nanumBold  text-[18px]">소개말</p>
+            <p className="nanum text-[15px] text-da-800 mb-6">{item.text}</p>
             <hr className="mb-[20px] border-da-900" />
-            <p className="nanum text-[15px] text-da-800 mb-[20px]">
-              {item.text}
-            </p>
-            <hr className="mb-[30px] border-da-900" />
+
             <div className="w-full grid gap-3 ">
-              <p className="nanumBold mt-[30px] text-[18px]">
+              <p className="nanumBold text-[18px]">
                 참석댕명단 {item.nowUser}/{item.peoples}
               </p>
               {/* 참석자명단시작! - map돌려야합니다 */}
@@ -196,7 +193,7 @@ function CCViewPage() {
               {/* 참석자명단 end - 여기까지 map돌립니다 */}
             </div>
             {/* 글 contents 섹션 완료 */}
-            <hr className="my-[30px] border-da-900" />
+            <hr className="my-[20px] border-da-900" />
             {/* 댓글구간 시작============= */}
             <div>
               <p className="nanumBold text-[18px]">할 말이 있개!</p>
@@ -204,32 +201,34 @@ function CCViewPage() {
 
             {/* 댓글입력창 */}
             <div
-              className=" flex my-[20px] gap-[10px] text-black"
+              className="w-full flex my-[20px] gap-[10px] text-black"
               onClick={handleInsertComment}
             >
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <input
-                  type="text"
-                  placeholder="댓글입력"
-                  className=" border w-[365px] rounded-[25px] px-[10px] py-[5px] nanum"
-                  onChange={textDataChange}
-                  value={textData}
-                  id="commentText"
-                  {...register("commentText", commentText)}
-                />
-                {errors.commentText && (
-                  <div className="text-red-500 text-xs mt-1">
-                    {errors.commentText.message}
-                  </div>
-                )}
-                <button
-                  onClick={clickListener}
-                  className="w-[50px] bg-da-100 rounded-[50px]"
-                  // onClick={clickListener}
-                  type="submit"
-                >
-                  등록
-                </button>
+              <form onSubmit={handleSubmit(onSubmit)} className="w-[440px]">
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="댓글입력"
+                    className=" border w-full rounded-[5px] px-[10px] py-[5px] nanum pr-10"
+                    onChange={textDataChange}
+                    value={textData}
+                    id="commentText"
+                    {...register("commentText", commentText)}
+                  />
+                  {errors.commentText && (
+                    <div className="text-red-500 text-xs mt-1">
+                      {errors.commentText.message}
+                    </div>
+                  )}
+                  <button
+                    onClick={clickListener}
+                    className="absolute top-1/2 transform -translate-y-1/2 right-4"
+                    // onClick={clickListener}
+                    type="submit"
+                  >
+                    <i class="fa-regular fa-paper-plane"></i>
+                  </button>
+                </div>
               </form>
             </div>
             {commentList

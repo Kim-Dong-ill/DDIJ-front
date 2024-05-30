@@ -87,48 +87,36 @@ function AllCCListPage({}) {
         </button>
       </div>
       <div className="flex flex-col items-center ">
-        <div className="w-[400px] flex justify-start mb-[10px] gap-[10px]">
+        <div className="w-[400px] flex justify-start mb-[15px] gap-4">
           <button
-            className="flex items-center rounded-[10px] h-[27px] p-[5px] border border-da-200"
+            className="flex items-center rounded-[5px] w-auto h-auto py-1 px-3 border border-ye-600 text-ye-600 hover:bg-ye-600 hover:text-white"
             onClick={
               FLAG === 0
                 ? () => setViewData(AllCircleData)
                 : () => setViewData(UserCircleData)
             }
           >
-            <img
-              src="/images/icon_filter.svg"
-              className="w-[15px] h-[15px] mr-[3px]"
-            />
-            <span className="text-[15px]">전체보기</span>
+            <span className="text-[13px]">전체보기</span>
           </button>
           <button
-            className="flex items-center rounded-[10px] h-[27px] p-[5px] border border-da-100"
+            className="flex items-center rounded-[5px] h-auto py-1 px-3 border border-ye-600 text-ye-600 hover:bg-ye-600 hover:text-white"
             onClick={
               FLAG === 0
                 ? () => setViewData(AllCircleByDate)
                 : () => setViewData(UserCircleByDate)
             }
           >
-            <img
-              src="/images/icon_alarm.svg"
-              className="w-[17px] h-[17px] mt-[3px] mr-[3px]"
-            />
-            <span className="text-[15px]">시간순</span>
+            <span className="text-[13px]">시간순</span>
           </button>
           <button
-            className="flex items-center rounded-[10px] h-[27px] p-[5px] border border-da-100"
+            className="flex items-center rounded-[5px] h-auto py-1 px-3 border border-ye-600 text-ye-600 hover:bg-ye-600 hover:text-white"
             onClick={
               FLAG === 0
                 ? () => setViewData(AllCircleByDist)
                 : () => setViewData(UserCircleByDist)
             }
           >
-            <img
-              src="/images/icon_flag.svg"
-              className="w-[17px] h-[17px] mt-[3px] mr-[3px]"
-            />
-            <span className="text-[15px]">거리순</span>
+            <span className="text-[13px]">거리순</span>
           </button>
         </div>
         <div className="w-[500px] px-[18px] flex justify-between">
