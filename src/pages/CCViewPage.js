@@ -4,12 +4,16 @@ import axiosInstance from "../utils/axios";
 import { useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useLocation } from "react-router-dom";
 
 function CCViewPage() {
   const location = useLocation();
   const item = location.state?.item || {};
 
   // 유효성 검사
+  const location = useLocation();
+  const item = location.state?.item || {};
+
   const {
     register,
     handleSubmit,
@@ -23,6 +27,8 @@ function CCViewPage() {
     reset();
   }
 
+  const location = useLocation();
+  const item = location.state?.item || {};
   let [textData, setTextData] = useState(""); // 댓글 입력
   const [commentList, setCommentList] = useState([]); // 댓글 리스트
   const [circleViewCon, setCircleViewCon] = useState(null); // 모임 content (circles/detail)
@@ -56,11 +62,11 @@ function CCViewPage() {
     setTextData(e.target.value);
   }
 
-  // function clickListener() {
-  //   let temp = [...commentList];
-  //   setCommentList([textData, ...temp]);
-  //   setTextData("");
-  // }
+  function clickListener() {
+    let temp = [...commentList];
+    setCommentList([textData, ...temp]);
+    setTextData("");
+  }
 
   // 모임 정보 가져오기
   // useEffect(() => {
@@ -228,6 +234,7 @@ function CCViewPage() {
                   </div>
                 )}
                 <button
+                  onClick={clickListener}
                   className="w-[50px] bg-da-100 rounded-[50px]"
                   // onClick={clickListener}
                   type="submit"
@@ -248,6 +255,7 @@ function CCViewPage() {
                     <p className="nanumBold">닉네임6글자</p>
                   </div>
                 </div> */}
+
 
             {/* 댓글나타나는곳 */}
             {commentList.length === 0 ? (
@@ -306,6 +314,7 @@ function CCViewPage() {
                 </button>
               </div>
             )}
+
 
             {/* </div>
             </div> */}

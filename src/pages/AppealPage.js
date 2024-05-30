@@ -93,13 +93,6 @@ function AppealPage({}) {
         </div>
         <div className="grid gap-[3px]">
           <div className="h-[100px] w-[100px] bg-ye-100 m-auto rounded-[50px]  my-[5px]">
-            {/* {mainPet && mainPet.image && (
-              <img
-                src={`${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${mainPet.image}`}
-                // alt=""
-                className="w-[100px] h-[100px] rounded-full m-auto"
-              />
-            )} */}
             {mainPet.image ? (
               <img
                 src={`${process.env.REACT_APP_NODE_SERVER_URL}/uploads/${mainPet.image}`}
@@ -210,6 +203,7 @@ function AppealPage({}) {
                         />
                       )}
                       {appealData.image}
+
                       {/* 강아지 사진 끝*/}
                       {/* 강아지 이름 + 날짜 시작*/}
                       <div className="nanumBold text-[15px] mt-[2px]">
