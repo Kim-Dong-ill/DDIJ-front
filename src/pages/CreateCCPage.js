@@ -185,7 +185,7 @@ function CreateCCPage() {
     name: {
       required: {
         value: true,
-        message: "비밀번호는 필수입니다.",
+        message: "모임명을 입력해주세요.",
       },
 
       maxLength: {
