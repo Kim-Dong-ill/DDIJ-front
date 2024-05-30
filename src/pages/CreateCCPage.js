@@ -195,8 +195,8 @@ function CreateCCPage() {
       },
 
       maxLength: {
-        value: 10,
-        message: "최대 10글자 입니다.",
+        value: 20,
+        message: "최대 20글자 입니다.",
       },
     },
     text: {

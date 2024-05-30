@@ -51,12 +51,12 @@ function CCViewPage() {
         const userData = resForUser.data.member;
         console.log("보여줄게요잘봐요:? " + JSON.stringify(userData));
         setCircleUserData(Array.isArray(userData) ? userData : []); // 사용자 데이터를 상태로 설정, 배열이 아닌 경우 빈 배열로 설정
-
         const res = await axiosInstance.get(`circles/${circleId}/comment`);
         if (res.data.circleComment.length) {
           setCommentList(res.data.circleComment);
         } else {
           setCommentList(["댓글이 없습니다."]);
+
         }
       } catch (error) {
         console.log(error);
@@ -235,7 +235,6 @@ function CCViewPage() {
                 </button>
               </form>
             </div>
-
             {commentList
                 .slice(0, moreComments ? commentList.length : 1)
                 .map((comment, idx) => {
