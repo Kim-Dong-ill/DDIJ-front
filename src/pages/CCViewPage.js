@@ -29,8 +29,19 @@ function CCViewPage() {
   const [circleViewCon, setCircleViewCon] = useState(null); // 모임 content (circles/detail)
   const [moreComments, setMoreComments] = useState(false); // 댓글 더보기
   const userData = useSelector((state) => state.user?.userData); // 유저데이터 가져오기
-
+  const [startLoc, setStartLoc] = useState(); //출발지 좌표
+  const [endLoc, setEndLoc] = useState(); //도착지 좌표
   const { circleId } = useParams();
+
+  // console.log("adadadad", location);
+  console.log("목적지 좌표", item.endLoc.endCoordinates);
+  console.log("출발지 좌표", item.startLoc.coordinates);
+
+  // 출발지 목적지 좌표 저장
+  useEffect(() => {
+    setStartLoc(item.startLoc.coordinates);
+    setEndLoc(item.endLoc.endCoordinates);
+  }, []);
 
   // 댓글 더보기
   const showComments = () => {
@@ -121,7 +132,7 @@ function CCViewPage() {
     <>
       <div className="grid gap-3 bg-da-400 pt-[90px] pb-[100px] border-[1px]">
         <div className="w-[500px] h-[255px] bg-slate-300">
-          <Kakao_StrEnd />
+          <Kakao_StrEnd startLoc={startLoc} endLoc={endLoc} />
         </div>
         <div className="text-wh-100">
           {/* 박스 안 contents start======= */}

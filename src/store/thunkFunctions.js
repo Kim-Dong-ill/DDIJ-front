@@ -11,7 +11,7 @@ export const loginUser = createAsyncThunk(
 
       toast.success(`😸😸 ${res.data.message} 😸😸`, {
         position: "bottom-right",
-        autoClose: 5000,
+        autoClose: 2000,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
@@ -26,7 +26,7 @@ export const loginUser = createAsyncThunk(
 
       toast.error(`🤷‍♂️🤷‍♂️🤷‍♂️ 로그인실패`, {
         position: "bottom-right",
-        autoClose: 5000,
+        autoClose: 2000,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,

@@ -38,6 +38,7 @@ function MyPetModifyPage() {
   const user = useSelector((state) => {
     return state;
   });
+  console.log("재희님 왜그랬어요", user);
   // const [userData, setUserData] = useState();
   const [gender, setGender] = useState(""); //남자인지 여자인지
   const [neuter, setNeuter] = useState(); //중성화 여부
@@ -58,8 +59,8 @@ function MyPetModifyPage() {
 
   //배열에 있는 데이터 filter로 가져옴
   useEffect(() => {
-    const targetId = petid.petid;
-
+    const targetId = petid.petId;
+    console.log("재희", targetId);
     // petArray가 비어 있지 않은지 확인 후 필터링
     if (user.user.petsData.length > 0) {
       const filteredData = user.user.petsData.filter(
