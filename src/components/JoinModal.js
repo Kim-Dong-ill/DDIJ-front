@@ -1,7 +1,7 @@
 import React from "react";
 
 function JoinModal() {
-  return <div>JoinModal</div>;
+  return <div>JoinModasdsdl</div>;
 }
 
 export default JoinModal;
