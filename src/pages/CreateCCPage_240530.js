@@ -387,8 +387,8 @@ function CreateCCPage() {
               value={newCCInfo.text}
               onChange={handleChangeValue}
               disabled={checkCircle ? false : true}
-              // error={!!errors.text}
-              // helperText={errors.text?.message}
+              error={!!errors.text}
+              helperText={errors.text?.message}
               // className="bg-gray-200 rounded-md w-full h-[100px] text-justify mb-4 px-4 py-2"
             />
             {checkCircle && errors.text && (
