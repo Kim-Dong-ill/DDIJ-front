@@ -63,14 +63,13 @@ function App() {
                     path="/appealwrite/:userId"
                     element={<AppealWritePage />}
                 />
-
                 <Route path="/circles" element={<AllCCListPage />} />
                 <Route path="/newcircle" element={<CreateCCPage />} />
-                <Route path="/circles/:circleid" element={<CCViewPage />} />
-                <Route path="/circles/:circleid/mod" element={<CreateCCPage />} />
-                <Route path="/userinfo/:userid" element={<UserInfoPage />} />
+                <Route path="/circles/:circleId" element={<CCViewPage />} />
+                <Route path="/circles/:circleId/mod" element={<CreateCCPage />} />
+                <Route path="/userinfo/:userId" element={<UserInfoPage />} />
                 <Route path="/userinfo" element={<UserInfoPage />} />
-                <Route path="/usermod/:userid" element={<UserModifyPage />} />
+                <Route path="/usermod/:userId" element={<UserModifyPage />} />
                 <Route path="/mypet/:userId" element={<MyPetListPage />} />
               </Route>
 
@@ -78,7 +77,7 @@ function App() {
             <Route element={<ProtectRouter isAuth={isAuth} />}>
               <Route index element={<MainPage />} />
               <Route path="/appeal/:userId" element={<AppealPage />} />
-              <Route path="/mypet/mod/:petid" element={<MyPetModifyPage />} />
+              <Route path="/mypet/mod/:petId" element={<MyPetModifyPage />} />
               <Route path="/mypet/add" element={<AddMyPetPage />} />
             </Route>
             <Route path="/*" element={<ErrPathPage />} />
