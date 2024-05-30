@@ -80,7 +80,7 @@ function MyPetListPage() {
           </button>
         </Link>
       </div>
-      {/* 상단 버튼 끝 */}
+      {/* 상단 버튼 끝  */}
       {/* 강아지1 시작 */}
       {mypetList.map((item, idx) => {
         console.log("펫 리스트 펫이미징 item.image", item.image);
