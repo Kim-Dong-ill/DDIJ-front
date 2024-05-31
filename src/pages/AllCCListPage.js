@@ -123,16 +123,7 @@ function AllCCListPage({}) {
               >
                 <span className="text-[13px]">전체보기</span>
               </button>
-              {/* <button
-                className="flex items-center rounded-[5px] w-auto h-auto py-1 px-3 border ${ border-ye-600 text-ye-600 hover:bg-ye-600 hover:text-white"
-                onClick={
-                  FLAG === 0
-                    ? () => setViewData(AllCircleData)
-                    : () => setViewData(UserCircleData)
-                }
-              >
-                <span className="text-[13px]">전체보기</span>
-              </button> */}
+
               <button
                 className={`flex items-center rounded-[5px] h-auto py-1 px-3 border ${
                   activeButton === "date"
@@ -150,16 +141,7 @@ function AllCCListPage({}) {
               >
                 <span className="text-[13px]">시간순</span>
               </button>
-              {/* <button
-                className="flex items-center rounded-[5px] h-auto py-1 px-3 border border-ye-600 text-ye-600 hover:bg-ye-600 hover:text-white"
-                onClick={
-                  FLAG === 0
-                    ? () => setViewData(AllCircleByDate)
-                    : () => setViewData(UserCircleByDate)
-                }
-              >
-                <span className="text-[13px]">시간순</span>
-              </button> */}
+
               <button
                 className={`flex items-center rounded-[5px] h-auto py-1 px-3 border ${
                   activeButton === "distance"
@@ -177,16 +159,6 @@ function AllCCListPage({}) {
               >
                 <span className="text-[13px]">거리순</span>
               </button>
-              {/* <button
-                className="flex items-center rounded-[5px] h-auto py-1 px-3 border border-ye-600 text-ye-600 hover:bg-ye-600 hover:text-white"
-                onClick={
-                  FLAG === 0
-                    ? () => setViewData(AllCircleByDist)
-                    : () => setViewData(UserCircleByDist)
-                }
-              >
-                <span className="text-[13px]">거리순</span>
-              </button> */}
             </div>
           )}
         </div>
