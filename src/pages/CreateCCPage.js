@@ -334,10 +334,12 @@ function CreateCCPage() {
         >
           {/* <form className="pt-[90px] pb-[100px]"> */}
           {/* 중복모임 체크 */}
-          <div className="mt-4">
-            <div className="text-center border rounded-md  mb-4 px-4 py-2">
-              <span className="text-red-500">동일한 시간대</span>에 중복된
-              모임이있는지
+          <div className="mt-5">
+            <div className="text-center border rounded-md  mb-5 px-4 py-2 text-[15px]">
+              <span className="text-red-500 text-[17px] mr-[2px]">
+                동일한 시간대
+              </span>
+              에 중복된 모임이있는지
               <br />
               확인하셨나요?
             </div>
@@ -349,10 +351,12 @@ function CreateCCPage() {
           </div>
           <div>
             {/* 모임명 start */}
-            <div className="flex flex-col mb-6 ">
+            <div className="flex flex-col mb-6 pt-5">
               <label
                 className={
-                  checkCircle ? `w-[100px] mb-4` : `w-[100px] mb-4 text-da-500`
+                  checkCircle
+                    ? `w-[100px] mb-3 nanumBold text-[15px] text-da-400`
+                    : `w-[100px] mb-4 nanumBold text-[15px] text-da-500`
                 }
                 htmlFor="title"
               >
@@ -372,7 +376,7 @@ function CreateCCPage() {
                 // helperText={errors.name?.message}
               />
               {checkCircle && errors.name && (
-                <div className="nanumBold text-red-500 text-xs mt-1">
+                <div className="nanum text-red-500 text-xs mt-2 ml-1">
                   {errors.name.message}
                 </div>
               )}
@@ -386,8 +390,8 @@ function CreateCCPage() {
               name="text"
               className={
                 checkCircle
-                  ? `bg-gray-200 rounded-md w-full h-[100px] text-justify px-4 py-2 border hover:border-ye-800 focus:border-ye-600 focus:border-2 outline-none`
-                  : `bg-gray-200 rounded-md w-full h-[100px] text-justify px-4 py-2 border hover:border-ye-800 text-da-500`
+                  ? `bg-white rounded-[4px] w-full h-[160px] text-justify px-4 py-2 border border-da-500 nanum text-[15px] hover:border-ye-800 focus:border-ye-600 focus:border-2 outline-none`
+                  : `bg-gray-200 rounded-[4px] w-full h-[160px] text-justify px-4 py-2 border  text-da-500 nanum text-[15px] `
               }
               value={newCCInfo.text}
               onChange={handleChangeValue}
@@ -397,7 +401,7 @@ function CreateCCPage() {
               // className="bg-gray-200 rounded-md w-full h-[100px] text-justify mb-4 px-4 py-2"
             />
             {checkCircle && errors.text && (
-              <div className="nanumBold text-red-500 text-xs mt-1">
+              <div className="nanum text-red-500 text-xs mt-1 ml-1">
                 {errors.text.message}
               </div>
             )}
@@ -411,14 +415,15 @@ function CreateCCPage() {
                   htmlFor="startPoint"
                   className={
                     checkCircle
-                      ? `mb-2 flex gap-2 mt-4`
-                      : `mb-2 flex gap-2 text-da-500 mt-4`
+                      ? `mb-3 flex gap-2 mt-8 nanumBold text-[15px] text-da-400`
+                      : `mb-3 flex gap-2 mt-8 nanumBold text-[15px] text-da-500`
                   }
                 >
                   {/* <label htmlFor="startPoint" className=" mb-4 flex gap-2 "> */}
-                  <img src="/images/plag_icon.svg" alt="깃발아이콘" />
+                  <i class="fa-regular fa-flag mt-1"></i>
                   출발지
                 </label>
+
                 <TextFieldLine
                   onChange={handleChangeValue}
                   onClick={starthandleTextFieldClick}
@@ -467,12 +472,12 @@ function CreateCCPage() {
                   htmlFor="endPoint"
                   className={
                     checkCircle
-                      ? `mb-2 flex gap-2 mt-4`
-                      : `mb-2 flex gap-2 text-da-500 mt-4`
+                      ? `mb-3 flex gap-2 mt-8 nanumBold text-[15px] text-da-400`
+                      : `mb-3 flex gap-2 mt-8 nanumBold text-[15px] text-da-500`
                   }
                 >
                   {/* <label htmlFor="endPoint" className=" mb-4 flex gap-2 "> */}
-                  <img src="/images/plag_icon.svg" alt="깃발아이콘" />
+                  <i class="fa-solid fa-flag mt-1"></i>
                   목적지
                 </label>
 
@@ -525,12 +530,12 @@ function CreateCCPage() {
                 htmlFor="startDate"
                 className={
                   checkCircle
-                    ? `mb-2 flex gap-2 mt-4`
-                    : `mb-2 flex gap-2 text-da-500 mt-4`
+                    ? `mb-3 flex gap-2 mt-8 nanumBold text-[15px] text-da-400`
+                    : `mb-3 flex gap-2 mt-8 nanumBold text-[15px] text-da-500`
                 }
               >
                 {/* <label htmlFor="startTime" className=" mb-4 flex gap-2 "> */}
-                <img src="/images/clock_icon.svg" alt="시계 아이콘" />
+                <i class="fa-regular fa-calendar-check mt-[3px]"></i>
                 시작 날짜
               </label>
 
@@ -551,7 +556,7 @@ function CreateCCPage() {
                 // helperText={errors.startDate?.message}
               />
               {checkCircle && errors.startDate && (
-                <div className="nanumBold text-red-500 text-xs mt-1">
+                <div className="nanum text-red-500 text-xs mt-2 ml-1">
                   {errors.startDate.message}
                 </div>
               )}
@@ -561,12 +566,12 @@ function CreateCCPage() {
                 htmlFor="startTime"
                 className={
                   checkCircle
-                    ? `mb-2 flex gap-2 mt-4`
-                    : `mb-2 flex gap-2 text-da-500 mt-4`
+                    ? `mb-3 flex gap-2 mt-8 nanumBold text-[15px] text-da-400`
+                    : `mb-3 flex gap-2 mt-8 nanumBold text-[15px] text-da-500`
                 }
               >
                 {/* <label htmlFor="startTime" className=" mb-4 flex gap-2 "> */}
-                <img src="/images/clock_icon.svg" alt="시계 아이콘" />
+                <i class="fa-regular fa-clock mt-[3px]"></i>
                 시작 시간
               </label>
 
@@ -589,7 +594,7 @@ function CreateCCPage() {
                 // helperText={errors.startTime?.message}
               />
               {checkCircle && errors.startTime && (
-                <div className="nanumBold text-red-500 text-xs mt-1">
+                <div className="nanum text-red-500 text-xs mt-2 ml-1">
                   {errors.startTime.message}
                 </div>
               )}
@@ -599,14 +604,14 @@ function CreateCCPage() {
               <label
                 htmlFor="usingTime"
                 className={
-                  checkCircle ? `block mb-2` : `block mb-4 text-da-500`
+                  checkCircle
+                    ? `mb-3 flex gap-2 mt-8 nanumBold text-[15px] text-da-400`
+                    : `mb-3 flex gap-2 mt-8 nanumBold text-[15px] text-da-500`
                 }
               >
-                {/* <label htmlFor="usingTime" className="block mb-4"> */}
-                <h4 className="flex gap-2">
-                  <img src="/images/clock_icon.svg" alt="시계 아이콘" />
-                  소요 시간
-                </h4>
+                {/* <label htmlFor="usingTime" className="mb-4 flex gap-2"> */}
+                <i class="fa-solid fa-clock mt-[3px]"></i>
+                소요 시간
               </label>
 
               <select
@@ -618,7 +623,7 @@ function CreateCCPage() {
                 //     ? `w-full mb-6 py-2 px-4 border rounded-md`
                 //     : `w-full mb-6 py-2 px-4 border rounded-md text-da-500`
                 // }
-                className="w-full border px-4 py- 2 mb-4 rounded-md block h-[60px] cursor-pointer border-[#e0e3e7] hover:border-ye-800 focus:border-ye-600 focus:border-2 outline-none"
+                className="w-full border px-4 py- 2 mb-4 rounded-md block h-[60px] cursor-pointer nanum text-[15px] text-da-300 border-[#e0e3e7] hover:border-ye-800 focus:border-ye-600 focus:border-2 outline-none"
                 disabled={!checkCircle}
                 // onChange={(e) => setUsingTime(e.target.value)}
                 onChange={handleChangeValue}
@@ -634,7 +639,7 @@ function CreateCCPage() {
                 ))}
               </select>
               {checkCircle && errors.usingTime && (
-                <div className="nanumBold text-red-500 text-xs mt-1">
+                <div className="nanum text-red-500 text-xs pl-2 pb-1">
                   {errors.usingTime.message}
                 </div>
               )}
@@ -644,20 +649,20 @@ function CreateCCPage() {
               <label
                 htmlFor="peoples"
                 className={
-                  checkCircle ? `block mb-4` : `block mb-4 text-da-500 `
+                  checkCircle
+                    ? `mb-3 flex gap-2 mt-8 nanumBold text-[15px] text-da-400`
+                    : `mb-3 flex gap-2 mt-8 nanumBold text-[15px] text-da-500 `
                 }
               >
-                <h4 className="flex mb-3 gap-2 ">
-                  <img src="/images/people_icon.svg" alt="사람 아이콘" />
-                  참여 인원 수
-                </h4>
+                <i class="fa-solid fa-user-group mt-[3px]"></i>
+                참여 인원 수
               </label>
 
               <select
                 {...register("peoples", validationRules.peoples)}
                 id="peoples"
                 name="peoples"
-                className="w-full px-4 py-2 mb-10 border rounded-md  h-[60px] cursor-pointer border-[#e0e3e7] hover:border-ye-800 focus:border-ye-600 focus:border-2 outline-none"
+                className="w-full px-4 py-2 mb-4 border rounded-md  h-[60px] cursor-pointer nanum text-[15px] text-da-300 border-[#e0e3e7] hover:border-ye-800 focus:border-ye-600 focus:border-2 outline-none"
                 disabled={!checkCircle}
                 // className={
                 //   checkCircle
@@ -678,7 +683,7 @@ function CreateCCPage() {
                 ))}
               </select>
               {checkCircle && errors.peoples && (
-                <div className="nanumBold text-red-500 text-xs mt-1">
+                <div className="nanum text-red-500 text-xs pl-2 pb-1">
                   {errors.peoples.message}
                 </div>
               )}
@@ -686,7 +691,7 @@ function CreateCCPage() {
           </div>
           {/* 취소,등록버튼 */}
           <div
-            className="flex justify-center items-center gap-10"
+            className="flex justify-center items-center gap-10 mt-16"
             disabled={!checkCircle}
           >
             <Link to="/circles">
