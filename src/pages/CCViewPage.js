@@ -4,7 +4,7 @@ import axiosInstance from "../utils/axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import JoinModal from "../components/JoinModal";
+// import JoinModal from "../components/JoinModal";
 
 function CCViewPage() {
   const location = useLocation();
@@ -362,6 +362,7 @@ function checkPeople(circleData){
             {/*/!*=============== 댓글구간 끝 *!/*/}
           </div>
           <div className="w-full flex justify-center">
+
             {}
             {item?.users.includes(userData.user.id) ? (
                 <button
@@ -391,5 +392,6 @@ function checkPeople(circleData){
               )
               ;
             }
+
 
 export default CCViewPage;
