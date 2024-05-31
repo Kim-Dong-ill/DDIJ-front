@@ -1,3 +1,5 @@
+import { formatDistance } from "date-fns";
+import { ko } from "date-fns/locale";
 import React from "react";
 import { useSelector } from "react-redux";
 
@@ -29,12 +31,14 @@ import { useSelector } from "react-redux";
 //   })}
 
 function CCViewCommentList({ comment, deleteComment }) {
+  const createdAtDate = new Date(comment.createdAt);
+
   const userData = useSelector((state) => {
     return state.user?.userData;
   });
 
   // 댓글삭제시 필요
-  // const loggedInUserId = userData.user.id;  // 현재 로그인한유저 ID
+  // const loggedInUserId = userData.user.id; // 현재 로그인한유저 ID
   // const commentAuthorId = comment.user._id; // 댓글 작성자의 ID
 
   // const isCommentAuthor = loggedInUserId === commentAuthorId; // Id비교
@@ -51,6 +55,7 @@ function CCViewCommentList({ comment, deleteComment }) {
           <img src="/images/commenticon_white.svg" alt="" className="block" />
           <div className="flex items-center w-[90px]">
             <p className="nanumBold">{comment.user?.nickName}</p>
+            {/* {timeAgo && <p>{timeAgo}</p>} */}
           </div>
         </div>
         <div className="nanum flex-wrap w-[280px] overflow-wrap">

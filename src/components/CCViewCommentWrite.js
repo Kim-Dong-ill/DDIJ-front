@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
-function CCViewCommentWrite() {
+function CCViewCommentWrite({ onSubmit }) {
   const [commentText, setCommentText] = useState("");
+  // const userData = useSelector((state) => state.user?.userData);
+
   function handleSubmit(e) {
     e.preventDefault();
     onSubmit(commentText);
@@ -14,6 +17,7 @@ function CCViewCommentWrite() {
     <div>
       <div className=" flex my-[20px] gap-[10px] text-black">
         <form onSubmit={handleSubmit}>
+          {/* <span className="nanumBold mr-2">{userData?.user?.nickName}</span> */}
           <input
             type="text"
             placeholder="댓글입력"

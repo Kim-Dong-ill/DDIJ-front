@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Kakao_StrEnd from "../kakaoMap/Kakao_StrEnd";
 import axiosInstance from "../utils/axios";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 // import { useForm } from "react-hook-form";
 import CCViewCommentList from "../components/CCViewCommentList";
 import CCViewCommentWrite from "../components/CCViewCommentWrite";
@@ -10,41 +10,17 @@ import CCViewCommentWrite from "../components/CCViewCommentWrite";
 function CCViewPage() {
   const location = useLocation();
   const item = location.state?.item || {}; // 유효성 검사
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  //   reset,
-  // } = useForm({ mode: "onChange" });
 
-  // let [textData, setTextData] = useState(""); // 댓글 입력
   const [comment, setComment] = useState([]); // 댓글 리스트
   const [moreComments, setMoreComments] = useState(false); // 댓글 더보기
   const userData = useSelector((state) => state.user?.userData); // 유저데이터 가져오기
 
   const circleId = item._id;
 
-  // async function onSubmit({ commentText }) {
-  // handleInsertComment(commentText); // 댓글추가
-  // setTextData("");
-
-  // reset();
-  // }
-
   // 댓글 더보기
-  const showComments = () => {
-    setMoreComments((prevState) => !prevState);
-  };
-
-  // function textDataChange(e) {
-  //   setTextData(e.target.value);
-  // }
-
-  // function clickListener() {
-  //   let temp = [...commentList];
-  //   setCommentList([textData, ...temp]);
-  //   setTextData("");
-  // }
+  // const showComments = () => {
+  //   setMoreComments((prevState) => !prevState);
+  // };
 
   // 모임댓글 가져오기 -Get
   useEffect(() => {
@@ -58,6 +34,17 @@ function CCViewPage() {
     }
     comment();
   }, []);
+
+  // 댓글 작성후 댓글목록 다시 조회
+  const fetchComments = async () => {
+    try {
+      const res = await axiosInstance.get(`/circles/${circleId}/comment`);
+      setComment(res.data.comment);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleInsertComment = async (commentContent) => {
     const commentData = {
       content: commentContent,
@@ -65,16 +52,22 @@ function CCViewPage() {
     };
     // 모임댓글 추가-Post
     try {
-      const res = await axiosInstance.post(
-        `/circles/${circleId}/comment`,
-        commentData
-      );
-      const newComment = res.data.comment;
-      setComment([...comment, newComment]);
+      await axiosInstance.post(`/circles/${circleId}/comment`, commentData);
+      fetchComments();
     } catch (error) {
       console.log(error);
     }
   };
+  // try {
+  //   const res = await axiosInstance.post(
+  //     `/circles/${circleId}/comment`,
+  //     commentData
+  //   );
+  //   const newComment = res.data.comment;
+  //   setComment([...comment, newComment]);
+  // } catch (error) {
+  //   console.log(error);
+  // }
 
   // 모임댓글 삭제
   // const deleteComment = async (commentId)=>{
@@ -190,7 +183,7 @@ function CCViewPage() {
 
             {/* 댓글 리스트 */}
             {comment.length === 0 ? (
-              <p>댓글없네요!!!!!</p>
+              <p>댓글이 없습니다.</p>
             ) : (
               comment &&
               comment.map((item, idx) => {
