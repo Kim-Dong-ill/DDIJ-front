@@ -6,14 +6,28 @@ import { useSelector } from "react-redux";
 function AllCCListPage({}) {
   const [tempArray, setTempArray] = useState([]);
   const userLocation = useSelector((state) => {
-    console.log(state);
-    return [
-      state.user.userData.user.location.coordinates[0],
-      state.user.userData.user.location.coordinates[1],
-    ];
+    if (
+        state.user &&
+        state.user.userData &&
+        state.user.userData.user &&
+        state.user.userData.user.location
+    ) {
+      return [
+        state.user.userData.user.location.coordinates[0],
+        state.user.userData.user.location.coordinates[1],
+      ];
+    } else {
+      console.log("state에 유저 위치 정보가없음", state);
+      return [0, 0];
+    }
   });
   const loginState = useSelector((state) => {
-    return state.user.userData.user.id;
+    if (state.user && state.user.userData && state.user.userData.user) {
+      return state.user.userData.user.id;
+    } else {
+      console.log("state에 유저정보가없음", state);
+      return false;
+    }
   });
   const [FLAG, setFLAG] = useState(0); // 0->전체목록, 1-> 내목록
   // -> 이미지 매칭시키기, 약속시간 형식수정하기, 출발장소 띄워주기, 현재 인원수 총인원수 계산해서 띄워주기, 내모임,시간순,거리순 반응하기

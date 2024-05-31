@@ -34,13 +34,7 @@ function CCViewPage() {
     setEndLoc(location.state.item.endLoc.endCoordinates);
   }, [location]);
 
-  // console.log(item.startLoc.coordinates);
-  //출발지 목적지 좌표 저장
-  // useEffect(() => {
-  //   setStartLoc(item.startLoc.coordinates);
-  //   setEndLoc(item.endLoc.endCoordinates);
-  // }, [item]);
-  // console.log(startLoc, endLoc);
+
 
   async function onSubmit({ commentText }) {
     handleInsertComment(commentText); // 댓글추가
@@ -70,12 +64,12 @@ function CCViewPage() {
         );
         const tempData = resForUser.data.member;
         setCircleUserData(Array.isArray(tempData) ? tempData : []); // 사용자 데이터를 상태로 설정, 배열이 아닌 경우 빈 배열로 설정
-        const res = await axiosInstance.get(`circles/${circleId}/comment`);
-        if (res.data.circleComment.length) {
-          setCommentList(res.data.circleComment);
-        } else {
-          setCommentList(["댓글이 없습니다."]);
-        }
+        // const res = await axiosInstance.get(`circles/${circleId}/comment`);
+        // if (res.data.circleComment.length) {
+        //   setCommentList(res.data.circleComment);
+        // } else {
+        //   setCommentList(["댓글이 없습니다."]);
+        // }
       } catch (error) {
         console.log(error);
       }
@@ -86,20 +80,33 @@ function CCViewPage() {
     }
   }, [circleId]);
 
+  const fetchCircleUserData = async () => {
+    try {
+      const resForUser = await axiosInstance.get(`circles/detail/${circleId}`);
+      const tempData = resForUser.data.member;
+      // const tempPetData = resForUser.data.userData.mainPet
+      setCircleUserData(Array.isArray(tempData) ? tempData : []);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleAddCircleMember = async () => {
     try {
       const response = await axiosInstance.patch(
           `/circles/${circleId}/join`,
-          { userId: userData.user._id }
+          { userId: userData.user.id }
       );
       if (response.status === 200) {
-        alert("참석 완료!");
-        setItem((prevItem) => ({
-          ...prevItem,
-          users: [...prevItem.users, userData.user._id],
-          nowUser: prevItem.nowUser + 1
-        }));
-      }
+          setItem((prevItem) => ({
+                ...prevItem,
+                users: [...prevItem.users, userData.user.id],
+                nowUser: prevItem.nowUser + 1
+              }
+          ));
+          fetchCircleUserData()
+          alert("참석 완료!");
+        }
     } catch (error) {
       console.error(error);
       alert(error.response.data.message || "참석에 실패했습니다.");
@@ -107,36 +114,47 @@ function CCViewPage() {
   };
 
   const handleRemoveCircleMember = async () => {
-    if (userData.user._id === item.user) {
+    if (userData.user.id === item.user) {
       alert("작성자는 취소할 수 없습니다.");
       return;
     }
 
     try {
+      console.log("이제취소할거다?"+userData.user.id)
+
       const response = await axiosInstance.patch(
           `/circles/${circleId}/leave`,
-          { userId: userData.user._id }
+          { userId: userData.user.id }
       );
       if (response.status === 200) {
-        alert("취소 완료!");
         setItem((prevItem) => ({
           ...prevItem,
-          users: prevItem.users.filter(id => id !== userData.user._id),
+          users: prevItem.users.filter(id => id !== userData.user.id),
           nowUser: prevItem.nowUser - 1
         }));
+        fetchCircleUserData()
+        alert("취소 완료!");
       }
     } catch (error) {
-      console.error(error);
+      console.log("프론트에서띄우는에러"+error.stack);
+      console.log(error.message);
       alert(error.response.data.message || "취소에 실패했습니다.");
     }
   };
+
+function checkPeople(circleData){
+    if(circleData.users.length < circleData.peoples){
+      return true;
+    }
+    else return false
+}
 
   // 모임댓글 추가-Post
   const handleInsertComment = async (commentContent) => {
     const commentData = {
       content: commentContent,
       circleId: circleId,
-      userId: userData.user._id,
+      userId: userData.user.id,
     };
     try {
       const res = await axiosInstance.post(
@@ -166,25 +184,25 @@ function CCViewPage() {
     <>
       <div className="grid gap-3 bg-da-400 pt-[90px] pb-[100px] border-[1px]">
         <div className="w-[500px] h-[255px] bg-slate-300">
-          <Kakao_StrEnd startLoc={startLoc} endLoc={endLoc} />
+          {/*<Kakao_StrEnd startLoc={startLoc} endLoc={endLoc} />*/}
         </div>
         <div className="text-wh-100">
           {/* 박스 안 contents start======= */}
           <div className=" border border-da-900 mx-5 my-[30px] rounded-lg p-5">
             <div className="flex mb-[20px] ">
               <img
-                  src="/images/dog3.svg"
+                  src="/images/dog3.svg"        //{userData.pets[0].pImage}
                   className="w-[100px] h-[100px] rounded-full"
               />
 
               <div className="grid gap-[3px] ml-[20px]">
                 <div className="flex text-da-800 text-[15px] ">
                   <p className="nanum">이름 :&nbsp;</p>
-                  <p className="nanum">봄</p>
+                  <p className="nanum">{userData.pets[0].pName}</p>
                 </div>
                 <div className="flex text-da-800 text-[15px]">
                   <p className="nanum">나이 :&nbsp;</p>
-                  <p className="nanum">11살</p>
+                  <p className="nanum">{userData.pets[0].pAge}살</p>
                 </div>
                 <div className="flex text-da-800 text-[15px] items-center">
                   <p className="nanum">성별 :&nbsp;</p>
@@ -192,7 +210,7 @@ function CCViewPage() {
                 </div>
                 <div className="flex text-da-800 text-[15px] ">
                   <p className="nanum">특이사항 :&nbsp;</p>
-                  <p className="nanum">칭구 조와!!</p>
+                  <p className="nanum">{userData.pets[0].pCharOne}</p>
                 </div>
               </div>
             </div>
@@ -344,7 +362,8 @@ function CCViewPage() {
             {/*/!*=============== 댓글구간 끝 *!/*/}
           </div>
           <div className="w-full flex justify-center">
-            {item?.users.includes(userData.user._id) ? (
+            {}
+            {item?.users.includes(userData.user.id) ? (
                 <button
                     className="fixed bottom-[60px] w-[150px] h-[40px] m-auto text-[13px] text-center rounded-[20px] bg-ye-600 text-black my-4"
                     onClick={handleRemoveCircleMember}
