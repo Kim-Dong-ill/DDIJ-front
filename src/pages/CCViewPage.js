@@ -60,6 +60,8 @@ function CCViewPage() {
           `circles/detail/${circleId}`
         );
         const tempData = resForUser.data.member;
+        console.log(resForUser.data);
+        console.log(resForUser.data.userData.pets);
         setCircleUserData(Array.isArray(tempData) ? tempData : []); // 사용자 데이터를 상태로 설정, 배열이 아닌 경우 빈 배열로 설정
         // const res = await axiosInstance.get(`circles/${circleId}/comment`);
         // if (res.data.circleComment.length) {
@@ -183,7 +185,7 @@ function CCViewPage() {
           <div className=" border border-da-900 mx-5 my-[35px] rounded-lg p-5">
             <div className="flex mb-[20px] ">
               <img
-                src="/images/dog3.svg" //{userData.pets[0].pImage}
+                src={`${process.env.REACT_APP_NODE_SERVER_URL}/uploads/f035eaf8-f3ad-4c2f-95c8-f113d9088d9e.jpeg`} //{userData.pets[0].pImage}
                 className="w-[100px] h-[100px] rounded-full"
               />
 
