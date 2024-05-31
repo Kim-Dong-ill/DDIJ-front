@@ -74,7 +74,6 @@ function CCViewPage() {
         console.log(error);
       }
     }
-
     if (circleId) {
       fetchData();
     }
@@ -83,8 +82,8 @@ function CCViewPage() {
   const fetchCircleUserData = async () => {
     try {
       const resForUser = await axiosInstance.get(`circles/detail/${circleId}`);
-      const tempData = resForUser.data.member;
       // const tempPetData = resForUser.data.userData.mainPet
+      const tempData = resForUser.data.member;
       setCircleUserData(Array.isArray(tempData) ? tempData : []);
     } catch (error) {
       console.error(error);
@@ -215,7 +214,8 @@ function checkPeople(circleData){
               </div>
             </div>
             <div>
-              <h2 className="nanumBold text-center"> {item?.name}</h2>
+              <hr className="mb-[20px] border-da-900"/>
+              <h2 className="nanumBold text-center">{item?.name}</h2>
             </div>
           </div>
           {/* =======박스 안 contents end */}
