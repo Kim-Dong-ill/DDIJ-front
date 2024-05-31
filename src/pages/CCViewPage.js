@@ -4,7 +4,7 @@ import axiosInstance from "../utils/axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import JoinModal from "../components/JoinModal";
+// import JoinModal from "../components/JoinModal";
 
 function CCViewPage() {
   const location = useLocation();
@@ -319,9 +319,7 @@ function CCViewPage() {
           </div>
         </div>
       </div>
-      <div className="">
-        <JoinModal />
-      </div>
+      <div className="">{/* <JoinModal /> */}</div>
     </>
   );
 }

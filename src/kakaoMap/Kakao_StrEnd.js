@@ -73,10 +73,10 @@ function Kakao_StrEnd({ startLoc, endLoc }) {
       );
     }
   }, [startLoc, endLoc]);
-  console.log(positions);
-  console.log(centerLa);
-  console.log(centerMa);
-  console.log(level);
+  // console.log(positions);
+  // console.log(centerLa);
+  // console.log(centerMa);
+  // console.log(level);
 
   //map, postions가 있을때 마커 생성
   useEffect(() => {
