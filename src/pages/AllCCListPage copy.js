@@ -24,14 +24,6 @@ function AllCCListPage({}) {
   const [UserCircleByDate, setUserCircleByDate] = useState([]);
   const [UserCircleByDist, setUserCircleByDist] = useState([]);
 
-  const [showButtons, setShowButtons] = useState(false);
-  const [activeButton, setActiveButton] = useState(null);
-
-  const handleButtonClick = (dataFunction, buttonName) => {
-    dataFunction();
-    setActiveButton(buttonName);
-  };
-
   const [ViewData, setViewData] = useState([
     {
       name: " ",
@@ -95,100 +87,37 @@ function AllCCListPage({}) {
         </button>
       </div>
       <div className="flex flex-col items-center ">
-        <div className="w-[400px] h-[30px] flex justify-start mb-[15px] gap-4">
+        <div className="w-[400px] flex justify-start mb-[15px] gap-4">
           <button
             className="flex items-center rounded-[5px] w-auto h-auto py-1 px-3 border border-ye-600 text-ye-600 hover:bg-ye-600 hover:text-white"
-            onClick={() => setShowButtons(!showButtons)}
+            onClick={
+              FLAG === 0
+                ? () => setViewData(AllCircleData)
+                : () => setViewData(UserCircleData)
+            }
           >
-            <i class="fa-solid fa-angles-right"></i>
-            {/* <span className="text-[13px]">정렬하기</span> */}
+            <span className="text-[13px]">전체보기</span>
           </button>
-
-          {showButtons && (
-            <div className=" h-[30px] flex mb-[15px] gap-4">
-              <button
-                className={`flex items-center rounded-[5px] w-auto h-auto py-1 px-3 border ${
-                  activeButton === "all"
-                    ? "bg-ye-600 text-white"
-                    : "border-ye-600 text-ye-600"
-                } hover:bg-ye-600 hover:text-white`}
-                onClick={() =>
-                  handleButtonClick(
-                    FLAG === 0
-                      ? () => setViewData(AllCircleData)
-                      : () => setViewData(UserCircleData),
-                    "all"
-                  )
-                }
-              >
-                <span className="text-[13px]">전체보기</span>
-              </button>
-              {/* <button
-                className="flex items-center rounded-[5px] w-auto h-auto py-1 px-3 border ${ border-ye-600 text-ye-600 hover:bg-ye-600 hover:text-white"
-                onClick={
-                  FLAG === 0
-                    ? () => setViewData(AllCircleData)
-                    : () => setViewData(UserCircleData)
-                }
-              >
-                <span className="text-[13px]">전체보기</span>
-              </button> */}
-              <button
-                className={`flex items-center rounded-[5px] h-auto py-1 px-3 border ${
-                  activeButton === "date"
-                    ? "bg-ye-600 text-white"
-                    : "border-ye-600 text-ye-600"
-                } hover:bg-ye-600 hover:text-white`}
-                onClick={() =>
-                  handleButtonClick(
-                    FLAG === 0
-                      ? () => setViewData(AllCircleByDate)
-                      : () => setViewData(UserCircleByDate),
-                    "date"
-                  )
-                }
-              >
-                <span className="text-[13px]">시간순</span>
-              </button>
-              {/* <button
-                className="flex items-center rounded-[5px] h-auto py-1 px-3 border border-ye-600 text-ye-600 hover:bg-ye-600 hover:text-white"
-                onClick={
-                  FLAG === 0
-                    ? () => setViewData(AllCircleByDate)
-                    : () => setViewData(UserCircleByDate)
-                }
-              >
-                <span className="text-[13px]">시간순</span>
-              </button> */}
-              <button
-                className={`flex items-center rounded-[5px] h-auto py-1 px-3 border ${
-                  activeButton === "distance"
-                    ? "bg-ye-600 text-white"
-                    : "border-ye-600 text-ye-600"
-                } hover:bg-ye-600 hover:text-white`}
-                onClick={() =>
-                  handleButtonClick(
-                    FLAG === 0
-                      ? () => setViewData(AllCircleByDist)
-                      : () => setViewData(UserCircleByDist),
-                    "distance"
-                  )
-                }
-              >
-                <span className="text-[13px]">거리순</span>
-              </button>
-              {/* <button
-                className="flex items-center rounded-[5px] h-auto py-1 px-3 border border-ye-600 text-ye-600 hover:bg-ye-600 hover:text-white"
-                onClick={
-                  FLAG === 0
-                    ? () => setViewData(AllCircleByDist)
-                    : () => setViewData(UserCircleByDist)
-                }
-              >
-                <span className="text-[13px]">거리순</span>
-              </button> */}
-            </div>
-          )}
+          <button
+            className="flex items-center rounded-[5px] h-auto py-1 px-3 border border-ye-600 text-ye-600 hover:bg-ye-600 hover:text-white"
+            onClick={
+              FLAG === 0
+                ? () => setViewData(AllCircleByDate)
+                : () => setViewData(UserCircleByDate)
+            }
+          >
+            <span className="text-[13px]">시간순</span>
+          </button>
+          <button
+            className="flex items-center rounded-[5px] h-auto py-1 px-3 border border-ye-600 text-ye-600 hover:bg-ye-600 hover:text-white"
+            onClick={
+              FLAG === 0
+                ? () => setViewData(AllCircleByDist)
+                : () => setViewData(UserCircleByDist)
+            }
+          >
+            <span className="text-[13px]">거리순</span>
+          </button>
         </div>
         <div className="w-[500px] px-[18px] flex justify-between">
           <div className="w-[100%] flex flex-col items-center">
