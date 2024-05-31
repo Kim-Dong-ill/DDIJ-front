@@ -6,14 +6,28 @@ import { useSelector } from "react-redux";
 function AllCCListPage({}) {
   const [tempArray, setTempArray] = useState([]);
   const userLocation = useSelector((state) => {
-    console.log(state);
-    return [
-      state.user.userData.user.location.coordinates[0],
-      state.user.userData.user.location.coordinates[1],
-    ];
+    if (
+        state.user &&
+        state.user.userData &&
+        state.user.userData.user &&
+        state.user.userData.user.location
+    ) {
+      return [
+        state.user.userData.user.location.coordinates[0],
+        state.user.userData.user.location.coordinates[1],
+      ];
+    } else {
+      console.log("state에 유저 위치 정보가없음", state);
+      return [0, 0];
+    }
   });
   const loginState = useSelector((state) => {
-    return state.user.userData.user.id;
+    if (state.user && state.user.userData && state.user.userData.user) {
+      return state.user.userData.user.id;
+    } else {
+      console.log("state에 유저정보가없음", state);
+      return false;
+    }
   });
   const [FLAG, setFLAG] = useState(0); // 0->전체목록, 1-> 내목록
   // -> 이미지 매칭시키기, 약속시간 형식수정하기, 출발장소 띄워주기, 현재 인원수 총인원수 계산해서 띄워주기, 내모임,시간순,거리순 반응하기
@@ -166,92 +180,96 @@ function AllCCListPage({}) {
           <div className="w-[100%] flex flex-col items-center">
             {ViewData.map((item, idx) => {
               const rest = idx % 2;
+              const cardClassName = item.complete
+                  ? "w-[400px] h-auto bg-gray-400 mb-[20px] rounded-lg px-[12px] py-[10px] opacity-50"
+                  : "w-[400px] h-auto bg-ye-300 mb-[20px] rounded-lg px-[12px] py-[10px]";
+
               return (
-                <>
-                  {rest === 0 ? (
-                    <Link
-                      to={`/circles/${item._id}`}
-                      state={{ item }}
-                      key={item._id}
-                    >
-                      <div className="w-[400px] h-auto bg-ye-300 mb-[20px] rounded-lg px-[12px] py-[10px]">
-                        <p className="text-right nanumBold text-xs">
-                          {item.nowUser}/{item.peoples}
-                        </p>
-                        <div className="flex gap-3 items-center">
-                          <div className="w-[80px] h-[80px] bg-slate-400 rounded-[50px] flex-shrink-0 mr-[5px] text-center">
-                            <img
-                              src="/images/dog4.svg"
-                              className="w-[80px] h-[80px] rounded-full m-auto inline-block"
-                            />
-                          </div>
-                          <div>
-                            <p className="nanumBold text-[16px] mb-[5px]">
-                              {item.name}
+                  <>
+                    {rest === 0 ? (
+                        <Link
+                            to={`/circles/${item._id}`}
+                            state={{ item }}
+                            key={item._id}
+                        >
+                          <div className={cardClassName}>
+                            <p className="text-right nanumBold text-xs">
+                              {item.nowUser}/{item.peoples}
                             </p>
-                            <div className="flex gap-[7px] ">
-                              <p className="nanum text-sm whitespace-nowrap">
-                                약속시간{" "}
-                              </p>
-                              <span className="text-da-200 nanum text-[13px]">
+                            <div className="flex gap-3 items-center">
+                              <div className="w-[80px] h-[80px] bg-slate-400 rounded-[50px] flex-shrink-0 mr-[5px] text-center">
+                                <img
+                                    src="/images/dog4.svg"
+                                    className="w-[80px] h-[80px] rounded-full m-auto inline-block"
+                                />
+                              </div>
+                              <div>
+                                <p className="nanumBold text-[16px] mb-[5px]">
+                                  {item.name}
+                                </p>
+                                <div className="flex gap-[7px] ">
+                                  <p className="nanum text-sm whitespace-nowrap">
+                                    약속시간{" "}
+                                  </p>
+                                  <span className="text-da-200 nanum text-[13px]">
                                 {item.DateData} {item.TimeData}
                               </span>
-                            </div>
-                            <div className="flex gap-[7px]">
-                              <p className="nanum text-sm whitespace-nowrap">
-                                출발장소{" "}
-                              </p>
-                              <span className="text-da-200 nanum text-[13px]">
+                                </div>
+                                <div className="flex gap-[7px]">
+                                  <p className="nanum text-sm whitespace-nowrap">
+                                    출발장소{" "}
+                                  </p>
+                                  <span className="text-da-200 nanum text-[13px]">
                                 {item.startAdd}
                               </span>
+                                </div>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                    </Link>
-                  ) : (
-                    <Link
-                      to={`/circles/${item._id}`}
-                      state={{ item }}
-                      key={item._id}
-                    >
-                      <div className="w-[400px] h-auto bg-ye-200 mb-[20px] rounded-lg px-[12px] py-[10px]">
-                        <p className="text-right nanumBold text-xs">
-                          {item.nowUser}/{item.peoples}
-                        </p>
-                        <div className="flex gap-3 items-center">
-                          <div className="w-[80px] h-[80px] bg-slate-400 rounded-[50px] flex-shrink-0 mr-[5px] text-center">
-                            <img
-                              src="/images/dog5.svg"
-                              className="w-[80px] h-[80px] rounded-full m-auto inline-block"
-                            />
-                          </div>
-                          <div>
-                            <p className="nanumBold text-[16px] mb-[5px]">
-                              {item.name}
+                        </Link>
+                    ) : (
+                        <Link
+                            to={`/circles/${item._id}`}
+                            state={{ item }}
+                            key={item._id}
+                        >
+                          <div className={cardClassName}>
+                            <p className="text-right nanumBold text-xs">
+                              {item.nowUser}/{item.peoples}
                             </p>
-                            <div className="flex gap-[7px]">
-                              <p className="nanum text-sm whitespace-nowrap">
-                                약속시간{" "}
-                              </p>
-                              <span className="text-da-200 nanum text-[13px]">
+                            <div className="flex gap-3 items-center">
+                              <div className="w-[80px] h-[80px] bg-slate-400 rounded-[50px] flex-shrink-0 mr-[5px] text-center">
+                                <img
+                                    src="/images/dog5.svg"
+                                    className="w-[80px] h-[80px] rounded-full m-auto inline-block"
+                                />
+                              </div>
+                              <div>
+                                <p className="nanumBold text-[16px] mb-[5px]">
+                                  {item.name}
+                                </p>
+                                <div className="flex gap-[7px]">
+                                  <p className="nanum text-sm whitespace-nowrap">
+                                    약속시간{" "}
+                                  </p>
+                                  <span className="text-da-200 nanum text-[13px]">
                                 {item.DateData} {item.TimeData}
                               </span>
-                            </div>
-                            <div className="flex gap-[7px]">
-                              <p className="nanum text-sm whitespace-nowrap">
-                                출발장소{" "}
-                              </p>
-                              <span className="text-da-200 nanum text-[13px]">
+                                </div>
+                                <div className="flex gap-[7px]">
+                                  <p className="nanum text-sm whitespace-nowrap">
+                                    출발장소{" "}
+                                  </p>
+                                  <span className="text-da-200 nanum text-[13px]">
                                 {item.startAdd}
                               </span>
+                                </div>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                    </Link>
-                  )}
-                </>
+                        </Link>
+                    )}
+                  </>
               );
             })}
           </div>
