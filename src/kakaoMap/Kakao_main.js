@@ -195,7 +195,7 @@ function Kakao_main({ indexPet }) {
     console.log("초기 마커 추가");
     console.log(circles);
 
-    clearMarkers();
+    // clearMarkers();
     const newMarkers = [];
     if (circles && circles.length > 0) {
       //기존 마커 배열 지도에 표시

@@ -178,7 +178,7 @@ function CCViewPage() {
     <>
       <div className="grid gap-3 bg-da-400 pt-[90px] pb-[100px] border-[1px]">
         <div className="w-[500px] h-[255px] bg-slate-300">
-          {/* <Kakao_StrEnd startLoc={startLoc} endLoc={endLoc} /> */}
+          <Kakao_StrEnd startLoc={startLoc} endLoc={endLoc} />
         </div>
         <div className="text-wh-100">
           {/* 박스 안 contents start======= */}
@@ -218,33 +218,29 @@ function CCViewPage() {
           <div className="grid gap-[5px] px-[25px] ">
             <p className="nanumBold text-[18px] mb-3">어서오시개</p>
             <p className="nanum text-[15px] text-da-800 mb-1">
-              시작시간 : {item.DateData} {item.TimeData}
+              시작시간 : {item?.DateData} {item?.TimeData}
             </p>
             <p className="nanum text-[15px] text-da-800 mb-1">
-              예상 종료시간 : {item.finishTime.split("T")[1].split(":")[0]}시{" "}
-              {item.finishTime.split("T")[1].split(":")[1]}분
+              예상 종료시간 : {item?.finishTime.split("T")[1].split(":")[0]}시{" "}
+              {item?.finishTime.split("T")[1].split(":")[1]}분
             </p>
             <p className="nanum text-[15px] text-da-800 mb-6">
-              출발 장소 : {item.startAdd}
-
+              출발 장소 : {item?.startAdd}
             </p>
             <hr className="mb-[20px] border-da-900" />
           </div>
           <div className="grid gap-[5px] px-[25px]">
             <p className="nanumBold  text-[18px]">소개말</p>
-            <p className="nanum text-[15px] text-da-800 mb-6">{item.text}</p>
+            <p className="nanum text-[15px] text-da-800 mb-6">{item?.text}</p>
             <hr className="mb-[20px] border-da-900" />
 
-
-       
             <p className="nanum text-[15px] text-da-800 mb-[20px]">
               {item?.text}
             </p>
             <hr className="mb-[30px] border-da-900" />
-     <div className="w-full grid gap-3 ">
+            <div className="w-full grid gap-3 ">
               <p className="nanumBold text-[18px]">
-                참석댕명단 {item.nowUser}/{item.peoples}
-
+                참석댕명단 {item?.nowUser}/{item?.peoples}
               </p>
               {/* 참석자명단시작! - map돌려야합니다 */}
               {Array.isArray(circleUserData) ? (
